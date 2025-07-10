@@ -37,6 +37,7 @@ export default function Navigation() {
     { name: 'Categories', href: '/categories' },
     { name: 'Trending', href: '/trending' },
     { name: 'About', href: '/about' },
+    { name: 'Admin', href: '/admin' },
   ];
 
   return (

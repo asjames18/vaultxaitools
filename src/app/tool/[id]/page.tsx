@@ -40,77 +40,37 @@ const CheckIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+import { getToolById, getReviewsByToolId } from '@/data';
+
 export default function ToolDetails({ params }: { params: { id: string } }) {
   const [isLiked, setIsLiked] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Mock data - in a real app, this would come from an API
-  const tool = {
-    id: params.id,
-    name: "ChatGPT",
-    logo: "🤖",
-    description: "Advanced language model for conversation and text generation",
-    longDescription: "ChatGPT is an AI-powered conversational agent that can engage in natural language conversations, answer questions, provide explanations, and assist with various tasks. It's built on OpenAI's GPT architecture and can understand context, generate human-like responses, and adapt to different conversation styles.",
-    category: "Language",
-    rating: 4.8,
-    reviewCount: 1247,
-    weeklyUsers: 15420,
-    growth: "+45%",
-    website: "https://chat.openai.com",
-    pricing: "Freemium",
-    features: [
-      "Natural language conversations",
-      "Context-aware responses",
-      "Multi-language support",
-      "Code generation and debugging",
-      "Creative writing assistance",
-      "Educational explanations",
-      "Real-time responses",
-      "Customizable conversation styles"
-    ],
-    pros: [
-      "Highly accurate and contextual responses",
-      "Excellent for learning and education",
-      "Free tier available",
-      "Regular updates and improvements",
-      "Good for creative tasks"
-    ],
-    cons: [
-      "Can sometimes provide incorrect information",
-      "Limited to training data cutoff",
-      "May not always understand complex queries",
-      "Privacy concerns with data handling"
-    ],
-    alternatives: [
-      { name: "Claude", rating: 4.7, logo: "🧠" },
-      { name: "Bard", rating: 4.5, logo: "🤖" },
-      { name: "Perplexity", rating: 4.6, logo: "🔍" }
-    ]
-  };
+  // Get tool data from centralized data
+  const tool = getToolById(params.id);
+  const reviews = getReviewsByToolId(params.id);
 
-  const reviews = [
-    {
-      id: 1,
-      user: "Sarah M.",
-      rating: 5,
-      date: "2 days ago",
-      comment: "Absolutely amazing tool! I use it daily for work and it's incredibly helpful for brainstorming and writing."
-    },
-    {
-      id: 2,
-      user: "Mike R.",
-      rating: 4,
-      date: "1 week ago",
-      comment: "Great for learning new concepts. Sometimes the responses can be a bit verbose, but overall very useful."
-    },
-    {
-      id: 3,
-      user: "Emily K.",
-      rating: 5,
-      date: "2 weeks ago",
-      comment: "This has become an essential part of my workflow. The code generation feature is particularly helpful."
-    }
-  ];
+  // If tool not found, show error or redirect
+  if (!tool) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Tool not found
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            The tool you&apos;re looking for doesn&apos;t exist.
+          </p>
+          <Link
+            href="/"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -259,14 +219,18 @@ export default function ToolDetails({ params }: { params: { id: string } }) {
                       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
                         Key Features
                       </h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {tool.features.map((feature, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <CheckIcon className="w-4 h-4 text-green-500 flex-shrink-0" />
-                            <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
+                      {tool.features && tool.features.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {tool.features.map((feature, index) => (
+                            <div key={index} className="flex items-center gap-2">
+                              <CheckIcon className="w-4 h-4 text-green-500 flex-shrink-0" />
+                              <span className="text-gray-600 dark:text-gray-300">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-gray-500 dark:text-gray-400">No features listed</p>
+                      )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -274,28 +238,36 @@ export default function ToolDetails({ params }: { params: { id: string } }) {
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
                           Pros
                         </h3>
-                        <ul className="space-y-2">
-                          {tool.pros.map((pro, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300">{pro}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        {tool.pros && tool.pros.length > 0 ? (
+                          <ul className="space-y-2">
+                            {tool.pros.map((pro, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                                <span className="text-gray-600 dark:text-gray-300">{pro}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-500 dark:text-gray-400">No pros listed</p>
+                        )}
                       </div>
 
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
                           Cons
                         </h3>
-                        <ul className="space-y-2">
-                          {tool.cons.map((con, index) => (
-                            <li key={index} className="flex items-start gap-2">
-                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300">{con}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        {tool.cons && tool.cons.length > 0 ? (
+                          <ul className="space-y-2">
+                            {tool.cons.map((con, index) => (
+                              <li key={index} className="flex items-start gap-2">
+                                <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0" />
+                                <span className="text-gray-600 dark:text-gray-300">{con}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-500 dark:text-gray-400">No cons listed</p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -345,32 +317,36 @@ export default function ToolDetails({ params }: { params: { id: string } }) {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                       Similar Tools
                     </h3>
-                    <div className="space-y-3">
-                      {tool.alternatives.map((alternative, index) => (
-                        <div key={index} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                          <div className="flex items-center gap-3">
-                            <div className="text-2xl">{alternative.logo}</div>
-                            <div>
-                              <h4 className="font-medium text-gray-900 dark:text-white">
-                                {alternative.name}
-                              </h4>
-                              <div className="flex items-center gap-1">
-                                {renderStars(alternative.rating)}
-                                <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">
-                                  {alternative.rating}
-                                </span>
+                    {tool.alternatives && tool.alternatives.length > 0 ? (
+                      <div className="space-y-3">
+                        {tool.alternatives.map((alternative, index) => (
+                          <div key={index} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            <div className="flex items-center gap-3">
+                              <div className="text-2xl">{alternative.logo}</div>
+                              <div>
+                                <h4 className="font-medium text-gray-900 dark:text-white">
+                                  {alternative.name}
+                                </h4>
+                                <div className="flex items-center gap-1">
+                                  {renderStars(alternative.rating)}
+                                  <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">
+                                    {alternative.rating}
+                                  </span>
+                                </div>
                               </div>
                             </div>
+                            <Link
+                              href={`/tool/${alternative.name.toLowerCase().replace(' ', '-')}`}
+                              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium"
+                            >
+                              View Details
+                            </Link>
                           </div>
-                          <Link
-                            href={`/tool/${alternative.name.toLowerCase().replace(' ', '-')}`}
-                            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium"
-                          >
-                            View Details
-                          </Link>
-                        </div>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 dark:text-gray-400">No alternatives listed</p>
+                    )}
                   </div>
                 )}
               </div>
@@ -411,7 +387,7 @@ export default function ToolDetails({ params }: { params: { id: string } }) {
               </h3>
               <div className="space-y-2">
                 <Link
-                  href={`/categories/${tool.category.toLowerCase()}`}
+                  href={`/categories/${tool.category.toLowerCase().replace(/\s+/g, '-')}`}
                   className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-3 py-1 text-sm font-medium text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
                 >
                   {tool.category}

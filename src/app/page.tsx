@@ -28,94 +28,19 @@ const ArrowRightIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const popularTools = [
-  {
-    id: 1,
-    name: "ChatGPT",
-    logo: "🤖",
-    description: "Advanced language model for conversation and text generation",
-    category: "Language",
-    rating: 4.8,
-    reviewCount: 1247,
-    weeklyUsers: 15420,
-    growth: "+45%"
-  },
-  {
-    id: 2,
-    name: "Midjourney",
-    logo: "🎨",
-    description: "AI-powered image generation from text descriptions",
-    category: "Design",
-    rating: 4.6,
-    reviewCount: 892,
-    weeklyUsers: 12850,
-    growth: "+32%"
-  },
-  {
-    id: 3,
-    name: "GitHub Copilot",
-    logo: "💻",
-    description: "AI pair programmer that helps write code faster",
-    category: "Development",
-    rating: 4.7,
-    reviewCount: 1563,
-    weeklyUsers: 8920,
-    growth: "+67%"
-  },
-  {
-    id: 4,
-    name: "Notion AI",
-    logo: "📝",
-    description: "Writing assistant integrated into Notion workspace",
-    category: "Productivity",
-    rating: 4.5,
-    reviewCount: 734,
-    weeklyUsers: 11230,
-    growth: "+28%"
-  },
-  {
-    id: 5,
-    name: "Jasper",
-    logo: "✍️",
-    description: "AI content creation platform for marketing and writing",
-    category: "Marketing",
-    rating: 4.4,
-    reviewCount: 567,
-    weeklyUsers: 8750,
-    growth: "+41%"
-  },
-  {
-    id: 6,
-    name: "DALL-E",
-    logo: "🖼️",
-    description: "AI system that creates realistic images from text descriptions",
-    category: "Design",
-    rating: 4.6,
-    reviewCount: 445,
-    weeklyUsers: 6540,
-    growth: "+38%"
-  }
-];
-
-const categories = [
-  { name: "Language", icon: "💬", count: 45, color: "from-blue-500 to-cyan-500" },
-  { name: "Design", icon: "🎨", count: 38, color: "from-purple-500 to-pink-500" },
-  { name: "Development", icon: "💻", count: 52, color: "from-green-500 to-emerald-500" },
-  { name: "Productivity", icon: "⚡", count: 29, color: "from-yellow-500 to-orange-500" },
-  { name: "Marketing", icon: "📈", count: 31, color: "from-red-500 to-rose-500" },
-  { name: "Writing", icon: "✍️", count: 27, color: "from-indigo-500 to-blue-500" }
-];
+import { getPopularTools, categories, searchTools } from '@/data';
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
-  const filteredTools = popularTools.filter(tool => {
-    const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         tool.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || tool.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const popularTools = getPopularTools(6);
+  
+  const filteredTools = searchQuery || selectedCategory !== 'All' 
+    ? searchTools(searchQuery).filter(tool => 
+        selectedCategory === 'All' || tool.category === selectedCategory
+      )
+    : popularTools;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -188,7 +113,7 @@ export default function Home() {
             {categories.map((category) => (
               <Link
                 key={category.name}
-                href={`/categories/${category.name.toLowerCase()}`}
+                href={`/categories/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
                 className="group"
               >
                 <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">

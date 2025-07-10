@@ -22,183 +22,18 @@ const ArrowRightIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const categories = [
-  {
-    name: "Language",
-    icon: "💬",
-    description: "AI tools for text generation, translation, and language processing",
-    count: 45,
-    color: "from-blue-500 to-cyan-500",
-    popularTools: ["ChatGPT", "Claude", "Bard", "Perplexity"]
-  },
-  {
-    name: "Design",
-    icon: "🎨",
-    description: "AI-powered design tools for graphics, UI/UX, and creative work",
-    count: 38,
-    color: "from-purple-500 to-pink-500",
-    popularTools: ["Midjourney", "DALL-E", "Stable Diffusion", "Canva AI"]
-  },
-  {
-    name: "Development",
-    icon: "💻",
-    description: "AI tools for coding, debugging, and software development",
-    count: 52,
-    color: "from-green-500 to-emerald-500",
-    popularTools: ["GitHub Copilot", "Cursor", "Tabnine", "CodeWhisperer"]
-  },
-  {
-    name: "Productivity",
-    icon: "⚡",
-    description: "AI assistants and tools to boost your productivity",
-    count: 29,
-    color: "from-yellow-500 to-orange-500",
-    popularTools: ["Notion AI", "Grammarly", "Otter.ai", "Fireflies"]
-  },
-  {
-    name: "Marketing",
-    icon: "📈",
-    description: "AI tools for marketing, advertising, and business growth",
-    count: 31,
-    color: "from-red-500 to-rose-500",
-    popularTools: ["Jasper", "Copy.ai", "Surfer SEO", "Phrasee"]
-  },
-  {
-    name: "Writing",
-    icon: "✍️",
-    description: "AI writing assistants and content creation tools",
-    count: 27,
-    color: "from-indigo-500 to-blue-500",
-    popularTools: ["Grammarly", "Hemingway", "ProWritingAid", "Wordtune"]
-  },
-  {
-    name: "Video",
-    icon: "🎬",
-    description: "AI tools for video creation, editing, and generation",
-    count: 23,
-    color: "from-pink-500 to-purple-500",
-    popularTools: ["Runway", "Synthesia", "Lumen5", "Pictory"]
-  },
-  {
-    name: "Audio",
-    icon: "🎵",
-    description: "AI tools for audio processing, music generation, and voice synthesis",
-    count: 19,
-    color: "from-teal-500 to-cyan-500",
-    popularTools: ["Mubert", "Amper Music", "Descript", "Synthesia"]
-  },
-  {
-    name: "Data",
-    icon: "📊",
-    description: "AI tools for data analysis, visualization, and insights",
-    count: 34,
-    color: "from-gray-500 to-slate-500",
-    popularTools: ["Tableau", "Power BI", "Looker", "Metabase"]
-  }
-];
-
-const allTools = [
-  {
-    id: 1,
-    name: "ChatGPT",
-    logo: "🤖",
-    description: "Advanced language model for conversation and text generation",
-    category: "Language",
-    rating: 4.8,
-    reviewCount: 1247,
-    weeklyUsers: 15420,
-    growth: "+45%"
-  },
-  {
-    id: 2,
-    name: "Midjourney",
-    logo: "🎨",
-    description: "AI-powered image generation from text descriptions",
-    category: "Design",
-    rating: 4.6,
-    reviewCount: 892,
-    weeklyUsers: 12850,
-    growth: "+32%"
-  },
-  {
-    id: 3,
-    name: "GitHub Copilot",
-    logo: "💻",
-    description: "AI pair programmer that helps write code faster",
-    category: "Development",
-    rating: 4.7,
-    reviewCount: 1563,
-    weeklyUsers: 8920,
-    growth: "+67%"
-  },
-  {
-    id: 4,
-    name: "Notion AI",
-    logo: "📝",
-    description: "Writing assistant integrated into Notion workspace",
-    category: "Productivity",
-    rating: 4.5,
-    reviewCount: 734,
-    weeklyUsers: 11230,
-    growth: "+28%"
-  },
-  {
-    id: 5,
-    name: "Jasper",
-    logo: "✍️",
-    description: "AI content creation platform for marketing and writing",
-    category: "Marketing",
-    rating: 4.4,
-    reviewCount: 567,
-    weeklyUsers: 8750,
-    growth: "+41%"
-  },
-  {
-    id: 6,
-    name: "DALL-E",
-    logo: "🖼️",
-    description: "AI system that creates realistic images from text descriptions",
-    category: "Design",
-    rating: 4.6,
-    reviewCount: 445,
-    weeklyUsers: 6540,
-    growth: "+38%"
-  },
-  {
-    id: 7,
-    name: "Claude",
-    logo: "🧠",
-    description: "Advanced AI assistant with strong reasoning capabilities",
-    category: "Language",
-    rating: 4.7,
-    reviewCount: 678,
-    weeklyUsers: 9870,
-    growth: "+52%"
-  },
-  {
-    id: 8,
-    name: "Cursor",
-    logo: "⌨️",
-    description: "AI-powered code editor with intelligent autocomplete",
-    category: "Development",
-    rating: 4.5,
-    reviewCount: 423,
-    weeklyUsers: 5430,
-    growth: "+89%"
-  }
-];
+import { categories, tools, searchTools } from '@/data';
 
 export default function Categories() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('popular');
 
-  const filteredTools = allTools.filter(tool => {
-    const matchesSearch = tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         tool.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || tool.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const filteredTools = searchQuery || selectedCategory !== 'All' 
+    ? searchTools(searchQuery).filter(tool => 
+        selectedCategory === 'All' || tool.category === selectedCategory
+      )
+    : tools;
 
   const sortedTools = [...filteredTools].sort((a, b) => {
     switch (sortBy) {
@@ -269,7 +104,7 @@ export default function Categories() {
             {categories.map((category) => (
               <Link
                 key={category.name}
-                href={`/categories/${category.name.toLowerCase()}`}
+                href={`/categories/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
                 className="group"
               >
                 <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
