@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { searchTools, Tool, Category } from '@/data';
+import { Database } from '@/lib/database.types';
+
+type Tool = Database['public']['Tables']['tools']['Row'];
+type Category = Database['public']['Tables']['categories']['Row'];
 
 // Simple SVG icons as fallback
 const MagnifyingGlassIcon = ({ className }: { className?: string }) => (
@@ -54,9 +57,12 @@ export default function CategoryPageClient({ category, categoryTools }: Category
     );
   }
 
-  // Filter and sort tools
+  // Filter tools based on search query
   const filteredTools = searchQuery 
-    ? searchTools(searchQuery).filter(tool => tool.category === category.name)
+    ? categoryTools.filter(tool => 
+        tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        tool.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     : categoryTools;
 
   const sortedTools = [...filteredTools].sort((a, b) => {
@@ -64,7 +70,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
       case 'rating':
         return b.rating - a.rating;
       case 'users':
-        return b.weeklyUsers - a.weeklyUsers;
+        return b.weekly_users - a.weekly_users;
       case 'growth':
         const aGrowth = parseInt(a.growth.replace('+', '').replace('%', ''));
         const bGrowth = parseInt(b.growth.replace('+', '').replace('%', ''));
@@ -72,7 +78,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
       case 'name':
         return a.name.localeCompare(b.name);
       default: // popular
-        return b.weeklyUsers - a.weeklyUsers;
+        return b.weekly_users - a.weekly_users;
     }
   });
 
@@ -119,7 +125,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
             <div className="flex items-center justify-center gap-8 text-sm text-gray-600 dark:text-gray-400">
               <span>{category.count} tools</span>
               <span>•</span>
-              <span>Popular: {category.popularTools.slice(0, 3).join(', ')}</span>
+              <span>Popular: {category.popular_tools.slice(0, 3).join(', ')}</span>
             </div>
           </div>
         </div>
@@ -189,7 +195,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                 
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-4 text-gray-500 dark:text-gray-400">
-                    <span>{tool.weeklyUsers.toLocaleString()} users</span>
+                    <span>{tool.weekly_users.toLocaleString()} users</span>
                     <span className="text-green-600 font-medium">{tool.growth}</span>
                   </div>
                   <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
@@ -199,7 +205,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
           ))}
         </div>
 
-        {/* No Results */}
+        {/* No tools found */}
         {sortedTools.length === 0 && (
           <div className="text-center py-12">
             <div className="text-6xl mb-4">🔍</div>
@@ -207,14 +213,19 @@ export default function CategoryPageClient({ category, categoryTools }: Category
               No tools found
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Try adjusting your search or browse all categories.
+              {searchQuery 
+                ? `No tools match "${searchQuery}" in ${category.name}`
+                : `No tools available in ${category.name} yet`
+              }
             </p>
-            <Link
-              href="/categories"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-            >
-              Browse All Categories
-            </Link>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
+                Clear Search
+              </button>
+            )}
           </div>
         )}
       </div>
