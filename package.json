@@ -14,8 +14,6 @@
     "install-deps": "npm install && npm run seed"
   },
   "dependencies": {
-    "@heroicons/react": "^2.0.18",
-    "@tailwindcss/postcss": "^4",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.41.0",
     "cors": "^2.8.5",
@@ -30,7 +28,9 @@
     "next": "15.3.5",
     "react": "^18",
     "react-dom": "^18",
-    "tailwindcss": "^4"
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
