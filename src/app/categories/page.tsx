@@ -1,197 +1,333 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
+import { useState } from 'react';
+import Link from 'next/link';
+import { 
+  SparklesIcon, 
+  ArrowRightIcon, 
+  StarIcon,
+  UsersIcon,
+  ChartBarIcon
+} from '@heroicons/react/24/outline';
 
-// Mock data for categories and tools
 const categories = [
   {
-    name: "Development",
-    description: "AI-powered development tools and utilities",
-    toolCount: 12,
-    color: "bg-blue-500"
+    name: "Language",
+    icon: "💬",
+    description: "AI tools for text generation, translation, and language processing",
+    toolCount: 45,
+    avgRating: 4.6,
+    totalReviews: 2847,
+    color: "from-blue-500 to-cyan-500",
+    popularTools: ["ChatGPT", "Claude", "Bard", "Perplexity"]
   },
   {
     name: "Design",
-    description: "Creative design and visual content tools",
-    toolCount: 8,
-    color: "bg-purple-500"
+    icon: "🎨",
+    description: "AI-powered design tools for graphics, images, and visual content",
+    toolCount: 38,
+    avgRating: 4.4,
+    totalReviews: 2156,
+    color: "from-purple-500 to-pink-500",
+    popularTools: ["Midjourney", "DALL-E", "Stable Diffusion", "Canva AI"]
   },
   {
-    name: "Analytics",
-    description: "Data analysis and business intelligence tools",
-    toolCount: 6,
-    color: "bg-green-500"
+    name: "Development",
+    icon: "💻",
+    description: "AI coding assistants and development tools for programmers",
+    toolCount: 52,
+    avgRating: 4.7,
+    totalReviews: 3892,
+    color: "from-green-500 to-emerald-500",
+    popularTools: ["GitHub Copilot", "CodeWhisperer", "Tabnine", "Replit"]
+  },
+  {
+    name: "Productivity",
+    icon: "⚡",
+    description: "AI tools to boost productivity and streamline workflows",
+    toolCount: 29,
+    avgRating: 4.5,
+    totalReviews: 1678,
+    color: "from-yellow-500 to-orange-500",
+    popularTools: ["Notion AI", "Grammarly", "Otter.ai", "Fireflies"]
+  },
+  {
+    name: "Marketing",
+    icon: "📈",
+    description: "AI marketing tools for content creation and campaign optimization",
+    toolCount: 31,
+    avgRating: 4.3,
+    totalReviews: 1432,
+    color: "from-red-500 to-rose-500",
+    popularTools: ["Jasper", "Copy.ai", "Writesonic", "Surfer"]
   },
   {
     name: "Writing",
-    description: "Content creation and writing assistance",
-    toolCount: 10,
-    color: "bg-yellow-500"
+    icon: "✍️",
+    description: "AI writing assistants for content creation and editing",
+    toolCount: 27,
+    avgRating: 4.4,
+    totalReviews: 1892,
+    color: "from-indigo-500 to-blue-500",
+    popularTools: ["Grammarly", "Hemingway", "ProWritingAid", "Wordtune"]
   },
   {
     name: "Media",
-    description: "Video, audio, and multimedia tools",
-    toolCount: 7,
-    color: "bg-red-500"
+    icon: "🎬",
+    description: "AI tools for video, audio, and multimedia content creation",
+    toolCount: 23,
+    avgRating: 4.2,
+    totalReviews: 987,
+    color: "from-pink-500 to-rose-500",
+    popularTools: ["Runway", "Synthesia", "Descript", "Lumen5"]
+  },
+  {
+    name: "Analytics",
+    icon: "📊",
+    description: "AI-powered analytics and data visualization tools",
+    toolCount: 19,
+    avgRating: 4.6,
+    totalReviews: 756,
+    color: "from-teal-500 to-cyan-500",
+    popularTools: ["Tableau", "Power BI", "Looker", "Metabase"]
   },
   {
     name: "Communication",
-    description: "Chatbots and communication tools",
-    toolCount: 5,
-    color: "bg-indigo-500"
+    icon: "💬",
+    description: "AI communication tools for meetings, chat, and collaboration",
+    toolCount: 18,
+    avgRating: 4.3,
+    totalReviews: 634,
+    color: "from-violet-500 to-purple-500",
+    popularTools: ["Zoom AI", "Slack AI", "Microsoft Teams", "Discord"]
   }
 ];
 
-const toolsByCategory = {
-  "Development": [
-    { id: 1, name: "AI Code Assistant", rating: 4.8, description: "Advanced code completion and debugging" },
-    { id: 2, name: "GitHub Copilot", rating: 4.7, description: "AI pair programming assistant" },
-    { id: 3, name: "Code Review AI", rating: 4.6, description: "Automated code review and suggestions" }
-  ],
-  "Design": [
-    { id: 4, name: "Image Generator Pro", rating: 4.6, description: "Create stunning images from text" },
-    { id: 5, name: "UI Design Assistant", rating: 4.5, description: "AI-powered UI/UX design tools" },
-    { id: 6, name: "Logo Creator AI", rating: 4.4, description: "Generate professional logos instantly" }
-  ],
-  "Analytics": [
-    { id: 7, name: "Data Analyzer AI", rating: 4.9, description: "Intelligent data analysis" },
-    { id: 8, name: "Business Intelligence", rating: 4.7, description: "AI-driven business insights" },
-    { id: 9, name: "Predictive Analytics", rating: 4.6, description: "Forecast trends and patterns" }
-  ],
-  "Writing": [
-    { id: 10, name: "Content Writer", rating: 4.7, description: "AI-powered content creation" },
-    { id: 11, name: "Grammar Checker Pro", rating: 4.8, description: "Advanced grammar and style checking" },
-    { id: 12, name: "Blog Post Generator", rating: 4.5, description: "Generate engaging blog content" }
-  ],
-  "Media": [
-    { id: 13, name: "Video Editor AI", rating: 4.5, description: "Automated video editing" },
-    { id: 14, name: "Audio Enhancement", rating: 4.4, description: "AI-powered audio processing" },
-    { id: 15, name: "Thumbnail Generator", rating: 4.3, description: "Create eye-catching thumbnails" }
-  ],
-  "Communication": [
-    { id: 16, name: "Chatbot Builder", rating: 4.4, description: "Create intelligent chatbots" },
-    { id: 17, name: "Email Assistant", rating: 4.6, description: "AI-powered email composition" },
-    { id: 18, name: "Translation Pro", rating: 4.5, description: "Real-time language translation" }
-  ]
+const renderStars = (rating: number) => {
+  return Array.from({ length: 5 }, (_, i) => (
+    <StarIcon
+      key={i}
+      className={`w-3 h-3 ${
+        i < Math.floor(rating) 
+          ? 'text-yellow-500 fill-current' 
+          : i < rating 
+          ? 'text-yellow-500 fill-current opacity-50' 
+          : 'text-gray-300'
+      }`}
+    />
+  ));
 };
 
 export default function Categories() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredCategories = categories.filter(category =>
+    category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    category.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              VaultX AI Tools
-            </h1>
-            <nav className="flex space-x-8">
-              <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                Home
-              </Link>
-              <Link href="/categories" className="text-blue-600 dark:text-blue-400 font-medium">
-                Categories
-              </Link>
-              <Link href="/trending" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                Trending
-              </Link>
-              <Link href="/about" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                About
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Tool Categories
-          </h2>
-          <p className="text-gray-600 dark:text-gray-300">
-            Browse AI tools organized by category to find exactly what you need
-          </p>
-        </div>
-
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.name}
-              onClick={() => setSelectedCategory(selectedCategory === category.name ? null : category.name)}
-              className={`p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-left ${
-                selectedCategory === category.name
-                  ? "ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                  : "bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
-              }`}
-            >
-              <div className="flex items-center mb-4">
-                <div className={`w-12 h-12 rounded-lg ${category.color} flex items-center justify-center mr-4`}>
-                  <span className="text-white font-bold text-lg">
-                    {category.name.charAt(0)}
-                  </span>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {category.name}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {category.toolCount} tools
-                  </p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300 text-sm">
-                {category.description}
-              </p>
-            </button>
-          ))}
-        </div>
-
-        {/* Tools for Selected Category */}
-        {selectedCategory && (
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {selectedCategory} Tools
-              </h3>
-              <button
-                onClick={() => setSelectedCategory(null)}
-                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-              >
-                ✕
-              </button>
+    <div className="min-h-screen gradient-bg">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-pink-600/10" />
+        <div className="relative container mx-auto px-4 py-20 lg:py-32">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
+              <SparklesIcon className="w-4 h-4 text-blue-500" />
+              <span className="text-sm font-medium">Explore AI tools by category</span>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {toolsByCategory[selectedCategory as keyof typeof toolsByCategory]?.map((tool) => (
-                <Link
-                  key={tool.id}
-                  href={`/tool/${tool.id}`}
-                  className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">
-                      {tool.name}
-                    </h4>
-                    <div className="flex items-center">
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-sm text-gray-600 dark:text-gray-300 ml-1">
-                        {tool.rating}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {tool.description}
-                  </p>
-                </Link>
-              ))}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6 animate-slide-up">
+              AI Tool Categories
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed animate-slide-up">
+              Discover the perfect AI tools organized by category. Find exactly what you need for your specific use case.
+            </p>
+
+            {/* Search Bar */}
+            <div className="relative max-w-2xl mx-auto mb-12 animate-scale-in">
+              <div className="relative">
+                <SparklesIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search categories..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                />
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto animate-fade-in">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">{categories.length}</div>
+                <div className="text-sm text-muted-foreground">Categories</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">
+                  {categories.reduce((sum, cat) => sum + cat.toolCount, 0)}
+                </div>
+                <div className="text-sm text-muted-foreground">Total Tools</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">
+                  {categories.reduce((sum, cat) => sum + cat.totalReviews, 0).toLocaleString()}
+                </div>
+                <div className="text-sm text-muted-foreground">Reviews</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">4.5</div>
+                <div className="text-sm text-muted-foreground">Avg Rating</div>
+              </div>
             </div>
           </div>
-        )}
-      </div>
-    </main>
+        </div>
+      </section>
+
+      {/* Categories Grid */}
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          {searchQuery && (
+            <div className="text-center mb-12">
+              <p className="text-lg text-muted-foreground">
+                {filteredCategories.length} category{filteredCategories.length !== 1 ? 'ies' : 'y'} found
+              </p>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredCategories.map((category) => (
+              <Link
+                key={category.name}
+                href={`/categories/${category.name.toLowerCase()}`}
+                className="group"
+              >
+                <div className="card hover-lift h-full transition-all duration-300">
+                  <div className="card-header">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300`}>
+                        {category.icon}
+                      </div>
+                      <div className="text-right">
+                        <div className="badge badge-secondary">
+                          {category.toolCount} tools
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <h3 className="card-title text-xl mb-3 group-hover:text-primary transition-colors">
+                      {category.name}
+                    </h3>
+                    
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      {category.description}
+                    </p>
+                  </div>
+
+                  <div className="card-content">
+                    {/* Stats */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                                           <div className="flex items-center gap-2">
+                       <div className="flex items-center gap-1">
+                         {renderStars(category.avgRating)}
+                       </div>
+                       <div>
+                         <div className="text-sm font-medium">{category.avgRating}</div>
+                         <div className="text-xs text-muted-foreground">Avg Rating</div>
+                       </div>
+                     </div>
+                      <div className="flex items-center gap-2">
+                        <UsersIcon className="w-4 h-4 text-blue-500" />
+                        <div>
+                          <div className="text-sm font-medium">{category.totalReviews.toLocaleString()}</div>
+                          <div className="text-xs text-muted-foreground">Reviews</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Popular Tools */}
+                    <div className="mb-6">
+                      <h4 className="text-sm font-medium mb-3 text-muted-foreground">
+                        Popular Tools
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {category.popularTools.slice(0, 3).map((tool) => (
+                          <span
+                            key={tool}
+                            className="px-2 py-1 bg-muted text-xs rounded-md text-muted-foreground"
+                          >
+                            {tool}
+                          </span>
+                        ))}
+                        {category.popularTools.length > 3 && (
+                          <span className="px-2 py-1 bg-muted text-xs rounded-md text-muted-foreground">
+                            +{category.popularTools.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                        <ChartBarIcon className="w-4 h-4" />
+                        View all {category.toolCount} tools
+                      </div>
+                      <ArrowRightIcon className="w-4 h-4 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {filteredCategories.length === 0 && (
+            <div className="text-center py-20">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold mb-2">No categories found</h3>
+              <p className="text-muted-foreground mb-6">
+                Try adjusting your search terms
+              </p>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="btn btn-primary"
+              >
+                Clear Search
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="relative container mx-auto px-4 text-center">
+                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+             Can&apos;t find what you&apos;re looking for?
+           </h2>
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            Browse all tools or use our advanced search to find the perfect AI solution for your needs.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/"
+              className="btn btn-primary bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg"
+            >
+              Browse All Tools
+            </Link>
+            <Link
+              href="/trending"
+              className="btn btn-outline border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg"
+            >
+              See Trending
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 } 
