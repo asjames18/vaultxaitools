@@ -51,11 +51,11 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-gray-200 dark:border-gray-700;
   }
   
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
@@ -66,43 +66,47 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-muted/50;
+    @apply bg-gray-100 dark:bg-gray-800;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/30 rounded-full;
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground/50;
+    @apply bg-gray-400 dark:bg-gray-500;
   }
 }
 
 @layer components {
   /* Modern button styles */
   .btn {
-    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
   }
 
   .btn-primary {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md;
+    @apply bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    @apply bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700;
   }
 
   .btn-ghost {
-    @apply hover:bg-accent hover:text-accent-foreground;
+    @apply hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-gray-800 dark:hover:text-white;
   }
 
   .btn-outline {
-    @apply border border-input bg-background hover:bg-accent hover:text-accent-foreground;
+    @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
   }
 
   /* Modern card styles */
   .card {
-    @apply rounded-xl border bg-card text-card-foreground shadow-sm transition-all duration-200 hover:shadow-md;
+    @apply rounded-xl border border-gray-200 bg-white text-gray-900 shadow-sm transition-all duration-200 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-white;
   }
 
   .card-header {
@@ -114,7 +118,7 @@
   }
 
   .card-description {
-    @apply text-sm text-muted-foreground;
+    @apply text-sm text-gray-600 dark:text-gray-400;
   }
 
   .card-content {
@@ -127,24 +131,24 @@
 
   /* Modern input styles */
   .input {
-    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-800 dark:placeholder:text-gray-400;
   }
 
   /* Modern badge styles */
   .badge {
-    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
   }
 
   .badge-default {
-    @apply border-transparent bg-primary text-primary-foreground hover:bg-primary/80;
+    @apply border-transparent bg-blue-600 text-white hover:bg-blue-700;
   }
 
   .badge-secondary {
-    @apply border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80;
+    @apply border-transparent bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700;
   }
 
   .badge-outline {
-    @apply text-foreground;
+    @apply text-gray-900 dark:text-white;
   }
 
   /* Gradient backgrounds */
@@ -191,7 +195,7 @@
 
   /* Modern focus styles */
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:ring-offset-2;
   }
 
   /* Modern hover effects */
@@ -200,6 +204,6 @@
   }
 
   .hover-glow {
-    @apply transition-all duration-200 hover:shadow-lg hover:shadow-primary/25;
+    @apply transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25;
   }
 }

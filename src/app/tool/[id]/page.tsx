@@ -2,115 +2,125 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { 
-  StarIcon, 
-  ArrowLeftIcon, 
-  ExternalLinkIcon, 
-  PlayIcon,
-  PhotoIcon,
-  ChatBubbleLeftRightIcon,
-  CurrencyDollarIcon,
-  CheckCircleIcon,
-  XCircleIcon
-} from '@heroicons/react/24/outline';
 
-// Mock data - replace with API call
-const tool = {
-  id: 1,
-  name: "ChatGPT",
-  logo: "🤖",
-  description: "Advanced language model for conversation and text generation",
-  longDescription: "ChatGPT is a powerful AI language model developed by OpenAI that can engage in human-like conversations, answer questions, write content, and assist with various tasks. It's trained on a diverse range of internet text and can understand context, generate creative content, and provide helpful responses across multiple domains.",
-  category: "Language",
-  website: "https://chat.openai.com",
-  github: "https://github.com/openai/chatgpt",
-  rating: 4.8,
-  reviewCount: 1247,
-  weeklyUsers: 15420,
-  growth: "+45%",
-  pricing: [
-    { plan: "Free", price: "Free", description: "Basic access with GPT-3.5" },
-    { plan: "Plus", price: "$20/month", description: "GPT-4 access with priority" },
-    { plan: "Enterprise", price: "Custom", description: "Custom pricing for businesses" }
-  ],
-  features: [
-    "Natural language conversations",
-    "Code generation and debugging",
-    "Content creation and editing",
-    "Translation and language learning",
-    "Problem solving and analysis",
-    "Creative writing assistance",
-    "API access for developers",
-    "Multi-language support"
-  ],
-  pros: [
-    "Exceptional conversational abilities",
-    "Wide range of use cases",
-    "Regular model updates",
-    "Strong community support"
-  ],
-  cons: [
-    "Limited free tier features",
-    "Occasional factual inaccuracies",
-    "Requires internet connection",
-    "Content moderation limitations"
-  ],
-  screenshots: [
-    "https://via.placeholder.com/800x450/2563eb/ffffff?text=ChatGPT+Screenshot+1",
-    "https://via.placeholder.com/800x450/2563eb/ffffff?text=ChatGPT+Screenshot+2",
-    "https://via.placeholder.com/800x450/2563eb/ffffff?text=ChatGPT+Screenshot+3"
-  ],
-  videoUrl: "https://www.youtube.com/embed/example1",
-  reviews: [
+// Simple SVG icons as fallback
+const StarIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+  </svg>
+);
+
+const ArrowLeftIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+  </svg>
+);
+
+const ExternalLinkIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+  </svg>
+);
+
+const HeartIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+  </svg>
+);
+
+const ShareIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+  </svg>
+);
+
+const CheckIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+export default function ToolDetails({ params }: { params: { id: string } }) {
+  const [isLiked, setIsLiked] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+
+  // Mock data - in a real app, this would come from an API
+  const tool = {
+    id: params.id,
+    name: "ChatGPT",
+    logo: "🤖",
+    description: "Advanced language model for conversation and text generation",
+    longDescription: "ChatGPT is an AI-powered conversational agent that can engage in natural language conversations, answer questions, provide explanations, and assist with various tasks. It's built on OpenAI's GPT architecture and can understand context, generate human-like responses, and adapt to different conversation styles.",
+    category: "Language",
+    rating: 4.8,
+    reviewCount: 1247,
+    weeklyUsers: 15420,
+    growth: "+45%",
+    website: "https://chat.openai.com",
+    pricing: "Freemium",
+    features: [
+      "Natural language conversations",
+      "Context-aware responses",
+      "Multi-language support",
+      "Code generation and debugging",
+      "Creative writing assistance",
+      "Educational explanations",
+      "Real-time responses",
+      "Customizable conversation styles"
+    ],
+    pros: [
+      "Highly accurate and contextual responses",
+      "Excellent for learning and education",
+      "Free tier available",
+      "Regular updates and improvements",
+      "Good for creative tasks"
+    ],
+    cons: [
+      "Can sometimes provide incorrect information",
+      "Limited to training data cutoff",
+      "May not always understand complex queries",
+      "Privacy concerns with data handling"
+    ],
+    alternatives: [
+      { name: "Claude", rating: 4.7, logo: "🧠" },
+      { name: "Bard", rating: 4.5, logo: "🤖" },
+      { name: "Perplexity", rating: 4.6, logo: "🔍" }
+    ]
+  };
+
+  const reviews = [
     {
       id: 1,
-      user: "Sarah Johnson",
-      avatar: "👩‍💻",
+      user: "Sarah M.",
       rating: 5,
-      comment: "ChatGPT has completely transformed my workflow. The ability to generate code, debug issues, and get instant explanations has made me 10x more productive.",
-      date: "2024-01-15"
+      date: "2 days ago",
+      comment: "Absolutely amazing tool! I use it daily for work and it's incredibly helpful for brainstorming and writing."
     },
     {
       id: 2,
-      user: "Mike Chen",
-      avatar: "👨‍🎨",
+      user: "Mike R.",
       rating: 4,
-      comment: "Great for brainstorming and content creation. Sometimes the responses can be a bit generic, but overall very useful for my design process.",
-      date: "2024-01-10"
+      date: "1 week ago",
+      comment: "Great for learning new concepts. Sometimes the responses can be a bit verbose, but overall very useful."
     },
     {
       id: 3,
-      user: "Alex Rodriguez",
-      avatar: "👨‍💼",
+      user: "Emily K.",
       rating: 5,
-      comment: "Incredible tool for business writing and communication. Saves me hours every week on email drafting and content creation.",
-      date: "2024-01-08"
+      date: "2 weeks ago",
+      comment: "This has become an essential part of my workflow. The code generation feature is particularly helpful."
     }
-  ]
-};
-
-const tabs = [
-  { id: 'overview', name: 'Overview', icon: PhotoIcon },
-  { id: 'features', name: 'Features', icon: CheckCircleIcon },
-  { id: 'pricing', name: 'Pricing', icon: CurrencyDollarIcon },
-  { id: 'reviews', name: 'Reviews', icon: ChatBubbleLeftRightIcon }
-];
-
-export default function ToolDetails({ params }: { params: { id: string } }) {
-  // TODO: Use params.id to fetch tool data from API
-  console.log('Tool ID:', params.id);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [showVideo, setShowVideo] = useState(false);
+  ];
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <StarIcon
         key={i}
         className={`w-4 h-4 ${
-          i < Math.floor(rating) 
-            ? 'text-yellow-500 fill-current' 
-            : i < rating 
-            ? 'text-yellow-500 fill-current opacity-50' 
+          i < Math.floor(rating)
+            ? 'text-yellow-500 fill-current'
+            : i < rating
+            ? 'text-yellow-500 fill-current opacity-50'
             : 'text-gray-300'
         }`}
       />
@@ -118,356 +128,294 @@ export default function ToolDetails({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="min-h-screen gradient-bg">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-white/20 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center gap-4 mb-6">
             <Link
               href="/"
-              className="btn btn-ghost btn-sm flex items-center gap-2"
+              className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
               <ArrowLeftIcon className="w-4 h-4" />
               Back to Tools
             </Link>
-            
-            <div className="flex items-center gap-4">
+          </div>
+
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
+            <div className="flex-1">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="text-4xl">{tool.logo}</div>
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                    {tool.name}
+                  </h1>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-1">
+                      {renderStars(tool.rating)}
+                      <span className="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                        {tool.rating}
+                      </span>
+                    </div>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      ({tool.reviewCount} reviews)
+                    </span>
+                    <span className="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-200">
+                      {tool.growth} growth
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                {tool.description}
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-3 py-1 text-sm font-medium text-blue-800 dark:text-blue-200">
+                  {tool.category}
+                </span>
+                <span className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-sm font-medium text-gray-800 dark:text-gray-200">
+                  {tool.pricing}
+                </span>
+                <span className="inline-flex items-center rounded-full bg-purple-100 dark:bg-purple-900 px-3 py-1 text-sm font-medium text-purple-800 dark:text-purple-200">
+                  {tool.weeklyUsers.toLocaleString()} weekly users
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3">
               <a
                 href={tool.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-outline btn-sm flex items-center gap-2"
+                className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md"
               >
+                Visit Website
                 <ExternalLinkIcon className="w-4 h-4" />
-                Visit Site
               </a>
-              {tool.github && (
-                <a
-                  href={tool.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline btn-sm"
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setIsLiked(!isLiked)}
+                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
+                    isLiked
+                      ? 'bg-red-50 border-red-200 text-red-600 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400'
+                      : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700'
+                  }`}
                 >
-                  GitHub
-                </a>
-              )}
+                  <HeartIcon className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
+                  {isLiked ? 'Liked' : 'Like'}
+                </button>
+                
+                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+                  <ShareIcon className="w-4 h-4" />
+                  Share
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Tool Header */}
-        <div className="card mb-8">
-          <div className="card-header">
-            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-              <div className="flex items-start gap-6">
-                <div className="text-6xl">{tool.logo}</div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h1 className="text-3xl md:text-4xl font-bold">{tool.name}</h1>
-                    <div className="badge badge-secondary">{tool.category}</div>
-                  </div>
-                  <p className="text-lg text-muted-foreground mb-4">
-                    {tool.description}
-                  </p>
-                  
-                  <div className="flex items-center gap-6 text-sm">
-                    <div className="flex items-center gap-2">
-                      {renderStars(tool.rating)}
-                      <span className="font-medium">{tool.rating}</span>
-                      <span className="text-muted-foreground">({tool.reviewCount})</span>
-                    </div>
-                    <div className="text-muted-foreground">
-                      {tool.weeklyUsers.toLocaleString()} weekly users
-                    </div>
-                    <div className="text-green-600 font-medium">
-                      {tool.growth} growth
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="flex flex-col gap-3">
-                <a
-                  href={tool.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary flex items-center gap-2"
-                >
-                  <ExternalLinkIcon className="w-4 h-4" />
-                  Visit Website
-                </a>
-                <button className="btn btn-outline">
-                  Add to Favorites
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-2 border-b border-border">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-                    activeTab === tab.id
-                      ? 'border-primary text-primary'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {tab.name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Tab Content */}
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
           <div className="lg:col-span-2">
-            {/* Overview Tab */}
-            {activeTab === 'overview' && (
-              <div className="space-y-8">
-                <div className="card">
-                  <div className="card-header">
-                    <h2 className="card-title">About {tool.name}</h2>
-                  </div>
-                  <div className="card-content">
-                    <p className="text-muted-foreground leading-relaxed">
-                      {tool.longDescription}
-                    </p>
-                  </div>
-                </div>
+            {/* Tabs */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 mb-8">
+              <div className="border-b border-gray-200 dark:border-gray-700">
+                <nav className="flex space-x-8 px-6">
+                  {['overview', 'reviews', 'alternatives'].map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`py-4 px-1 border-b-2 font-medium text-sm capitalize transition-colors ${
+                        activeTab === tab
+                          ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </nav>
+              </div>
 
-                {/* Screenshots/Video */}
-                <div className="card">
-                  <div className="card-header">
-                    <div className="flex items-center justify-between">
-                      <h2 className="card-title">Screenshots & Demo</h2>
-                      <button
-                        onClick={() => setShowVideo(!showVideo)}
-                        className="btn btn-outline btn-sm flex items-center gap-2"
-                      >
-                        {showVideo ? <PhotoIcon className="w-4 h-4" /> : <PlayIcon className="w-4 h-4" />}
-                        {showVideo ? 'Show Screenshots' : 'Show Video'}
-                      </button>
+              <div className="p-6">
+                {activeTab === 'overview' && (
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                        About {tool.name}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {tool.longDescription}
+                      </p>
                     </div>
-                  </div>
-                  <div className="card-content">
-                    {showVideo ? (
-                      <div className="aspect-video rounded-lg overflow-hidden bg-gray-100">
-                        <iframe
-                          src={tool.videoUrl}
-                          className="w-full h-full"
-                          allowFullScreen
-                        />
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {tool.screenshots.map((screenshot, index) => (
-                          <div
-                            key={index}
-                            className="aspect-video rounded-lg overflow-hidden bg-gray-100"
-                          >
-                            <img
-                              src={screenshot}
-                              alt={`${tool.name} screenshot ${index + 1}`}
-                              className="w-full h-full object-cover"
-                            />
+
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                        Key Features
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {tool.features.map((feature, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <CheckIcon className="w-4 h-4 text-green-500 flex-shrink-0" />
+                            <span className="text-gray-600 dark:text-gray-300">{feature}</span>
                           </div>
                         ))}
                       </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
+                    </div>
 
-            {/* Features Tab */}
-            {activeTab === 'features' && (
-              <div className="space-y-8">
-                <div className="card">
-                  <div className="card-header">
-                    <h2 className="card-title">Key Features</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                          Pros
+                        </h3>
+                        <ul className="space-y-2">
+                          {tool.pros.map((pro, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0" />
+                              <span className="text-gray-600 dark:text-gray-300">{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                          Cons
+                        </h3>
+                        <ul className="space-y-2">
+                          {tool.cons.map((con, index) => (
+                            <li key={index} className="flex items-start gap-2">
+                              <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0" />
+                              <span className="text-gray-600 dark:text-gray-300">{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-content">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {tool.features.map((feature, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <CheckCircleIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-muted-foreground">{feature}</span>
+                )}
+
+                {activeTab === 'reviews' && (
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        User Reviews
+                      </h3>
+                      <button className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium">
+                        Write a Review
+                      </button>
+                    </div>
+
+                    <div className="space-y-4">
+                      {reviews.map((review) => (
+                        <div key={review.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-sm font-medium text-gray-700 dark:text-gray-300">
+                                {review.user.charAt(0)}
+                              </div>
+                              <span className="font-medium text-gray-900 dark:text-white">
+                                {review.user}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              {renderStars(review.rating)}
+                            </div>
+                          </div>
+                          <p className="text-gray-600 dark:text-gray-300 mb-2">
+                            {review.comment}
+                          </p>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {review.date}
+                          </span>
                         </div>
                       ))}
                     </div>
                   </div>
-                </div>
+                )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="card">
-                    <div className="card-header">
-                      <h3 className="card-title flex items-center gap-2">
-                        <CheckCircleIcon className="w-5 h-5 text-green-500" />
-                        Pros
-                      </h3>
-                    </div>
-                    <div className="card-content">
-                      <ul className="space-y-2">
-                        {tool.pros.map((pro, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <CheckCircleIcon className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                            <span className="text-muted-foreground">{pro}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="card">
-                    <div className="card-header">
-                      <h3 className="card-title flex items-center gap-2">
-                        <XCircleIcon className="w-5 h-5 text-red-500" />
-                        Cons
-                      </h3>
-                    </div>
-                    <div className="card-content">
-                      <ul className="space-y-2">
-                        {tool.cons.map((con, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <XCircleIcon className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                            <span className="text-muted-foreground">{con}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Pricing Tab */}
-            {activeTab === 'pricing' && (
-              <div className="card">
-                <div className="card-header">
-                  <h2 className="card-title">Pricing Plans</h2>
-                </div>
-                <div className="card-content">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {tool.pricing.map((plan, index) => (
-                      <div key={index} className="card hover-lift">
-                        <div className="card-header text-center">
-                          <h3 className="card-title">{plan.plan}</h3>
-                          <div className="text-3xl font-bold text-primary mb-2">
-                            {plan.price}
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            {plan.description}
-                          </p>
-                        </div>
-                        <div className="card-footer">
-                          <button className="btn btn-primary w-full">
-                            Get Started
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Reviews Tab */}
-            {activeTab === 'reviews' && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold">User Reviews</h2>
-                  <button className="btn btn-primary">Write a Review</button>
-                </div>
-                
-                <div className="space-y-6">
-                  {tool.reviews.map((review) => (
-                    <div key={review.id} className="card">
-                      <div className="card-content">
-                        <div className="flex items-start gap-4">
-                          <div className="text-2xl">{review.avatar}</div>
-                          <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-2">
-                              <h4 className="font-semibold">{review.user}</h4>
+                {activeTab === 'alternatives' && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                      Similar Tools
+                    </h3>
+                    <div className="space-y-3">
+                      {tool.alternatives.map((alternative, index) => (
+                        <div key={index} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                          <div className="flex items-center gap-3">
+                            <div className="text-2xl">{alternative.logo}</div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 dark:text-white">
+                                {alternative.name}
+                              </h4>
                               <div className="flex items-center gap-1">
-                                {renderStars(review.rating)}
+                                {renderStars(alternative.rating)}
+                                <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">
+                                  {alternative.rating}
+                                </span>
                               </div>
-                              <span className="text-sm text-muted-foreground">
-                                {new Date(review.date).toLocaleDateString()}
-                              </span>
                             </div>
-                            <p className="text-muted-foreground leading-relaxed">
-                              {review.comment}
-                            </p>
                           </div>
+                          <Link
+                            href={`/tool/${alternative.name.toLowerCase().replace(' ', '-')}`}
+                            className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium"
+                          >
+                            View Details
+                          </Link>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Quick Stats */}
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">Quick Stats</h3>
-              </div>
-              <div className="card-content space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Rating</span>
-                  <div className="flex items-center gap-1">
-                    {renderStars(tool.rating)}
-                    <span className="font-medium">{tool.rating}</span>
-                  </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Quick Stats
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">Rating</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{tool.rating}/5</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Reviews</span>
-                  <span className="font-medium">{tool.reviewCount}</span>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">Reviews</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{tool.reviewCount}</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Weekly Users</span>
-                  <span className="font-medium">{tool.weeklyUsers.toLocaleString()}</span>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">Weekly Users</span>
+                  <span className="font-medium text-gray-900 dark:text-white">{tool.weeklyUsers.toLocaleString()}</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Growth</span>
+                <div className="flex justify-between">
+                  <span className="text-gray-600 dark:text-gray-400">Growth</span>
                   <span className="font-medium text-green-600">{tool.growth}</span>
                 </div>
               </div>
             </div>
 
-            {/* Similar Tools */}
-            <div className="card">
-              <div className="card-header">
-                <h3 className="card-title">Similar Tools</h3>
-              </div>
-              <div className="card-content space-y-3">
-                {['Claude', 'Bard', 'Perplexity'].map((name, index) => (
-                  <Link
-                    key={index}
-                    href={`/tool/${index + 2}`}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors"
-                  >
-                    <div className="text-2xl">🤖</div>
-                    <div>
-                      <div className="font-medium">{name}</div>
-                      <div className="text-sm text-muted-foreground">Language AI</div>
-                    </div>
-                  </Link>
-                ))}
+            {/* Categories */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Categories
+              </h3>
+              <div className="space-y-2">
+                <Link
+                  href={`/categories/${tool.category.toLowerCase()}`}
+                  className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-3 py-1 text-sm font-medium text-blue-800 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                >
+                  {tool.category}
+                </Link>
               </div>
             </div>
           </div>

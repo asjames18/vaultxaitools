@@ -281,13 +281,13 @@ export default function Categories() {
                         {category.popularTools.slice(0, 3).map((tool) => (
                           <span
                             key={tool}
-                            className="px-2 py-1 bg-muted text-xs rounded-md text-muted-foreground"
+                            className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded-md text-gray-600 dark:text-gray-300"
                           >
                             {tool}
                           </span>
                         ))}
                         {category.popularTools.length > 3 && (
-                          <span className="px-2 py-1 bg-muted text-xs rounded-md text-muted-foreground">
+                          <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded-md text-gray-600 dark:text-gray-300">
                             +{category.popularTools.length - 3} more
                           </span>
                         )}

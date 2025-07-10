@@ -118,35 +118,35 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen gradient-bg">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-pink-600/10" />
-        <div className="relative container mx-auto px-4 py-20 lg:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-pink-600/5" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
-              <SparklesIcon className="w-4 h-4 text-blue-500" />
-              <span className="text-sm font-medium">Discover the latest AI tools</span>
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full px-4 py-2 mb-8 animate-fade-in shadow-sm">
+              <SparklesIcon className="w-4 h-4 text-blue-600" />
+              <span className="text-sm font-medium text-gray-700">Discover the latest AI tools</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6 animate-slide-up">
               VaultX AI Tools
             </h1>
             
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed animate-slide-up">
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed animate-slide-up">
               Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.
             </p>
 
             {/* Search Bar */}
             <div className="relative max-w-2xl mx-auto mb-12 animate-scale-in">
               <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search AI tools..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                  className="w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-lg"
                 />
               </div>
             </div>
@@ -154,20 +154,20 @@ export default function Home() {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto animate-fade-in">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                <div className="text-sm text-muted-foreground">AI Tools</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">50K+</div>
-                <div className="text-sm text-muted-foreground">Reviews</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">50K+</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Reviews</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">1M+</div>
-                <div className="text-sm text-muted-foreground">Users</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">1M+</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Users</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">9</div>
-                <div className="text-sm text-muted-foreground">Categories</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">9</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
               </div>
             </div>
           </div>
@@ -175,11 +175,11 @@ export default function Home() {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Explore by Category</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Explore by Category</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Find the perfect AI tool for your specific needs across different domains
             </p>
           </div>
@@ -191,14 +191,14 @@ export default function Home() {
                 href={`/categories/${category.name.toLowerCase()}`}
                 className="group"
               >
-                <div className="card hover-lift p-6 text-center transition-all duration-300">
+                <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                   <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300`}>
                     {category.icon}
                   </div>
-                  <h3 className="font-semibold mb-2 group-hover:text-primary transition-colors">
+                  <h3 className="font-semibold mb-2 group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white">
                     {category.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     {category.count} tools
                   </p>
                 </div>
@@ -210,11 +210,11 @@ export default function Home() {
 
       {/* Popular Tools Section */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Popular AI Tools</h2>
-              <p className="text-lg text-muted-foreground">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Popular AI Tools</h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">
                 Discover the most trending and highly-rated AI tools
               </p>
             </div>
@@ -227,8 +227,8 @@ export default function Home() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     selectedCategory === category
-                      ? 'bg-primary text-primary-foreground shadow-md'
-                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                   }`}
                 >
                   {category}
@@ -239,50 +239,50 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredTools.map((tool) => (
-              <div key={tool.id} className="card hover-lift group">
-                <div className="card-header">
+              <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-1 group">
+                <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="text-3xl">{tool.logo}</div>
                       <div>
-                        <h3 className="card-title group-hover:text-primary transition-colors">
+                        <h3 className="text-lg font-semibold group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white">
                           {tool.name}
                         </h3>
                         <div className="flex items-center gap-2 mt-1">
                           <div className="flex items-center gap-1">
                             <StarIcon className="w-4 h-4 text-yellow-500 fill-current" />
-                            <span className="text-sm font-medium">{tool.rating}</span>
+                            <span className="text-sm font-medium text-gray-900 dark:text-white">{tool.rating}</span>
                           </div>
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
                             ({tool.reviewCount})
                           </span>
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="badge badge-secondary mb-1">
+                      <div className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
                         {tool.category}
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-green-600 font-medium">
                         {tool.growth} growth
                       </div>
                     </div>
                   </div>
                   
-                  <p className="text-muted-foreground mb-4 line-clamp-2">
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
                     {tool.description}
                   </p>
                   
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
                       {tool.weeklyUsers.toLocaleString()} weekly users
                     </div>
                     <Link
                       href={`/tool/${tool.id}`}
-                      className="btn btn-primary btn-sm group-hover:shadow-glow transition-all duration-200"
+                      className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors group-hover:shadow-md"
                     >
                       View Details
-                      <ArrowRightIcon className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
@@ -293,8 +293,8 @@ export default function Home() {
           {filteredTools.length === 0 && (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold mb-2">No tools found</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">No tools found</h3>
+              <p className="text-gray-600 dark:text-gray-400">
                 Try adjusting your search or category filter
               </p>
             </div>
@@ -305,7 +305,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10" />
-        <div className="relative container mx-auto px-4 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to explore the future of AI?
           </h2>
@@ -315,13 +315,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/categories"
-              className="btn btn-primary bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg"
+              className="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors text-lg shadow-lg"
             >
               Browse All Tools
             </Link>
             <Link
               href="/trending"
-              className="btn btn-outline border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg"
+              className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors text-lg"
             >
               See Trending
             </Link>

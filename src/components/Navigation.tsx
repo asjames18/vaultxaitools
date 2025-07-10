@@ -22,85 +22,86 @@ const MagnifyingGlassIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const SparklesIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-  </svg>
-);
-
 const UserIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
   </svg>
 );
 
-const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Categories', href: '/categories' },
-  { name: 'Trending', href: '/trending' },
-  { name: 'About', href: '/about' },
-];
-
 export default function Navigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Categories', href: '/categories' },
+    { name: 'Trending', href: '/trending' },
+    { name: 'About', href: '/about' },
+  ];
 
   return (
-    <nav className="bg-white/80 backdrop-blur-sm border-b border-white/20 sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <nav className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                <SparklesIcon className="w-5 h-5 text-white" />
+            <Link href="/" className="flex items-center space-x-2 group">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg group-hover:scale-110 transition-transform duration-200">
+                V
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-blue-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent dark:from-white dark:to-gray-300">
                 VaultX
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
                 {item.name}
               </Link>
             ))}
           </div>
 
-          {/* Search Bar - Desktop */}
-          <div className="hidden lg:flex items-center gap-4">
-            <div className="relative">
-              <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search AI tools..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-64 pl-10 pr-4 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200"
-              />
-            </div>
-            
-            <button className="btn btn-primary btn-sm">
-              Sign In
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center space-x-4">
+            {/* Search Button */}
+            <button
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200"
+            >
+              <MagnifyingGlassIcon className="w-5 h-5" />
             </button>
+
+            {/* User Menu */}
+            <div className="relative">
+              <button className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+                <UserIcon className="w-5 h-5" />
+                <span className="text-sm font-medium">Sign In</span>
+              </button>
+            </div>
+
+            {/* CTA Button */}
+            <Link
+              href="/submit-tool"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+            >
+              Submit Tool
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
-              type="button"
-              className="btn btn-ghost btn-sm"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200"
             >
-              <span className="sr-only">Open main menu</span>
-              {mobileMenuOpen ? (
+              {isMenuOpen ? (
                 <XMarkIcon className="w-6 h-6" />
               ) : (
                 <Bars3Icon className="w-6 h-6" />
@@ -109,45 +110,64 @@ export default function Navigation() {
           </div>
         </div>
 
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-sm rounded-lg mt-2 border border-white/20">
-              {/* Mobile Search */}
-              <div className="relative mb-4">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search AI tools..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-muted/50 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                />
-              </div>
-
-              {/* Mobile Navigation Links */}
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-
-              {/* Mobile Sign In */}
-              <div className="pt-4 border-t border-border">
-                <button className="w-full btn btn-primary">
-                  <UserIcon className="w-4 h-4 mr-2" />
-                  Sign In
-                </button>
-              </div>
+        {/* Search Bar */}
+        {isSearchOpen && (
+          <div className="py-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="relative">
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search AI tools..."
+                className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+              />
             </div>
           </div>
         )}
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-base font-medium transition-colors duration-200"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            
+            {/* Mobile Search */}
+            <div className="px-3 py-2">
+              <div className="relative">
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search AI tools..."
+                  className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+                />
+              </div>
+            </div>
+
+            {/* Mobile Actions */}
+            <div className="px-3 py-2 space-y-2">
+              <Link
+                href="/submit-tool"
+                className="block w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 text-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Submit Tool
+              </Link>
+              <button className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors duration-200">
+                Sign In
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 } 
