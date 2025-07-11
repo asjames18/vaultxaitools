@@ -1,15 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import { categories, getToolsFromDB, getPopularTools } from '@/data';
+import SearchAndFilter from '@/components/SearchAndFilter';
+import SearchResults from '@/components/SearchResults';
+import type { Tool } from '@/data';
 
 // Simple SVG icons as fallback
-const MagnifyingGlassIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-  </svg>
-);
-
 const SparklesIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -28,19 +26,48 @@ const ArrowRightIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-import { getPopularTools, categories, searchTools } from '@/data';
-
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [filteredTools, setFilteredTools] = useState<Tool[]>([]);
+  const [allTools, setAllTools] = useState<Tool[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const popularTools = getPopularTools(6);
-  
-  const filteredTools = searchQuery || selectedCategory !== 'All' 
-    ? searchTools(searchQuery).filter(tool => 
-        selectedCategory === 'All' || tool.category === selectedCategory
-      )
-    : popularTools;
+  // Load tools from database on component mount
+  useEffect(() => {
+    const loadTools = async () => {
+      try {
+        setLoading(true);
+        const tools = await getToolsFromDB();
+        setAllTools(tools);
+        // Get popular tools for initial display
+        const popularTools = tools
+          .sort((a, b) => b.weeklyUsers - a.weeklyUsers)
+          .slice(0, 6);
+        setFilteredTools(popularTools);
+      } catch (error) {
+        console.error('Error loading tools:', error);
+        setFilteredTools([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTools();
+  }, []);
+
+  const handleResultsChange = useCallback((tools: Tool[]) => {
+    setFilteredTools(tools);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading AI tools...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -62,24 +89,22 @@ export default function Home() {
               Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.
             </p>
 
-            {/* Search Bar */}
-            <div className="relative max-w-2xl mx-auto mb-12 animate-scale-in">
-              <div className="relative">
-                <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search AI tools..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-lg"
-                />
-              </div>
+            {/* Search CTA */}
+            <div className="max-w-2xl mx-auto mb-12 animate-scale-in">
+              <Link
+                href="/search"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                <SparklesIcon className="w-5 h-5" />
+                Explore All AI Tools
+                <ArrowRightIcon className="w-5 h-5" />
+              </Link>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto animate-fade-in">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">{allTools.length}+</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
               </div>
               <div className="text-center">
@@ -91,7 +116,7 @@ export default function Home() {
                 <div className="text-sm text-gray-600 dark:text-gray-400">Users</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">9</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">{categories.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
               </div>
             </div>
@@ -124,7 +149,7 @@ export default function Home() {
                     {category.name}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {category.count} tools
+                    {allTools.filter(tool => tool.category === category.name).length} tools
                   </p>
                 </div>
               </Link>
@@ -144,86 +169,29 @@ export default function Home() {
               </p>
             </div>
             
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2 mt-6 md:mt-0">
-              {['All', 'Language', 'Design', 'Development', 'Productivity', 'Marketing'].map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    selectedCategory === category
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+            {/* Search Link */}
+            <div className="mt-6 md:mt-0">
+              <Link
+                href="/search"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium transition-all duration-200"
+              >
+                Advanced Search
+                <ArrowRightIcon className="w-4 h-4" />
+              </Link>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredTools.map((tool) => (
-              <div key={tool.id} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-1 group">
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="text-3xl">{tool.logo}</div>
-                      <div>
-                        <h3 className="text-lg font-semibold group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white">
-                          {tool.name}
-                        </h3>
-                        <div className="flex items-center gap-2 mt-1">
-                          <div className="flex items-center gap-1">
-                            <StarIcon className="w-4 h-4 text-yellow-500 fill-current" />
-                            <span className="text-sm font-medium text-gray-900 dark:text-white">{tool.rating}</span>
-                          </div>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            ({tool.reviewCount})
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
-                        {tool.category}
-                      </div>
-                      <div className="text-xs text-green-600 font-medium">
-                        {tool.growth} growth
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                    {tool.description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      {tool.weeklyUsers.toLocaleString()} weekly users
-                    </div>
-                    <Link
-                      href={`/tool/${tool.id}`}
-                      className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors group-hover:shadow-md"
-                    >
-                      View Details
-                      <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
+          {/* Search and Filter for Popular Tools */}
+          <div className="mb-8">
+            <SearchAndFilter
+              tools={allTools}
+              categories={categories}
+              onResultsChange={handleResultsChange}
+              showAdvancedFilters={false}
+            />
           </div>
 
-          {filteredTools.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">No tools found</h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Try adjusting your search or category filter
-              </p>
-            </div>
-          )}
+          <SearchResults tools={filteredTools} showStats={false} />
         </div>
       </section>
 
