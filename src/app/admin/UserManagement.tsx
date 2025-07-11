@@ -57,7 +57,7 @@ export default function UserManagement({ onClose }: UserManagementProps) {
   }, []);
 
   // Filter users based on search and status
-  const filteredUsers = users.filter(user => {
+  const filteredUsers = (users || []).filter(user => {
     const matchesSearch = user.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' || 
       (filterStatus === 'confirmed' && user.email_confirmed_at) ||
