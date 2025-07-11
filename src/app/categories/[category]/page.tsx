@@ -1,7 +1,49 @@
+import { Metadata } from 'next';
 import { getToolsByCategory, getCategories } from '@/lib/database';
 import CategoryPageClient from './CategoryPageClient';
+import { generateCategoryMetadata } from '@/lib/seo';
 
-export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+interface CategoryPageProps {
+  params: Promise<{ category: string }>;
+}
+
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const categoryName = decodeURIComponent(resolvedParams.category).replace(/-/g, ' ');
+  
+  try {
+    const allCategories = await getCategories();
+    const currentCategory = allCategories.find(cat => 
+      cat.name.toLowerCase() === categoryName.toLowerCase()
+    );
+    
+    if (!currentCategory) {
+      return {
+        title: 'Category Not Found',
+        description: 'The requested category could not be found.',
+      };
+    }
+    
+    // Transform database category to match the expected interface
+    const categoryForSEO = {
+      name: currentCategory.name,
+      icon: currentCategory.icon,
+      description: currentCategory.description,
+      count: currentCategory.count,
+      color: currentCategory.color,
+      popularTools: currentCategory.popular_tools,
+    };
+    
+    return generateCategoryMetadata(categoryForSEO);
+  } catch (error) {
+    return {
+      title: 'Category Not Found',
+      description: 'The requested category could not be found.',
+    };
+  }
+}
+
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const resolvedParams = await params;
   const categoryName = decodeURIComponent(resolvedParams.category).replace(/-/g, ' ');
   

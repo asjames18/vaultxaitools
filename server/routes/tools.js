@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Tool = require('../models/Tool');
 const { validateTool } = require('../middleware/validation');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 
 // GET /api/tools - Get all tools with pagination and filtering
 router.get('/', async (req, res) => {

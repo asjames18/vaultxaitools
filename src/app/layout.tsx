@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { baseMetadata, generateWebsiteStructuredData, generateOrganizationStructuredData } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,31 +15,32 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "VaultX AI Tools - Discover the Best AI Tools",
-  description: "Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.",
-  keywords: ["AI tools", "artificial intelligence", "machine learning", "productivity", "development", "design"],
-  authors: [{ name: "VaultX Team" }],
-  openGraph: {
-    title: "VaultX AI Tools - Discover the Best AI Tools",
-    description: "Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "VaultX AI Tools - Discover the Best AI Tools",
-    description: "Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.",
-  },
-};
+export const metadata: Metadata = baseMetadata;
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const websiteStructuredData = generateWebsiteStructuredData();
+  const organizationStructuredData = generateOrganizationStructuredData();
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteStructuredData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationStructuredData),
+          }}
+        />
+      </head>
       <body className="antialiased">
         <Navigation />
         <main>
