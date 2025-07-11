@@ -3,8 +3,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { categories, getToolsFromDB, getPopularTools } from '@/data';
+import { getTrendingTools, getTrendingBadge } from '@/lib/trending';
+import { getSponsoredTools } from '@/lib/affiliate';
 import SearchAndFilter from '@/components/SearchAndFilter';
 import SearchResults from '@/components/SearchResults';
+import SponsoredContent from '@/components/SponsoredContent';
 import type { Tool } from '@/data';
 
 // Simple SVG icons as fallback
@@ -26,9 +29,24 @@ const ArrowRightIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const TrendingUpIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+  </svg>
+);
+
+const FireIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+  </svg>
+);
+
 export default function Home() {
   const [filteredTools, setFilteredTools] = useState<Tool[]>([]);
   const [allTools, setAllTools] = useState<Tool[]>([]);
+  const [trendingTools, setTrendingTools] = useState<Tool[]>([]);
+  const [sponsoredTools, setSponsoredTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Load tools from database on component mount
@@ -38,14 +56,39 @@ export default function Home() {
         setLoading(true);
         const tools = await getToolsFromDB();
         setAllTools(tools);
+        
         // Get popular tools for initial display
         const popularTools = tools
           .sort((a, b) => b.weeklyUsers - a.weeklyUsers)
           .slice(0, 6);
         setFilteredTools(popularTools);
+
+        // Get trending tools using utility function
+        const trendingToolsData = getTrendingTools(tools, 6);
+        setTrendingTools(trendingToolsData);
+
+        // Get sponsored tools (mock data for now)
+        const mockSponsoredSlots = [
+          {
+            id: '1',
+            toolId: tools[0]?.id || '',
+            position: 'top' as const,
+            startDate: new Date(),
+            endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+            priority: 1,
+            budget: 1000,
+            impressions: 0,
+            clicks: 0
+          }
+        ];
+        
+        const sponsoredToolsData = getSponsoredTools('top', mockSponsoredSlots, tools);
+        setSponsoredTools(sponsoredToolsData);
       } catch (error) {
         console.error('Error loading tools:', error);
         setFilteredTools([]);
+        setTrendingTools([]);
+        setSponsoredTools([]);
       } finally {
         setLoading(false);
       }
@@ -57,6 +100,21 @@ export default function Home() {
   const handleResultsChange = useCallback((tools: Tool[]) => {
     setFilteredTools(tools);
   }, []);
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <StarIcon
+        key={i}
+        className={`w-4 h-4 ${
+          i < Math.floor(rating)
+            ? 'text-yellow-500 fill-current'
+            : i < rating
+            ? 'text-yellow-500 fill-current opacity-50'
+            : 'text-gray-300'
+        }`}
+      />
+    ));
+  };
 
   if (loading) {
     return (
@@ -120,6 +178,110 @@ export default function Home() {
                 <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sponsored Content Section */}
+      {sponsoredTools.length > 0 && (
+        <section className="py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SponsoredContent
+              tools={sponsoredTools}
+              title="Featured Tools"
+              subtitle="Tools that help support VaultX"
+              maxItems={3}
+              showDisclosure={true}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Trending Tools Section */}
+      <section className="py-20 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                🔥 Trending Now
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                The hottest AI tools based on user interactions, ratings, and growth
+              </p>
+            </div>
+            
+            <div className="mt-6 md:mt-0">
+              <Link
+                href="/trending"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-full text-sm font-medium transition-all duration-200 hover:shadow-lg"
+              >
+                <FireIcon className="w-4 h-4" />
+                View All Trending
+                <ArrowRightIcon className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {trendingTools.map((tool, index) => {
+              const badge = getTrendingBadge(index);
+              return (
+                <div
+                  key={tool.id}
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-1 group relative"
+                >
+                  {/* Trending Badge */}
+                  <div className={`absolute top-4 right-4 px-2 py-1 rounded-full text-xs font-medium ${badge.color}`}>
+                    {badge.text}
+                  </div>
+
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="text-3xl">{tool.logo}</div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                            {tool.name}
+                          </h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            {tool.category}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+                      {tool.description}
+                    </p>
+
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-1">
+                        {renderStars(tool.rating)}
+                        <span className="text-sm font-medium text-gray-900 dark:text-white ml-1">
+                          {tool.rating}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                        <TrendingUpIcon className="w-4 h-4" />
+                        <span className="text-sm font-medium text-green-600">{tool.growth}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        {tool.weeklyUsers.toLocaleString()} weekly users
+                      </span>
+                      <Link
+                        href={`/tool/${tool.id}`}
+                        className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                      >
+                        View Details →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -198,25 +360,27 @@ export default function Home() {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to explore the future of AI?
+            Ready to Discover Amazing AI Tools?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of users discovering and mastering the most powerful AI tools available today.
+          <p className="text-xl text-blue-100 mb-8">
+            Join thousands of users who are already leveraging the power of AI to transform their workflows.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/categories"
-              className="inline-flex items-center justify-center px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors text-lg shadow-lg"
+              href="/search"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-blue-600 font-semibold rounded-xl transition-all duration-200 hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              Browse All Tools
+              <SparklesIcon className="w-5 h-5" />
+              Start Exploring
             </Link>
             <Link
               href="/trending"
-              className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors text-lg"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-xl transition-all duration-200 hover:bg-white hover:text-blue-600"
             >
-              See Trending
+              <FireIcon className="w-5 h-5" />
+              View Trending
             </Link>
           </div>
         </div>

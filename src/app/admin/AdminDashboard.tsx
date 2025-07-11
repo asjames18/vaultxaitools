@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase';
 import { Database } from '@/lib/database.types';
 import ToolForm from './ToolForm';
 import CategoryForm from './CategoryForm';
+import SponsoredSlots from './SponsoredSlots';
 
 type Tool = Database['public']['Tables']['tools']['Row'];
 type Category = Database['public']['Tables']['categories']['Row'];
@@ -17,7 +18,7 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ tools, categories, user }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'tools' | 'categories'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored'>('tools');
   const [showToolForm, setShowToolForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [editingTool, setEditingTool] = useState<Tool | null>(null);
@@ -152,6 +153,16 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               >
                 Categories ({categories.length})
               </button>
+              <button
+                onClick={() => setActiveTab('sponsored')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'sponsored'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                💎 Sponsored Content
+              </button>
             </nav>
           </div>
         </div>
@@ -204,34 +215,37 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                                 {tool.name}
                               </div>
                               <div className="text-sm text-gray-500 dark:text-gray-400">
-                                {tool.description.substring(0, 50)}...
+                                {tool.website}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                          {tool.category}
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                            {tool.category}
+                          </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                          {tool.rating}/5 ({tool.review_count} reviews)
+                          ⭐ {tool.rating}/5 ({tool.review_count} reviews)
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                          {tool.weekly_users.toLocaleString()}
+                          {tool.weekly_users?.toLocaleString() || 0}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <button
-                            onClick={() => handleEditTool(tool)}
-                            className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteTool(tool.id)}
-                            disabled={loading}
-                            className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                          >
-                            Delete
-                          </button>
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => handleEditTool(tool)}
+                              className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteTool(tool.id)}
+                              className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -265,9 +279,6 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                         Category
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                        Description
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         Tools Count
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -281,31 +292,34 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="text-2xl mr-3">{category.icon}</div>
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">
-                              {category.name}
+                            <div>
+                              <div className="text-sm font-medium text-gray-900 dark:text-white">
+                                {category.name}
+                              </div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">
+                                {category.description}
+                              </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
-                          {category.description}
-                        </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                          {category.count}
+                          {tools.filter(tool => tool.category === category.name).length} tools
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <button
-                            onClick={() => handleEditCategory(category)}
-                            className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 mr-4"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteCategory(category.id)}
-                            disabled={loading}
-                            className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                          >
-                            Delete
-                          </button>
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => handleEditCategory(category)}
+                              className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteCategory(category.id)}
+                              className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -313,6 +327,20 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                 </table>
               </div>
             </div>
+          </div>
+        )}
+
+        {activeTab === 'sponsored' && (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                💎 Sponsored Content Management
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Manage sponsored slots and track affiliate performance
+              </p>
+            </div>
+            <SponsoredSlots />
           </div>
         )}
 

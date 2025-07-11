@@ -1,8 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getToolById, getReviewsByToolId } from '@/data';
+import { getToolById, getReviewsByToolIdFromDB } from '@/data';
+import ReviewForm from '@/components/ReviewForm';
+import ReviewList from '@/components/ReviewList';
+import QuickVote from '@/components/QuickVote';
+import AffiliateLink from '@/components/AffiliateLink';
+import type { Database } from '@/lib/database.types';
+
+type DatabaseReview = Database['public']['Tables']['reviews']['Row'];
 
 // Simple SVG icons as fallback
 const StarIcon = ({ className }: { className?: string }) => (
@@ -44,10 +51,86 @@ const CheckIcon = ({ className }: { className?: string }) => (
 export default function ToolDetailsClient({ toolId }: { toolId: string }) {
   const [isLiked, setIsLiked] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
+  const [reviews, setReviews] = useState<DatabaseReview[]>([]);
+  const [loadingReviews, setLoadingReviews] = useState(true);
+  const [tool, setTool] = useState<any>(null);
+  const [loadingTool, setLoadingTool] = useState(true);
 
-  // Get tool data from centralized data
-  const tool = getToolById(toolId);
-  const reviews = getReviewsByToolId(toolId);
+  // Load tool data from centralized data
+  useEffect(() => {
+    const loadTool = async () => {
+      try {
+        setLoadingTool(true);
+        const toolData = await getToolById(toolId);
+        setTool(toolData);
+      } catch (error) {
+        console.error('Error loading tool:', error);
+      } finally {
+        setLoadingTool(false);
+      }
+    };
+
+    loadTool();
+  }, [toolId]);
+
+  // Load reviews from database
+  useEffect(() => {
+    const loadReviews = async () => {
+      try {
+        setLoadingReviews(true);
+        const reviewsData = await getReviewsByToolIdFromDB(toolId);
+        setReviews(reviewsData);
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+      } finally {
+        setLoadingReviews(false);
+      }
+    };
+
+    loadReviews();
+  }, [toolId]);
+
+  const handleReviewSubmitted = async () => {
+    // Reload reviews after a new review is submitted
+    try {
+      const reviewsData = await getReviewsByToolIdFromDB(toolId);
+      setReviews(reviewsData);
+    } catch (error) {
+      console.error('Error reloading reviews:', error);
+    }
+  };
+
+  const handleReviewUpdated = async () => {
+    // Reload reviews after a review is updated (e.g., helpful vote)
+    try {
+      const reviewsData = await getReviewsByToolIdFromDB(toolId);
+      setReviews(reviewsData);
+    } catch (error) {
+      console.error('Error reloading reviews:', error);
+    }
+  };
+
+  const handleVoteSubmitted = async () => {
+    // Reload tool data after a vote is submitted
+    try {
+      const toolData = await getToolById(toolId);
+      setTool(toolData);
+    } catch (error) {
+      console.error('Error reloading tool data:', error);
+    }
+  };
+
+  // Show loading state
+  if (loadingTool) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading tool details...</p>
+        </div>
+      </div>
+    );
+  }
 
   // If tool not found, show error or redirect
   if (!tool) {
@@ -144,15 +227,15 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
             </div>
 
             <div className="flex flex-col gap-3">
-              <a
+              <AffiliateLink
                 href={tool.website}
-                target="_blank"
-                rel="noopener noreferrer"
+                toolId={tool.id}
+                hasAffiliate={true}
                 className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md"
               >
                 Visit Website
                 <ExternalLinkIcon className="w-4 h-4" />
-              </a>
+              </AffiliateLink>
               
               <div className="flex gap-2">
                 <button
@@ -222,7 +305,7 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                           Key Features
                         </h3>
                         <ul className="space-y-2">
-                          {tool.features.map((feature, index) => (
+                          {tool.features.map((feature: string, index: number) => (
                             <li key={index} className="flex items-start gap-3">
                               <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                               <span className="text-gray-600 dark:text-gray-300">{feature}</span>
@@ -238,7 +321,7 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                           Pros
                         </h3>
                         <ul className="space-y-2">
-                          {tool.pros.map((pro, index) => (
+                          {tool.pros.map((pro: string, index: number) => (
                             <li key={index} className="flex items-start gap-3">
                               <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                               <span className="text-gray-600 dark:text-gray-300">{pro}</span>
@@ -254,7 +337,7 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                           Cons
                         </h3>
                         <ul className="space-y-2">
-                          {tool.cons.map((con, index) => (
+                          {tool.cons.map((con: string, index: number) => (
                             <li key={index} className="flex items-start gap-3">
                               <div className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0 text-center">×</div>
                               <span className="text-gray-600 dark:text-gray-300">{con}</span>
@@ -268,32 +351,32 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
 
                 {activeTab === 'reviews' && (
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                      Reviews ({reviews.length})
-                    </h3>
-                    <div className="space-y-4">
-                      {reviews.map((review) => (
-                        <div key={review.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                          <div className="flex items-center gap-3 mb-2">
-                            <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center text-sm font-medium text-gray-700 dark:text-gray-300">
-                              {review.user.charAt(0)}
-                            </div>
-                            <div>
-                              <div className="font-medium text-gray-900 dark:text-white">
-                                {review.user}
-                              </div>
-                              <div className="flex items-center gap-1">
-                                {renderStars(review.rating)}
-                                <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
-                                  {review.rating}/5
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <p className="text-gray-600 dark:text-gray-300">{review.comment}</p>
-                        </div>
-                      ))}
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                        Reviews ({reviews.length})
+                      </h3>
                     </div>
+                    
+                    {/* Review Form */}
+                    <ReviewForm
+                      toolId={toolId}
+                      currentRating={tool.rating}
+                      currentReviewCount={tool.reviewCount}
+                      onReviewSubmitted={handleReviewSubmitted}
+                    />
+                    
+                    {/* Review List */}
+                    {loadingReviews ? (
+                      <div className="text-center py-8">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                        <p className="text-gray-600 dark:text-gray-400 mt-2">Loading reviews...</p>
+                      </div>
+                    ) : (
+                      <ReviewList 
+                        reviews={reviews} 
+                        onReviewUpdated={handleReviewUpdated}
+                      />
+                    )}
                   </div>
                 )}
 
@@ -303,7 +386,7 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                       Alternatives
                     </h3>
                     <div className="space-y-3">
-                      {tool.alternatives.map((alternative) => (
+                      {tool.alternatives.map((alternative: any) => (
                         <div key={alternative.name} className="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
                           <div className="text-2xl">{alternative.logo}</div>
                           <div className="flex-1">
@@ -328,6 +411,14 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Quick Vote */}
+            <QuickVote
+              toolId={toolId}
+              currentRating={tool.rating}
+              currentReviewCount={tool.reviewCount}
+              onVoteSubmitted={handleVoteSubmitted}
+            />
+
             {/* Quick Info */}
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
@@ -360,7 +451,7 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                   Tags
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {tool.tags.map((tag) => (
+                  {tool.tags.map((tag: string) => (
                     <span
                       key={tag}
                       className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-sm font-medium text-gray-800 dark:text-gray-200"

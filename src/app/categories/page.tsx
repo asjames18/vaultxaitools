@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { categories, getToolsFromDB } from '@/data';
+import type { Tool } from '@/data/tools';
 
 // Simple SVG icons as fallback
 const MagnifyingGlassIcon = ({ className }: { className?: string }) => (
@@ -22,17 +24,38 @@ const ArrowRightIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-import { categories, tools, searchTools } from '@/data';
-
 export default function Categories() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('popular');
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Load tools from database
+  useEffect(() => {
+    const loadTools = async () => {
+      try {
+        setLoading(true);
+        const toolsData = await getToolsFromDB();
+        setTools(toolsData);
+      } catch (error) {
+        console.error('Error loading tools:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTools();
+  }, []);
 
   const filteredTools = searchQuery || selectedCategory !== 'All' 
-    ? searchTools(searchQuery).filter(tool => 
-        selectedCategory === 'All' || tool.category === selectedCategory
-      )
+    ? tools.filter(tool => {
+        const matchesSearch = !searchQuery || 
+          tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          tool.description.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory = selectedCategory === 'All' || tool.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+      })
     : tools;
 
   const sortedTools = [...filteredTools].sort((a, b) => {
@@ -64,6 +87,17 @@ export default function Categories() {
       />
     ));
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading categories...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

@@ -1,77 +1,161 @@
 # VaultX AI Tools
 
-A modern, responsive platform for discovering and reviewing AI tools with a full-stack architecture including Next.js frontend and Node.js/Express.js backend with MongoDB.
+A comprehensive directory and discovery platform for AI tools, built with Next.js, Express.js, and Supabase.
 
-## 🚀 Features
+## Features
 
-### Frontend (Next.js + React + Tailwind CSS)
-- **Modern UI/UX** with responsive design and dark mode support
-- **Search & Filter** functionality for AI tools
-- **Dynamic Routing** with Next.js App Router
-- **Tool Profiles** with detailed information, screenshots, and reviews
-- **Category-based Browsing** with statistics
-- **Trending Tools** with growth metrics
-- **User Reviews** with star ratings and comments
+### 🔥 Dynamic Trending System
+- **Real-time Trending Algorithm**: Sophisticated scoring system based on multiple factors:
+  - User ratings (25% weight)
+  - Review count (20% weight) 
+  - Weekly user engagement (25% weight)
+  - Growth rate (20% weight)
+  - Recency factor (10% weight)
+- **Time-based Filtering**: View trending tools by day, week, or month
+- **Trending Categories**: See which categories are gaining popularity
+- **Trending Insights**: Analytics showing most popular, fastest growing, highest rated, and most reviewed tools
+- **Visual Indicators**: Trending badges (🔥 Hot, ⚡ Rising, 📈 Trending, ⭐ Popular) and growth indicators
 
-### Backend (Node.js + Express.js + MongoDB)
-- **RESTful API** with comprehensive CRUD operations
-- **JWT Authentication** with bcrypt password hashing
-- **MongoDB Database** with Mongoose ODM
-- **Input Validation** using Joi schemas
-- **Rate Limiting** and security middleware
-- **Search & Filtering** capabilities
-- **Pagination** support
-- **Admin Role Management**
+### 💎 Affiliate & Sponsored Content System
+- **Affiliate Link Tracking**: Automatic UTM parameter generation and click tracking
+- **Sponsored Content Slots**: Dedicated placement areas for sponsored tools with clear disclosure
+- **Transparent Disclosure**: Clear labeling of sponsored content and affiliate links
+- **Performance Analytics**: Track clicks, impressions, and revenue from affiliate links
+- **Admin Management**: Complete admin interface for managing sponsored slots and affiliate performance
+- **Multiple Placement Options**: Top banner, sidebar, category pages, and search results
+- **Revenue Tracking**: Monitor affiliate earnings and conversion rates
 
-## 🛠️ Tech Stack
+### 🎯 Advanced Search & Filtering
+- **Instant Search**: Real-time search across tool names, descriptions, and categories
+- **Multi-field Filtering**: Filter by category, rating, pricing, and popularity
+- **Advanced Filters**: Category multi-select, rating slider, pricing filter
+- **Sorting Options**: Sort by rating, popularity, growth, or alphabetical order
+- **Active Filter Display**: Clear visual indication of applied filters
+- **Responsive Design**: Works seamlessly on desktop and mobile
+
+### ⭐ Rating & Review System
+- **User Reviews**: Submit ratings (1-5 stars) and written reviews
+- **Review Management**: View, edit, and delete reviews
+- **Helpful Voting**: Users can mark reviews as helpful
+- **Quick Voting**: Simple thumbs up/down voting system
+- **Review Analytics**: Track review counts and average ratings
+- **Real-time Updates**: Reviews update immediately without page refresh
+
+### 📊 Comprehensive Tool Database
+- **Live Data**: All tools fetched from Supabase database
+- **Rich Metadata**: Detailed tool information including pricing, features, and usage statistics
+- **Category Organization**: Tools organized into logical categories
+- **Growth Tracking**: Monitor tool popularity and user engagement trends
+- **SEO Optimized**: Each tool has dedicated pages with proper metadata
+
+### 🎨 Modern UI/UX
+- **Responsive Design**: Optimized for all device sizes
+- **Dark Mode Support**: Automatic theme switching
+- **Smooth Animations**: CSS transitions and hover effects
+- **Loading States**: Proper loading indicators and skeleton screens
+- **Error Handling**: Graceful error states and fallbacks
+
+## Tech Stack
 
 ### Frontend
-- **Framework**: Next.js 15 with App Router
-- **UI Library**: React 18
-- **Styling**: Tailwind CSS 4
-- **Language**: TypeScript
-- **State Management**: React Hooks
-- **Icons**: Heroicons
+- **Next.js 15**: React framework with App Router
+- **TypeScript**: Type-safe development
+- **Tailwind CSS**: Utility-first CSS framework
+- **React Hooks**: Modern state management
+- **Supabase Client**: Real-time database integration
 
 ### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose
-- **Authentication**: JWT + bcryptjs
-- **Validation**: Joi
-- **Security**: Helmet, CORS, Rate Limiting
+- **Express.js**: Node.js web framework
+- **Supabase**: PostgreSQL database with real-time features
+- **JWT Authentication**: Secure user authentication
+- **RESTful API**: Clean API design
 
-## 📁 Project Structure
+### Database
+- **PostgreSQL**: Robust relational database
+- **Real-time Subscriptions**: Live data updates
+- **Row Level Security**: Data protection
+- **Automatic Backups**: Data safety
 
+## Trending Algorithm
+
+The trending system uses a sophisticated scoring algorithm that considers multiple factors:
+
+```typescript
+const calculateTrendingScore = (tool: Tool) => {
+  const growthRate = parseFloat(tool.growth.replace('%', ''));
+  
+  // Rating factor (25% weight)
+  const ratingScore = (tool.rating / 5) * 0.25;
+  
+  // Review count factor (20% weight)
+  const reviewScore = Math.min(tool.reviewCount / 100, 1) * 0.20;
+  
+  // User engagement factor (25% weight)
+  const userScore = Math.min(tool.weeklyUsers / 10000, 1) * 0.25;
+  
+  // Growth factor (20% weight)
+  const growthScore = Math.max(growthRate / 100, 0) * 0.20;
+  
+  // Recency factor (10% weight)
+  const recencyScore = 0.10;
+  
+  return ratingScore + reviewScore + userScore + growthScore + recencyScore;
+};
 ```
-vaultxaitools/
-├── src/                    # Frontend source code
-│   ├── app/               # Next.js App Router pages
-│   ├── components/        # React components
-│   └── lib/              # Utilities and API client
-├── server/                # Backend source code
-│   ├── models/           # MongoDB schemas
-│   ├── routes/           # API endpoints
-│   ├── middleware/       # Custom middleware
-│   ├── index.js          # Main server file
-│   └── seed.js           # Database seeding
-├── public/               # Static assets
-├── package.json          # Dependencies and scripts
-└── README.md            # This file
+
+### Trending Features
+
+1. **Time-based Filtering**: Different weights for day/week/month views
+2. **Category Trending**: Aggregate trending scores by category
+3. **Trending Insights**: Analytics dashboard with key metrics
+4. **Visual Indicators**: Color-coded badges and growth indicators
+5. **Real-time Updates**: Trending data updates as user interactions change
+
+## Affiliate System
+
+The affiliate system provides comprehensive tracking and management capabilities:
+
+### Affiliate Link Generation
+```typescript
+const affiliateUrl = generateAffiliateUrl(
+  originalUrl, 
+  toolId, 
+  config
+);
+// Adds UTM parameters: utm_source=vaultx&utm_medium=affiliate&utm_campaign=ai-tools&utm_content=toolId&ref=vaultx
 ```
 
-## 🚀 Quick Start
+### Sponsored Content Management
+- **Multiple Placement Options**: Top banner, sidebar, category pages, search results
+- **Scheduling**: Set start and end dates for sponsored campaigns
+- **Priority System**: Manage multiple sponsored slots with priority levels
+- **Performance Tracking**: Monitor impressions, clicks, and conversion rates
+- **Budget Management**: Track campaign budgets and spending
+
+### Disclosure & Transparency
+- **Clear Labeling**: Sponsored content clearly marked with 💎 badges
+- **Hover Disclosures**: Tooltips explaining affiliate relationships
+- **Admin Controls**: Toggle disclosure visibility and customize messages
+- **Compliance**: Built-in features for FTC and advertising compliance
+
+### Analytics & Reporting
+- **Click Tracking**: Monitor affiliate link performance
+- **Revenue Analytics**: Track earnings and conversion rates
+- **Performance Metrics**: CTR, impressions, and engagement data
+- **Admin Dashboard**: Comprehensive reporting interface
+
+## Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- MongoDB (local or cloud instance)
+- Node.js 18+ 
 - npm or yarn
+- Supabase account
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/yourusername/vaultxaitools.git
    cd vaultxaitools
    ```
 
@@ -80,196 +164,130 @@ vaultxaitools/
    npm install
    ```
 
-3. **Environment Setup**
+3. **Set up environment variables**
    ```bash
-   # Copy environment example
-   cp env.example .env
-   
-   # Update .env with your configuration
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/vaultxaitools
-   JWT_SECRET=your-super-secret-jwt-key
-   FRONTEND_URL=http://localhost:3000
+   cp env.example .env.local
+   ```
+   Add your Supabase credentials:
+   ```
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_KEY=your_supabase_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
    ```
 
-4. **Start MongoDB**
+4. **Start the development server**
    ```bash
-   # Local MongoDB
-   mongod
-   
-   # Or use MongoDB Atlas cloud service
-   ```
-
-5. **Seed the database**
-   ```bash
-   npm run seed
-   ```
-
-6. **Start the development servers**
-   ```bash
-   # Start both frontend and backend
-   npm run dev:full
-   
-   # Or start individually:
-   # Frontend only
    npm run dev
-   
-   # Backend only
-   npm run server:dev
    ```
 
-7. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000/api
-   - API Health Check: http://localhost:5000/api/health
+5. **Start the backend server** (in a new terminal)
+   ```bash
+   cd server
+   npm install
+   npm start
+   ```
 
-## 📚 Available Scripts
+The application will be available at `http://localhost:3000`
 
-```bash
-# Development
-npm run dev              # Start Next.js frontend
-npm run server:dev       # Start Express backend with nodemon
-npm run dev:full         # Start both frontend and backend
+## Project Structure
 
-# Production
-npm run build           # Build Next.js application
-npm run start           # Start production server
-
-# Database
-npm run seed            # Seed database with sample data
-
-# Utilities
-npm run lint            # Run ESLint
+```
+vaultxaitools/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── trending/          # Trending page with dynamic algorithms
+│   │   ├── search/            # Advanced search functionality
+│   │   ├── tool/[id]/         # Individual tool pages with reviews
+│   │   ├── categories/        # Category browsing
+│   │   └── admin/             # Admin interface for sponsored content
+│   ├── components/            # Reusable React components
+│   │   ├── AffiliateLink.tsx  # Affiliate link component with tracking
+│   │   └── SponsoredContent.tsx # Sponsored content display
+│   ├── lib/                   # Utility functions and database helpers
+│   │   ├── trending.ts        # Trending algorithms and utilities
+│   │   ├── affiliate.ts       # Affiliate system and sponsored content
+│   │   └── database.ts        # Database connection and queries
+│   └── data/                  # Data layer and type definitions
+├── server/                    # Express.js backend API
+│   ├── routes/               # API endpoints
+│   ├── models/               # Database models
+│   └── middleware/           # Authentication and validation
+└── public/                   # Static assets
 ```
 
-## 🔧 API Endpoints
-
-### Authentication
-- `POST /api/users/register` - Register new user
-- `POST /api/users/login` - User login
-- `GET /api/users/profile` - Get current user profile
+## API Endpoints
 
 ### Tools
-- `GET /api/tools` - Get all tools (with pagination, filtering, search)
-- `GET /api/tools/:id` - Get single tool by ID
-- `GET /api/tools/trending` - Get trending tools
-- `POST /api/tools` - Create new tool (Admin only)
+- `GET /api/tools` - Get all tools
+- `GET /api/tools/:id` - Get specific tool
+- `POST /api/tools` - Create new tool (admin)
+- `PUT /api/tools/:id` - Update tool (admin)
+- `DELETE /api/tools/:id` - Delete tool (admin)
 
 ### Reviews
-- `GET /api/reviews` - Get all reviews
-- `POST /api/reviews` - Add review to tool
-- `GET /api/reviews/stats` - Get review statistics
+- `GET /api/reviews/:toolId` - Get reviews for a tool
+- `POST /api/reviews` - Submit a new review
+- `PUT /api/reviews/:id` - Update a review
+- `DELETE /api/reviews/:id` - Delete a review
+
+### Affiliate Analytics
+- `POST /api/analytics/affiliate-click` - Track affiliate link clicks
+- `GET /api/analytics/affiliate-click` - Get affiliate click data
 
 ### Categories
-- `GET /api/categories` - Get all categories with stats
-- `GET /api/categories/:name` - Get category details with tools
+- `GET /api/categories` - Get all categories
+- `POST /api/categories` - Create new category (admin)
 
-## 🗄️ Database Schema
+## Database Schema
 
-### Tool Collection
-```javascript
-{
-  name: String (required, unique),
-  logo: String (required),
-  description: String (required, max 200),
-  longDescription: String (required, max 2000),
-  category: String (required, enum),
-  website: String (required, URL),
-  pricing: Array of pricing plans,
-  features: Array of strings,
-  pros: Array of strings,
-  cons: Array of strings,
-  screenshots: Array of URLs,
-  reviews: Array of review objects,
-  rating: Number (0-5),
-  weeklyUsers: Number,
-  growth: String
-}
+### Affiliate System Tables
+```sql
+-- Affiliate clicks tracking
+CREATE TABLE affiliate_clicks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tool_id UUID REFERENCES tools(id) ON DELETE CASCADE,
+  original_url TEXT NOT NULL,
+  affiliate_url TEXT NOT NULL,
+  user_agent TEXT,
+  referrer TEXT,
+  ip_address TEXT,
+  timestamp TIMESTAMP DEFAULT NOW()
+);
+
+-- Sponsored slots management
+CREATE TABLE sponsored_slots (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tool_id UUID REFERENCES tools(id) ON DELETE CASCADE,
+  position VARCHAR(20) NOT NULL,
+  start_date TIMESTAMP NOT NULL,
+  end_date TIMESTAMP NOT NULL,
+  priority INTEGER DEFAULT 1,
+  budget DECIMAL(10,2) DEFAULT 0,
+  impressions INTEGER DEFAULT 0,
+  clicks INTEGER DEFAULT 0,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Add affiliate clicks column to tools table
+ALTER TABLE tools ADD COLUMN affiliate_clicks INTEGER DEFAULT 0;
 ```
 
-### User Collection
-```javascript
-{
-  username: String (required, unique),
-  email: String (required, unique),
-  password: String (required, hashed),
-  firstName: String (required),
-  lastName: String (required),
-  role: String (enum: user, admin, moderator),
-  favoriteTools: Array of tool IDs
-}
-```
-
-## 🔐 Authentication
-
-The application uses JWT (JSON Web Tokens) for authentication:
-
-1. **Register/Login** to get a JWT token
-2. **Include token** in request headers: `Authorization: Bearer <token>`
-3. **Protected routes** require valid JWT token
-4. **Admin routes** require admin role
-
-## 🎨 Frontend Features
-
-### Pages
-- **Home** - Tool listings with search and filters
-- **Categories** - Browse tools by category
-- **Tool Details** - Comprehensive tool profiles with reviews
-- **Trending** - Popular tools with growth metrics
-- **About** - Platform information
-
-### Components
-- **Search Bar** - Real-time search functionality
-- **Tool Cards** - Responsive tool information display
-- **Review System** - Star ratings and comments
-- **Category Filters** - Easy category navigation
-- **Pagination** - Efficient data loading
-
-## 🔒 Security Features
-
-- **Password Hashing** with bcryptjs
-- **JWT Authentication** with expiration
-- **Input Validation** with Joi schemas
-- **Rate Limiting** to prevent abuse
-- **CORS Protection** for cross-origin requests
-- **Helmet** for security headers
-
-## 🚀 Deployment
-
-### Frontend (Vercel/Netlify)
-1. Connect your repository
-2. Set environment variables
-3. Deploy automatically on push
-
-### Backend (Railway/Heroku/Render)
-1. Set environment variables
-2. Connect MongoDB database
-3. Deploy the server
-
-### Environment Variables for Production
-```env
-NODE_ENV=production
-PORT=5000
-MONGODB_URI=your-production-mongodb-uri
-JWT_SECRET=your-production-jwt-secret
-FRONTEND_URL=https://your-frontend-domain.com
-```
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 📝 License
+## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## Support
 
-For support and questions:
-- Create an issue in the repository
-- Check the API documentation in `/server/README.md`
-- Review the code comments for implementation details
+For support, email support@vaultxaitools.com or join our Discord community.
+
+---
+
+Built with ❤️ by the VaultX team

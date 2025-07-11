@@ -9,7 +9,7 @@ interface ToolDetailsProps {
 
 export async function generateMetadata({ params }: ToolDetailsProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const tool = getToolById(resolvedParams.id);
+  const tool = await getToolById(resolvedParams.id);
   
   if (!tool) {
     return {
@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: ToolDetailsProps): Promise<Me
 
 export default async function ToolDetails({ params }: ToolDetailsProps) {
   const resolvedParams = await params;
-  const tool = getToolById(resolvedParams.id);
+  const tool = await getToolById(resolvedParams.id);
   
   if (!tool) {
     return (
@@ -55,7 +55,7 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
         '@type': 'ListItem',
         position: 2,
         name: tool.category,
-        item: `https://vaultxaitools.com/categories/${tool.category.toLowerCase()}`,
+        item: `https://vaultxaitools.com/categories/${tool.category?.toLowerCase() || 'general'}`,
       },
       {
         '@type': 'ListItem',

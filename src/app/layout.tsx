@@ -26,7 +26,7 @@ export default function RootLayout({
   const organizationStructuredData = generateOrganizationStructuredData();
 
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning={true}>
       <head>
         <script
           type="application/ld+json"
@@ -40,8 +40,27 @@ export default function RootLayout({
             __html: JSON.stringify(organizationStructuredData),
           }}
         />
+        {/* Prevent hydration mismatch from browser extensions */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                // Remove any theme attributes that might be added by browser extensions
+                if (typeof window !== 'undefined') {
+                  const html = document.documentElement;
+                  if (html.hasAttribute('data-theme')) {
+                    html.removeAttribute('data-theme');
+                  }
+                  if (html.style.colorScheme) {
+                    html.style.removeProperty('color-scheme');
+                  }
+                }
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning={true}>
         <Navigation />
         <main>
           {children}
