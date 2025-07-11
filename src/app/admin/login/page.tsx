@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
+import PasswordResetForm from '../PasswordResetForm';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -77,7 +79,7 @@ export default function AdminLogin() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-800"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-b-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-800"
                 placeholder="Password"
               />
             </div>
@@ -98,7 +100,29 @@ export default function AdminLogin() {
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(true)}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+            >
+              Forgot your password?
+            </button>
+          </div>
         </form>
+
+        {/* Forgot Password Form */}
+        {showForgotPassword && (
+          <PasswordResetForm
+            mode="forgot-password"
+            onClose={() => setShowForgotPassword(false)}
+            onSuccess={() => {
+              setShowForgotPassword(false);
+              setError('');
+            }}
+          />
+        )}
       </div>
     </div>
   );
