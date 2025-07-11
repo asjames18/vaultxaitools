@@ -9,9 +9,81 @@ type Category = Database['public']['Tables']['categories']['Row'];
 type CategoryInsert = Database['public']['Tables']['categories']['Insert'];
 type CategoryUpdate = Database['public']['Tables']['categories']['Update'];
 
-type Review = Database['public']['Tables']['reviews']['Row'];
-type ReviewInsert = Database['public']['Tables']['reviews']['Insert'];
-type ReviewUpdate = Database['public']['Tables']['reviews']['Update'];
+// Static categories data
+const staticCategories = [
+  {
+    name: "Language",
+    icon: "💬",
+    description: "AI tools for text generation, translation, and language processing",
+    count: 45,
+    color: "from-blue-500 to-cyan-500",
+    popular_tools: ["ChatGPT", "Claude", "Bard", "Perplexity"]
+  },
+  {
+    name: "Design",
+    icon: "🎨",
+    description: "AI-powered design tools for graphics, UI/UX, and creative work",
+    count: 38,
+    color: "from-purple-500 to-pink-500",
+    popular_tools: ["Midjourney", "DALL-E", "Stable Diffusion", "Canva AI"]
+  },
+  {
+    name: "Development",
+    icon: "💻",
+    description: "AI tools for coding, debugging, and software development",
+    count: 52,
+    color: "from-green-500 to-emerald-500",
+    popular_tools: ["GitHub Copilot", "Cursor", "Tabnine", "CodeWhisperer"]
+  },
+  {
+    name: "Productivity",
+    icon: "⚡",
+    description: "AI assistants and tools to boost your productivity",
+    count: 29,
+    color: "from-yellow-500 to-orange-500",
+    popular_tools: ["Notion AI", "Grammarly", "Otter.ai", "Fireflies"]
+  },
+  {
+    name: "Marketing",
+    icon: "📈",
+    description: "AI tools for marketing, advertising, and business growth",
+    count: 31,
+    color: "from-red-500 to-rose-500",
+    popular_tools: ["Jasper", "Copy.ai", "Surfer SEO", "Phrasee"]
+  },
+  {
+    name: "Writing",
+    icon: "✍️",
+    description: "AI writing assistants and content creation tools",
+    count: 27,
+    color: "from-indigo-500 to-blue-500",
+    popular_tools: ["Grammarly", "Hemingway", "ProWritingAid", "Wordtune"]
+  },
+  {
+    name: "Video",
+    icon: "🎬",
+    description: "AI tools for video creation, editing, and generation",
+    count: 23,
+    color: "from-pink-500 to-purple-500",
+    popular_tools: ["Runway", "Synthesia", "Lumen5", "Pictory"]
+  },
+  {
+    name: "Audio",
+    icon: "🎵",
+    description: "AI tools for audio processing, music generation, and voice synthesis",
+    count: 19,
+    color: "from-teal-500 to-cyan-500",
+    popular_tools: ["Mubert", "Amper Music", "Descript", "Synthesia"]
+  },
+  {
+    name: "Data",
+    icon: "📊",
+    description: "AI tools for data analysis, visualization, and insights",
+    count: 34,
+    color: "from-gray-500 to-slate-500",
+    popular_tools: ["Tableau", "Power BI", "Looker", "Metabase"]
+  }
+];
 
 // Client-side Tools CRUD operations
 export async function getToolsClient(): Promise<Tool[]> {
@@ -169,6 +241,63 @@ export async function deleteCategoryClient(id: string): Promise<void> {
   }
 }
 
+// Sync categories from static data to database
+export async function syncCategoriesClient(): Promise<{ added: number; total: number }> {
+  const supabase = createClient();
+  
+  try {
+    // Get existing categories
+    const { data: existingCategories, error: fetchError } = await supabase
+      .from('categories')
+      .select('name');
+    
+    if (fetchError) {
+      console.error('Error fetching existing categories:', fetchError);
+      throw fetchError;
+    }
+    
+    const existingNames = existingCategories.map(c => c.name);
+    const newCategories = staticCategories.filter(cat => !existingNames.includes(cat.name));
+    
+    if (newCategories.length === 0) {
+      console.log('All categories already exist in the database!');
+      return { added: 0, total: existingCategories.length };
+    }
+    
+    // Insert new categories
+    const { data: insertedCategories, error: insertError } = await supabase
+      .from('categories')
+      .insert(newCategories)
+      .select();
+    
+    if (insertError) {
+      console.error('Error inserting categories:', insertError);
+      throw insertError;
+    }
+    
+    console.log(`Successfully added ${insertedCategories.length} categories!`);
+    
+    // Get total count
+    const { data: allCategories, error: countError } = await supabase
+      .from('categories')
+      .select('*');
+    
+    if (countError) {
+      console.error('Error counting categories:', countError);
+      throw countError;
+    }
+    
+    return { 
+      added: insertedCategories.length, 
+      total: allCategories.length 
+    };
+    
+  } catch (error) {
+    console.error('Error syncing categories:', error);
+    throw error;
+  }
+}
+
 // Client-side Helper functions
 export async function getToolsByCategoryClient(category: string): Promise<Tool[]> {
   const supabase = createClient();
@@ -203,7 +332,7 @@ export async function searchToolsClient(query: string): Promise<Tool[]> {
 }
 
 // Review functions
-export async function getReviewsByToolIdClient(toolId: string): Promise<Review[]> {
+export async function getReviewsByToolIdClient(toolId: string): Promise<Database['public']['Tables']['reviews']['Row'][]> {
   const supabase = createClient();
   const { data, error } = await supabase
     .from('reviews')
@@ -219,7 +348,7 @@ export async function getReviewsByToolIdClient(toolId: string): Promise<Review[]
   return data || [];
 }
 
-export async function addReviewClient(review: ReviewInsert): Promise<Review> {
+export async function addReviewClient(review: Database['public']['Tables']['reviews']['Insert']): Promise<Database['public']['Tables']['reviews']['Row']> {
   const supabase = createClient();
   const { data, error } = await supabase
     .from('reviews')
@@ -235,7 +364,7 @@ export async function addReviewClient(review: ReviewInsert): Promise<Review> {
   return data;
 }
 
-export async function updateReviewHelpfulClient(reviewId: string, helpful: number): Promise<Review> {
+export async function updateReviewHelpfulClient(reviewId: string, helpful: number): Promise<Database['public']['Tables']['reviews']['Row']> {
   const supabase = createClient();
   const { data, error } = await supabase
     .from('reviews')

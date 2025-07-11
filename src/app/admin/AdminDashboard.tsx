@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase';
 import { Database } from '@/lib/database.types';
+import { syncCategoriesClient } from '@/lib/database-client';
 import ToolForm from './ToolForm';
 import CategoryForm from './CategoryForm';
 import SponsoredSlots from './SponsoredSlots';
@@ -31,6 +32,26 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   const handleLogout = async () => {
     await supabase.auth.signOut();
     window.location.href = '/admin/login';
+  };
+
+  const handleSyncCategories = async () => {
+    setLoading(true);
+    try {
+      const result = await syncCategoriesClient();
+      setMessage({ 
+        type: 'success', 
+        text: `Successfully synced categories! Added ${result.added} new categories. Total: ${result.total} categories.` 
+      });
+      // Refresh the page to show updated data
+      setTimeout(() => window.location.reload(), 2000);
+    } catch (error) {
+      setMessage({ 
+        type: 'error', 
+        text: 'Failed to sync categories. Please try again.' 
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDeleteTool = async (id: string) => {
@@ -262,12 +283,21 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Categories
               </h2>
-              <button
-                onClick={() => setShowCategoryForm(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Add New Category
-              </button>
+              <div className="flex space-x-3">
+                <button
+                  onClick={handleSyncCategories}
+                  disabled={loading}
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
+                >
+                  {loading ? 'Syncing...' : '🔄 Sync Categories'}
+                </button>
+                <button
+                  onClick={() => setShowCategoryForm(true)}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Add New Category
+                </button>
+              </div>
             </div>
 
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">

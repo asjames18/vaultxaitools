@@ -17,5 +17,9 @@ export default async function AdminPage() {
   const tools = await getTools();
   const categories = await getCategories();
 
+  // Debug: Log the number of categories fetched
+  console.log(`Admin: Fetched ${categories.length} categories from database`);
+  console.log('Categories:', categories.map(c => c.name));
+
   return <AdminDashboard tools={tools} categories={categories} user={user} />;
 } 

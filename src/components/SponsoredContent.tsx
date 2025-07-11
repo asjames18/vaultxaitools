@@ -77,8 +77,10 @@ export default function SponsoredContent({
               className="bg-white dark:bg-gray-800 rounded-lg border border-purple-200 dark:border-purple-700 shadow-sm hover:shadow-md transition-shadow relative group"
             >
               {/* Sponsored Badge */}
-              <div className={`absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-medium ${sponsoredBadge.className} shadow-sm`}>
-                {sponsoredBadge.icon} {sponsoredBadge.text}
+              <div className="absolute top-4 right-4 z-10">
+                <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg border border-white/10 backdrop-blur-sm">
+                  <span className="text-base">💎</span> Sponsored
+                </span>
               </div>
 
               <div className="p-4">
@@ -114,20 +116,20 @@ export default function SponsoredContent({
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-6 items-stretch">
                   <AffiliateLink
                     href={tool.website}
                     toolId={tool.id}
                     isSponsored={true}
                     hasAffiliate={true}
-                    className="flex-1 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium py-2 px-3 rounded-lg transition-colors text-center"
+                    showBadge={false}
+                    className="flex-1 flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold py-3 px-5 rounded-lg transition-colors text-center shadow h-12"
                   >
                     Visit Site
                   </AffiliateLink>
-                  
                   <Link
                     href={`/tool/${tool.id}`}
-                    className="bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium py-2 px-3 rounded-lg transition-colors"
+                    className="flex-1 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-gray-200 text-sm font-semibold py-3 px-5 rounded-lg transition-colors text-center shadow h-12"
                   >
                     Details
                   </Link>
@@ -192,6 +194,7 @@ export function CompactSponsoredContent({
                 toolId={tool.id}
                 isSponsored={true}
                 hasAffiliate={true}
+                showBadge={false}
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium py-1.5 px-2 rounded transition-colors text-center block"
               >
                 Visit Site

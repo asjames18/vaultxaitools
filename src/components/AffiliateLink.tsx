@@ -20,6 +20,7 @@ interface AffiliateLinkProps {
   config?: AffiliateConfig;
   showDisclosure?: boolean;
   onClick?: () => void;
+  showBadge?: boolean; // NEW: allow suppressing badge
 }
 
 export default function AffiliateLink({
@@ -31,7 +32,8 @@ export default function AffiliateLink({
   hasAffiliate = true,
   config,
   showDisclosure = true,
-  onClick
+  onClick,
+  showBadge = true // NEW: default true
 }: AffiliateLinkProps) {
   const [showTooltip, setShowTooltip] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -87,14 +89,14 @@ export default function AffiliateLink({
       </a>
       
       {/* Sponsored Badge */}
-      {isSponsored && (
+      {showBadge && isSponsored && (
         <span className={`absolute -top-2 -right-2 px-2 py-1 rounded-full text-xs font-medium ${sponsoredBadge.className} shadow-sm`}>
           {sponsoredBadge.icon} {sponsoredBadge.text}
         </span>
       )}
       
       {/* Affiliate Badge */}
-      {hasAffiliate && !isSponsored && (
+      {showBadge && hasAffiliate && !isSponsored && (
         <span className={`absolute -top-2 -right-2 px-2 py-1 rounded-full text-xs font-medium ${affiliateBadge.className} shadow-sm`}>
           {affiliateBadge.icon} {affiliateBadge.text}
         </span>
