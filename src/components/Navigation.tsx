@@ -34,21 +34,59 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [signingOut, setSigningOut] = useState(false);
   const supabase = createClient();
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user);
+      try {
+        setLoading(true);
+        const { data, error } = await supabase.auth.getUser();
+        if (error) {
+          console.error('Error getting user:', error);
+        } else {
+          console.log('User data:', data.user);
+          setUser(data.user);
+        }
+      } catch (error) {
+        console.error('Error in getUser:', error);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    // Get initial user state
     getUser();
-    const { data: listener } = supabase.auth.onAuthStateChange(() => getUser());
-    return () => { listener?.subscription.unsubscribe(); };
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state change:', event, session?.user?.email);
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          setUser(session?.user || null);
+        } else if (event === 'SIGNED_OUT') {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [supabase]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
+    try {
+      setSigningOut(true);
+      await supabase.auth.signOut();
+      setUser(null);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    } finally {
+      setSigningOut(false);
+    }
   };
 
   const navigation = [
@@ -106,9 +144,10 @@ export default function Navigation() {
                   <span className="text-gray-600 dark:text-gray-300 text-sm mr-2">{user.email}</span>
                   <button
                     onClick={handleSignOut}
-                    className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 font-semibold transition-colors"
+                    disabled={signingOut}
+                    className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Sign Out
+                    {signingOut ? 'Signing out...' : 'Sign Out'}
                   </button>
                 </>
               ) : (
@@ -192,9 +231,10 @@ export default function Navigation() {
                   <span className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 text-sm">{user.email}</span>
                   <button
                     onClick={() => { handleSignOut(); setIsMenuOpen(false); }}
-                    className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors duration-200"
+                    disabled={signingOut}
+                    className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Sign Out
+                    {signingOut ? 'Signing out...' : 'Sign Out'}
                   </button>
                 </>
               ) : (

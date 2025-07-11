@@ -1,33 +1,50 @@
 "use client";
 import { useState } from "react";
+import { createClient } from '@/lib/supabase';
 
 export default function EmailSignupForm() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const supabase = createClient();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
     setMessage("");
+    
     try {
-      const res = await fetch("/api/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setStatus("success");
-        setMessage("Thank you for signing up!");
-        setEmail("");
-      } else {
+      // Check if email already exists
+      const { data: existing } = await supabase
+        .from('email_signups')
+        .select('id')
+        .eq('email', email)
+        .single();
+
+      if (existing) {
         setStatus("error");
-        setMessage(data.error || "Something went wrong.");
+        setMessage("This email is already signed up!");
+        return;
       }
-    } catch {
+
+      // Insert new email signup
+      const { error } = await supabase
+        .from('email_signups')
+        .insert([{ 
+          email, 
+          source: 'website',
+          is_active: true 
+        }]);
+
+      if (error) throw error;
+
+      setStatus("success");
+      setMessage("Thank you for signing up! We'll keep you updated.");
+      setEmail("");
+    } catch (error: any) {
+      console.error('Email signup error:', error);
       setStatus("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage(error.message || "Something went wrong. Please try again.");
     }
   };
 

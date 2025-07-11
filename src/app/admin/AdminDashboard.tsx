@@ -8,6 +8,8 @@ import { syncCategoriesClient } from '@/lib/database-client';
 import ToolForm from './ToolForm';
 import CategoryForm from './CategoryForm';
 import SponsoredSlots from './SponsoredSlots';
+import AdminSignupForm from './AdminSignupForm';
+import UserManagement from './UserManagement';
 
 type Tool = Database['public']['Tables']['tools']['Row'];
 type Category = Database['public']['Tables']['categories']['Row'];
@@ -19,9 +21,10 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ tools, categories, user }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users'>('tools');
   const [showToolForm, setShowToolForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
+  const [showSignupForm, setShowSignupForm] = useState(false);
   const [editingTool, setEditingTool] = useState<Tool | null>(null);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(false);
@@ -103,6 +106,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   const handleFormClose = () => {
     setShowToolForm(false);
     setShowCategoryForm(false);
+    setShowSignupForm(false);
     setEditingTool(null);
     setEditingCategory(null);
   };
@@ -183,6 +187,26 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                 }`}
               >
                 💎 Sponsored Content
+              </button>
+              <button
+                onClick={() => setActiveTab('users')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'users'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                👥 Users
+              </button>
+              <button
+                onClick={() => setActiveTab('signup')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'signup'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                👑 Admin Signup
               </button>
             </nav>
           </div>
@@ -374,6 +398,69 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
           </div>
         )}
 
+        {activeTab === 'signup' && (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                👑 Admin Account Management
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Create new admin accounts for your team
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  Create New Admin Account
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                  Add new administrators to your team. They will receive a confirmation email and need to verify their account before accessing the dashboard.
+                </p>
+                <button
+                  onClick={() => setShowSignupForm(true)}
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                >
+                  Create Admin Account
+                </button>
+              </div>
+
+              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-4">
+                  Important Notes:
+                </h4>
+                <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+                  <li className="flex items-start">
+                    <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
+                    New admins will receive a confirmation email
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
+                    They must confirm their email before signing in
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
+                    Update the SQL policies to include their email address
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-blue-600 dark:text-blue-400 mr-2">•</span>
+                    Only confirmed admins can access the dashboard
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'users' && (
+          <UserManagement />
+        )}
+
         {/* Forms */}
         {showToolForm && (
           <ToolForm
@@ -387,6 +474,13 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
         {showCategoryForm && (
           <CategoryForm
             category={editingCategory}
+            onClose={handleFormClose}
+            onSuccess={handleFormSuccess}
+          />
+        )}
+
+        {showSignupForm && (
+          <AdminSignupForm
             onClose={handleFormClose}
             onSuccess={handleFormSuccess}
           />

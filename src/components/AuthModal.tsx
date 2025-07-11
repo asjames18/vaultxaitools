@@ -17,7 +17,13 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
     setMessage("");
     try {
       if (mode === 'signup') {
-        const { error } = await supabase.auth.signUp({ email, password });
+        const { error } = await supabase.auth.signUp({ 
+          email, 
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`
+          }
+        });
         if (error) throw error;
         setStatus("success");
         setMessage("Check your email to confirm your account.");
@@ -26,7 +32,10 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
         if (error) throw error;
         setStatus("success");
         setMessage("Signed in successfully!");
-        onClose();
+        // Add a small delay to ensure auth state is updated before closing
+        setTimeout(() => {
+          onClose();
+        }, 1000);
       }
     } catch (err: any) {
       setStatus("error");
@@ -65,7 +74,8 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
           {mode === 'signin' ? 'Sign In' : 'Sign Up'}
         </h2>
-        {/* Social Login Buttons */}
+        {/* Social Login Buttons - Temporarily disabled until OAuth providers are configured */}
+        {/*
         <div className="flex flex-col gap-3 mb-6">
           <button
             type="button"
@@ -86,6 +96,7 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
             Sign in with GitHub
           </button>
         </div>
+        */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <input
             type="email"
