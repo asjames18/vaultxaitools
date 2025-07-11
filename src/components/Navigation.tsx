@@ -1,7 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase';
+import AuthModal from './AuthModal';
 
 // Simple SVG icons as fallback
 const Bars3Icon = ({ className }: { className?: string }) => (
@@ -30,6 +32,24 @@ const UserIcon = ({ className }: { className?: string }) => (
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+    getUser();
+    const { data: listener } = supabase.auth.onAuthStateChange(() => getUser());
+    return () => { listener?.subscription.unsubscribe(); };
+  }, [supabase]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -81,10 +101,25 @@ export default function Navigation() {
 
             {/* User Menu */}
             <div className="relative">
-              <button className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
-                <UserIcon className="w-5 h-5" />
-                <span className="text-sm font-medium">Sign In</span>
-              </button>
+              {user ? (
+                <>
+                  <span className="text-gray-600 dark:text-gray-300 text-sm mr-2">{user.email}</span>
+                  <button
+                    onClick={handleSignOut}
+                    className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 font-semibold transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => setAuthOpen(true)}
+                  className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800"
+                >
+                  <UserIcon className="w-5 h-5" />
+                  <span className="text-sm font-medium">Sign In</span>
+                </button>
+              )}
             </div>
 
             {/* CTA Button */}
@@ -152,13 +187,29 @@ export default function Navigation() {
               >
                 Submit Tool
               </Link>
-              <button className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors duration-200">
-                Sign In
-              </button>
+              {user ? (
+                <>
+                  <span className="block w-full text-left px-4 py-2 text-gray-600 dark:text-gray-300 text-sm">{user.email}</span>
+                  <button
+                    onClick={() => { handleSignOut(); setIsMenuOpen(false); }}
+                    className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors duration-200"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => { setAuthOpen(true); setIsMenuOpen(false); }}
+                  className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-colors duration-200"
+                >
+                  Sign In
+                </button>
+              )}
             </div>
           </div>
         </div>
       )}
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} />
     </nav>
   );
 } 

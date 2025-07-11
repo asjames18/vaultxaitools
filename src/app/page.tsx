@@ -8,6 +8,7 @@ import { getSponsoredTools } from '@/lib/affiliate';
 import SearchAndFilter from '@/components/SearchAndFilter';
 import SearchResults from '@/components/SearchResults';
 import SponsoredContent from '@/components/SponsoredContent';
+import EmailSignupForm from '@/components/EmailSignupForm';
 import type { Tool } from '@/data';
 
 // Simple SVG icons as fallback
@@ -179,6 +180,15 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Email Signup Section */}
+      <section className="py-8">
+        <div className="max-w-xl mx-auto">
+          <h2 className="text-2xl font-bold text-center mb-2 text-gray-900 dark:text-white">Stay in the Loop</h2>
+          <p className="text-center text-gray-500 dark:text-gray-400 mb-4">Sign up to get updates on the latest AI tools and features.</p>
+          <EmailSignupForm />
         </div>
       </section>
 
