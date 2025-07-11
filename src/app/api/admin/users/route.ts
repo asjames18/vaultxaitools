@@ -6,7 +6,7 @@ export async function GET() {
 
   // Get the current user
   const { data: { user } } = await supabase.auth.getUser();
-
+  console.log("Current user:", user);
   // Check if user is admin
   if (!user || user.user_metadata?.role !== 'admin') {
     return NextResponse.json({ error: 'user not allowed' }, { status: 403 });
