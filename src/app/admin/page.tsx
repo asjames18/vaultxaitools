@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { getTools, getCategories } from '@/lib/database';
+import { canAccessAdmin } from '@/lib/auth';
 import AdminDashboard from './AdminDashboard';
 
 export default async function AdminPage() {
@@ -11,6 +12,11 @@ export default async function AdminPage() {
   
   if (!user) {
     redirect('/admin/login');
+  }
+
+  // Check if user has admin privileges
+  if (!canAccessAdmin(user)) {
+    redirect('/admin/unauthorized');
   }
 
   // Fetch data for the dashboard

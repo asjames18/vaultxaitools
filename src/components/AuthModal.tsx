@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { createClient } from '@/lib/supabase';
+import PasswordResetForm from '@/app/admin/PasswordResetForm';
 
 export default function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
@@ -8,6 +9,7 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>("idle");
   const [message, setMessage] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const supabase = createClient();
 
@@ -127,6 +129,20 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
         {message && (
           <div className={`mt-3 text-center text-sm ${status === 'success' ? 'text-green-600' : 'text-red-600'}`}>{message}</div>
         )}
+        
+        {/* Forgot Password Link - Only show on signin mode */}
+        {mode === 'signin' && (
+          <div className="mt-4 text-center">
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(true)}
+              className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+            >
+              Forgot your password?
+            </button>
+          </div>
+        )}
+        
         <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
           {mode === 'signin' ? (
             <>
@@ -144,6 +160,18 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
             </>
           )}
         </div>
+
+        {/* Forgot Password Form Modal */}
+        {showForgotPassword && (
+          <PasswordResetForm
+            mode="forgot-password"
+            onClose={() => setShowForgotPassword(false)}
+            onSuccess={() => {
+              setShowForgotPassword(false);
+              setMessage('');
+            }}
+          />
+        )}
       </div>
     </div>
   );

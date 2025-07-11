@@ -34,22 +34,14 @@ export default function UserManagement({ onClose }: UserManagementProps) {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const { data: { users }, error } = await supabase.auth.admin.listUsers();
-      
-      if (error) {
-        throw error;
+      const response = await fetch('/api/admin/users');
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to fetch users');
       }
 
-      const userData: UserData[] = users.map(user => ({
-        id: user.id,
-        email: user.email || '',
-        created_at: user.created_at,
-        last_sign_in_at: user.last_sign_in_at,
-        email_confirmed_at: user.email_confirmed_at,
-        role: user.user_metadata?.role || 'user'
-      }));
-
-      setUsers(userData);
+      setUsers(result.users);
     } catch (error: any) {
       setMessage({ 
         type: 'error', 
@@ -80,10 +72,14 @@ export default function UserManagement({ onClose }: UserManagementProps) {
     }
 
     try {
-      const { error } = await supabase.auth.admin.deleteUser(userId);
-      
-      if (error) {
-        throw error;
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to delete user');
       }
 
       setMessage({ type: 'success', text: 'User deleted successfully' });
@@ -191,6 +187,9 @@ export default function UserManagement({ onClose }: UserManagementProps) {
                   Status
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  Role
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Created
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -204,7 +203,7 @@ export default function UserManagement({ onClose }: UserManagementProps) {
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                  <td colSpan={6} className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                     <div className="flex items-center justify-center">
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mr-2"></div>
                       Loading users...
@@ -213,7 +212,7 @@ export default function UserManagement({ onClose }: UserManagementProps) {
                 </tr>
               ) : filteredUsers.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                  <td colSpan={6} className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                     No users found
                   </td>
                 </tr>
@@ -239,6 +238,43 @@ export default function UserManagement({ onClose }: UserManagementProps) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {getStatusBadge(user)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                      <div className="flex items-center space-x-2">
+                        <select
+                          value={user.role || 'user'}
+                          onChange={async (e) => {
+                            const newRole = e.target.value as 'admin' | 'user';
+                            try {
+                              const response = await fetch(`/api/admin/users/${user.id}/role`, {
+                                method: 'PUT',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ role: newRole }),
+                              });
+
+                              const result = await response.json();
+
+                              if (!response.ok) {
+                                throw new Error(result.error || 'Failed to update role');
+                              }
+
+                              setMessage({ type: 'success', text: `Role updated to ${newRole}` });
+                              fetchUsers(); // Refresh the list
+                            } catch (error: any) {
+                              setMessage({ 
+                                type: 'error', 
+                                text: error.message || 'Failed to update role' 
+                              });
+                            }
+                          }}
+                          className="px-2 py-1 text-xs rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        >
+                          <option value="user">User</option>
+                          <option value="admin">Admin</option>
+                        </select>
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                       {formatDate(user.created_at)}
@@ -311,6 +347,7 @@ function CreateUserForm({ onClose, onSuccess }: { onClose: () => void; onSuccess
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState<'user' | 'admin'>('user');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   
@@ -333,26 +370,30 @@ function CreateUserForm({ onClose, onSuccess }: { onClose: () => void; onSuccess
     setMessage(null);
 
     try {
-      const { data, error } = await supabase.auth.admin.createUser({
-        email,
-        password,
-        email_confirm: true, // Auto-confirm email for admin-created users
-        user_metadata: { role: 'user' }
+      const response = await fetch('/api/admin/create-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, role }),
       });
 
-      if (error) {
-        throw error;
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to create user account');
       }
 
       setMessage({ 
         type: 'success', 
-        text: `User account created successfully! Email: ${email}` 
+        text: `User account created successfully! Email: ${email} (Role: ${role})` 
       });
 
       // Clear form
       setEmail('');
       setPassword('');
       setConfirmPassword('');
+      setRole('user');
 
       // Close form after 2 seconds
       setTimeout(() => {
@@ -441,6 +482,22 @@ function CreateUserForm({ onClose, onSuccess }: { onClose: () => void; onSuccess
               className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               placeholder="Confirm your password"
             />
+          </div>
+
+          <div>
+            <label htmlFor="role" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Role *
+            </label>
+            <select
+              id="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value as 'user' | 'admin')}
+              required
+              className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
 
           <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
