@@ -135,49 +135,62 @@ export default function Categories() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category) => (
-              <Link
-                key={category.name}
-                href={`/categories/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                className="group"
-              >
-                <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300`}>
-                    {category.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white text-center">
-                    {category.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">
-                    {category.description}
-                  </p>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">
-                      {category.count} tools
-                    </span>
-                    <div className="flex items-center gap-1 text-blue-600 group-hover:translate-x-1 transition-transform">
-                      <span className="font-medium">Explore</span>
-                      <ArrowRightIcon className="w-4 h-4" />
+            {categories.map((category) => {
+              // Dynamically count tools for this category
+              const toolsInCategory = tools.filter(tool => tool.category === category.name);
+              const toolCount = toolsInCategory.length;
+              // Dynamically get top 3 popular tools by weeklyUsers
+              const popularTools = toolsInCategory
+                .sort((a, b) => b.weeklyUsers - a.weeklyUsers)
+                .slice(0, 3)
+                .map(tool => tool.name);
+              return (
+                <Link
+                  key={category.name}
+                  href={`/categories/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="group"
+                >
+                  <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300`}>
+                      {category.icon}
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white text-center">
+                      {category.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 text-center">
+                      {category.description}
+                    </p>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600 dark:text-gray-400">
+                        {toolCount} tools
+                      </span>
+                      <div className="flex items-center gap-1 text-blue-600 group-hover:translate-x-1 transition-transform">
+                        <span className="font-medium">Explore</span>
+                        <ArrowRightIcon className="w-4 h-4" />
+                      </div>
+                    </div>
+                    {/* Popular Tools Preview */}
+                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Popular:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {popularTools.length === 0 ? (
+                          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">No tools</span>
+                        ) : (
+                          popularTools.map((tool, index) => (
+                            <span
+                              key={index}
+                              className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                            >
+                              {tool}
+                            </span>
+                          ))
+                        )}
+                      </div>
                     </div>
                   </div>
-                  
-                  {/* Popular Tools Preview */}
-                  <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Popular:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {category.popularTools.slice(0, 3).map((tool, index) => (
-                        <span
-                          key={index}
-                          className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

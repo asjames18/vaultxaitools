@@ -55,6 +55,8 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
   const [loadingReviews, setLoadingReviews] = useState(true);
   const [tool, setTool] = useState<any>(null);
   const [loadingTool, setLoadingTool] = useState(true);
+  // Add state for share feedback
+  const [shareCopied, setShareCopied] = useState(false);
 
   // Load tool data from centralized data
   useEffect(() => {
@@ -250,9 +252,16 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                   {isLiked ? 'Liked' : 'Like'}
                 </button>
                 
-                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+                <button
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(window.location.href);
+                    setShareCopied(true);
+                    setTimeout(() => setShareCopied(false), 1500);
+                  }}
+                >
                   <ShareIcon className="w-4 h-4" />
-                  Share
+                  {shareCopied ? 'Link Copied!' : 'Share'}
                 </button>
               </div>
             </div>

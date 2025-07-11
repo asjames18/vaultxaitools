@@ -45,8 +45,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const resolvedParams = await params;
-  const categoryName = decodeURIComponent(resolvedParams.category).replace(/-/g, ' ');
-  
+  let categoryName = decodeURIComponent(resolvedParams.category).replace(/-/g, ' ');
+  // Capitalize first letter to match DB
+  categoryName = categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
   try {
     // Get tools for this category from the database
     const categoryTools = await getToolsByCategory(categoryName);
@@ -59,6 +60,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       cat.name.toLowerCase() === categoryName.toLowerCase()
     );
 
+    // Move debug log here, after all variables are defined
     console.log('Category page debug:', {
       categoryName,
       categoryToolsCount: categoryTools.length,
@@ -82,4 +84,4 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       </div>
     );
   }
-} 
+}

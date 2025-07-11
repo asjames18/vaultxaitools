@@ -109,6 +109,18 @@ export default function ToolForm({ tool, categories, onClose, onSuccess }: ToolF
     return array.join(', ');
   };
 
+  const OFFICIAL_CATEGORIES = [
+    'Language',
+    'Design',
+    'Development',
+    'Productivity',
+    'Marketing',
+    'Writing',
+    'Video',
+    'Audio',
+    'Data',
+  ];
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -169,10 +181,8 @@ export default function ToolForm({ tool, categories, onClose, onSuccess }: ToolF
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="">Select a category</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.name}>
-                    {category.name}
-                  </option>
+                {OFFICIAL_CATEGORIES.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
             </div>
