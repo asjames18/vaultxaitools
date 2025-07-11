@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
-import { tools, categories } from '@/data';
+import { tools } from '@/data/tools';
+import { categories } from '@/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://vaultxaitools.com';

@@ -1,12 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+  const userId = params.id;
   try {
-    const userId = params.id;
     const { role } = await request.json();
 
     if (!userId) {
@@ -47,10 +44,11 @@ export async function PUT(
       message: `User role updated to ${role}`
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Server error updating user role:', error);
+    const message = error instanceof Error ? error.message : 'Internal server error';
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: message },
       { status: 500 }
     );
   }
