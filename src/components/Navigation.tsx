@@ -106,6 +106,7 @@ export default function Navigation() {
     { name: 'Search', href: '/search' },
     { name: 'Categories', href: '/categories' },
     { name: 'Trending', href: '/trending' },
+    { name: 'Blog', href: '/blog' },
     { name: 'About', href: '/about' },
     // Admin link will be conditionally rendered below
   ];

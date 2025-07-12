@@ -36,6 +36,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
         class: 'prose prose-lg dark:prose-invert max-w-none focus:outline-none min-h-[300px] p-4',
       },
     },
+    immediatelyRender: false,
   });
 
   if (!editor) {

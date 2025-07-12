@@ -1,266 +1,243 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { blogPosts, BlogPost, categories } from '@/data/blog';
-
-interface BlogFormData {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
-  category: string;
-  readTime: string;
-  featured: boolean;
-  tags: string[];
-}
+import { BlogPost } from '@/data/blog';
+import RichTextEditor from '@/components/RichTextEditor';
 
 export default function BlogManagementClient() {
-  const [posts, setPosts] = useState<BlogPost[]>(blogPosts);
-  const [isEditing, setIsEditing] = useState(false);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-  const [formData, setFormData] = useState<BlogFormData>({
-    id: '',
+  const [formData, setFormData] = useState({
     title: '',
+    slug: '',
     excerpt: '',
     content: '',
     author: '',
-    category: 'Writing',
+    category: '',
     readTime: '5 min read',
     featured: false,
-    tags: []
+    status: 'draft' as 'draft' | 'published' | 'archived',
+    tags: [] as string[],
+    seoTitle: '',
+    seoDescription: '',
+    seoKeywords: [] as string[],
+    featuredImage: ''
   });
 
-  const handleCreateNew = () => {
-    setIsEditing(true);
-    setEditingPost(null);
-    setFormData({
-      id: Date.now().toString(), // Generate temporary ID
-      title: '',
-      excerpt: '',
-      content: '',
-      author: '',
-      category: 'Writing',
-      readTime: '5 min read',
-      featured: false,
-      tags: []
-    });
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
+  const loadPosts = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/admin/blog');
+      if (response.ok) {
+        const fetchedPosts = await response.json();
+        setPosts(fetchedPosts);
+      } else {
+        console.error('Error loading posts:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error loading posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      if (editingPost) {
+        const response = await fetch('/api/admin/blog', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: editingPost.id, ...formData })
+        });
+        
+        if (response.ok) {
+          const updatedPost = await response.json();
+          setPosts(posts.map(p => p.id === editingPost.id ? updatedPost : p));
+          setEditingPost(null);
+        }
+      } else {
+        const response = await fetch('/api/admin/blog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+        
+        if (response.ok) {
+          const newPost = await response.json();
+          setPosts([newPost, ...posts]);
+        }
+      }
+      
+      resetForm();
+      setShowForm(false);
+    } catch (error) {
+      console.error('Error saving post:', error);
+    }
   };
 
   const handleEdit = (post: BlogPost) => {
-    setIsEditing(true);
     setEditingPost(post);
     setFormData({
-      id: post.id,
       title: post.title,
+      slug: post.slug,
       excerpt: post.excerpt,
       content: post.content,
       author: post.author,
       category: post.category,
       readTime: post.readTime,
       featured: post.featured,
-      tags: [...post.tags]
+      status: post.status,
+      tags: post.tags,
+      seoTitle: post.seoTitle || '',
+      seoDescription: post.seoDescription || '',
+      seoKeywords: post.seoKeywords || [],
+      featuredImage: post.featuredImage || ''
     });
+    setShowForm(true);
   };
 
-  const handleDelete = (postId: string) => {
-    if (confirm('Are you sure you want to delete this blog post?')) {
-      const updatedPosts = posts.filter(post => post.id !== postId);
-      setPosts(updatedPosts);
-      setMessage({ type: 'success', text: 'Blog post deleted successfully!' });
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      try {
+        const response = await fetch(`/api/admin/blog?id=${id}`, {
+          method: 'DELETE'
+        });
+        
+        if (response.ok) {
+          setPosts(posts.filter(p => p.id !== id));
+        }
+      } catch (error) {
+        console.error('Error deleting post:', error);
+      }
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.title || !formData.excerpt || !formData.content || !formData.author) {
-      setMessage({ type: 'error', text: 'Please fill in all required fields.' });
-      return;
-    }
-
-    const newPost: BlogPost = {
-      ...formData,
-      date: editingPost ? editingPost.date : new Date().toISOString().split('T')[0],
-      image: editingPost?.image
-    };
-
-    if (editingPost) {
-      // Update existing post
-      const updatedPosts = posts.map(post => 
-        post.id === editingPost.id ? newPost : post
-      );
-      setPosts(updatedPosts);
-      setMessage({ type: 'success', text: 'Blog post updated successfully!' });
-    } else {
-      // Create new post
-      const updatedPosts = [newPost, ...posts];
-      setPosts(updatedPosts);
-      setMessage({ type: 'success', text: 'Blog post created successfully!' });
-    }
-
-    setIsEditing(false);
-    setEditingPost(null);
+  const resetForm = () => {
     setFormData({
-      id: '',
       title: '',
+      slug: '',
       excerpt: '',
       content: '',
       author: '',
-      category: 'Writing',
+      category: '',
       readTime: '5 min read',
       featured: false,
-      tags: []
+      status: 'draft',
+      tags: [],
+      seoTitle: '',
+      seoDescription: '',
+      seoKeywords: [],
+      featuredImage: ''
     });
   };
 
-  const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
-      e.preventDefault();
-      const newTag = e.currentTarget.value.trim();
-      if (!formData.tags.includes(newTag)) {
-        setFormData(prev => ({
-          ...prev,
-          tags: [...prev.tags, newTag]
-        }));
-      }
-      e.currentTarget.value = '';
-    }
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
   };
 
-  const removeTag = (tagToRemove: string) => {
-    setFormData(prev => ({
-      ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
-    }));
-  };
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Blog Management
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
-              Create, edit, and manage blog posts
-            </p>
-          </div>
-          <div className="flex gap-4">
-            <Link
-              href="/admin"
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              Back to Admin
-            </Link>
-            <button
-              onClick={handleCreateNew}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Create New Post
-            </button>
-          </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Blog Management
+          </h1>
+          <button
+            onClick={() => {
+              resetForm();
+              setEditingPost(null);
+              setShowForm(true);
+            }}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Create New Post
+          </button>
         </div>
 
-        {/* Message */}
-        {message && (
-          <div className={`p-4 rounded-lg mb-6 ${
-            message.type === 'success' 
-              ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400' 
-              : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'
-          }`}>
-            {message.text}
-          </div>
-        )}
-
-        {/* Blog Editor Form */}
-        {isEditing && (
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-              {editingPost ? 'Edit Blog Post' : 'Create New Blog Post'}
+        {showForm && (
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+              {editingPost ? 'Edit Post' : 'Create New Post'}
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Title */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Title *
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="Enter blog post title"
-                  required
-                />
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.title}
+                    onChange={(e) => {
+                      setFormData({ ...formData, title: e.target.value });
+                      if (!editingPost) {
+                        setFormData(prev => ({ ...prev, slug: generateSlug(e.target.value) }));
+                      }
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
 
-              {/* Excerpt */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Excerpt *
-                </label>
-                <textarea
-                  value={formData.excerpt}
-                  onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="Enter a brief excerpt"
-                  rows={3}
-                  required
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Slug
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.slug}
+                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
 
-              {/* Content */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Content *
-                </label>
-                <textarea
-                  value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="Enter the full blog post content"
-                  rows={10}
-                  required
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Author
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.author}
+                    onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
+                </div>
 
-              {/* Author */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Author *
-                </label>
-                <input
-                  type="text"
-                  value={formData.author}
-                  onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="Enter author name"
-                  required
-                />
-              </div>
-
-              {/* Category and Read Time */}
-              <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Category
                   </label>
-                  <select
+                  <input
+                    type="text"
                     value={formData.category}
-                    onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  >
-                    {categories.filter(cat => cat !== 'All').map(category => (
-                      <option key={category} value={category}>{category}</option>
-                    ))}
-                  </select>
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    required
+                  />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Read Time
@@ -268,85 +245,146 @@ export default function BlogManagementClient() {
                   <input
                     type="text"
                     value={formData.readTime}
-                    onChange={(e) => setFormData(prev => ({ ...prev, readTime: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                    placeholder="e.g., 5 min read"
+                    onChange={(e) => setFormData({ ...formData, readTime: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    placeholder="5 min read"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Status
+                  </label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value as 'draft' | 'published' | 'archived' })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  >
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                    <option value="archived">Archived</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Excerpt
+                </label>
+                <textarea
+                  value={formData.excerpt}
+                  onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Content
+                </label>
+                <RichTextEditor
+                  content={formData.content}
+                  onChange={(content) => setFormData({ ...formData, content })}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Tags (comma-separated)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.tags.join(', ')}
+                    onChange={(e) => setFormData({ ...formData, tags: e.target.value.split(',').map(tag => tag.trim()).filter(tag => tag) })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    placeholder="AI, Technology, Innovation"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Featured Image URL
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.featuredImage}
+                    onChange={(e) => setFormData({ ...formData, featuredImage: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    placeholder="https://example.com/image.jpg"
                   />
                 </div>
               </div>
 
-              {/* Tags */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Tags
-                </label>
-                <input
-                  type="text"
-                  onKeyDown={handleTagInput}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  placeholder="Press Enter to add a tag"
-                />
-                {formData.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {formData.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full"
-                      >
-                        {tag}
-                        <button
-                          type="button"
-                          onClick={() => removeTag(tag)}
-                          className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100"
-                        >
-                          ×
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    SEO Title
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.seoTitle}
+                    onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    SEO Keywords (comma-separated)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.seoKeywords.join(', ')}
+                    onChange={(e) => setFormData({ ...formData, seoKeywords: e.target.value.split(',').map(keyword => keyword.trim()).filter(keyword => keyword) })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                    placeholder="AI, technology, innovation"
+                  />
+                </div>
               </div>
 
-              {/* Featured Toggle */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  SEO Description
+                </label>
+                <textarea
+                  value={formData.seoDescription}
+                  onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                />
+              </div>
+
               <div className="flex items-center">
                 <input
                   type="checkbox"
                   id="featured"
                   checked={formData.featured}
-                  onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
-                <label htmlFor="featured" className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                  Mark as featured post
+                <label htmlFor="featured" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                  Featured Post
                 </label>
               </div>
 
-              {/* Form Actions */}
               <div className="flex gap-4">
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   {editingPost ? 'Update Post' : 'Create Post'}
                 </button>
                 <button
                   type="button"
                   onClick={() => {
-                    setIsEditing(false);
+                    setShowForm(false);
                     setEditingPost(null);
-                    setFormData({
-                      id: '',
-                      title: '',
-                      excerpt: '',
-                      content: '',
-                      author: '',
-                      category: 'Writing',
-                      readTime: '5 min read',
-                      featured: false,
-                      tags: []
-                    });
+                    resetForm();
                   }}
-                  className="px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
+                  className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors"
                 >
                   Cancel
                 </button>
@@ -355,15 +393,15 @@ export default function BlogManagementClient() {
           </div>
         )}
 
-        {/* Blog Posts List */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Blog Posts ({posts.length})
+              All Posts ({posts.length})
             </h2>
           </div>
+          
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -376,10 +414,10 @@ export default function BlogManagementClient() {
                     Category
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                    Date
+                    Status
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                    Status
+                    Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                     Actions
@@ -390,58 +428,59 @@ export default function BlogManagementClient() {
                 {posts.map((post) => (
                   <tr key={post.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white">
-                          {post.title}
-                        </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">
-                          {post.excerpt}
+                      <div className="flex items-center">
+                        <div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">
+                            {post.title}
+                          </div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {post.slug}
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                       {post.author}
                     </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                      {post.category}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
-                        {post.category}
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        post.status === 'published' 
+                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                          : post.status === 'draft'
+                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+                          : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+                      }`}>
+                        {post.status}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                       {new Date(post.date).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {post.featured ? (
-                        <span className="px-2 py-1 text-xs font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded-full">
-                          Featured
-                        </span>
-                      ) : (
-                        <span className="px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full">
-                          Published
-                        </span>
-                      )}
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex gap-2">
+                      <div className="flex space-x-2">
                         <button
                           onClick={() => handleEdit(post)}
-                          className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300"
+                          className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
                         >
                           Edit
                         </button>
-                        <Link
-                          href={`/blog/${post.id}`}
-                          target="_blank"
-                          className="text-green-600 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300"
-                        >
-                          View
-                        </Link>
                         <button
                           onClick={() => handleDelete(post.id)}
-                          className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
+                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
                         >
                           Delete
                         </button>
+                        <a
+                          href={`/blog/${post.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
+                        >
+                          View
+                        </a>
                       </div>
                     </td>
                   </tr>

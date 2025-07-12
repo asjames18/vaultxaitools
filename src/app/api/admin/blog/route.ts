@@ -1,131 +1,161 @@
-import { NextResponse } from 'next/server';
-import { createServerSupabaseClient } from '@/lib/supabase-server';
-import { getUserRole } from '@/lib/auth';
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+import { BlogPost } from '@/data/blog';
 
-export async function GET() {
-  const supabase = await createServerSupabaseClient();
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
-  // Get the current user
-  const { data: { user } } = await supabase.auth.getUser();
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-  // Check admin status
-  const role = getUserRole(user);
-  if (role !== 'admin') {
-    return NextResponse.json({ error: 'User not allowed' }, { status: 403 });
-  }
-
-  try {
-    // For now, return mock data. In the future, this would fetch from a blog_posts table
-    const blogPosts = [
-      {
-        id: '1',
-        title: 'The Future of AI Writing: How ChatGPT is Revolutionizing Content Creation',
-        excerpt: 'Discover how AI writing tools are transforming the way we create content.',
-        content: 'AI writing tools have fundamentally changed how we approach content creation...',
-        author: 'Sarah Johnson',
-        date: '2024-01-15',
-        category: 'Writing',
-        readTime: '5 min read',
-        featured: true,
-        tags: ['AI Writing', 'ChatGPT', 'Content Creation']
-      }
-    ];
-
-    return NextResponse.json({ posts: blogPosts });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch blog posts' }, { status: 500 });
-  }
+// Convert frontend format to database format
+function convertToDB(post: Partial<BlogPost>) {
+  return {
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt,
+    content: post.content,
+    author: post.author,
+    category: post.category,
+    read_time: post.readTime,
+    featured: post.featured,
+    status: post.status,
+    tags: post.tags,
+    seo_title: post.seoTitle,
+    seo_description: post.seoDescription,
+    seo_keywords: post.seoKeywords,
+    featured_image: post.featuredImage,
+    published_at: post.publishedAt
+  };
 }
 
-export async function POST(request: Request) {
-  const supabase = await createServerSupabaseClient();
+// Convert database format to frontend format
+function convertFromDB(dbPost: any): BlogPost {
+  return {
+    id: dbPost.id,
+    title: dbPost.title,
+    slug: dbPost.slug,
+    excerpt: dbPost.excerpt,
+    content: dbPost.content,
+    author: dbPost.author,
+    date: dbPost.published_at ? new Date(dbPost.published_at).toISOString().split('T')[0] : '',
+    category: dbPost.category,
+    readTime: dbPost.read_time,
+    featured: dbPost.featured,
+    status: dbPost.status,
+    image: dbPost.featured_image,
+    tags: dbPost.tags || [],
+    seoTitle: dbPost.seo_title,
+    seoDescription: dbPost.seo_description,
+    seoKeywords: dbPost.seo_keywords || [],
+    featuredImage: dbPost.featured_image,
+    publishedAt: dbPost.published_at,
+    createdAt: dbPost.created_at,
+    updatedAt: dbPost.updated_at
+  };
+}
 
-  // Get the current user
-  const { data: { user } } = await supabase.auth.getUser();
-
-  // Check admin status
-  const role = getUserRole(user);
-  if (role !== 'admin') {
-    return NextResponse.json({ error: 'User not allowed' }, { status: 403 });
-  }
-
+export async function GET(request: NextRequest) {
   try {
-    const body = await request.json();
-    
-    // Validate required fields
-    if (!body.title || !body.excerpt || !body.content || !body.author) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching blog posts:', error);
+      return NextResponse.json({ error: 'Failed to fetch blog posts' }, { status: 500 });
     }
 
-    // In the future, this would insert into a blog_posts table
-    const newPost = {
-      id: Date.now().toString(),
-      ...body,
-      date: new Date().toISOString().split('T')[0],
-      createdAt: new Date().toISOString()
-    };
-
-    return NextResponse.json({ post: newPost, message: 'Blog post created successfully' });
+    const posts = data?.map(convertFromDB) || [];
+    return NextResponse.json(posts);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create blog post' }, { status: 500 });
+    console.error('Error in GET /api/admin/blog:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
-export async function PUT(request: Request) {
-  const supabase = await createServerSupabaseClient();
-
-  // Get the current user
-  const { data: { user } } = await supabase.auth.getUser();
-
-  // Check admin status
-  const role = getUserRole(user);
-  if (role !== 'admin') {
-    return NextResponse.json({ error: 'User not allowed' }, { status: 403 });
-  }
-
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
-    // Validate required fields
-    if (!body.id || !body.title || !body.excerpt || !body.content || !body.author) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    const postData = convertToDB(body);
+
+    // Set published_at if status is published
+    if (postData.status === 'published' && !postData.published_at) {
+      postData.published_at = new Date().toISOString();
     }
 
-    // In the future, this would update a blog_posts table
-    const updatedPost = {
-      ...body,
-      updatedAt: new Date().toISOString()
-    };
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .insert([postData])
+      .select()
+      .single();
 
-    return NextResponse.json({ post: updatedPost, message: 'Blog post updated successfully' });
+    if (error) {
+      console.error('Error creating blog post:', error);
+      return NextResponse.json({ error: 'Failed to create blog post' }, { status: 500 });
+    }
+
+    const post = convertFromDB(data);
+    return NextResponse.json(post);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update blog post' }, { status: 500 });
+    console.error('Error in POST /api/admin/blog:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
-export async function DELETE(request: Request) {
-  const supabase = await createServerSupabaseClient();
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { id, ...postData } = body;
+    const updateData = convertToDB(postData);
 
-  // Get the current user
-  const { data: { user } } = await supabase.auth.getUser();
+    // Set published_at if status is being changed to published
+    if (updateData.status === 'published' && !updateData.published_at) {
+      updateData.published_at = new Date().toISOString();
+    }
 
-  // Check admin status
-  const role = getUserRole(user);
-  if (role !== 'admin') {
-    return NextResponse.json({ error: 'User not allowed' }, { status: 403 });
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating blog post:', error);
+      return NextResponse.json({ error: 'Failed to update blog post' }, { status: 500 });
+    }
+
+    const post = convertFromDB(data);
+    return NextResponse.json(post);
+  } catch (error) {
+    console.error('Error in PUT /api/admin/blog:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
+}
 
+export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
     if (!id) {
-      return NextResponse.json({ error: 'Blog post ID is required' }, { status: 400 });
+      return NextResponse.json({ error: 'Post ID is required' }, { status: 400 });
     }
 
-    // In the future, this would delete from a blog_posts table
-    return NextResponse.json({ message: 'Blog post deleted successfully' });
+    const { error } = await supabase
+      .from('blog_posts')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting blog post:', error);
+      return NextResponse.json({ error: 'Failed to delete blog post' }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete blog post' }, { status: 500 });
+    console.error('Error in DELETE /api/admin/blog:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 } 

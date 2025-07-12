@@ -2,13 +2,18 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { blogPosts, categories, BlogPost } from '@/data/blog';
+import { BlogPost } from '@/data/blog';
 
-export default function BlogClient() {
+interface BlogClientProps {
+  initialPosts: BlogPost[];
+  initialCategories: string[];
+}
+
+export default function BlogClient({ initialPosts, initialCategories }: BlogClientProps) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredPosts = blogPosts.filter(post => {
+  const filteredPosts = initialPosts.filter(post => {
     const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -16,7 +21,7 @@ export default function BlogClient() {
     return matchesCategory && matchesSearch;
   });
 
-  const featuredPosts = blogPosts.filter(post => post.featured);
+  const featuredPosts = initialPosts.filter(post => post.featured);
   const regularPosts = filteredPosts.filter(post => !post.featured);
 
   return (
@@ -57,7 +62,7 @@ export default function BlogClient() {
       {/* Category Filter */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-wrap gap-2 justify-center mb-8">
-          {categories.map((category) => (
+          {initialCategories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
@@ -80,7 +85,7 @@ export default function BlogClient() {
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {featuredPosts.map((post) => (
-                <Link key={post.id} href={`/blog/${post.id}`}>
+                <Link key={post.id} href={`/blog/${post.slug}`}>
                   <article
                     className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
                   >
@@ -127,7 +132,7 @@ export default function BlogClient() {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {regularPosts.map((post) => (
-              <Link key={post.id} href={`/blog/${post.id}`}>
+              <Link key={post.id} href={`/blog/${post.slug}`}>
                 <article
                   className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
                 >

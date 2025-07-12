@@ -1,18 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { blogPosts, BlogPost } from '@/data/blog';
+import { BlogPost } from '@/data/blog';
 
 interface BlogPostClientProps {
   post: BlogPost;
+  relatedPosts: BlogPost[];
 }
 
-export default function BlogPostClient({ post }: BlogPostClientProps) {
-  // Get related posts (same category, excluding current post)
-  const relatedPosts = blogPosts
-    .filter(p => p.category === post.category && p.id !== post.id)
-    .slice(0, 3);
-
+export default function BlogPostClient({ post, relatedPosts }: BlogPostClientProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
@@ -80,36 +76,10 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
           {/* Article Body */}
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-              {post.content}
-            </p>
-            
-            {/* Extended content for demo purposes */}
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Artificial intelligence has become an integral part of our daily lives, transforming how we work, create, and interact with technology. The tools we've explored in this article represent just the beginning of what's possible with AI.
-            </p>
-            
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
-              Key Takeaways
-            </h2>
-            <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-6">
-              <li>AI tools are becoming more accessible and user-friendly</li>
-              <li>Integration with existing workflows is crucial for adoption</li>
-              <li>Quality and accuracy continue to improve rapidly</li>
-              <li>Cost-effectiveness is making AI tools viable for small businesses</li>
-            </ul>
-            
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              As we look to the future, it's clear that AI will continue to evolve and become even more sophisticated. The key is to stay informed about the latest developments and choose tools that align with your specific needs and goals.
-            </p>
-            
-            <blockquote className="border-l-4 border-blue-500 pl-6 italic text-gray-700 dark:text-gray-300 my-8">
-              "The best way to predict the future is to invent it." - Alan Kay
-            </blockquote>
-            
-            <p className="text-gray-600 dark:text-gray-400">
-              Whether you're a developer, designer, marketer, or content creator, there's an AI tool out there that can help you work more efficiently and creatively. The key is to experiment, learn, and find what works best for your unique situation.
-            </p>
+            <div 
+              className="text-gray-700 dark:text-gray-300 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br>') }}
+            />
           </div>
 
           {/* Author Bio */}
@@ -141,7 +111,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               {relatedPosts.map((relatedPost) => (
                 <Link
                   key={relatedPost.id}
-                  href={`/blog/${relatedPost.id}`}
+                  href={`/blog/${relatedPost.slug}`}
                   className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group"
                 >
                   <div className="p-5">

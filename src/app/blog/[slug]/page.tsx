@@ -1,49 +1,58 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import BlogPostClient from './BlogPostClient';
-import { blogPosts } from '@/data/blog';
+import { getBlogPostBySlug, getAllBlogPosts } from '@/lib/blog-service';
 
 interface BlogPostPageProps {
-  params: { slug: string };
+  params: {
+    slug: string;
+  };
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = blogPosts.find(p => p.id === params.slug);
+  const post = await getBlogPostBySlug(params.slug);
   
   if (!post) {
     return {
-      title: 'Blog Post Not Found',
-      description: 'The requested blog post could not be found.',
+      title: 'Post Not Found - VaultX AI Tools',
     };
   }
 
   return {
-    title: `${post.title} - AI Tools Blog`,
-    description: post.excerpt,
-    keywords: [...post.tags, 'AI tools', 'artificial intelligence', 'blog'],
+    title: post.seoTitle || post.title,
+    description: post.seoDescription || post.excerpt,
+    keywords: post.seoKeywords,
     openGraph: {
-      title: post.title,
-      description: post.excerpt,
+      title: post.seoTitle || post.title,
+      description: post.seoDescription || post.excerpt,
       type: 'article',
-      url: `https://vaultxaitools.com/blog/${post.id}`,
+      publishedTime: post.publishedAt,
       authors: [post.author],
-      publishedTime: post.date,
       tags: post.tags,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.excerpt,
     },
   };
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = blogPosts.find(p => p.id === params.slug);
+export async function generateStaticParams() {
+  const posts = await getAllBlogPosts();
+  
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = await getBlogPostBySlug(params.slug);
   
   if (!post) {
     notFound();
   }
 
-  return <BlogPostClient post={post} />;
+  // Get related posts (same category, excluding current post)
+  const allPosts = await getAllBlogPosts();
+  const relatedPosts = allPosts
+    .filter(p => p.category === post.category && p.id !== post.id)
+    .slice(0, 3);
+
+  return <BlogPostClient post={post} relatedPosts={relatedPosts} />;
 } 
