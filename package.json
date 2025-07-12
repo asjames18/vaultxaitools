@@ -14,6 +14,7 @@
     "install-deps": "npm install && npm run seed"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.50.5",
     "@tiptap/extension-image": "^3.0.1",
