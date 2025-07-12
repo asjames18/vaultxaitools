@@ -167,23 +167,21 @@ export function getTrendingBadge(index: number) {
  * Calculate time-based trending (for future use with real-time data)
  */
 export function getTimeBasedTrending(tools: Tool[], timeFilter: 'day' | 'week' | 'month' = 'week') {
-  // This could be enhanced with real-time data from analytics
-  // For now, we'll use the existing algorithm but could weight recent activity more heavily
-  
-  const timeMultipliers = {
-    day: 1.5,    // Recent activity gets higher weight
-    week: 1.0,   // Standard weight
-    month: 0.8   // Older activity gets lower weight
-  };
-  
+  if (timeFilter === 'day') {
+    // Sort by highest growth today
+    return tools
+      .slice()
+      .sort((a, b) => parseFloat(b.growth.replace('%', '')) - parseFloat(a.growth.replace('%', '')));
+  }
+  if (timeFilter === 'month') {
+    // Sort by most reviews (simulate monthly engagement)
+    return tools
+      .slice()
+      .sort((a, b) => b.reviewCount - a.reviewCount);
+  }
+  // Default: trending score (week)
   return tools
-    .map(tool => {
-      const baseScore = calculateTrendingScore(tool);
-      return {
-        ...baseScore,
-        score: baseScore.score * timeMultipliers[timeFilter]
-      };
-    })
+    .map(tool => calculateTrendingScore(tool))
     .sort((a, b) => b.score - a.score)
     .map(item => item.tool);
 } 

@@ -1,23 +1,25 @@
 import { NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
+import { getUserRole, createAdminClient } from '@/lib/auth';
 
 export async function GET() {
   const supabase = await createServerSupabaseClient();
 
   // Get the current user
   const { data: { user } } = await supabase.auth.getUser();
-  console.log("Current user:", user);
+  console.log("Current user:", JSON.stringify(user, null, 2));
 
-  // Defensive: check for user_metadata and role
-  const role = user?.user_metadata?.role;
+  // Use getUserRole to check admin status
+  const role = getUserRole(user);
   console.log("User role:", role);
 
-  if (typeof role !== 'string' || role.trim().toLowerCase() !== 'admin') {
+  if (role !== 'admin') {
     return NextResponse.json({ error: 'user not allowed' }, { status: 403 });
   }
 
-  // Fetch all users from Supabase
-  const { data, error } = await supabase.auth.admin.listUsers();
+  // Use admin client for listing users
+  const adminClient = createAdminClient();
+  const { data, error } = await adminClient.auth.admin.listUsers();
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

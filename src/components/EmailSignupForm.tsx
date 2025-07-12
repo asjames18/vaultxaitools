@@ -39,7 +39,7 @@ export default function EmailSignupForm() {
       if (error) throw error;
 
       setStatus("success");
-      setMessage("Thank you for signing up! We'll keep you updated.");
+      setMessage("🎉 Welcome to VaultX! We'll keep you updated with the latest AI tools.");
       setEmail("");
     } catch (error: any) {
       console.error('Email signup error:', error);
@@ -49,25 +49,25 @@ export default function EmailSignupForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 items-center max-w-md mx-auto mt-8">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 items-center max-w-md mx-auto">
       <input
         type="email"
         value={email}
         onChange={e => setEmail(e.target.value)}
-        placeholder="Enter your email"
+        placeholder="Enter your email address"
         required
-        className="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+        className="flex-1 px-4 py-3 rounded-lg border border-white/30 bg-white/20 backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all"
         disabled={status === "loading"}
       />
       <button
         type="submit"
-        className="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors disabled:opacity-60"
+        className="px-6 py-3 rounded-lg bg-white text-blue-600 hover:bg-gray-100 font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-60 disabled:transform-none"
         disabled={status === "loading" || !email}
       >
-        {status === "loading" ? "Signing up..." : "Sign Up"}
+        {status === "loading" ? "Signing up..." : "Get Updates"}
       </button>
       {message && (
-        <div className={`w-full text-center mt-2 text-sm ${status === "success" ? "text-green-600" : "text-red-600"}`}>
+        <div className={`w-full text-center mt-3 text-sm ${status === "success" ? "text-green-200" : "text-red-200"}`}>
           {message}
         </div>
       )}

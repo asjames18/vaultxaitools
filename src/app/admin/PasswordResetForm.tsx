@@ -48,28 +48,27 @@ export default function PasswordResetForm({
     setMessage(null);
 
     try {
-      const { error } = await supabase.auth.admin.updateUserById(userId, {
-        password: newPassword
+      // Call secure API route for admin password reset
+      const response = await fetch(`/api/admin/users/${userId}/password`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: newPassword })
       });
-
-      if (error) {
-        throw error;
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to update password');
       }
-
       setMessage({ 
         type: 'success', 
         text: `Password updated successfully for ${email}` 
       });
-
       // Clear form
       setNewPassword('');
       setConfirmPassword('');
-
       // Close form after 2 seconds
       setTimeout(() => {
         onSuccess();
       }, 2000);
-
     } catch (error: any) {
       setMessage({ 
         type: 'error', 

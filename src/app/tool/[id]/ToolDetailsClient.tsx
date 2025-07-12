@@ -172,305 +172,238 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center gap-4 mb-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      {/* Enhanced Header */}
+      <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-700/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="flex items-center gap-4 mb-8">
             <Link
               href="/"
-              className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors text-lg font-medium"
             >
-              <ArrowLeftIcon className="w-4 h-4" />
+              <ArrowLeftIcon className="w-5 h-5" />
               Back to Tools
             </Link>
           </div>
-
-          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
-            <div className="flex-1">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="text-4xl">{tool.logo}</div>
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12">
+            {/* Main Content */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-6 mb-6">
+                <div className="text-6xl shadow-lg rounded-2xl bg-gradient-to-br from-blue-100 to-purple-100 p-4">
+                  {tool.logo}
+                </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-3">
                     {tool.name}
                   </h1>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-6 flex-wrap">
                     <div className="flex items-center gap-1">
                       {renderStars(tool.rating)}
-                      <span className="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                      <span className="ml-2 text-lg font-semibold text-gray-900 dark:text-white">
                         {tool.rating}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                    <span className="text-lg text-gray-600 dark:text-gray-400">
                       ({tool.reviewCount} reviews)
                     </span>
-                    <span className="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-200">
+                    <span className="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900 px-3 py-1 text-sm font-semibold text-green-800 dark:text-green-200">
                       {tool.growth} growth
                     </span>
                   </div>
                 </div>
               </div>
-
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 {tool.description}
               </p>
-
-              <div className="flex flex-wrap gap-4">
-                <span className="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900 px-3 py-1 text-sm font-medium text-blue-800 dark:text-blue-200">
-                  {tool.category}
-                </span>
-                <span className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-sm font-medium text-gray-800 dark:text-gray-200">
-                  {tool.pricing}
-                </span>
-                <span className="inline-flex items-center rounded-full bg-purple-100 dark:bg-purple-900 px-3 py-1 text-sm font-medium text-purple-800 dark:text-purple-200">
-                  {tool.weeklyUsers.toLocaleString()} weekly users
-                </span>
+              {/* Long Description/About */}
+              {tool.longDescription && (
+                <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 mb-8 shadow-md">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">About {tool.name}</h3>
+                  <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">{tool.longDescription}</p>
+                </div>
+              )}
+              {/* Key Features */}
+              {tool.features && tool.features.length > 0 && (
+                <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 mb-8 shadow-md">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">Key Features</h3>
+                  <ul className="space-y-2">
+                    {tool.features.map((feature: string, idx: number) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-lg text-gray-700 dark:text-gray-300">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {/* Pros & Cons */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {tool.pros && tool.pros.length > 0 && (
+                  <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-6 shadow-md">
+                    <h3 className="text-xl font-bold text-green-700 dark:text-green-200 mb-3">Pros</h3>
+                    <ul className="space-y-2">
+                      {tool.pros.map((pro: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-lg text-gray-700 dark:text-gray-200">{pro}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {tool.cons && tool.cons.length > 0 && (
+                  <div className="bg-red-50 dark:bg-red-900/20 rounded-2xl p-6 shadow-md">
+                    <h3 className="text-xl font-bold text-red-700 dark:text-red-200 mb-3">Cons</h3>
+                    <ul className="space-y-2">
+                      {tool.cons.map((con: string, idx: number) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <div className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0 text-center">×</div>
+                          <span className="text-lg text-gray-700 dark:text-gray-200">{con}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
+              {/* Alternatives */}
+              {tool.alternatives && tool.alternatives.length > 0 && (
+                <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 mb-8 shadow-md">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Alternatives</h3>
+                  <div className="space-y-3">
+                    {tool.alternatives.map((alt: any) => (
+                      <div key={alt.name} className="flex items-center gap-4 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                        <div className="text-2xl">{alt.logo}</div>
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900 dark:text-white">{alt.name}</div>
+                          <div className="flex items-center gap-1">
+                            {renderStars(alt.rating)}
+                            <span className="text-base text-gray-600 dark:text-gray-400 ml-2">{alt.rating}/5</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* Tags */}
+              {tool.tags && tool.tags.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {tool.tags.map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-base font-medium text-gray-800 dark:text-gray-200"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* Tabs */}
+              <div className="flex gap-4 mb-8">
+                <button
+                  className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all duration-200 shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 hover:border-blue-300 ${activeTab === 'overview' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-blue-50'}`}
+                  onClick={() => setActiveTab('overview')}
+                >
+                  Overview
+                </button>
+                <button
+                  className={`px-6 py-3 rounded-xl text-lg font-semibold transition-all duration-200 shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 hover:border-blue-300 ${activeTab === 'reviews' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-blue-50'}`}
+                  onClick={() => setActiveTab('reviews')}
+                >
+                  Reviews
+                </button>
+              </div>
+              {/* Tab Content */}
+              {activeTab === 'overview' && (
+                <div className="animate-fade-in">
+                  <QuickVote 
+                    toolId={tool.id} 
+                    currentRating={tool.rating} 
+                    currentReviewCount={tool.reviewCount} 
+                    onVoteSubmitted={handleVoteSubmitted} 
+                  />
+                </div>
+              )}
+              {activeTab === 'reviews' && (
+                <div className="animate-fade-in">
+                  <ReviewForm 
+                    toolId={tool.id} 
+                    currentRating={tool.rating} 
+                    currentReviewCount={tool.reviewCount} 
+                    onReviewSubmitted={handleReviewSubmitted} 
+                  />
+                  <ReviewList
+                    reviews={reviews}
+                    onReviewUpdated={handleReviewUpdated}
+                  />
+                </div>
+              )}
             </div>
-
-            <div className="flex flex-col gap-3">
+            {/* Sidebar */}
+            <div className="flex flex-col gap-6 min-w-[320px] max-w-xs mx-auto lg:mx-0">
+              <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl p-6 shadow-md mb-2">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Quick Info</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">Category</span>
+                    <span className="font-medium text-gray-900 dark:text-white">{tool.category}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">Pricing</span>
+                    <span className="font-medium text-gray-900 dark:text-white">{tool.pricing}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">Weekly Users</span>
+                    <span className="font-medium text-gray-900 dark:text-white">{tool.weeklyUsers.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600 dark:text-gray-400">Growth</span>
+                    <span className="font-medium text-green-600">{tool.growth}</span>
+                  </div>
+                </div>
+              </div>
               <AffiliateLink
                 href={tool.website}
                 toolId={tool.id}
                 hasAffiliate={true}
-                className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md"
+                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Visit Website
-                <ExternalLinkIcon className="w-4 h-4" />
+                <ExternalLinkIcon className="w-6 h-6" />
               </AffiliateLink>
-              
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setIsLiked(!isLiked)}
-                  className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                    isLiked
-                      ? 'bg-red-50 border-red-200 text-red-600 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400'
-                      : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  <HeartIcon className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
-                  {isLiked ? 'Liked' : 'Like'}
-                </button>
-                
-                <button
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-                  onClick={async () => {
-                    await navigator.clipboard.writeText(window.location.href);
-                    setShareCopied(true);
-                    setTimeout(() => setShareCopied(false), 1500);
-                  }}
-                >
-                  <ShareIcon className="w-4 h-4" />
-                  {shareCopied ? 'Link Copied!' : 'Share'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
-            {/* Tabs */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 mb-8">
-              <div className="border-b border-gray-200 dark:border-gray-700">
-                <nav className="flex space-x-8 px-6">
-                  {['overview', 'reviews', 'alternatives'].map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`py-4 px-1 border-b-2 font-medium text-sm capitalize transition-colors ${
-                        activeTab === tab
-                          ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                          : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </nav>
-              </div>
-
-              <div className="p-6">
-                {activeTab === 'overview' && (
-                  <div className="space-y-6">
-                    {tool.longDescription && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                          About {tool.name}
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                          {tool.longDescription}
-                        </p>
-                      </div>
-                    )}
-
-                    {tool.features && tool.features.length > 0 && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                          Key Features
-                        </h3>
-                        <ul className="space-y-2">
-                          {tool.features.map((feature: string, index: number) => (
-                            <li key={index} className="flex items-start gap-3">
-                              <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {tool.pros && tool.pros.length > 0 && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                          Pros
-                        </h3>
-                        <ul className="space-y-2">
-                          {tool.pros.map((pro: string, index: number) => (
-                            <li key={index} className="flex items-start gap-3">
-                              <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300">{pro}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {tool.cons && tool.cons.length > 0 && (
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                          Cons
-                        </h3>
-                        <ul className="space-y-2">
-                          {tool.cons.map((con: string, index: number) => (
-                            <li key={index} className="flex items-start gap-3">
-                              <div className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0 text-center">×</div>
-                              <span className="text-gray-600 dark:text-gray-300">{con}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
+              <button
+                onClick={() => setIsLiked(!isLiked)}
+                className={`flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border transition-colors text-lg font-semibold shadow-sm ${
+                  isLiked
+                    ? 'bg-red-50 border-red-200 text-red-600 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400'
+                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700'
+                }`}
+              >
+                <HeartIcon className="w-6 h-6" />
+                {isLiked ? 'Liked' : 'Like'}
+              </button>
+              <button
+                onClick={async () => {
+                  await navigator.clipboard.writeText(window.location.href);
+                  setShareCopied(true);
+                  setTimeout(() => setShareCopied(false), 1500);
+                }}
+                className="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 text-lg font-semibold shadow-sm"
+              >
+                <ShareIcon className="w-6 h-6" />
+                {shareCopied ? (
+                  <>
+                    Copied!
+                    <CheckIcon className="w-5 h-5 text-green-500" />
+                  </>
+                ) : (
+                  'Share'
                 )}
-
-                {activeTab === 'reviews' && (
-                  <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                        Reviews ({reviews.length})
-                      </h3>
-                    </div>
-                    
-                    {/* Review Form */}
-                    <ReviewForm
-                      toolId={toolId}
-                      currentRating={tool.rating}
-                      currentReviewCount={tool.reviewCount}
-                      onReviewSubmitted={handleReviewSubmitted}
-                    />
-                    
-                    {/* Review List */}
-                    {loadingReviews ? (
-                      <div className="text-center py-8">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                        <p className="text-gray-600 dark:text-gray-400 mt-2">Loading reviews...</p>
-                      </div>
-                    ) : (
-                      <ReviewList 
-                        reviews={reviews} 
-                        onReviewUpdated={handleReviewUpdated}
-                      />
-                    )}
-                  </div>
-                )}
-
-                {activeTab === 'alternatives' && tool.alternatives && (
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                      Alternatives
-                    </h3>
-                    <div className="space-y-3">
-                      {tool.alternatives.map((alternative: any) => (
-                        <div key={alternative.name} className="flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
-                          <div className="text-2xl">{alternative.logo}</div>
-                          <div className="flex-1">
-                            <div className="font-medium text-gray-900 dark:text-white">
-                              {alternative.name}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              {renderStars(alternative.rating)}
-                              <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
-                                {alternative.rating}/5
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              </button>
             </div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Quick Vote */}
-            <QuickVote
-              toolId={toolId}
-              currentRating={tool.rating}
-              currentReviewCount={tool.reviewCount}
-              onVoteSubmitted={handleVoteSubmitted}
-            />
-
-            {/* Quick Info */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Quick Info
-              </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Category</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{tool.category}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Pricing</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{tool.pricing}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Weekly Users</span>
-                  <span className="font-medium text-gray-900 dark:text-white">{tool.weeklyUsers.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Growth</span>
-                  <span className="font-medium text-green-600">{tool.growth}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Tags */}
-            {tool.tags && tool.tags.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                  Tags
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {tool.tags.map((tag: string) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-3 py-1 text-sm font-medium text-gray-800 dark:text-gray-200"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>

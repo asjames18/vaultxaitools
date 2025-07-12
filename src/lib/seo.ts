@@ -246,6 +246,44 @@ export function generateAboutMetadata(): Metadata {
   };
 }
 
+// Generate metadata for blog page
+export function generateBlogMetadata(): Metadata {
+  return {
+    title: 'Blog - AI Tools Insights & Reviews',
+    description: 'Stay updated with the latest AI tools, industry insights, and expert reviews. Discover how AI is transforming various industries.',
+    keywords: [
+      'AI tools blog',
+      'artificial intelligence',
+      'AI reviews',
+      'tech insights',
+      'AI industry news',
+      'AI writing tools',
+      'AI design tools',
+      'AI development tools'
+    ],
+    openGraph: {
+      title: 'Blog - AI Tools Insights & Reviews',
+      description: 'Stay updated with the latest AI tools, industry insights, and expert reviews.',
+      type: 'website',
+      url: 'https://vaultxaitools.com/blog',
+      images: [
+        {
+          url: '/og-blog.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'AI Tools Blog - Insights & Reviews',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Blog - AI Tools Insights & Reviews',
+      description: 'Stay updated with the latest AI tools, industry insights, and expert reviews.',
+      images: ['/og-blog.jpg'],
+    },
+  };
+}
+
 // Generate structured data for tools
 export function generateToolStructuredData(tool: Tool) {
   const structuredData = {

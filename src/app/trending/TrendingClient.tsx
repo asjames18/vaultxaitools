@@ -131,144 +131,118 @@ export default function TrendingClient() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header Section */}
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                🔥 Trending AI Tools
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Discover the fastest-growing AI tools based on user interactions, ratings, and popularity
-              </p>
-            </div>
-            
-            {/* Time Filter */}
-            <div className="mt-4 sm:mt-0">
-              <div className="flex bg-gray-200 dark:bg-gray-700 rounded-lg p-1">
-                {[
-                  { key: "day", label: "Today" },
-                  { key: "week", label: "This Week" },
-                  { key: "month", label: "This Month" }
-                ].map((filter) => (
-                  <button
-                    key={filter.key}
-                    onClick={() => setTimeFilter(filter.key as "day" | "week" | "month")}
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                      timeFilter === filter.key
-                        ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm"
-                        : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                    }`}
-                  >
-                    {filter.label}
-                  </button>
-                ))}
-              </div>
-            </div>
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        {/* Enhanced Header Section */}
+        <div className="mb-12 text-center max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full px-4 py-2 mb-8 animate-fade-in shadow-sm">
+            <FireIcon className="w-5 h-5 text-orange-500" />
+            <span className="text-sm font-medium text-gray-700">Trending Now</span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6 animate-slide-up">
+            🔥 Trending AI Tools
+          </h2>
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-slide-up">
+            Discover the fastest-growing AI tools based on user interactions, ratings, and popularity.
+          </p>
+          {/* Enhanced Time Filter */}
+          <div className="flex justify-center gap-4 animate-fade-in">
+            {[{ key: "day", label: "Today" }, { key: "week", label: "This Week" }, { key: "month", label: "This Month" }].map((filter) => (
+              <button
+                key={filter.key}
+                onClick={() => setTimeFilter(filter.key as "day" | "week" | "month")}
+                className={`px-6 py-3 rounded-xl text-base font-semibold transition-all duration-200 shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 hover:border-blue-300 ${
+                  timeFilter === filter.key
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                    : "bg-white text-gray-700 hover:bg-blue-50"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Trending Categories */}
-        <div className="mb-12">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-            Trending Categories
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Enhanced Trending Categories */}
+        <div className="mb-16">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Trending Categories</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {trendingCategories.map((category) => (
               <div
                 key={category.name}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center text-2xl`}>
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center text-3xl shadow-md`}>
                     {category.icon}
                   </div>
-                  <div className="flex items-center gap-1 text-green-600">
-                    <TrendingUpIcon className="w-4 h-4" />
-                    <span className="text-sm font-medium">{category.growth}</span>
+                  <div className="flex items-center gap-1 text-green-600 font-semibold">
+                    <TrendingUpIcon className="w-5 h-5" />
+                    <span className="text-base">{category.growth}</span>
                   </div>
                 </div>
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                  {category.name}
-                </h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {category.toolCount} tools
-                </p>
-                <div className="mt-2">
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div 
-                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${Math.min((category.totalScore / 10) * 100, 100)}%` }}
-                    ></div>
-                  </div>
+                <h4 className="font-bold text-lg text-gray-900 dark:text-white mb-2 text-center">{category.name}</h4>
+                <p className="text-base text-gray-600 dark:text-gray-400 mb-4 text-center">{category.toolCount} tools</p>
+                <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                  <div 
+                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${Math.min((category.totalScore / 10) * 100, 100)}%` }}
+                  ></div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Trending Tools */}
+        {/* Enhanced Trending Tools */}
         <div>
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-            Trending Tools
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Trending Tools</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {trendingTools.map((tool, index) => {
               const badge = getTrendingBadge(index);
               return (
                 <div
                   key={tool.id}
-                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow relative group"
+                  className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative group"
+                  style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   {/* Trending Badge */}
-                  <div className={`absolute top-4 right-4 px-2 py-1 rounded-full text-xs font-medium ${badge.color}`}>
-                    {badge.text}
-                  </div>
-
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="text-3xl">{tool.logo}</div>
+                  <div className={`absolute top-6 right-6 px-3 py-1 rounded-full text-xs font-bold shadow-md ${badge.color} text-white`}>{badge.text}</div>
+                  <div className="p-8">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex items-center gap-4">
+                        <div className="text-4xl">{tool.logo}</div>
                         <div>
-                          <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                            {tool.name}
-                          </h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
-                            {tool.category}
-                          </p>
+                          <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors">{tool.name}</h4>
+                          <p className="text-base text-gray-600 dark:text-gray-400">{tool.category}</p>
                         </div>
                       </div>
                     </div>
-
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
-                      {tool.description}
-                    </p>
-
+                    <p className="text-gray-600 dark:text-gray-300 text-base mb-6 line-clamp-3 leading-relaxed">{tool.description}</p>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-1">
-                        {renderStars(tool.rating)}
-                        <span className="text-sm font-medium text-gray-900 dark:text-white ml-1">
-                          {tool.rating}
-                        </span>
+                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                        <EyeIcon className="w-5 h-5 text-blue-500" />
+                        <span className="font-semibold">{tool.weeklyUsers.toLocaleString()}</span> users
                       </div>
-                      <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center gap-2 text-green-600 font-semibold text-sm">
                         {renderGrowthIcon(tool.growth)}
-                        <span className="text-sm font-medium">{tool.growth}</span>
+                        {tool.growth}
                       </div>
                     </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
-                        <EyeIcon className="w-4 h-4" />
-                        <span className="text-sm">{tool.weeklyUsers.toLocaleString()}</span>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1">
+                        {renderStars(tool.rating)}
+                        <span className="text-base font-semibold text-gray-900 dark:text-white ml-1">{tool.rating}</span>
                       </div>
+                      <span className="text-base text-gray-600 dark:text-gray-400">({tool.reviewCount} reviews)</span>
+                    </div>
+                    <div className="mt-6 flex justify-end">
                       <Link
                         href={`/tool/${tool.id}`}
-                        className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl text-base font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                       >
-                        View Details →
+                        View Details
+                        <RocketIcon className="w-5 h-5" />
                       </Link>
                     </div>
                   </div>
