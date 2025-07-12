@@ -5,31 +5,6 @@ import Link from "next/link";
 export default function AboutClient() {
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-              VaultX AI Tools
-            </h1>
-            <nav className="flex space-x-8">
-              <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                Home
-              </Link>
-              <Link href="/categories" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                Categories
-              </Link>
-              <Link href="/trending" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                Trending
-              </Link>
-              <Link href="/about" className="text-blue-600 dark:text-blue-400 font-medium">
-                About
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -166,7 +141,7 @@ export default function AboutClient() {
                 <span className="text-2xl text-gray-600 dark:text-gray-400">👨‍💻</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Alex Chen
+                Antonio James
               </h3>
               <p className="text-blue-600 dark:text-blue-400 mb-2">Founder & CEO</p>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
@@ -179,7 +154,7 @@ export default function AboutClient() {
                 <span className="text-2xl text-gray-600 dark:text-gray-400">👩‍🎨</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Sarah Johnson
+                Rasheena James
               </h3>
               <p className="text-blue-600 dark:text-blue-400 mb-2">Head of Curation</p>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
@@ -192,11 +167,11 @@ export default function AboutClient() {
                 <span className="text-2xl text-gray-600 dark:text-gray-400">👨‍💼</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                Mike Rodriguez
+                Dewayne Brady
               </h3>
-              <p className="text-blue-600 dark:text-blue-400 mb-2">Lead Developer</p>
+              <p className="text-blue-600 dark:text-blue-400 mb-2">Lead Marketer & Tester</p>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
-                Full-stack developer focused on creating the best user experience for discovering AI tools.
+                Lead marketer and tester focused on data-driven growth and flawless AI product experiences.
               </p>
             </div>
           </div>
