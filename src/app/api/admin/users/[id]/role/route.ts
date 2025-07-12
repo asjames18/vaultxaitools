@@ -1,9 +1,8 @@
-// @ts-nocheck
 import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(request, { params }) {
-  const userId = params.id;
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id: userId } = await params;
   try {
     const { role } = await request.json();
 

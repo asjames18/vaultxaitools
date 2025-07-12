@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/auth';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { getUserRole } from '@/lib/auth';
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const userId = params.id;
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id: userId } = await params;
   try {
     const { password } = await request.json();
 
