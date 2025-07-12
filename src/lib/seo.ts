@@ -392,3 +392,20 @@ export function generateOrganizationStructuredData() {
 
   return structuredData;
 } 
+
+// Generate metadata for admin pages
+export function generateAdminMetadata(pageTitle: string): Metadata {
+  return {
+    title: `${pageTitle} - Admin Dashboard`,
+    description: 'Admin dashboard for managing VaultX AI Tools content and settings.',
+    robots: {
+      index: false,
+      follow: false,
+    },
+    openGraph: {
+      title: `${pageTitle} - Admin Dashboard`,
+      description: 'Admin dashboard for managing VaultX AI Tools content and settings.',
+      type: 'website',
+    },
+  };
+} 

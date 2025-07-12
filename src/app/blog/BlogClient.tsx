@@ -2,106 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
-  date: string;
-  category: string;
-  readTime: string;
-  featured: boolean;
-  image?: string;
-  tags: string[];
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    id: '1',
-    title: 'The Future of AI Writing: How ChatGPT is Revolutionizing Content Creation',
-    excerpt: 'Discover how AI writing tools are transforming the way we create content, from blog posts to marketing copy.',
-    content: 'AI writing tools have fundamentally changed how we approach content creation...',
-    author: 'Sarah Johnson',
-    date: '2024-01-15',
-    category: 'Writing',
-    readTime: '5 min read',
-    featured: true,
-    tags: ['AI Writing', 'ChatGPT', 'Content Creation', 'Productivity']
-  },
-  {
-    id: '2',
-    title: 'Top 10 AI Design Tools Every Designer Should Know in 2024',
-    excerpt: 'From Midjourney to DALL-E, explore the most powerful AI design tools that are reshaping the creative industry.',
-    content: 'The design industry is experiencing an AI revolution...',
-    author: 'Mike Chen',
-    date: '2024-01-12',
-    category: 'Design',
-    readTime: '8 min read',
-    featured: true,
-    tags: ['AI Design', 'Midjourney', 'DALL-E', 'Creative Tools']
-  },
-  {
-    id: '3',
-    title: 'How GitHub Copilot is Changing the Way Developers Code',
-    excerpt: 'An in-depth look at how AI-powered coding assistants are boosting developer productivity and code quality.',
-    content: 'GitHub Copilot has become an essential tool for developers...',
-    author: 'David Lee',
-    date: '2024-01-10',
-    category: 'Development',
-    readTime: '6 min read',
-    featured: false,
-    tags: ['GitHub Copilot', 'AI Coding', 'Development', 'Productivity']
-  },
-  {
-    id: '4',
-    title: 'AI Marketing Tools: The Complete Guide to Automating Your Marketing',
-    excerpt: 'Learn how AI marketing tools can help you automate campaigns, analyze data, and boost ROI.',
-    content: 'Marketing automation with AI is no longer a luxury...',
-    author: 'Emily Rodriguez',
-    date: '2024-01-08',
-    category: 'Marketing',
-    readTime: '7 min read',
-    featured: false,
-    tags: ['AI Marketing', 'Automation', 'ROI', 'Campaigns']
-  },
-  {
-    id: '5',
-    title: 'The Rise of AI Video Generation: What You Need to Know',
-    excerpt: 'Explore the latest developments in AI video generation and how it\'s transforming content creation.',
-    content: 'Video content is king in today\'s digital landscape...',
-    author: 'Alex Thompson',
-    date: '2024-01-05',
-    category: 'Video',
-    readTime: '4 min read',
-    featured: false,
-    tags: ['AI Video', 'Content Creation', 'Synthesia', 'Runway']
-  },
-  {
-    id: '6',
-    title: 'AI Productivity Tools: Boost Your Workflow in 2024',
-    excerpt: 'Discover the best AI productivity tools that can help you work smarter, not harder.',
-    content: 'Productivity is the key to success in today\'s fast-paced world...',
-    author: 'Lisa Park',
-    date: '2024-01-03',
-    category: 'Productivity',
-    readTime: '5 min read',
-    featured: false,
-    tags: ['Productivity', 'Workflow', 'Automation', 'Efficiency']
-  }
-];
-
-const categories = [
-  'All',
-  'Writing',
-  'Design',
-  'Development',
-  'Marketing',
-  'Video',
-  'Productivity',
-  'Language'
-];
+import { blogPosts, categories, BlogPost } from '@/data/blog';
 
 export default function BlogClient() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -179,40 +80,41 @@ export default function BlogClient() {
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {featuredPosts.map((post) => (
-                <article
-                  key={post.id}
-                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                >
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full">
-                        {post.category}
-                      </span>
-                      <span className="text-gray-500 dark:text-gray-400 text-sm">
-                        {post.readTime}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                          {post.author.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {post.author}
+                <Link key={post.id} href={`/blog/${post.id}`}>
+                  <article
+                    className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer"
+                  >
+                    <div className="p-6">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full">
+                          {post.category}
+                        </span>
+                        <span className="text-gray-500 dark:text-gray-400 text-sm">
+                          {post.readTime}
                         </span>
                       </div>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {new Date(post.date).toLocaleDateString()}
-                      </span>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                            {post.author.split(' ').map(n => n[0]).join('')}
+                          </div>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                            {post.author}
+                          </span>
+                        </div>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                          {new Date(post.date).toLocaleDateString()}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </Link>
               ))}
             </div>
           </div>
@@ -225,35 +127,36 @@ export default function BlogClient() {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {regularPosts.map((post) => (
-              <article
-                key={post.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden"
-              >
-                <div className="p-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full">
-                      {post.category}
-                    </span>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs">
-                      {post.readTime}
-                    </span>
+              <Link key={post.id} href={`/blog/${post.id}`}>
+                <article
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+                >
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full">
+                        {post.category}
+                      </span>
+                      <span className="text-gray-500 dark:text-gray-400 text-xs">
+                        {post.readTime}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        {post.author}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {new Date(post.date).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {post.author}
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {new Date(post.date).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
         </div>

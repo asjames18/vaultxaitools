@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { tools } from '@/data/tools';
 import { categories } from '@/data';
+import { blogPosts } from '@/data/blog';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://vaultxaitools.com';
@@ -55,5 +56,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...toolPages, ...categoryPages];
+  // Blog post pages
+  const blogPostPages = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.id}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...toolPages, ...categoryPages, ...blogPostPages];
 } 
