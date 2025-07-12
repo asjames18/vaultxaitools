@@ -108,6 +108,7 @@ export default function Navigation() {
     { name: 'Trending', href: '/trending' },
     { name: 'Blog', href: '/blog' },
     { name: 'Documentation', href: '/documentation' },
+    { name: 'Status', href: '/status' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
     // Admin link will be conditionally rendered below
