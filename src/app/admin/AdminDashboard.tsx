@@ -21,7 +21,7 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ tools, categories, user }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact'>('tools');
   const [showToolForm, setShowToolForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
@@ -197,6 +197,16 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                 }`}
               >
                 👥 Users
+              </button>
+              <button
+                onClick={() => setActiveTab('contact')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'contact'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                📧 Contact Messages
               </button>
               <a
                 href="/admin/blog"
@@ -465,6 +475,40 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
 
         {activeTab === 'users' && (
           <UserManagement />
+        )}
+
+        {activeTab === 'contact' && (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                📧 Contact Messages
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Manage contact form submissions and customer inquiries
+              </p>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  Contact Message Management
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                  View and manage all contact form submissions from your website visitors.
+                </p>
+                <a
+                  href="/admin/contact"
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium inline-block"
+                >
+                  Open Contact Management
+                </a>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* Forms */}
