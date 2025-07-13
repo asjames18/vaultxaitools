@@ -111,6 +111,7 @@ export default function Navigation() {
     // { name: 'Status', href: '/status' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
+    // { name: 'Cookies', href: '/cookies' },
     // Admin link will be conditionally rendered below
   ];
 
