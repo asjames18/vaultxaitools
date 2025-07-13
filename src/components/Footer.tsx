@@ -21,9 +21,9 @@ export default function Footer() {
       { name: 'Contact', href: '/contact' },
     ],
     support: [
-      { name: 'Help Center', href: '/help' },
+      // { name: 'Help Center', href: '/help' },
       { name: 'Documentation', href: '/docs' },
-      { name: 'Community', href: '/community' },
+      // { name: 'Community', href: '/community' },
       { name: 'Status', href: '/status' },
     ],
     legal: [
