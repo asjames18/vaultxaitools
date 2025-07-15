@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { addReviewToDB, updateToolRatingInDB } from '@/data';
 import type { Database } from '@/lib/database.types';
+import AccessibleRating from './AccessibleRating';
 
 type DatabaseReviewInsert = Database['public']['Tables']['reviews']['Insert'];
 
@@ -13,22 +14,6 @@ interface ReviewFormProps {
   onReviewSubmitted: () => void;
 }
 
-const StarIcon = ({ className, filled }: { className?: string; filled: boolean }) => (
-  <svg 
-    className={className} 
-    fill={filled ? "currentColor" : "none"} 
-    stroke="currentColor" 
-    viewBox="0 0 24 24"
-  >
-    <path 
-      strokeLinecap="round" 
-      strokeLinejoin="round" 
-      strokeWidth={2} 
-      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" 
-    />
-  </svg>
-);
-
 export default function ReviewForm({ 
   toolId, 
   currentRating, 
@@ -36,7 +21,6 @@ export default function ReviewForm({
   onReviewSubmitted 
 }: ReviewFormProps) {
   const [rating, setRating] = useState(0);
-  const [hoveredRating, setHoveredRating] = useState(0);
   const [comment, setComment] = useState('');
   const [userName, setUserName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -102,39 +86,16 @@ export default function ReviewForm({
     }
   };
 
-  const renderStars = () => {
-    return Array.from({ length: 5 }, (_, i) => {
-      const starValue = i + 1;
-      const isFilled = starValue <= (hoveredRating || rating);
-      
-      return (
-        <button
-          key={i}
-          type="button"
-          className="p-1 transition-colors"
-          onClick={() => setRating(starValue)}
-          onMouseEnter={() => setHoveredRating(starValue)}
-          onMouseLeave={() => setHoveredRating(0)}
-        >
-          <StarIcon
-            className={`w-6 h-6 ${
-              isFilled 
-                ? 'text-yellow-500' 
-                : 'text-gray-300 hover:text-yellow-400'
-            }`}
-            filled={isFilled}
-          />
-        </button>
-      );
-    });
-  };
-
   if (success) {
     return (
-      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
+      <div 
+        className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6"
+        role="alert"
+        aria-live="polite"
+      >
         <div className="flex items-center">
           <div className="flex-shrink-0">
-            <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+            <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
           </div>
@@ -165,24 +126,32 @@ export default function ReviewForm({
             id="userName"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white focus:outline-none"
             placeholder="Enter your name"
             maxLength={50}
+            required
+            aria-describedby={error && error.includes('name') ? 'error-message' : undefined}
           />
         </div>
 
         {/* Rating */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <fieldset>
+          <legend className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Rating *
-          </label>
-          <div className="flex items-center gap-1">
-            {renderStars()}
-            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
+          </legend>
+          <div className="flex items-center gap-3">
+            <AccessibleRating
+              rating={rating}
+              interactive={true}
+              onRatingChange={setRating}
+              size="lg"
+              aria-label="Select your rating for this tool"
+            />
+            <span className="text-sm text-gray-600 dark:text-gray-400">
               {rating ? `${rating} out of 5` : 'Select rating'}
             </span>
           </div>
-        </div>
+        </fieldset>
 
         {/* Comment */}
         <div>
@@ -194,19 +163,37 @@ export default function ReviewForm({
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none focus:outline-none"
             placeholder="Share your experience with this tool..."
             maxLength={1000}
+            required
+            aria-describedby={error && error.includes('comment') ? 'error-message' : undefined}
           />
-          <div className="mt-1 text-xs text-gray-500 dark:text-gray-400 text-right">
+          <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
             {comment.length}/1000 characters
           </div>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="text-red-600 dark:text-red-400 text-sm">
-            {error}
+          <div 
+            id="error-message"
+            className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3"
+            role="alert"
+            aria-live="polite"
+          >
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                  {error}
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
@@ -214,7 +201,7 @@ export default function ReviewForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           {isSubmitting ? 'Submitting...' : 'Submit Review'}
         </button>

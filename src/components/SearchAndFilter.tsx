@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { Tool, Category } from '@/data';
+import AccessibleRating from './AccessibleRating';
 
 // Icons
 const MagnifyingGlassIcon = ({ className }: { className?: string }) => (
@@ -19,12 +20,6 @@ const FilterIcon = ({ className }: { className?: string }) => (
 const XMarkIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-  </svg>
-);
-
-const StarIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
   </svg>
 );
 
@@ -50,6 +45,8 @@ export default function SearchAndFilter({
   const [pricingFilter, setPricingFilter] = useState<string>('all');
   const [showFilters, setShowFilters] = useState(false);
   const lastFilteredToolsRef = useRef<Tool[]>([]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const filterPanelRef = useRef<HTMLDivElement>(null);
 
   // Memoized search and filter logic
   const filteredTools = useMemo(() => {
@@ -122,8 +119,6 @@ export default function SearchAndFilter({
     return results;
   }, [tools, searchQuery, selectedCategories, sortBy, minRating, pricingFilter]);
 
-
-
   // Handle category selection
   const toggleCategory = useCallback((category: string) => {
     setSelectedCategories(prev => {
@@ -190,18 +185,26 @@ export default function SearchAndFilter({
     <div className={`space-y-6 ${className}`}>
       {/* Search Bar */}
       <div className="relative">
+        <label htmlFor="search-input" className="sr-only">
+          Search AI tools by name, description, category, or features
+        </label>
         <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                  type="text"
-                  placeholder="Search AI tools by name, description, category, or features..."
-                  value={searchQuery}
-                  onChange={handleSearchChange}
-                  className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-sm search-input"
-                />
+        <input
+          ref={searchInputRef}
+          id="search-input"
+          type="text"
+          placeholder="Search AI tools by name, description, category, or features..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-sm search-input"
+          aria-describedby={searchQuery ? "search-clear-button" : undefined}
+        />
         {searchQuery && (
           <button
+            id="search-clear-button"
             onClick={() => setSearchQuery('')}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+            aria-label="Clear search"
           >
             <XMarkIcon className="w-5 h-5" />
           </button>
@@ -214,16 +217,18 @@ export default function SearchAndFilter({
           {showAdvancedFilters && (
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium filter-toggle ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium filter-toggle focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
                 showFilters 
                   ? 'bg-blue-600 text-white' 
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
               }`}
+              aria-expanded={showFilters}
+              aria-controls="filter-panel"
             >
               <FilterIcon className="w-4 h-4" />
               Filters
               {activeFilterCount > 0 && (
-                <span className="bg-white text-blue-600 text-xs font-bold px-2 py-1 rounded-full">
+                <span className="bg-white text-blue-600 text-xs font-bold px-2 py-1 rounded-full" aria-label={`${activeFilterCount} active filters`}>
                   {activeFilterCount}
                 </span>
               )}
@@ -231,10 +236,15 @@ export default function SearchAndFilter({
           )}
 
           {/* Sort Dropdown */}
+          <label htmlFor="sort-select" className="sr-only">
+            Sort tools by
+          </label>
           <select
+            id="sort-select"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
             className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200"
+            aria-label="Sort tools by"
           >
             <option value="relevance">Sort by Relevance</option>
             <option value="rating">Sort by Rating</option>
@@ -244,39 +254,59 @@ export default function SearchAndFilter({
         </div>
 
         {/* Results Count */}
-        <div className="text-sm text-gray-600 dark:text-gray-400">
-          {filteredTools.length} of {tools.length} tools
+        <div className="text-sm text-gray-600 dark:text-gray-400" aria-live="polite" aria-atomic="true">
+          <span id="results-count">{filteredTools.length}</span> of {tools.length} tools
         </div>
       </div>
 
       {/* Advanced Filters */}
       {showAdvancedFilters && showFilters && (
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 space-y-6">
+        <section
+          ref={filterPanelRef}
+          id="filter-panel"
+          role="region"
+          aria-label="Filter tools"
+          className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 space-y-6"
+        >
           {/* Categories */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Categories</h3>
-            <div className="flex flex-wrap gap-2">
+          <fieldset>
+            <legend className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+              Categories
+            </legend>
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Select categories">
               {categories.map((category) => (
-                <button
+                <label
                   key={category.name}
-                  onClick={() => toggleCategory(category.name)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 ${
                     selectedCategories.includes(category.name)
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                   }`}
                 >
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category.name)}
+                    onChange={() => toggleCategory(category.name)}
+                    className="sr-only"
+                    aria-label={`Filter by ${category.name} category`}
+                  />
                   {category.icon} {category.name}
-                </button>
+                </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           {/* Rating Filter */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Minimum Rating</h3>
+          <fieldset>
+            <legend className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+              Minimum Rating
+            </legend>
             <div className="flex items-center gap-4">
+              <label htmlFor="rating-slider" className="sr-only">
+                Minimum rating: {minRating} stars
+              </label>
               <input
+                id="rating-slider"
                 type="range"
                 min="0"
                 max="5"
@@ -284,61 +314,80 @@ export default function SearchAndFilter({
                 value={minRating}
                 onChange={(e) => setMinRating(parseFloat(e.target.value))}
                 className="flex-1"
+                aria-valuemin={0}
+                aria-valuemax={5}
+                aria-valuenow={minRating}
+                aria-valuetext={`${minRating} stars`}
               />
-              <div className="flex items-center gap-1 min-w-[60px]">
-                <StarIcon className="w-4 h-4 text-yellow-500 fill-current" />
-                <span className="text-sm font-medium">{minRating}+</span>
+              <div className="flex items-center gap-1 min-w-[60px]" aria-hidden="true">
+                <AccessibleRating rating={minRating} size="sm" aria-label={`Minimum rating: ${minRating} stars`} />
+                <span className="text-sm font-medium">+</span>
               </div>
             </div>
-          </div>
+          </fieldset>
 
           {/* Pricing Filter */}
-          <div>
-            <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">Pricing</h3>
-            <div className="flex flex-wrap gap-2">
+          <fieldset>
+            <legend className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+              Pricing
+            </legend>
+            <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Select pricing type">
               {[
                 { value: 'all', label: 'All' },
                 { value: 'free', label: 'Free' },
                 { value: 'freemium', label: 'Freemium' },
                 { value: 'paid', label: 'Paid' }
               ].map((option) => (
-                <button
+                <label
                   key={option.value}
-                  onClick={() => setPricingFilter(option.value)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 ${
                     pricingFilter === option.value
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                   }`}
                 >
+                  <input
+                    type="radio"
+                    name="pricing-filter"
+                    value={option.value}
+                    checked={pricingFilter === option.value}
+                    onChange={(e) => setPricingFilter(e.target.value)}
+                    className="sr-only"
+                    aria-label={`Filter by ${option.label} pricing`}
+                  />
                   {option.label}
-                </button>
+                </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           {/* Clear Filters */}
           {activeFilterCount > 0 && (
             <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={clearFilters}
-                className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
+                className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                aria-label={`Clear all ${activeFilterCount} active filters`}
               >
                 Clear all filters
               </button>
             </div>
           )}
-        </div>
+        </section>
       )}
 
       {/* Active Filters Display */}
       {activeFilterCount > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2" role="region" aria-label="Active filters">
           <span className="text-sm text-gray-600 dark:text-gray-400">Active filters:</span>
           {searchQuery && (
             <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">
               Search: "{searchQuery}"
-              <button onClick={() => setSearchQuery('')} className="ml-1">
+              <button 
+                onClick={() => setSearchQuery('')} 
+                className="ml-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 rounded"
+                aria-label="Remove search filter"
+              >
                 <XMarkIcon className="w-3 h-3" />
               </button>
             </span>
@@ -346,7 +395,11 @@ export default function SearchAndFilter({
           {selectedCategories.map((category) => (
             <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">
               {category}
-              <button onClick={() => toggleCategory(category)} className="ml-1">
+              <button 
+                onClick={() => toggleCategory(category)} 
+                className="ml-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 rounded"
+                aria-label={`Remove ${category} filter`}
+              >
                 <XMarkIcon className="w-3 h-3" />
               </button>
             </span>
@@ -354,7 +407,11 @@ export default function SearchAndFilter({
           {minRating > 0 && (
             <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">
               Rating: {minRating}+
-              <button onClick={() => setMinRating(0)} className="ml-1">
+              <button 
+                onClick={() => setMinRating(0)} 
+                className="ml-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 rounded"
+                aria-label="Remove rating filter"
+              >
                 <XMarkIcon className="w-3 h-3" />
               </button>
             </span>
@@ -362,7 +419,11 @@ export default function SearchAndFilter({
           {pricingFilter !== 'all' && (
             <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">
               Pricing: {pricingFilter}
-              <button onClick={() => setPricingFilter('all')} className="ml-1">
+              <button 
+                onClick={() => setPricingFilter('all')} 
+                className="ml-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 rounded"
+                aria-label="Remove pricing filter"
+              >
                 <XMarkIcon className="w-3 h-3" />
               </button>
             </span>
