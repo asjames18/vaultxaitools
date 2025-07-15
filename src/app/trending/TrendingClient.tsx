@@ -1,15 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { getToolsFromDB } from "@/data";
+import { useState } from "react";
 import type { Tool } from "@/data/tools";
 import { 
-  getTrendingTools, 
-  getTrendingCategories, 
-  getTrendingInsights, 
   getTrendingBadge,
-  getTimeBasedTrending,
   type TrendingCategory 
 } from "@/lib/trending";
 
@@ -52,47 +47,45 @@ const TrendingDownIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export default function TrendingClient() {
+interface TrendingClientProps {
+  tools: Tool[];
+  trendingTools: Tool[];
+  trendingCategories: TrendingCategory[];
+  trendingInsights: {
+    mostPopular: Tool;
+    fastestGrowing: Tool;
+    highestRated: Tool;
+    mostReviewed: Tool;
+  };
+  dailyTrending: Tool[];
+  weeklyTrending: Tool[];
+  monthlyTrending: Tool[];
+}
+
+export default function TrendingClient({ 
+  tools,
+  trendingTools,
+  trendingCategories,
+  trendingInsights,
+  dailyTrending,
+  weeklyTrending,
+  monthlyTrending
+}: TrendingClientProps) {
   const [timeFilter, setTimeFilter] = useState<"day" | "week" | "month">("week");
-  const [tools, setTools] = useState<Tool[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [trendingTools, setTrendingTools] = useState<Tool[]>([]);
-  const [trendingCategories, setTrendingCategories] = useState<TrendingCategory[]>([]);
-  const [trendingInsights, setTrendingInsights] = useState<any>(null);
 
-  // Load tools from database
-  useEffect(() => {
-    const loadTools = async () => {
-      try {
-        setLoading(true);
-        const toolsData = await getToolsFromDB();
-        setTools(toolsData);
-      } catch (error) {
-        console.error('Error loading tools:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Get trending tools based on time filter
+  const getCurrentTrendingTools = () => {
+    switch (timeFilter) {
+      case 'day':
+        return dailyTrending;
+      case 'month':
+        return monthlyTrending;
+      default:
+        return weeklyTrending;
+    }
+  };
 
-    loadTools();
-  }, []);
-
-  // Calculate trending data based on time filter
-  useEffect(() => {
-    if (tools.length === 0) return;
-
-    // Get trending tools based on time filter
-    const trendingToolsData = getTimeBasedTrending(tools, timeFilter);
-    setTrendingTools(trendingToolsData);
-
-    // Get trending categories
-    const trendingCategoriesData = getTrendingCategories(tools);
-    setTrendingCategories(trendingCategoriesData);
-
-    // Get trending insights
-    const insights = getTrendingInsights(tools);
-    setTrendingInsights(insights);
-  }, [tools, timeFilter]);
+  const currentTrendingTools = getCurrentTrendingTools();
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -119,7 +112,7 @@ export default function TrendingClient() {
     return <TrendingUpIcon className="w-4 h-4 text-gray-400" />;
   };
 
-  if (loading) {
+  if (tools.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
@@ -198,51 +191,59 @@ export default function TrendingClient() {
         <div>
           <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">Trending Tools</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {trendingTools.map((tool, index) => {
+            {currentTrendingTools.map((tool, index) => {
               const badge = getTrendingBadge(index);
               return (
                 <div
                   key={tool.id}
-                  className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative group"
-                  style={{ animationDelay: `${index * 0.05}s` }}
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-200 hover:shadow-lg hover:-translate-y-1 group relative"
                 >
                   {/* Trending Badge */}
-                  <div className={`absolute top-6 right-6 px-3 py-1 rounded-full text-xs font-bold shadow-md ${badge.color} text-white`}>{badge.text}</div>
-                  <div className="p-8">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="flex items-center gap-4">
-                        <div className="text-4xl">{tool.logo}</div>
+                  <div className={`absolute top-4 right-4 px-2 py-1 rounded-full text-xs font-medium ${badge.color}`}>
+                    {badge.text}
+                  </div>
+
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="text-3xl">{tool.logo}</div>
                         <div>
-                          <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 transition-colors">{tool.name}</h4>
-                          <p className="text-base text-gray-600 dark:text-gray-400">{tool.category}</p>
+                          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                            {tool.name}
+                          </h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400">
+                            {tool.category}
+                          </p>
                         </div>
                       </div>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-base mb-6 line-clamp-3 leading-relaxed">{tool.description}</p>
+
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+                      {tool.description}
+                    </p>
+
                     <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                        <EyeIcon className="w-5 h-5 text-blue-500" />
-                        <span className="font-semibold">{tool.weeklyUsers.toLocaleString()}</span> users
-                      </div>
-                      <div className="flex items-center gap-2 text-green-600 font-semibold text-sm">
-                        {renderGrowthIcon(tool.growth)}
-                        {tool.growth}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
                       <div className="flex items-center gap-1">
                         {renderStars(tool.rating)}
-                        <span className="text-base font-semibold text-gray-900 dark:text-white ml-1">{tool.rating}</span>
+                        <span className="text-sm font-medium text-gray-900 dark:text-white ml-1">
+                          {tool.rating}
+                        </span>
                       </div>
-                      <span className="text-base text-gray-600 dark:text-gray-400">({tool.reviewCount} reviews)</span>
+                      <div className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                        <TrendingUpIcon className="w-4 h-4" />
+                        <span className="text-sm font-medium text-green-600">{tool.growth}</span>
+                      </div>
                     </div>
-                    <div className="mt-6 flex justify-end">
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        {tool.weeklyUsers.toLocaleString()} weekly users
+                      </span>
                       <Link
                         href={`/tool/${tool.id}`}
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl text-base font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                        className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors"
                       >
-                        View Details
-                        <RocketIcon className="w-5 h-5" />
+                        View Details →
                       </Link>
                     </div>
                   </div>
@@ -251,73 +252,6 @@ export default function TrendingClient() {
             })}
           </div>
         </div>
-
-        {/* Stats Section */}
-        {trendingInsights && (
-          <div className="mt-16 bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-              Trending Insights
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                  <FireIcon className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                  Most Popular
-                </h4>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {trendingInsights.mostPopular?.name || 'N/A'}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  {trendingInsights.mostPopular?.weeklyUsers.toLocaleString()} users
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
-                  <RocketIcon className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                  Fastest Growing
-                </h4>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {trendingInsights.fastestGrowing?.name || 'N/A'}
-                </p>
-                <p className="text-xs text-green-600 mt-1">
-                  {trendingInsights.fastestGrowing?.growth}
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center">
-                  <StarIcon className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                  Highest Rated
-                </h4>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {trendingInsights.highestRated?.name || 'N/A'}
-                </p>
-                <p className="text-xs text-yellow-600 mt-1">
-                  ⭐ {trendingInsights.highestRated?.rating}/5
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                  <EyeIcon className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                  Most Reviewed
-                </h4>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  {trendingInsights.mostReviewed?.name || 'N/A'}
-                </p>
-                <p className="text-xs text-purple-600 mt-1">
-                  {trendingInsights.mostReviewed?.reviewCount} reviews
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </main>
   );

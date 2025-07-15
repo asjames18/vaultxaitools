@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Tool = require('../models/Tool');
 const { validateReview } = require('../middleware/validation');
-const { auth } = require('../middleware/auth');
+const { authMiddleware } = require('../middleware/auth-jwt');
 
 // GET /api/reviews - Get all reviews with pagination
 router.get('/', async (req, res) => {
@@ -129,36 +129,32 @@ router.get('/user/:userId', async (req, res) => {
 });
 
 // POST /api/reviews - Add review to tool
-router.post('/', auth, validateReview, async (req, res) => {
+router.post('/', authMiddleware, validateReview, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: req.user missing' });
+  }
   try {
     const { toolId, rating, comment } = req.body;
-    
     if (!toolId) {
       return res.status(400).json({ error: 'Tool ID is required' });
     }
-    
     const tool = await Tool.findById(toolId);
     if (!tool) {
       return res.status(404).json({ error: 'Tool not found' });
     }
-    
     // Check if user already reviewed this tool
     const existingReview = tool.reviews.find(
       review => review.user.toString() === req.user.id
     );
-    
     if (existingReview) {
       return res.status(400).json({ error: 'You have already reviewed this tool' });
     }
-    
     await tool.addReview(req.user.id, rating, comment);
-    
     // Update user's review count
     const User = require('../models/User');
     await User.findByIdAndUpdate(req.user.id, {
       $inc: { reviewCount: 1 }
     });
-    
     res.status(201).json({ message: 'Review added successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Error adding review', message: error.message });
@@ -166,32 +162,29 @@ router.post('/', auth, validateReview, async (req, res) => {
 });
 
 // PUT /api/reviews/:reviewId - Update review
-router.put('/:reviewId', auth, validateReview, async (req, res) => {
+router.put('/:reviewId', authMiddleware, validateReview, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: req.user missing' });
+  }
   try {
     const { reviewId } = req.params;
     const { rating, comment } = req.body;
-    
     const tool = await Tool.findOne({ 'reviews._id': reviewId });
     if (!tool) {
       return res.status(404).json({ error: 'Review not found' });
     }
-    
     const review = tool.reviews.id(reviewId);
     if (!review) {
       return res.status(404).json({ error: 'Review not found' });
     }
-    
     // Check if user owns this review
     if (review.user.toString() !== req.user.id) {
       return res.status(403).json({ error: 'You can only edit your own reviews' });
     }
-    
     review.rating = rating;
     review.comment = comment;
     review.date = new Date();
-    
     await tool.save();
-    
     res.json({ message: 'Review updated successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Error updating review', message: error.message });
@@ -199,34 +192,31 @@ router.put('/:reviewId', auth, validateReview, async (req, res) => {
 });
 
 // DELETE /api/reviews/:reviewId - Delete review
-router.delete('/:reviewId', auth, async (req, res) => {
+router.delete('/:reviewId', authMiddleware, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: req.user missing' });
+  }
   try {
     const { reviewId } = req.params;
-    
     const tool = await Tool.findOne({ 'reviews._id': reviewId });
     if (!tool) {
       return res.status(404).json({ error: 'Review not found' });
     }
-    
     const review = tool.reviews.id(reviewId);
     if (!review) {
       return res.status(404).json({ error: 'Review not found' });
     }
-    
     // Check if user owns this review or is admin
     if (review.user.toString() !== req.user.id && req.user.role !== 'admin') {
       return res.status(403).json({ error: 'You can only delete your own reviews' });
     }
-    
     review.remove();
     await tool.save();
-    
     // Update user's review count
     const User = require('../models/User');
     await User.findByIdAndUpdate(review.user, {
       $inc: { reviewCount: -1 }
     });
-    
     res.json({ message: 'Review deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Error deleting review', message: error.message });

@@ -17,14 +17,40 @@ export async function GET() {
     return NextResponse.json({ error: 'user not allowed' }, { status: 403 });
   }
 
-  // Use admin client for listing users
-  const adminClient = createAdminClient();
-  const { data, error } = await adminClient.auth.admin.listUsers();
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  // Check if service role key is configured
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY === 'placeholder-service-key') {
+    console.log('Service role key not configured, returning mock data');
+    return NextResponse.json({ 
+      users: [
+        {
+          id: user?.id || 'mock-user-id',
+          email: user?.email || 'mock@example.com',
+          role: 'admin',
+          created_at: user?.created_at || new Date().toISOString()
+        }
+      ],
+      message: 'Mock data - configure SUPABASE_SERVICE_ROLE_KEY for real admin functionality'
+    });
   }
 
-  // Return users as an array
-  return NextResponse.json({ users: data?.users || [] });
+  try {
+    // Use admin client for listing users
+    const adminClient = createAdminClient();
+    const { data, error } = await adminClient.auth.admin.listUsers();
+
+    if (error) {
+      console.error('Admin client error:', error);
+      return NextResponse.json({ 
+        error: 'Failed to fetch users. Please check service role key configuration.' 
+      }, { status: 500 });
+    }
+
+    // Return users as an array
+    return NextResponse.json({ users: data?.users || [] });
+  } catch (error) {
+    console.error('Error in admin users route:', error);
+    return NextResponse.json({ 
+      error: 'Internal server error while fetching users' 
+    }, { status: 500 });
+  }
 } 

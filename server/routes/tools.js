@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Tool = require('../models/Tool');
 const { validateTool } = require('../middleware/validation');
-const { auth } = require('../middleware/auth');
+const { authMiddleware } = require('../middleware/auth-jwt');
 
 // GET /api/tools - Get all tools with pagination and filtering
 router.get('/', async (req, res) => {
@@ -121,16 +121,18 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/tools - Create new tool (Admin only)
-router.post('/', auth, validateTool, async (req, res) => {
+router.post('/', authMiddleware, validateTool, async (req, res) => {
+  // Smoke test: ensure req.user is defined
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: req.user missing' });
+  }
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Access denied. Admin only.' });
+  }
   try {
-    // Check if user is admin
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Access denied. Admin only.' });
-    }
-    
     const tool = new Tool(req.body);
     await tool.save();
-    
     res.status(201).json(tool);
   } catch (error) {
     if (error.code === 11000) {
@@ -141,23 +143,22 @@ router.post('/', auth, validateTool, async (req, res) => {
 });
 
 // PUT /api/tools/:id - Update tool (Admin only)
-router.put('/:id', auth, validateTool, async (req, res) => {
+router.put('/:id', authMiddleware, validateTool, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: req.user missing' });
+  }
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Access denied. Admin only.' });
+  }
   try {
-    // Check if user is admin
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Access denied. Admin only.' });
-    }
-    
     const tool = await Tool.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
-    
     if (!tool) {
       return res.status(404).json({ error: 'Tool not found' });
     }
-    
     res.json(tool);
   } catch (error) {
     if (error.code === 11000) {
@@ -168,19 +169,18 @@ router.put('/:id', auth, validateTool, async (req, res) => {
 });
 
 // DELETE /api/tools/:id - Delete tool (Admin only)
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', authMiddleware, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: req.user missing' });
+  }
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Access denied. Admin only.' });
+  }
   try {
-    // Check if user is admin
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ error: 'Access denied. Admin only.' });
-    }
-    
     const tool = await Tool.findByIdAndDelete(req.params.id);
-    
     if (!tool) {
       return res.status(404).json({ error: 'Tool not found' });
     }
-    
     res.json({ message: 'Tool deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Error deleting tool', message: error.message });
@@ -188,41 +188,35 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 // POST /api/tools/:id/reviews - Add review to tool
-router.post('/:id/reviews', auth, async (req, res) => {
+router.post('/:id/reviews', authMiddleware, async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: req.user missing' });
+  }
   try {
     const { rating, comment } = req.body;
-    
     if (!rating || !comment) {
       return res.status(400).json({ error: 'Rating and comment are required' });
     }
-    
     if (rating < 1 || rating > 5) {
       return res.status(400).json({ error: 'Rating must be between 1 and 5' });
     }
-    
     const tool = await Tool.findById(req.params.id);
-    
     if (!tool) {
       return res.status(404).json({ error: 'Tool not found' });
     }
-    
     // Check if user already reviewed this tool
     const existingReview = tool.reviews.find(
       review => review.user.toString() === req.user.id
     );
-    
     if (existingReview) {
       return res.status(400).json({ error: 'You have already reviewed this tool' });
     }
-    
     await tool.addReview(req.user.id, rating, comment);
-    
     // Update user's review count
     const User = require('../models/User');
     await User.findByIdAndUpdate(req.user.id, {
       $inc: { reviewCount: 1 }
     });
-    
     res.status(201).json({ message: 'Review added successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Error adding review', message: error.message });

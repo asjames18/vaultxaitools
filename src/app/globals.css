@@ -8,6 +8,11 @@
   to { opacity: 1; }
 }
 
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 @keyframes slideIn {
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }
@@ -20,6 +25,10 @@
 
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
 }
 
 .animate-slide-in {
@@ -188,33 +197,7 @@
     @apply bg-white/10 backdrop-blur-md border border-white/20;
   }
 
-  /* Modern animations */
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-out;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.3s ease-out;
-  }
-
-  .animate-scale-in {
-    animation: scaleIn 0.2s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes slideUp {
-    from { transform: translateY(10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-
-  @keyframes scaleIn {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
+  /* Modern animations - using the ones defined above */
 
   /* Modern focus styles */
   .focus-ring {
