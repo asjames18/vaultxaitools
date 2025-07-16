@@ -148,7 +148,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
               <div className="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">
-                  {category.popular_tools.slice(0, 3).join(', ')}
+                  {(Array.isArray(category.popular_tools) ? category.popular_tools : []).slice(0, 3).join(', ')}
                 </div>
                 <div className="text-sm">Popular Tools</div>
               </div>
