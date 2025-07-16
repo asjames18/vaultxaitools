@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import MailerLiteSignup from './MailerLiteSignup';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -125,6 +126,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom Section */}
+        <div className="mb-8">
+          <MailerLiteSignup />
+        </div>
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex flex-wrap gap-6 mb-4 md:mb-0">

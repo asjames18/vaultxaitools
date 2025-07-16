@@ -198,13 +198,16 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="relative px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-all duration-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="px-3 py-2 hover:bg-gray-100 rounded"
                 role="menuitem"
+                tabIndex={0}
               >
                 {item.name}
-                <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-blue-600 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </Link>
             ))}
+            <Link href="/submit-tool" className="px-3 py-2 hover:bg-gray-100 rounded">
+              Submit Tool
+            </Link>
             {/* Conditionally render Admin link for admins only */}
             {user && getUserRole(user) === 'admin' && (
               <Link
