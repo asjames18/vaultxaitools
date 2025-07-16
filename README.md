@@ -189,6 +189,15 @@ const affiliateUrl = generateAffiliateUrl(
 
 The application will be available at `http://localhost:3000`
 
+## Documentation
+
+- [Responsive Design](docs/responsive-design.md)
+- [Device Testing](docs/device-testing.md)
+- [SEO Implementation](docs/seo.md)
+- [Admin Setup](docs/admin-setup.md)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
+
 ## Project Structure
 
 ```
