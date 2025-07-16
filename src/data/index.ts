@@ -26,25 +26,25 @@ type DatabaseReviewInsert = Database['public']['Tables']['reviews']['Insert'];
 // Map database tool to frontend tool type
 function mapDatabaseToolToTool(dbTool: DatabaseTool): StaticTool {
   return {
-    id: dbTool.id,
-    name: dbTool.name,
-    logo: dbTool.logo,
-    description: dbTool.description,
+    id: dbTool.id || '',
+    name: dbTool.name || '',
+    logo: dbTool.logo || '🔧',
+    description: dbTool.description || '',
     longDescription: dbTool.long_description || undefined,
-    category: dbTool.category,
-    rating: dbTool.rating,
-    reviewCount: dbTool.review_count,
-    weeklyUsers: dbTool.weekly_users,
-    growth: dbTool.growth,
-    website: dbTool.website,
-    pricing: dbTool.pricing,
+    category: dbTool.category || '',
+    rating: dbTool.rating || 0,
+    reviewCount: dbTool.review_count || 0,
+    weeklyUsers: dbTool.weekly_users || 0,
+    growth: dbTool.growth || '0%',
+    website: dbTool.website || '',
+    pricing: dbTool.pricing || 'Unknown',
     features: dbTool.features || undefined,
     pros: dbTool.pros || undefined,
     cons: dbTool.cons || undefined,
     alternatives: dbTool.alternatives || undefined,
     tags: dbTool.tags || undefined,
-    createdAt: dbTool.created_at,
-    updatedAt: dbTool.updated_at
+    createdAt: dbTool.created_at || '',
+    updatedAt: dbTool.updated_at || ''
   };
 }
 

@@ -82,28 +82,29 @@ export default function CategoryPageClient({ category, categoryTools }: Category
   const sortedTools = [...filteredTools].sort((a, b) => {
     switch (sortBy) {
       case 'rating':
-        return b.rating - a.rating;
+        return (b.rating || 0) - (a.rating || 0);
       case 'users':
-        return b.weekly_users - a.weekly_users;
+        return (b.weekly_users || 0) - (a.weekly_users || 0);
       case 'growth':
-        const aGrowth = parseInt(a.growth.replace('+', '').replace('%', ''));
-        const bGrowth = parseInt(b.growth.replace('+', '').replace('%', ''));
+        const aGrowth = parseInt((a.growth || '0%').replace('+', '').replace('%', ''));
+        const bGrowth = parseInt((b.growth || '0%').replace('+', '').replace('%', ''));
         return bGrowth - aGrowth;
       case 'name':
-        return a.name.localeCompare(b.name);
+        return (a.name || '').localeCompare(b.name || '');
       default: // popular
-        return b.weekly_users - a.weekly_users;
+        return (b.weekly_users || 0) - (a.weekly_users || 0);
     }
   });
 
   const renderStars = (rating: number) => {
+    const safeRating = rating || 0;
     return Array.from({ length: 5 }, (_, i) => (
       <StarIcon
         key={i}
         className={`w-4 h-4 ${
-          i < Math.floor(rating)
+          i < Math.floor(safeRating)
             ? 'text-yellow-500 fill-current'
-            : i < rating
+            : i < safeRating
             ? 'text-yellow-500 fill-current opacity-50'
             : 'text-gray-300'
         }`}
@@ -225,7 +226,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                     <div className="flex items-center gap-1">
                       {renderStars(tool.rating)}
                       <span className="text-sm font-semibold text-gray-900 dark:text-white ml-1">
-                        {tool.rating}
+                        {tool.rating || 0}
                       </span>
                     </div>
                   </div>
@@ -240,10 +241,10 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                   
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-4 text-gray-500 dark:text-gray-400">
-                      <span className="font-semibold">{tool.weekly_users.toLocaleString()} users</span>
+                      <span className="font-semibold">{(tool.weekly_users || 0).toLocaleString()} users</span>
                       <div className="flex items-center gap-1 text-green-600 font-semibold">
                         <TrendingUpIcon className="w-4 h-4" />
-                        {tool.growth}
+                        {tool.growth || 'N/A'}
                       </div>
                     </div>
                     
