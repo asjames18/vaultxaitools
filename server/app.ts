@@ -1,17 +1,26 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import dotenv from 'dotenv';
 
-// Import error handler
-const { errorHandler } = require('./middleware/errorHandler');
+// Import middleware
+import { errorHandler } from './middleware/errorHandler';
+import { auth } from './middleware/auth';
+
+// Import routes (using require since they're still JS files)
+const toolsRouter = require('./routes/tools');
+const categoriesRouter = require('./routes/categories');
+const reviewsRouter = require('./routes/reviews');
+const usersRouter = require('./routes/users');
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// Security middleware
 app.use(helmet());
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -25,6 +34,7 @@ const limiter = rateLimit({
 });
 app.use('/api/', limiter);
 
+// Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,7 +43,7 @@ if (process.env.NODE_ENV !== 'test') {
   mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/vaultxaitools', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
+  } as mongoose.ConnectOptions)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 }
@@ -43,11 +53,11 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'VaultX AI Tools API is running' });
 });
 
-// Routes
-app.use('/api/tools', require('./routes/tools'));
-app.use('/api/categories', require('./routes/categories'));
-app.use('/api/reviews', require('./routes/reviews'));
-app.use('/api/users', require('./routes/users'));
+// API Routes
+app.use('/api/tools', toolsRouter);
+app.use('/api/categories', categoriesRouter);
+app.use('/api/reviews', reviewsRouter);
+app.use('/api/users', usersRouter);
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -64,4 +74,4 @@ if (process.env.NODE_ENV !== 'test') {
   });
 }
 
-module.exports = app; 
+export default app; 
