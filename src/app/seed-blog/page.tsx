@@ -52,6 +52,21 @@ const samplePosts = [
 ];
 
 export default async function SeedBlogPage() {
+  // Prevent seeding during build time
+  if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
+    return (
+      <div className="min-h-screen bg-gray-50 p-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8">Blog Seed Results</h1>
+          <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+            <p>Blog seeding is disabled during build time to prevent duplicate key errors.</p>
+            <p className="mt-2">Visit this page in development mode to seed blog posts.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const results = [];
   
   for (const post of samplePosts) {
@@ -60,14 +75,26 @@ export default async function SeedBlogPage() {
       results.push({
         title: post.title,
         success: !!createdPost,
-        id: createdPost?.id || 'Failed'
+        id: createdPost?.id || 'Failed',
+        message: createdPost ? 'Created successfully' : 'Failed to create'
       });
     } catch (error) {
-      results.push({
-        title: post.title,
-        success: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      });
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      // Check if it's a duplicate key error
+      if (errorMessage.includes('duplicate key value violates unique constraint')) {
+        results.push({
+          title: post.title,
+          success: true,
+          id: 'Already exists',
+          message: 'Post already exists in database'
+        });
+      } else {
+        results.push({
+          title: post.title,
+          success: false,
+          error: errorMessage
+        });
+      }
     }
   }
   
@@ -87,6 +114,7 @@ export default async function SeedBlogPage() {
                   Status: {result.success ? '✅ Success' : '❌ Failed'}
                 </p>
                 {result.success && <p className="text-sm text-gray-600">ID: {result.id}</p>}
+                {result.message && <p className="text-sm text-gray-600">{result.message}</p>}
                 {!result.success && <p className="text-sm text-red-600">Error: {result.error}</p>}
               </div>
             ))}

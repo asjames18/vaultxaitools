@@ -203,6 +203,15 @@ export async function getBlogCategories(): Promise<string[]> {
 // Admin functions (require service role key)
 export async function createBlogPost(post: Partial<BlogPost>): Promise<BlogPost | null> {
   try {
+    // Check if a post with the same slug already exists
+    if (post.slug) {
+      const existingPost = await getBlogPostBySlug(post.slug);
+      if (existingPost) {
+        console.log(`Blog post with slug "${post.slug}" already exists, skipping creation`);
+        return existingPost;
+      }
+    }
+
     const postData = convertToDB(post);
     const { data, error } = await supabaseAdmin
       .from('blog_posts')
