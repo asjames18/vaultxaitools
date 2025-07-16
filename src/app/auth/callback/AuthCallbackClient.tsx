@@ -11,6 +11,8 @@ export default function AuthCallbackClient() {
   const searchParams = useSearchParams();
   const supabase = createClient();
 
+  if (!searchParams) return null;
+
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
