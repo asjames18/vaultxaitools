@@ -1,0 +1,72 @@
+[
+  {
+    "name": "ChatGPT",
+    "blurb": "AI chatbot by OpenAI for natural language conversations.",
+    "category": "NLP",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://chat.openai.com/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "DALL·E",
+    "blurb": "AI image generation tool by OpenAI.",
+    "category": "Image Generation",
+    "priceTier": "Paid",
+    "affiliateUrl": "https://labs.openai.com/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Midjourney",
+    "blurb": "AI art generator for creative visuals from text prompts.",
+    "category": "Image Generation",
+    "priceTier": "Paid",
+    "affiliateUrl": "https://www.midjourney.com/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Jasper",
+    "blurb": "AI writing assistant for content creation.",
+    "category": "Writing",
+    "priceTier": "Paid",
+    "affiliateUrl": "https://www.jasper.ai/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Notion AI",
+    "blurb": "AI-powered productivity and note-taking platform.",
+    "category": "Productivity",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://www.notion.so/product/ai?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Grammarly",
+    "blurb": "AI grammar and writing enhancement tool.",
+    "category": "Writing",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://grammarly.com/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Copy.ai",
+    "blurb": "AI copywriting and content generation platform.",
+    "category": "Marketing",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://www.copy.ai/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Synthesia",
+    "blurb": "AI video creation from text.",
+    "category": "Video",
+    "priceTier": "Paid",
+    "affiliateUrl": "https://www.synthesia.io/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Otter.ai",
+    "blurb": "AI-powered meeting transcription and notes.",
+    "category": "Productivity",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://otter.ai/?ref=YOUR_AFFILIATE_ID"
+  },
+  {
+    "name": "Canva AI",
+    "blurb": "AI design tools for graphics and presentations.",
+    "category": "Design",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://www.canva.com/ai/?ref=YOUR_AFFILIATE_ID"
+  }
+] 

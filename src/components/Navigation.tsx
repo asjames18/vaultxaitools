@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase';
 import AuthModal from './AuthModal';
 import { getUserRole } from '@/lib/auth';
+import { usePathname } from 'next/navigation';
 
 // Simple SVG icons as fallback
 const Bars3Icon = ({ className }: { className?: string }) => (
@@ -41,6 +42,7 @@ export default function Navigation() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
+  const pathname = usePathname();
 
   useEffect(() => {
     const getUser = async () => {
@@ -198,16 +200,17 @@ export default function Navigation() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="px-3 py-2 hover:bg-gray-100 rounded"
+                className={`px-3 py-2 rounded transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                  pathname === item.href
+                    ? 'bg-gray-200 dark:bg-gray-800 font-bold text-gray-900 dark:text-white'
+                    : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+                }`}
                 role="menuitem"
                 tabIndex={0}
               >
                 {item.name}
               </Link>
             ))}
-            <Link href="/submit-tool" className="px-3 py-2 hover:bg-gray-100 rounded">
-              Submit Tool
-            </Link>
             {/* Conditionally render Admin link for admins only */}
             {user && getUserRole(user) === 'admin' && (
               <Link
