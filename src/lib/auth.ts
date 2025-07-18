@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { User } from '@supabase/supabase-js';
 
-// Admin emails that have admin privileges
+// Admin emails that have admin privileges (fallback)
 const ADMIN_EMAILS = [
   'asjames18@gmail.com',
   'asjames18@proton.me',
@@ -24,17 +24,36 @@ export function isAdmin(user: User | null): boolean {
 }
 
 /**
- * Get user role from user metadata or email
+ * Get user role from database or fallback to email check
  */
-export function getUserRole(user: User | null): 'admin' | 'user' {
+export async function getUserRole(user: User | null): Promise<'admin' | 'user'> {
   if (!user) return 'user';
   
-  // Check if user has role in metadata
+  try {
+    // First, try to get role from database
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    
+    const { data: userRole, error } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id)
+      .single();
+    
+    if (!error && userRole) {
+      return userRole.role as 'admin' | 'user';
+    }
+  } catch (error) {
+    console.error('Error fetching user role from database:', error);
+  }
+  
+  // Fallback to email check
   if (user.user_metadata?.role) {
     return user.user_metadata.role;
   }
   
-  // Check if user email is in admin list
   if (isAdmin(user)) {
     return 'admin';
   }
@@ -77,17 +96,22 @@ export async function getUsersWithRoles(): Promise<UserRole[]> {
     throw error;
   }
   
-  return users.map(user => ({
-    id: user.id,
-    email: user.email || '',
-    role: getUserRole(user),
-    created_at: user.created_at
-  }));
+  const usersWithRoles = await Promise.all(
+    users.map(async (user) => ({
+      id: user.id,
+      email: user.email || '',
+      role: await getUserRole(user),
+      created_at: user.created_at
+    }))
+  );
+  
+  return usersWithRoles;
 }
 
 /**
  * Check if user can access admin area
  */
-export function canAccessAdmin(user: User | null): boolean {
-  return getUserRole(user) === 'admin';
+export async function canAccessAdmin(user: User | null): Promise<boolean> {
+  const role = await getUserRole(user);
+  return role === 'admin';
 } 

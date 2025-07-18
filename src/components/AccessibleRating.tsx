@@ -38,19 +38,21 @@ export default function AccessibleRating({
 
     switch (event.key) {
       case 'ArrowRight':
-      case 'ArrowUp':
+      case 'ArrowUp': {
         event.preventDefault();
         const nextRating = Math.min(starIndex + 2, maxRating);
         setFocusedRating(nextRating);
         if (onRatingChange) onRatingChange(nextRating);
         break;
+      }
       case 'ArrowLeft':
-      case 'ArrowDown':
+      case 'ArrowDown': {
         event.preventDefault();
         const prevRating = Math.max(starIndex, 1);
         setFocusedRating(prevRating);
         if (onRatingChange) onRatingChange(prevRating);
         break;
+      }
       case ' ':
       case 'Enter':
         event.preventDefault();

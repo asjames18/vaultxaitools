@@ -1,29 +1,44 @@
+'use client';
 import React from 'react';
-import { Tool } from '@/data';
+import Link from 'next/link';
+import { Tool } from '../data/tools';
+import { useFavorites } from '@/lib/useFavorites';
+import { Heart } from 'lucide-react';
 
-interface ToolCardProps {
-  tool: Tool;
-}
+export default function ToolCard({ tool }: { tool: Tool }) {
+  const { isFavorite, addFavorite, removeFavorite, loading } = useFavorites();
+  const fav = isFavorite(tool.id);
 
-const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
+  const handleClick = () => {
+    if (fav) {
+      removeFavorite(tool.id);
+    } else {
+      addFavorite(tool.id);
+    }
+  };
+
   return (
-    <div className="border rounded-lg p-4 bg-white dark:bg-gray-800 shadow-sm flex flex-col gap-2">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="text-3xl">{tool.logo}</span>
-        <div>
-          <h3 className="font-bold text-lg">{tool.name}</h3>
-          <span className="text-xs text-gray-500">{tool.category}</span>
-        </div>
-      </div>
-      <p className="text-gray-700 dark:text-gray-300 text-sm mb-2 line-clamp-3">{tool.description}</p>
-      <div className="flex items-center justify-between mt-auto">
-        <span className="text-xs px-2 py-1 rounded bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-          {tool.pricing}
-        </span>
-        <a href={tool.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-xs font-medium">Visit</a>
-      </div>
+    <div className="relative border rounded-lg p-4 shadow hover:shadow-lg transition">
+      <button
+        onClick={handleClick}
+        className="absolute top-2 right-2"
+        aria-label={fav ? 'Unfavorite' : 'Favorite'}
+        disabled={loading}
+      >
+        <Heart
+          className={fav ? 'text-red-500' : ''}
+          fill={fav ? 'currentColor' : 'none'}
+        />
+      </button>
+
+      <h3 className="text-xl font-semibold mb-2">{tool.name}</h3>
+      <p className="text-gray-600 mb-1">{tool.description}</p>
+      <p className="text-sm text-gray-500 italic mb-4">
+        {tool.category} • {tool.pricing}
+      </p>
+      <Link href={`/tool/${tool.id}`} className="text-blue-600 hover:underline">
+        Learn More →
+      </Link>
     </div>
   );
-};
-
-export default ToolCard; 
+} 

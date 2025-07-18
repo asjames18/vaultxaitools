@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { createClient } from '@/lib/supabase';
-import PasswordResetForm from '@/app/admin/PasswordResetForm';
+import PasswordResetForm from '../../app/admin/PasswordResetForm';
 import AccessibleModal from './AccessibleModal';
 
 export default function AuthModal({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -104,6 +104,7 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
           </label>
           <input
             id="email-input"
+            name="email"
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
@@ -121,6 +122,7 @@ export default function AuthModal({ open, onClose }: { open: boolean; onClose: (
           </label>
           <input
             id="password-input"
+            name="password"
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}

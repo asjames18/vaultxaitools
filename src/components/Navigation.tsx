@@ -36,6 +36,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [userRole, setUserRole] = useState<'admin' | 'user'>('user');
   const [loading, setLoading] = useState(true);
   const [signingOut, setSigningOut] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -54,6 +55,19 @@ export default function Navigation() {
         } else {
           console.log('User data:', data.user);
           setUser(data.user);
+          
+          // Get user role
+          if (data.user) {
+            try {
+              const role = await getUserRole(data.user);
+              setUserRole(role);
+            } catch (error) {
+              console.error('Error getting user role:', error);
+              setUserRole('user');
+            }
+          } else {
+            setUserRole('user');
+          }
         }
       } catch (error) {
         console.error('Error in getUser:', error);
@@ -71,8 +85,22 @@ export default function Navigation() {
         console.log('Auth state change:', event, session?.user?.email);
         if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
           setUser(session?.user || null);
+          
+          // Get user role
+          if (session?.user) {
+            try {
+              const role = await getUserRole(session.user);
+              setUserRole(role);
+            } catch (error) {
+              console.error('Error getting user role:', error);
+              setUserRole('user');
+            }
+          } else {
+            setUserRole('user');
+          }
         } else if (event === 'SIGNED_OUT') {
           setUser(null);
+          setUserRole('user');
         }
         setLoading(false);
       }
@@ -212,7 +240,7 @@ export default function Navigation() {
               </Link>
             ))}
             {/* Conditionally render Admin link for admins only */}
-            {user && getUserRole(user) === 'admin' && (
+            {user && userRole === 'admin' && (
               <Link
                 key="Admin"
                 href="/admin"
@@ -256,7 +284,7 @@ export default function Navigation() {
                 <button
                   onClick={() => setAuthOpen(true)}
                   className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  aria-label="Sign in to your account"
+                  aria-label="Sign in or sign up"
                 >
                   <UserIcon className="w-5 h-5" />
                   <span className="text-sm font-medium">Sign In</span>
@@ -317,7 +345,7 @@ export default function Navigation() {
               </Link>
             ))}
             {/* Conditionally render Admin link for admins only */}
-            {user && getUserRole(user) === 'admin' && (
+            {user && userRole === 'admin' && (
               <Link
                 key="Admin"
                 href="/admin"
@@ -355,7 +383,7 @@ export default function Navigation() {
               <button
                 onClick={() => { setAuthOpen(true); setIsMenuOpen(false); }}
                 className="block w-full text-left px-4 py-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm font-medium transition-all duration-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                aria-label="Sign in to your account"
+                aria-label="Sign in or sign up"
               >
                 Sign In
               </button>

@@ -1,17 +1,20 @@
-import { createServerSupabaseClient } from './supabase-server';
+import { createClient } from './supabase-server';
 import { Database } from './database.types';
 
-type Tool = Database['public']['Tables']['tools']['Row'];
-type ToolInsert = Database['public']['Tables']['tools']['Insert'];
-type ToolUpdate = Database['public']['Tables']['tools']['Update'];
+export type Tool = Database['public']['Tables']['tools']['Row'];
+export type ToolInsert = Database['public']['Tables']['tools']['Insert'];
+export type ToolUpdate = Database['public']['Tables']['tools']['Update'];
 
-type Category = Database['public']['Tables']['categories']['Row'];
-type CategoryInsert = Database['public']['Tables']['categories']['Insert'];
-type CategoryUpdate = Database['public']['Tables']['categories']['Update'];
+export type Category = Database['public']['Tables']['categories']['Row'];
+export type CategoryInsert = Database['public']['Tables']['categories']['Insert'];
+export type CategoryUpdate = Database['public']['Tables']['categories']['Update'];
+
+export type Review = Database['public']['Tables']['reviews']['Row'];
+export type User = Database['public']['Tables']['users']['Row'];
 
 // Tools CRUD operations
 export async function getTools(): Promise<Tool[]> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('tools')
     .select('*')
@@ -26,7 +29,7 @@ export async function getTools(): Promise<Tool[]> {
 }
 
 export async function getToolById(id: string): Promise<Tool | null> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('tools')
     .select('*')
@@ -42,7 +45,7 @@ export async function getToolById(id: string): Promise<Tool | null> {
 }
 
 export async function createTool(tool: ToolInsert): Promise<Tool> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('tools')
     .insert(tool)
@@ -58,7 +61,7 @@ export async function createTool(tool: ToolInsert): Promise<Tool> {
 }
 
 export async function updateTool(id: string, updates: ToolUpdate): Promise<Tool> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('tools')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -75,7 +78,7 @@ export async function updateTool(id: string, updates: ToolUpdate): Promise<Tool>
 }
 
 export async function deleteTool(id: string): Promise<void> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { error } = await supabase
     .from('tools')
     .delete()
@@ -89,7 +92,7 @@ export async function deleteTool(id: string): Promise<void> {
 
 // Categories CRUD operations
 export async function getCategories(): Promise<Category[]> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('categories')
     .select('*')
@@ -104,7 +107,7 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function getCategoryById(id: string): Promise<Category | null> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('categories')
     .select('*')
@@ -120,7 +123,7 @@ export async function getCategoryById(id: string): Promise<Category | null> {
 }
 
 export async function createCategory(category: CategoryInsert): Promise<Category> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('categories')
     .insert(category)
@@ -136,7 +139,7 @@ export async function createCategory(category: CategoryInsert): Promise<Category
 }
 
 export async function updateCategory(id: string, updates: CategoryUpdate): Promise<Category> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('categories')
     .update({ ...updates, updated_at: new Date().toISOString() })
@@ -153,7 +156,7 @@ export async function updateCategory(id: string, updates: CategoryUpdate): Promi
 }
 
 export async function deleteCategory(id: string): Promise<void> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { error } = await supabase
     .from('categories')
     .delete()
@@ -167,7 +170,7 @@ export async function deleteCategory(id: string): Promise<void> {
 
 // Helper functions
 export async function getToolsByCategory(category: string): Promise<Tool[]> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('tools')
     .select('*')
@@ -183,7 +186,7 @@ export async function getToolsByCategory(category: string): Promise<Tool[]> {
 }
 
 export async function searchTools(query: string): Promise<Tool[]> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from('tools')
     .select('*')
