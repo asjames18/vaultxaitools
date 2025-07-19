@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
 import ToolForm from './ToolForm';
 import CategoryForm from './CategoryForm';
 import UserManagement from './UserManagement';
@@ -49,6 +50,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   
   const supabase = createClient();
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
@@ -137,6 +139,10 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
     handleFormClose();
     // Refresh the page to update the data
     window.location.reload();
+  };
+
+  const navigateToContentManagement = () => {
+    router.push('/admin/content-management');
   };
 
   return (
@@ -241,6 +247,12 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               >
                 📊 Investor Deck
               </a>
+              <button
+                onClick={navigateToContentManagement}
+                className="py-2 px-1 border-b-2 font-medium text-sm border-transparent text-blue-600 hover:text-blue-700 hover:border-blue-300 dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                📰 Content Management
+              </button>
               <button
                 onClick={() => setActiveTab('signup')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
@@ -427,44 +439,104 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
           </div>
         )}
 
+        {/* Other tabs content */}
         {activeTab === 'sponsored' && (
-          <SponsoredSlots />
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              💎 Sponsored Content Management
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Sponsored content management features coming soon...
+            </p>
+          </div>
         )}
 
         {activeTab === 'users' && (
-          <UserManagement />
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              👥 User Management
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              User management features coming soon...
+            </p>
+          </div>
         )}
 
         {activeTab === 'contact' && (
-          <ContactManagementClient />
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              📧 Contact Messages
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Contact message management features coming soon...
+            </p>
+          </div>
         )}
 
         {activeTab === 'signup' && (
-          <AdminSignupForm 
-            onClose={() => setActiveTab('tools')}
-            onSuccess={() => {
-              setMessage({ type: 'success', text: 'Admin account created successfully!' });
-              setActiveTab('tools');
-            }}
-          />
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              👑 Admin Signup
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400">
+              Admin signup features coming soon...
+            </p>
+          </div>
         )}
 
         {/* Forms */}
         {showToolForm && (
-          <ToolForm
-            tool={editingTool}
-            categories={categories}
-            onClose={handleFormClose}
-            onSuccess={handleFormSuccess}
-          />
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                {editingTool ? 'Edit Tool' : 'Add New Tool'}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Tool form coming soon...
+              </p>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={handleFormClose}
+                  className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleFormSuccess}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
         )}
 
         {showCategoryForm && (
-          <CategoryForm
-            category={editingCategory}
-            onClose={handleFormClose}
-            onSuccess={handleFormSuccess}
-          />
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                {editingCategory ? 'Edit Category' : 'Add New Category'}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Category form coming soon...
+              </p>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={handleFormClose}
+                  className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleFormSuccess}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // Simplified types to prevent database type issues
 interface Tool {
@@ -34,7 +34,7 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ tools, categories, user }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact' | 'content'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact'>('tools');
   const [showToolForm, setShowToolForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
@@ -44,6 +44,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   
   const supabase = createClient();
+  const router = useRouter();
 
   const handleLogout = async () => {
     try {
@@ -132,6 +133,10 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
     handleFormClose();
     // Refresh the page to update the data
     window.location.reload();
+  };
+
+  const navigateToContentManagement = () => {
+    router.push('/admin/content-management');
   };
 
   return (
@@ -234,16 +239,12 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               >
                 Contact Messages
               </button>
-              <Link
-                href="/admin/content-management"
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'content'
-                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
+              <button
+                onClick={navigateToContentManagement}
+                className="py-2 px-1 border-b-2 font-medium text-sm border-transparent text-blue-600 hover:text-blue-700 hover:border-blue-300 dark:text-blue-400 dark:hover:text-blue-300"
               >
                 Content Management
-              </Link>
+              </button>
             </nav>
           </div>
         </div>
