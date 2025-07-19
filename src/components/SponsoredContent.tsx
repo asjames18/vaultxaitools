@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import AffiliateLink from './AffiliateLink';
+import QuickVoteCard from './QuickVoteCard';
 import type { Tool } from '@/data/tools';
 import { getSponsoredBadgeStyle } from '@/lib/affiliate';
 
@@ -113,6 +114,16 @@ export default function SponsoredContent({
                   <div className="text-sm text-gray-600 dark:text-gray-400">
                     {tool.weeklyUsers.toLocaleString()} users
                   </div>
+                </div>
+
+                {/* Quick Vote */}
+                <div className="flex items-center justify-between mb-4">
+                  <QuickVoteCard
+                    toolId={tool.id}
+                    currentRating={tool.rating}
+                    currentReviewCount={tool.reviewCount}
+                    compact={true}
+                  />
                 </div>
 
                 {/* Action Buttons */}

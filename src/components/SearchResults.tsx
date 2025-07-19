@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Tool } from '@/data';
 import AffiliateLink from './AffiliateLink';
 import AccessibleRating from './AccessibleRating';
+import QuickVoteCard from './QuickVoteCard';
 
 interface SearchResultsProps {
   tools: Tool[];
@@ -75,14 +76,22 @@ export default function SearchResults({ tools }: SearchResultsProps) {
               <span>📈 {tool.growth}</span>
             </div>
 
-            {/* Pricing */}
+            {/* Pricing and Quick Vote */}
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {tool.pricing}
-              </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                {tool.reviewCount} reviews
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {tool.pricing}
+                </span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {tool.reviewCount} reviews
+                </span>
+              </div>
+              <QuickVoteCard
+                toolId={tool.id}
+                currentRating={tool.rating}
+                currentReviewCount={tool.reviewCount}
+                compact={true}
+              />
             </div>
 
             {/* Action Buttons */}

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Tool } from '../data/tools';
 import { useFavorites } from '@/lib/useFavorites';
 import { Heart } from 'lucide-react';
+import QuickVoteCard from './QuickVoteCard';
 
 export default function ToolCard({ tool }: { tool: Tool }) {
   const { isFavorite, addFavorite, removeFavorite, loading } = useFavorites();
@@ -36,9 +37,18 @@ export default function ToolCard({ tool }: { tool: Tool }) {
       <p className="text-sm text-gray-500 italic mb-4">
         {tool.category} • {tool.pricing}
       </p>
-      <Link href={`/tool/${tool.id}`} className="text-blue-600 hover:underline">
-        Learn More →
-      </Link>
+      
+      <div className="flex items-center justify-between mb-4">
+        <Link href={`/tool/${tool.id}`} className="text-blue-600 hover:underline">
+          Learn More →
+        </Link>
+        <QuickVoteCard
+          toolId={tool.id}
+          currentRating={tool.rating}
+          currentReviewCount={tool.reviewCount}
+          compact={true}
+        />
+      </div>
     </div>
   );
 } 

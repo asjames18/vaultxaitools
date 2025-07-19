@@ -1,0 +1,89 @@
+[
+  {
+    "tool_name": "ChatGPT",
+    "reviews": [
+      {
+        "user_name": "Sarah Johnson",
+        "rating": 5,
+        "date": "2 days ago",
+        "comment": "ChatGPT has completely transformed how I work. It's incredibly helpful for brainstorming, writing, and even coding. The responses are always relevant and well-thought-out.",
+        "helpful": 24,
+        "verified": true
+      },
+      {
+        "user_name": "Mike Chen",
+        "rating": 4,
+        "date": "1 week ago",
+        "comment": "Great tool for getting quick answers and explanations. Sometimes the responses can be a bit verbose, but overall very useful for learning and problem-solving.",
+        "helpful": 18,
+        "verified": true
+      },
+      {
+        "user_name": "Emily Rodriguez",
+        "rating": 5,
+        "date": "3 days ago",
+        "comment": "I use ChatGPT daily for content creation and research. It's like having a brilliant assistant available 24/7. The free tier is generous and the paid version is worth every penny.",
+        "helpful": 31,
+        "verified": false
+      }
+    ]
+  },
+  {
+    "tool_name": "Midjourney",
+    "reviews": [
+      {
+        "user_name": "Alex Thompson",
+        "rating": 5,
+        "date": "5 days ago",
+        "comment": "The quality of images Midjourney generates is absolutely stunning. I've been using it for concept art and the results are always impressive. The community is also very helpful.",
+        "helpful": 42,
+        "verified": true
+      },
+      {
+        "user_name": "Lisa Wang",
+        "rating": 4,
+        "date": "2 weeks ago",
+        "comment": "Great tool for creating unique artwork. The learning curve for writing good prompts can be steep, but once you get the hang of it, the possibilities are endless.",
+        "helpful": 15,
+        "verified": true
+      },
+      {
+        "user_name": "David Kim",
+        "rating": 4,
+        "date": "1 week ago",
+        "comment": "Midjourney produces beautiful images, but the Discord interface can be frustrating. Wish there was a standalone app. Still, the results make it worth the hassle.",
+        "helpful": 28,
+        "verified": false
+      }
+    ]
+  },
+  {
+    "tool_name": "GitHub Copilot",
+    "reviews": [
+      {
+        "user_name": "James Wilson",
+        "rating": 5,
+        "date": "4 days ago",
+        "comment": "Copilot has dramatically increased my coding speed. It's like having a pair programmer who never gets tired. The suggestions are usually spot-on and save me hours of typing.",
+        "helpful": 56,
+        "verified": true
+      },
+      {
+        "user_name": "Maria Garcia",
+        "rating": 4,
+        "date": "1 week ago",
+        "comment": "Very helpful for routine coding tasks and boilerplate code. Sometimes it suggests outdated patterns, but overall it's a great productivity booster.",
+        "helpful": 23,
+        "verified": true
+      },
+      {
+        "user_name": "Tom Anderson",
+        "rating": 3,
+        "date": "2 weeks ago",
+        "comment": "Good tool but can be expensive for individual developers. The suggestions are helpful but you still need to review everything carefully.",
+        "helpful": 12,
+        "verified": false
+      }
+    ]
+  }
+]
