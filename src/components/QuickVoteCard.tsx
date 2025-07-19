@@ -32,11 +32,13 @@ export default function QuickVoteCard({
 }: QuickVoteCardProps) {
   const [voted, setVoted] = useState<'up' | 'down' | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleVote = async (vote: 'up' | 'down') => {
     if (voted || isSubmitting) return;
 
     setIsSubmitting(true);
+    setError(null);
     
     try {
       // Calculate new rating based on vote
@@ -51,6 +53,10 @@ export default function QuickVoteCard({
       onVoteSubmitted?.();
     } catch (error) {
       console.error('Error submitting vote:', error);
+      setError('Unable to submit vote at this time. Please try again later.');
+      
+      // Show error for 3 seconds then clear
+      setTimeout(() => setError(null), 3000);
     } finally {
       setIsSubmitting(false);
     }
@@ -70,6 +76,7 @@ export default function QuickVoteCard({
               : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-green-900/20 dark:hover:text-green-400'
           }`}
           aria-label="Vote good"
+          title={error || "Vote good"}
         >
           <ThumbsUpIcon 
             className="w-4 h-4"
@@ -88,12 +95,19 @@ export default function QuickVoteCard({
               : 'bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-red-900/20 dark:hover:text-red-400'
           }`}
           aria-label="Vote bad"
+          title={error || "Vote bad"}
         >
           <ThumbsDownIcon 
             className="w-4 h-4"
             filled={voted === 'down'}
           />
         </button>
+        
+        {error && (
+          <div className="absolute -top-8 left-0 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-xs px-2 py-1 rounded whitespace-nowrap">
+            {error}
+          </div>
+        )}
       </div>
     );
   }
@@ -106,6 +120,12 @@ export default function QuickVoteCard({
       <p className="text-xs text-gray-600 dark:text-gray-400 mb-4">
         Rate this tool with a quick thumbs up or down
       </p>
+      
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 mb-4">
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      )}
       
       <div className="flex gap-3">
         <button
@@ -145,7 +165,7 @@ export default function QuickVoteCard({
         </button>
       </div>
       
-      {voted && (
+      {voted && !error && (
         <p className="text-xs text-green-600 dark:text-green-400 mt-3 text-center">
           Thanks for your vote!
         </p>

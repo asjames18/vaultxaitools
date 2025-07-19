@@ -7,6 +7,7 @@ import ReviewForm from '@/components/ReviewForm';
 import ReviewList from '@/components/ReviewList';
 import QuickVote from '@/components/QuickVote';
 import AffiliateLink from '@/components/AffiliateLink';
+import SocialShare from '@/components/SocialShare';
 import type { Database } from '@/lib/database.types';
 
 type DatabaseReview = Database['public']['Tables']['reviews']['Row'];
@@ -36,11 +37,7 @@ const HeartIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const ShareIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-  </svg>
-);
+
 
 const CheckIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,8 +52,7 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
   const [loadingReviews, setLoadingReviews] = useState(true);
   const [tool, setTool] = useState<any>(null);
   const [loadingTool, setLoadingTool] = useState(true);
-  // Add state for share feedback
-  const [shareCopied, setShareCopied] = useState(false);
+  const [likeError, setLikeError] = useState<string | null>(null);
 
   // Load tool data from centralized data
   useEffect(() => {
@@ -121,6 +117,37 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
       console.error('Error reloading tool data:', error);
     }
   };
+
+  const handleLike = () => {
+    try {
+      setIsLiked(!isLiked);
+      setLikeError(null);
+      
+      // Store like state in localStorage for persistence
+      const likes = JSON.parse(localStorage.getItem('toolLikes') || '{}');
+      if (!isLiked) {
+        likes[toolId] = true;
+      } else {
+        delete likes[toolId];
+      }
+      localStorage.setItem('toolLikes', JSON.stringify(likes));
+      
+    } catch (error) {
+      console.error('Error handling like:', error);
+      setLikeError('Unable to save like preference. Please try again.');
+      setTimeout(() => setLikeError(null), 3000);
+    }
+  };
+
+  // Load like state from localStorage on component mount
+  useEffect(() => {
+    try {
+      const likes = JSON.parse(localStorage.getItem('toolLikes') || '{}');
+      setIsLiked(!!likes[toolId]);
+    } catch (error) {
+      console.error('Error loading like state:', error);
+    }
+  }, [toolId]);
 
   // Show loading state
   if (loadingTool) {
@@ -375,7 +402,7 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                 <ExternalLinkIcon className="w-6 h-6" />
               </AffiliateLink>
               <button
-                onClick={() => setIsLiked(!isLiked)}
+                onClick={handleLike}
                 className={`flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border transition-colors text-lg font-semibold shadow-sm ${
                   isLiked
                     ? 'bg-red-50 border-red-200 text-red-600 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400'
@@ -385,24 +412,16 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
                 <HeartIcon className="w-6 h-6" />
                 {isLiked ? 'Liked' : 'Like'}
               </button>
-              <button
-                onClick={async () => {
-                  await navigator.clipboard.writeText(window.location.href);
-                  setShareCopied(true);
-                  setTimeout(() => setShareCopied(false), 1500);
-                }}
+              {likeError && (
+                <p className="text-red-500 text-center text-sm mt-2">{likeError}</p>
+              )}
+              <SocialShare
+                url={window.location.href}
+                title={`${tool.name} - AI Tool Review`}
+                description={tool.description}
+                hashtags={['AI', 'AITools', tool.category]}
                 className="flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 text-lg font-semibold shadow-sm"
-              >
-                <ShareIcon className="w-6 h-6" />
-                {shareCopied ? (
-                  <>
-                    Copied!
-                    <CheckIcon className="w-5 h-5 text-green-500" />
-                  </>
-                ) : (
-                  'Share'
-                )}
-              </button>
+              />
             </div>
           </div>
         </div>

@@ -185,6 +185,7 @@ export default function Navigation() {
     { name: 'Search', href: '/search' },
     { name: 'Categories', href: '/categories' },
     { name: 'Trending', href: '/trending' },
+    { name: 'News', href: '/news' },
     { name: 'Blog', href: '/blog' },
     // { name: 'Documentation', href: '/documentation' },
     // { name: 'Status', href: '/status' },

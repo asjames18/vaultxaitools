@@ -78,9 +78,19 @@ export default function ReviewForm({
       
       // Reset success message after 3 seconds
       setTimeout(() => setSuccess(false), 3000);
-    } catch (err) {
-      setError('Failed to submit review. Please try again.');
+    } catch (err: any) {
       console.error('Error submitting review:', err);
+      
+      // Provide user-friendly error messages
+      if (err.message?.includes('row-level security')) {
+        setError('Review submission is temporarily unavailable. Please try again later.');
+      } else if (err.message?.includes('already reviewed')) {
+        setError('You have already reviewed this tool. You can edit your existing review.');
+      } else if (err.message?.includes('network') || err.message?.includes('fetch')) {
+        setError('Network error. Please check your connection and try again.');
+      } else {
+        setError('Failed to submit review. Please try again later.');
+      }
     } finally {
       setIsSubmitting(false);
     }
