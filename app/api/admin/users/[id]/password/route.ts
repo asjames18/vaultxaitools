@@ -4,11 +4,11 @@ import { getUserRole } from '@/lib/auth';
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const resolvedParams = await params;
-    const { id } = resolvedParams;
+    const params = await context.params;
+    const { id } = params;
     const { password } = await request.json();
 
     if (!password || typeof password !== 'string' || password.length < 6) {

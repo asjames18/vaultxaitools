@@ -152,7 +152,7 @@ export const useRateLimit = (limit: number, windowMs: number) => {
 };
 
 // Performance: Caching with TTL
-export const useCache = <T>(ttl: number = 5 * 60 * 1000) => {
+export const useCache = <T,>(ttl: number = 5 * 60 * 1000) => {
   const cache = useMemo(() => new Map<string, { data: T; timestamp: number }>(), []);
 
   const get = useCallback((key: string): T | null => {

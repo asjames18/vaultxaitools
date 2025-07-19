@@ -29,10 +29,9 @@ export default async function HomePage() {
         .sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0))
         .slice(0, 6);
       
-      // Get sponsored tools (if any)
-      sponsoredTools = toolsData
-        .filter(tool => tool.sponsored)
-        .slice(0, 3);
+      // For now, sponsored tools will be empty since we don't have that field
+      // In the future, you can add a sponsored field to the Tool interface
+      sponsoredTools = [];
     } else {
       // Fallback to sample data if no tools found
       error = "No tools found in database";
@@ -40,28 +39,30 @@ export default async function HomePage() {
         {
           id: '1',
           name: 'ChatGPT',
+          logo: '🤖',
           description: 'Advanced language model for conversation and text generation',
-          url: 'https://chat.openai.com',
           category: 'Language',
           rating: 4.7,
           reviewCount: 1200000,
+          weeklyUsers: 15420,
+          growth: '+45%',
+          website: 'https://chat.openai.com',
           pricing: 'Freemium',
-          sponsored: false,
-          image: '/api/placeholder/400/300',
           features: ['Text Generation', 'Conversation', 'Code Help'],
           tags: ['AI', 'Language', 'Chatbot']
         },
         {
           id: '2',
           name: 'Midjourney',
+          logo: '🎨',
           description: 'AI-powered image generation from text descriptions',
-          url: 'https://midjourney.com',
           category: 'Image',
           rating: 4.6,
           reviewCount: 230000,
+          weeklyUsers: 12850,
+          growth: '+32%',
+          website: 'https://midjourney.com',
           pricing: 'Paid',
-          sponsored: false,
-          image: '/api/placeholder/400/300',
           features: ['Image Generation', 'Text-to-Image', 'Art'],
           tags: ['AI', 'Image', 'Art']
         }
@@ -76,14 +77,15 @@ export default async function HomePage() {
       {
         id: '1',
         name: 'ChatGPT',
+        logo: '🤖',
         description: 'Advanced language model for conversation and text generation',
-        url: 'https://chat.openai.com',
         category: 'Language',
         rating: 4.7,
         reviewCount: 1200000,
+        weeklyUsers: 15420,
+        growth: '+45%',
+        website: 'https://chat.openai.com',
         pricing: 'Freemium',
-        sponsored: false,
-        image: '/api/placeholder/400/300',
         features: ['Text Generation', 'Conversation', 'Code Help'],
         tags: ['AI', 'Language', 'Chatbot']
       }

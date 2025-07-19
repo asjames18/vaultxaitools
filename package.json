@@ -33,6 +33,7 @@
     "add:working-reviews": "node scripts/add-working-reviews.js"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.1",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.51.0",
     "@tiptap/extension-image": "^3.0.7",
@@ -43,6 +44,7 @@
     "dotenv": "^17.2.0",
     "fuse.js": "^7.1.0",
     "lucide-react": "^0.525.0",
+    "mongoose": "^8.8.4",
     "next": "15.3.5",
     "react": "^18",
     "react-dom": "^18"
@@ -65,6 +67,6 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": "20.x"
+    "node": ">=20.x"
   }
 }
