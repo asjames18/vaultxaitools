@@ -1,83 +1,108 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { baseMetadata, generateWebsiteStructuredData, generateOrganizationStructuredData } from "@/lib/seo";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
+import Navigation from '@/components/Navigation';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import Footer from '@/components/Footer';
+import './globals.css';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = baseMetadata;
+export const metadata: Metadata = {
+  title: {
+    default: 'VaultX AI Tools - Discover the Best AI Tools',
+    template: '%s | VaultX AI Tools'
+  },
+  description: 'Find and compare the best AI tools for your needs. From language models to image generators, discover powerful AI solutions.',
+  keywords: 'AI tools, artificial intelligence, machine learning, productivity tools',
+  authors: [{ name: 'VaultX' }],
+  creator: 'VaultX',
+  publisher: 'VaultX',
+  robots: 'index, follow',
+  formatDetection: {
+    telephone: false,
+    address: false,
+    email: false,
+  },
+  openGraph: {
+    title: 'VaultX AI Tools - Discover the Best AI Tools',
+    description: 'Find and compare the best AI tools for your needs.',
+    url: 'https://vaultxaitools.com',
+    siteName: 'VaultX AI Tools',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VaultX AI Tools - Discover the Best AI Tools',
+    description: 'Find and compare the best AI tools for your needs.',
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
+  manifest: '/manifest.webmanifest',
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const websiteStructuredData = generateWebsiteStructuredData();
-  const organizationStructuredData = generateOrganizationStructuredData();
-
+}) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning={true}>
+    <html lang="en">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteStructuredData),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationStructuredData),
-          }}
-        />
-        {/* Prevent hydration mismatch from browser extensions */}
+        {/* Preload critical resources */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://eyrjonntxrlykglvskua.supabase.co" />
+        
+        {/* Preload critical CSS */}
+        <link rel="preload" href="/_next/static/css/app/layout.css" as="style" />
+        
+        {/* Performance monitoring */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function() {
-                // Remove any theme attributes that might be added by browser extensions
-                if (typeof window !== 'undefined') {
-                  const html = document.documentElement;
-                  if (html.hasAttribute('data-theme')) {
-                    html.removeAttribute('data-theme');
+              // Performance monitoring
+              if (typeof window !== 'undefined') {
+                window.addEventListener('load', function() {
+                  // Measure Core Web Vitals
+                  if ('PerformanceObserver' in window) {
+                    const observer = new PerformanceObserver((list) => {
+                      for (const entry of list.getEntries()) {
+                        if (entry.entryType === 'largest-contentful-paint') {
+                          console.log('LCP:', entry.startTime);
+                        }
+                        if (entry.entryType === 'first-input') {
+                          console.log('FID:', entry.processingStart - entry.startTime);
+                        }
+                      }
+                    });
+                    observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input'] });
                   }
-                  if (html.style.colorScheme) {
-                    html.style.removeProperty('color-scheme');
+                  
+                  // Measure FCP
+                  const fcpEntry = performance.getEntriesByName('first-contentful-paint')[0];
+                  if (fcpEntry) {
+                    console.log('FCP:', fcpEntry.startTime);
                   }
-                }
-              })();
+                });
+              }
             `,
           }}
         />
       </head>
-      <body className="antialiased" suppressHydrationWarning={true}>
-        {/* Skip to content link for accessibility */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Skip to main content
-        </a>
+      <body className="__className_e8ce0c">
+        <ErrorBoundary>
+          <Navigation />
+        </ErrorBoundary>
         
-        <Navigation />
-        <main id="main-content" className="pt-16 lg:pt-18" role="main">
+        <ErrorBoundary>
           {children}
-        </main>
-        <Footer />
+        </ErrorBoundary>
+        
+        <ErrorBoundary>
+          <Footer />
+        </ErrorBoundary>
+        
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
