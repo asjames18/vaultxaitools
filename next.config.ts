@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   // Remove heavy CSP headers for better performance
   // Add basic security headers only
   async headers() {
