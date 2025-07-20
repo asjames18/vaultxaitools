@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { categories } from '@/data';
-import SearchResults from '@/components/SearchResults';
+
 import SponsoredContent from '@/components/SponsoredContent';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import QuickVoteCard from '@/components/QuickVoteCard';
@@ -95,11 +95,6 @@ export default function HomeClient({
   sponsoredTools, 
   error 
 }: HomeClientProps) {
-  const [filteredTools, setFilteredTools] = useState<Tool[]>(popularTools);
-
-  const handleResultsChange = useCallback((tools: Tool[]) => {
-    setFilteredTools(tools);
-  }, []);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -275,7 +270,7 @@ export default function HomeClient({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredTools.slice(0, 6).map((tool) => (
+            {popularTools.slice(0, 6).map((tool: Tool) => (
               <div
                 key={tool.id}
                 className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700"
@@ -355,17 +350,16 @@ export default function HomeClient({
             </p>
           </div>
 
-          <SearchAndFilter 
-            tools={allTools}
-            categories={categories}
-            onResultsChange={handleResultsChange} 
-          />
-          
-          {filteredTools.length > 0 && (
-            <div className="mt-12">
-              <SearchResults tools={filteredTools} />
-            </div>
-          )}
+          <div className="text-center">
+            <Link
+              href="/search"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              <SearchIcon className="w-5 h-5" />
+              Search AI Tools
+              <ArrowRightIcon className="w-5 h-5" />
+            </Link>
+          </div>
         </div>
       </section>
 

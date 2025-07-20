@@ -1,6 +1,6 @@
 import { getToolsFromDB } from '@/data';
 import SearchClient from './SearchClient';
-import type { Tool } from '@/data';
+import type { Tool } from '@/data/tools';
 
 export default async function SearchPage() {
   // Fetch data at the server level

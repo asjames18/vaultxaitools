@@ -3,7 +3,7 @@
 import Fuse from 'fuse.js';
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Tool, Category } from '@/data/tools';
-import { Search, Filter, X, ChevronDown } from 'lucide-react';
+import { Search, Filter, X, ChevronDown, Star, Users, TrendingUp, Zap } from 'lucide-react';
 
 interface SearchAndFilterProps {
   tools: Tool[];
@@ -27,6 +27,9 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
   const [selectedPricing, setSelectedPricing] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [minRating, setMinRating] = useState(0);
+  const [maxPrice, setMaxPrice] = useState<string>('any');
+  const [userCount, setUserCount] = useState<string>('any');
+  const [growthRate, setGrowthRate] = useState<string>('any');
 
   // Initialize Fuse.js for fuzzy search
   const fuse = useMemo(() => {
@@ -68,8 +71,40 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
       results = results.filter(tool => tool.rating >= minRating);
     }
 
+    // Apply max price filter
+    if (maxPrice !== 'any') {
+      results = results.filter(tool => {
+        if (maxPrice === 'free') return tool.pricing === 'Free';
+        if (maxPrice === 'freemium') return ['Free', 'Freemium'].includes(tool.pricing);
+        if (maxPrice === 'paid') return ['Paid', 'Freemium'].includes(tool.pricing);
+        return true;
+      });
+    }
+
+    // Apply user count filter
+    if (userCount !== 'any') {
+      results = results.filter(tool => {
+        const users = tool.weeklyUsers;
+        if (userCount === 'small') return users < 10000;
+        if (userCount === 'medium') return users >= 10000 && users < 100000;
+        if (userCount === 'large') return users >= 100000;
+        return true;
+      });
+    }
+
+    // Apply growth rate filter
+    if (growthRate !== 'any') {
+      results = results.filter(tool => {
+        const growth = parseInt(tool.growth.replace('+', '').replace('%', ''));
+        if (growthRate === 'slow') return growth < 20;
+        if (growthRate === 'medium') return growth >= 20 && growth < 50;
+        if (growthRate === 'fast') return growth >= 50;
+        return true;
+      });
+    }
+
     return results;
-  }, [tools, searchQuery, selectedCategories, selectedPricing, minRating, fuse]);
+  }, [tools, searchQuery, selectedCategories, selectedPricing, minRating, maxPrice, userCount, growthRate, fuse]);
 
   // Update parent component with filtered results
   useEffect(() => {
@@ -100,10 +135,15 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
     setSelectedCategories([]);
     setSelectedPricing([]);
     setMinRating(0);
+    setMaxPrice('any');
+    setUserCount('any');
+    setGrowthRate('any');
   }, []);
 
   // Get active filter count
-  const activeFiltersCount = selectedCategories.length + selectedPricing.length + (minRating > 0 ? 1 : 0);
+  const activeFiltersCount = selectedCategories.length + selectedPricing.length + 
+    (minRating > 0 ? 1 : 0) + (maxPrice !== 'any' ? 1 : 0) + 
+    (userCount !== 'any' ? 1 : 0) + (growthRate !== 'any' ? 1 : 0);
 
   return (
     <div className={className}>
@@ -135,7 +175,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
         <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
           <div className="flex items-center gap-3">
             <FilterIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-            <span className="font-medium text-gray-900 dark:text-white">Filters</span>
+            <span className="font-medium text-gray-900 dark:text-white">Advanced Filters</span>
             {activeFiltersCount > 0 && (
               <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">
                 {activeFiltersCount}
@@ -165,7 +205,10 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
           <div className="p-4 space-y-6">
             {/* Categories */}
             <div>
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Categories</h3>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                <Zap className="w-4 h-4" />
+                Categories
+              </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {categories.map((category) => (
                   <button
@@ -206,7 +249,8 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
 
             {/* Rating Filter */}
             <div>
-              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                <Star className="w-4 h-4" />
                 Minimum Rating: {minRating > 0 ? `${minRating}+ stars` : 'Any rating'}
               </h3>
               <div className="flex items-center gap-4">
@@ -224,12 +268,63 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
                 </span>
               </div>
             </div>
+
+            {/* Max Price Filter */}
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Max Price</h3>
+              <select
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="any">Any price</option>
+                <option value="free">Free only</option>
+                <option value="freemium">Free & Freemium</option>
+                <option value="paid">Paid tools</option>
+              </select>
+            </div>
+
+            {/* User Count Filter */}
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                User Base
+              </h3>
+              <select
+                value={userCount}
+                onChange={(e) => setUserCount(e.target.value)}
+                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="any">Any size</option>
+                <option value="small">Small (&lt;10K users)</option>
+                <option value="medium">Medium (10K-100K users)</option>
+                <option value="large">Large (&gt;100K users)</option>
+              </select>
+            </div>
+
+            {/* Growth Rate Filter */}
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4" />
+                Growth Rate
+              </h3>
+              <select
+                value={growthRate}
+                onChange={(e) => setGrowthRate(e.target.value)}
+                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="any">Any growth</option>
+                <option value="slow">Slow (&lt;20%)</option>
+                <option value="medium">Medium (20-50%)</option>
+                <option value="fast">Fast (&gt;50%)</option>
+              </select>
+            </div>
           </div>
         )}
       </div>
 
       {/* Active Filters Display */}
-      {(selectedCategories.length > 0 || selectedPricing.length > 0 || minRating > 0) && (
+      {(selectedCategories.length > 0 || selectedPricing.length > 0 || minRating > 0 || maxPrice !== 'any' || userCount !== 'any' || growthRate !== 'any') && (
         <div className="mt-4 flex flex-wrap gap-2">
           {selectedCategories.map((category) => (
             <span
@@ -265,6 +360,39 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
               <button
                 onClick={() => setMinRating(0)}
                 className="hover:text-yellow-600 dark:hover:text-yellow-300"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          )}
+          {maxPrice !== 'any' && (
+            <span className="inline-flex items-center gap-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
+              Max: {maxPrice}
+              <button
+                onClick={() => setMaxPrice('any')}
+                className="hover:text-purple-600 dark:hover:text-purple-300"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          )}
+          {userCount !== 'any' && (
+            <span className="inline-flex items-center gap-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm">
+              {userCount} users
+              <button
+                onClick={() => setUserCount('any')}
+                className="hover:text-indigo-600 dark:hover:text-indigo-300"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          )}
+          {growthRate !== 'any' && (
+            <span className="inline-flex items-center gap-1 bg-pink-100 dark:bg-pink-900 text-pink-800 dark:text-pink-200 px-3 py-1 rounded-full text-sm">
+              {growthRate} growth
+              <button
+                onClick={() => setGrowthRate('any')}
+                className="hover:text-pink-600 dark:hover:text-pink-300"
               >
                 <X className="w-3 h-3" />
               </button>

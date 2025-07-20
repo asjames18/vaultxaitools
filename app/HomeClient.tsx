@@ -8,7 +8,7 @@ import EmailSignupForm from '@/components/EmailSignupForm';
 import DailyTool from '@/components/DailyTool';
 import TrendingNow from '@/components/TrendingNow';
 import CommunityHighlights from '@/components/CommunityHighlights';
-import SmartSearch from '@/components/SmartSearch';
+
 import QuickActions from '@/components/QuickActions';
 import EnhancedNewsletter from '@/components/EnhancedNewsletter';
 import type { Tool } from '@/data/tools';
