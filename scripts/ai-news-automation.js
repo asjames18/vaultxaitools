@@ -378,15 +378,15 @@ function processNews(news) {
         url: item.url,
         source: item.source,
         author: item.author,
-        publishedAt: item.publishedAt,
-        imageUrl: item.imageUrl,
+        published_at: item.publishedAt,
+        image_url: item.imageUrl,
         category: item.category,
         sentiment: item.sentiment,
         topics: item.topics,
-        readTime: item.readTime,
+        read_time: item.readTime,
         engagement: item.engagement,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
       });
     }
   }
@@ -397,6 +397,70 @@ function processNews(news) {
 // Save news to database
 async function saveNewsToDatabase(news) {
   console.log('💾 Saving news to database...');
+  
+  // First, try to create the table if it doesn't exist
+  try {
+    const testRecord = {
+      id: 'test-news-item',
+      title: 'Test AI News Article',
+      content: 'This is a test article to create the table structure.',
+      url: 'https://example.com',
+      source: 'Test',
+      author: 'Test Author',
+      published_at: new Date().toISOString(),
+      image_url: null,
+      category: 'General AI',
+      sentiment: 'neutral',
+      topics: ['AI', 'Test'],
+      read_time: 1,
+      engagement: 0,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    
+    await supabase
+      .from('ai_news')
+      .insert(testRecord);
+    
+    // Clean up test record
+    await supabase
+      .from('ai_news')
+      .delete()
+      .eq('id', 'test-news-item');
+      
+    console.log('✅ Table structure verified!');
+  } catch (error) {
+    console.error('❌ Table does not exist. Please create it manually in Supabase:');
+    console.log(`
+CREATE TABLE IF NOT EXISTS ai_news (
+  id VARCHAR(100) PRIMARY KEY,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  url TEXT,
+  source VARCHAR(50) NOT NULL,
+  author VARCHAR(100),
+  published_at TIMESTAMP WITH TIME ZONE,
+  image_url TEXT,
+  category VARCHAR(50) NOT NULL,
+  sentiment VARCHAR(20) DEFAULT 'neutral',
+  topics TEXT[],
+  read_time INTEGER DEFAULT 1,
+  engagement INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE ai_news ENABLE ROW LEVEL SECURITY;
+
+-- Create policies
+CREATE POLICY "Public read access" ON ai_news FOR SELECT USING (true);
+CREATE POLICY "Admin insert access" ON ai_news FOR INSERT WITH CHECK (auth.role() = 'admin');
+CREATE POLICY "Admin update access" ON ai_news FOR UPDATE USING (auth.role() = 'admin');
+CREATE POLICY "Admin delete access" ON ai_news FOR DELETE USING (auth.role() = 'admin');
+    `);
+    return;
+  }
   
   for (const item of news) {
     try {
@@ -413,7 +477,7 @@ async function saveNewsToDatabase(news) {
           .from('ai_news')
           .update({
             ...item,
-            updatedAt: new Date().toISOString()
+            updated_at: new Date().toISOString()
           })
           .eq('id', item.id);
         console.log(`🔄 Updated: ${item.title}`);

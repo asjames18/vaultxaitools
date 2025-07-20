@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase';
 import { 
   Newspaper, 
   Clock, 
@@ -48,8 +47,6 @@ export default function AINewsFeed({ limit = 10, showFilters = true, category }:
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'published' | 'engagement' | 'readTime'>('published');
 
-  const supabase = createClient();
-
   const categories = [
     'Language Models',
     'Image Generation',
@@ -81,27 +78,28 @@ export default function AINewsFeed({ limit = 10, showFilters = true, category }:
       setLoading(true);
       setError(null);
 
-      let query = supabase
-        .from('ai_news')
-        .select('*')
-        .order(sortBy === 'published' ? 'published_at' : sortBy === 'engagement' ? 'engagement' : 'read_time', { ascending: false })
-        .limit(limit);
+      // Build query parameters
+      const params = new URLSearchParams({
+        limit: limit.toString(),
+        sortBy: sortBy
+      });
 
       if (selectedCategory) {
-        query = query.eq('category', selectedCategory);
+        params.append('category', selectedCategory);
       }
 
       if (selectedSource) {
-        query = query.eq('source', selectedSource);
+        params.append('source', selectedSource);
       }
 
-      const { data, error: fetchError } = await query;
-
-      if (fetchError) {
-        throw fetchError;
+      const response = await fetch(`/api/news?${params.toString()}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch news');
       }
 
-      setNews(data || []);
+      const result = await response.json();
+      setNews(result.data || []);
     } catch (err) {
       console.error('Error fetching news:', err);
       setError('Failed to load news');

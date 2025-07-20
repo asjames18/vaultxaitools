@@ -37,7 +37,8 @@
     "automation:start": "node scripts/scheduler.js",
     "automation:status": "curl -X GET http://localhost:3000/api/admin/automation",
     "automation:test": "node scripts/test-automation.js",
-    "setup:news-db": "node scripts/setup-news-database.js"
+    "setup:news-db": "node scripts/setup-news-database.js",
+    "create:news-table": "node scripts/create-news-table.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",

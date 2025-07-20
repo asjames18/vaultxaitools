@@ -17,6 +17,7 @@ const publicRoutes = [
   '/documentation',
   '/status',
   '/trending',
+  '/news',
   '/sign-in',
   '/sign-up',
   '/auth/callback',
