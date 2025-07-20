@@ -1,13 +1,19 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { categories } from '@/data/tools';
 import SponsoredContent from '@/components/SponsoredContent';
 import EmailSignupForm from '@/components/EmailSignupForm';
+import DailyTool from '@/components/DailyTool';
+import TrendingNow from '@/components/TrendingNow';
+import CommunityHighlights from '@/components/CommunityHighlights';
+import SmartSearch from '@/components/SmartSearch';
+import QuickActions from '@/components/QuickActions';
+import EnhancedNewsletter from '@/components/EnhancedNewsletter';
 import type { Tool } from '@/data/tools';
 
-// Simple SVG icons as fallback
+// Enhanced SVG icons with better styling
 const SparklesIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -63,6 +69,24 @@ const RocketIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const HeartIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+  </svg>
+);
+
+const ClockIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
+const UsersIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+  </svg>
+);
+
 interface HomeClientProps {
   allTools: Tool[];
   popularTools: Tool[];
@@ -70,6 +94,40 @@ interface HomeClientProps {
   sponsoredTools: Tool[];
   error: string | null;
 }
+
+// Dynamic headlines that rotate to keep content fresh
+const dynamicHeadlines = [
+  "The AI tools that actually work, hand-picked for you.",
+  "Stop searching. Start building with the right AI tools.",
+  "Your curated guide to the most powerful AI apps.",
+  "From AI newbie to power user in minutes.",
+  "Drowning in AI tools? We've got the lifeline."
+];
+
+// Testimonials for social proof
+const testimonials = [
+  {
+    name: "Sarah Chen",
+    role: "Product Manager",
+    company: "TechCorp",
+    content: "VaultX helped me find the perfect AI tools for our team. We've increased productivity by 40%!",
+    avatar: "👩‍💼"
+  },
+  {
+    name: "Marcus Rodriguez",
+    role: "Freelance Developer",
+    company: "Independent",
+    content: "I was overwhelmed by AI tools until I found VaultX. Now I know exactly what to use for each project.",
+    avatar: "👨‍💻"
+  },
+  {
+    name: "Dr. Emily Watson",
+    role: "Research Director",
+    company: "Innovation Labs",
+    content: "The quality of tools here is exceptional. Every recommendation has been spot-on for our research needs.",
+    avatar: "👩‍🔬"
+  }
+];
 
 export default function HomeClient({ 
   allTools, 
@@ -79,10 +137,52 @@ export default function HomeClient({
   error 
 }: HomeClientProps) {
   const [filteredTools, setFilteredTools] = useState<Tool[]>(popularTools);
+  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [favoriteTools, setFavoriteTools] = useState<string[]>([]);
+  const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
+
+  // Animation and interaction effects
+  useEffect(() => {
+    setIsVisible(true);
+    
+    // Rotate headlines every 4 seconds
+    const headlineInterval = setInterval(() => {
+      setCurrentHeadlineIndex((prev) => (prev + 1) % dynamicHeadlines.length);
+    }, 4000);
+
+    // Load user preferences from localStorage
+    const savedFavorites = localStorage.getItem('vaultx-favorites');
+    const savedRecent = localStorage.getItem('vaultx-recent');
+    
+    if (savedFavorites) {
+      setFavoriteTools(JSON.parse(savedFavorites));
+    }
+    if (savedRecent) {
+      setRecentlyViewed(JSON.parse(savedRecent));
+    }
+
+    return () => clearInterval(headlineInterval);
+  }, []);
 
   const handleResultsChange = useCallback((tools: Tool[]) => {
     setFilteredTools(tools);
   }, []);
+
+  const toggleFavorite = (toolId: string) => {
+    const newFavorites = favoriteTools.includes(toolId)
+      ? favoriteTools.filter(id => id !== toolId)
+      : [...favoriteTools, toolId];
+    
+    setFavoriteTools(newFavorites);
+    localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+  };
+
+  const addToRecentlyViewed = (toolId: string) => {
+    const newRecent = [toolId, ...recentlyViewed.filter(id => id !== toolId)].slice(0, 5);
+    setRecentlyViewed(newRecent);
+    localStorage.setItem('vaultx-recent', JSON.stringify(newRecent));
+  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -97,6 +197,14 @@ export default function HomeClient({
         }`}
       />
     ));
+  };
+
+  const getRecentlyViewedTools = () => {
+    return allTools.filter(tool => recentlyViewed.includes(tool.id)).slice(0, 3);
+  };
+
+  const getFavoriteTools = () => {
+    return allTools.filter(tool => favoriteTools.includes(tool.id)).slice(0, 3);
   };
 
   return (
@@ -119,87 +227,229 @@ export default function HomeClient({
         </div>
       )}
 
-      {/* Hero Section */}
+      {/* Enhanced Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-pink-600/5" />
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full px-4 py-2 mb-8 animate-fade-in shadow-sm">
-              <SparklesIcon className="w-4 h-4 text-blue-600" />
-              <span className="text-sm font-medium text-gray-700">Kingdom-backed, culture-focused</span>
+            {/* Enhanced badge */}
+            <div className={`inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-sm border border-blue-200 dark:border-blue-700 rounded-full px-6 py-3 mb-8 shadow-lg transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+              <SparklesIcon className="w-5 h-5 text-blue-600 animate-pulse" />
+              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">Curated AI Tools Directory</span>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6 animate-slide-up">
-              Drowning in AI tools? We've got the lifeline.
+            {/* Dynamic headline */}
+            <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              {dynamicHeadlines[currentHeadlineIndex]}
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up">
-              VaultX AI Tools is your Kingdom‑backed, culture‑focused guide to the most powerful AI apps. No hype, just hand‑picked, battle‑tested tools so you can stop searching and start building generational wealth.
+            <p className={`text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              Discover the best AI tools. No hype, just results.
             </p>
 
-            {/* Enhanced Value Proposition */}
-            <div className="mb-12 animate-fade-in">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <CheckIcon className="w-4 h-4 text-green-500" />
-                  <span>Hand-picked quality tools</span>
+            {/* Enhanced value proposition with animations */}
+            <div className={`mb-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-3xl mx-auto">
+                <div className="flex items-center gap-3 text-sm text-gray-300 bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-lg border border-gray-700/50">
+                  <CheckIcon className="w-4 h-4 md:w-5 md:h-5 text-green-500 flex-shrink-0" />
+                  <span className="font-medium">Hand-picked quality tools</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <CheckIcon className="w-4 h-4 text-green-500" />
-                  <span>Real user reviews & ratings</span>
+                <div className="flex items-center gap-3 text-sm text-gray-300 bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-lg border border-gray-700/50">
+                  <CheckIcon className="w-4 h-4 md:w-5 md:h-5 text-green-500 flex-shrink-0" />
+                  <span className="font-medium">Real user reviews & ratings</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <CheckIcon className="w-4 h-4 text-green-500" />
-                  <span>Always up-to-date</span>
+                <div className="flex items-center gap-3 text-sm text-gray-300 bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-lg border border-gray-700/50">
+                  <CheckIcon className="w-4 h-4 md:w-5 md:h-5 text-green-500 flex-shrink-0" />
+                  <span className="font-medium">Always up-to-date</span>
                 </div>
               </div>
             </div>
 
-            {/* Enhanced CTA */}
-            <div className="max-w-2xl mx-auto mb-12 animate-scale-in">
+            {/* Enhanced CTA with hover effects */}
+            <div className={`max-w-2xl mx-auto mb-12 transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/search"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-105"
                 >
-                  <SparklesIcon className="w-5 h-5" />
+                  <SparklesIcon className="w-5 h-5 group-hover:animate-spin" />
                   Show Me the Tools
-                  <ArrowRightIcon className="w-5 h-5" />
+                  <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   href="/trending"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-gray-200"
+                  className="group inline-flex items-center gap-3 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-105 border border-gray-200"
                 >
-                  <FireIcon className="w-5 h-5 text-orange-500" />
+                  <FireIcon className="w-5 h-5 text-orange-500 group-hover:animate-pulse" />
                   See Trending Tools
                 </Link>
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto animate-fade-in">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">{allTools.length}+</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
+            {/* Enhanced stats with animations */}
+            <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <div className="text-center group">
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{allTools.length}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Curated Tools</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">50K+</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Reviews</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">1M+</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Users</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">{categories.length}</div>
+              <div className="text-center group">
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{categories.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
+              </div>
+              <div className="text-center group">
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">50+</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Community Reviews</div>
+              </div>
+              <div className="text-center group">
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">100%</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Hand-Picked</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* Quick Actions Section */}
+      <QuickActions />
+
+      {/* Daily Tool Section - New! */}
+      <DailyTool tools={allTools} />
+
+      {/* Trending Now Section - New! */}
+      <TrendingNow tools={allTools} />
+
+      {/* Community Highlights Section - New! */}
+      <CommunityHighlights />
+
+      {/* Personalization Section - New! */}
+      {(favoriteTools.length > 0 || recentlyViewed.length > 0) && (
+        <section className="py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                Your Personal AI Toolkit
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                Tools you've loved and recently explored
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Favorite Tools */}
+              {favoriteTools.length > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <HeartIcon className="w-6 h-6 text-red-500" />
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Your Favorites</h3>
+                  </div>
+                  <div className="space-y-4">
+                    {getFavoriteTools().map((tool) => (
+                      <div key={tool.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                            <span className="text-lg">{tool.logo || tool.name.charAt(0)}</span>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-gray-900 dark:text-white">{tool.name}</h4>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{tool.category}</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => toggleFavorite(tool.id)}
+                          className="text-red-500 hover:text-red-600 transition-colors"
+                        >
+                          <HeartIcon className="w-5 h-5 fill-current" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Recently Viewed */}
+              {recentlyViewed.length > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <ClockIcon className="w-6 h-6 text-blue-500" />
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Recently Viewed</h3>
+                  </div>
+                  <div className="space-y-4">
+                    {getRecentlyViewedTools().map((tool) => (
+                      <div key={tool.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                            <span className="text-lg">{tool.logo || tool.name.charAt(0)}</span>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-gray-900 dark:text-white">{tool.name}</h4>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{tool.category}</p>
+                          </div>
+                        </div>
+                        <Link
+                          href={`/tool/${tool.id}`}
+                          className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                        >
+                          View →
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Testimonials Section - New! */}
+      <section className="py-20 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Trusted by AI Enthusiasts Worldwide
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              See what our community says about finding the perfect AI tools
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <div className="flex items-center gap-1 mb-4">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <StarIcon key={i} className="w-5 h-5 text-yellow-500 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 mb-6 italic">
+                  "{testimonial.content}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-xl">
+                    {testimonial.avatar}
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role} at {testimonial.company}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced How It Works Section */}
       <section className="py-20 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -212,31 +462,31 @@ export default function HomeClient({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <SearchIcon className="w-8 h-8 text-blue-600" />
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                <SearchIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Search & Discover</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Search & Discover</h3>
               <p className="text-gray-600 dark:text-gray-300">
                 Browse our curated collection of AI tools or use our powerful search to find exactly what you need.
               </p>
             </div>
             
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CompareIcon className="w-8 h-8 text-purple-600" />
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                <CompareIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Compare & Evaluate</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Compare & Evaluate</h3>
               <p className="text-gray-600 dark:text-gray-300">
                 Read detailed reviews, compare features, and see real user ratings to make informed decisions.
               </p>
             </div>
             
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <RocketIcon className="w-8 h-8 text-green-600" />
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                <RocketIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Start Building</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Start Building</h3>
               <p className="text-gray-600 dark:text-gray-300">
                 Get started with your chosen AI tool and join thousands of users building the future.
               </p>
@@ -245,7 +495,7 @@ export default function HomeClient({
         </div>
       </section>
 
-      {/* Featured Tools Section */}
+      {/* Enhanced Featured Tools Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -261,41 +511,49 @@ export default function HomeClient({
             {filteredTools.slice(0, 6).map((tool) => (
               <div
                 key={tool.id}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700"
+                className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700 overflow-hidden"
               >
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                         <span className="text-lg font-semibold text-gray-600 dark:text-gray-300">
-                          {tool.name.charAt(0)}
+                          {tool.logo || tool.name.charAt(0)}
                         </span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">{tool.name}</h3>
+                        <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{tool.name}</h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400">{tool.category}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      {renderStars(tool.rating)}
-                      <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">
-                        ({tool.reviewCount})
-                      </span>
-                    </div>
+                    <button
+                      onClick={() => toggleFavorite(tool.id)}
+                      className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                    >
+                      <HeartIcon className={`w-5 h-5 ${favoriteTools.includes(tool.id) ? 'fill-current' : ''}`} />
+                    </button>
                   </div>
                   
                   <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
                     {tool.description}
                   </p>
                   
+                  <div className="flex items-center gap-1 mb-4">
+                    {renderStars(tool.rating)}
+                    <span className="text-sm text-gray-600 dark:text-gray-400 ml-1">
+                      ({tool.reviewCount?.toLocaleString()})
+                    </span>
+                  </div>
+                  
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                       <TrendingUpIcon className="w-4 h-4" />
-                      <span>{tool.growth}% growth</span>
+                      <span>{tool.growth} growth</span>
                     </div>
                     <Link
                       href={`/tool/${tool.id}`}
-                      className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                      onClick={() => addToRecentlyViewed(tool.id)}
+                      className="text-blue-600 hover:text-blue-700 font-medium text-sm group-hover:translate-x-1 transition-transform"
                     >
                       Learn More →
                     </Link>
@@ -308,7 +566,7 @@ export default function HomeClient({
           <div className="text-center mt-12">
             <Link
               href="/search"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               View All Tools
               <ArrowRightIcon className="w-4 h-4" />
@@ -317,99 +575,94 @@ export default function HomeClient({
         </div>
       </section>
 
-      {/* Search and Filter Section */}
+      {/* Category Showcase Section */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Find Your Perfect AI Tool
+              Explore AI Tools by Category
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Use our advanced search and filters to discover tools that match your specific needs
+              Find the perfect AI tool for your specific needs and use case
             </p>
           </div>
 
-          {/* Simple Search Bar */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="relative">
-              <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search AI tools..."
-                className="w-full pl-12 pr-4 py-4 bg-white/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-lg"
-                readOnly
-                onClick={() => window.location.href = '/search'}
-              />
-            </div>
-          </div>
-
-          {/* Category Grid */}
+          {/* Top Categories Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categories.map((category) => (
+            {categories.slice(0, 6).map((category) => (
               <div
                 key={category.name}
-                className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden group"
+                className="group bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2"
               >
-                <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
-                  <div className="w-full h-full flex items-center justify-center">
+                <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
+                  <div className="w-full h-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <div className="text-6xl text-gray-400 dark:text-gray-500">{category.icon}</div>
                   </div>
                   <div className="absolute top-3 left-3">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                      {category.name}
+                      {category.count} tools
                     </span>
                   </div>
                 </div>
                 <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {category.name}
-                    </h3>
-                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-2">
+                    {category.name}
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
                     {category.description}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
-                    <span>👥 {category.count.toLocaleString()} tools</span>
-                    <span>🎯 Popular tools</span>
-                  </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {category.popularTools.slice(0, 2).join(', ')}
-                    </span>
-                  </div>
-                  <div className="flex gap-2">
-                    <Link
-                      href={`/categories/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="flex-1 bg-blue-600 text-white text-center py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                      Browse Tools
-                    </Link>
-                    <Link
-                      href={`/categories/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                      aria-label={`Learn more about ${category.name}`}
-                    >
-                      Details
-                    </Link>
-                  </div>
+                  <Link
+                    href={`/categories/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm group-hover:translate-x-1 transition-transform"
+                  >
+                    Explore {category.name} →
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
+
+          <div className="text-center mt-12">
+            <Link
+              href="/categories"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              View All Categories
+              <ArrowRightIcon className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Email Signup Section */}
-      <section className="py-20 bg-blue-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-            Stay Updated with the Latest AI Tools
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Get notified about new AI tools, updates, and exclusive insights delivered to your inbox.
-          </p>
-          <EmailSignupForm />
+      {/* Enhanced Newsletter Section */}
+      <EnhancedNewsletter />
+
+      {/* Trust Signals Section - New! */}
+      <section className="py-16 bg-white dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+              Trusted by AI Enthusiasts Worldwide
+            </h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-400 dark:text-gray-500 mb-2">🔒</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Secure & Private</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-400 dark:text-gray-500 mb-2">⚡</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Lightning Fast</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-400 dark:text-gray-500 mb-2">🎯</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Accurate Results</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-400 dark:text-gray-500 mb-2">💎</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Premium Quality</div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
