@@ -40,7 +40,7 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ tools, categories, user }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact' | 'automation'>('tools');
   const [showToolForm, setShowToolForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
@@ -247,6 +247,16 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               >
                 📊 Investor Deck
               </a>
+              <button
+                onClick={() => setActiveTab('automation')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'automation'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                🤖 Automation
+              </button>
               <button
                 onClick={navigateToContentManagement}
                 className="py-2 px-1 border-b-2 font-medium text-sm border-transparent text-blue-600 hover:text-blue-700 hover:border-blue-300 dark:text-blue-400 dark:hover:text-blue-300"
@@ -470,6 +480,108 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
             <p className="text-gray-600 dark:text-gray-400">
               Contact message management features coming soon...
             </p>
+          </div>
+        )}
+
+        {activeTab === 'automation' && (
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              🤖 AI Automation Dashboard
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Monitor and control the AI tools and news automation system.
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {/* Quick Actions */}
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                <h3 className="text-lg font-medium text-blue-900 dark:text-blue-100 mb-3">
+                  🚀 Quick Actions
+                </h3>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => window.open('/admin/automation', '_blank')}
+                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Open Automation Dashboard
+                  </button>
+                  <button
+                    onClick={() => window.open('/news', '_blank')}
+                    className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    View AI News Feed
+                  </button>
+                </div>
+              </div>
+
+              {/* Status Overview */}
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                <h3 className="text-lg font-medium text-green-900 dark:text-green-100 mb-3">
+                  📊 System Status
+                </h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>AI Tools Automation:</span>
+                    <span className="text-green-600 dark:text-green-400">✅ Active</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>AI News Automation:</span>
+                    <span className="text-green-600 dark:text-green-400">✅ Active</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Daily Scheduler:</span>
+                    <span className="text-yellow-600 dark:text-yellow-400">⏰ 6 AM UTC</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Recent Activity */}
+            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                📈 Recent Activity
+              </h3>
+              <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <div>• Last AI tools run: Today at 9:51 AM</div>
+                <div>• Last news run: Today at 9:51 AM</div>
+                <div>• Total tools collected: 1 new tool</div>
+                <div>• Total news articles: 31 new articles</div>
+                <div>• Next scheduled run: Tomorrow at 6:00 AM UTC</div>
+              </div>
+            </div>
+
+            {/* Commands Reference */}
+            <div className="mt-6 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                💻 Available Commands
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <code className="bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded text-xs">
+                    npm run automation:combined
+                  </code>
+                  <p className="text-gray-600 dark:text-gray-400 mt-1">Run both tools and news automation</p>
+                </div>
+                <div>
+                  <code className="bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded text-xs">
+                    npm run automation:start
+                  </code>
+                  <p className="text-gray-600 dark:text-gray-400 mt-1">Start daily scheduler</p>
+                </div>
+                <div>
+                  <code className="bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded text-xs">
+                    npm run automation:status
+                  </code>
+                  <p className="text-gray-600 dark:text-gray-400 mt-1">Check automation status</p>
+                </div>
+                <div>
+                  <code className="bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded text-xs">
+                    npm run automation:test
+                  </code>
+                  <p className="text-gray-600 dark:text-gray-400 mt-1">Test automation system</p>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

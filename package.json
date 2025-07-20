@@ -32,9 +32,12 @@
     "add:basic-reviews": "node scripts/add-basic-reviews.js",
     "add:working-reviews": "node scripts/add-working-reviews.js",
     "automation:run": "node scripts/ai-tools-automation.js",
+    "automation:news": "node scripts/ai-news-automation.js",
+    "automation:combined": "node scripts/combined-automation.js",
     "automation:start": "node scripts/scheduler.js",
     "automation:status": "curl -X GET http://localhost:3000/api/admin/automation",
-    "automation:test": "node scripts/test-automation.js"
+    "automation:test": "node scripts/test-automation.js",
+    "setup:news-db": "node scripts/setup-news-database.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",

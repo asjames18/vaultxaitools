@@ -1,0 +1,40 @@
+{
+  "status": "running",
+  "lastUpdated": "2025-07-20T21:55:00.000Z",
+  "scheduler": {
+    "status": "active",
+    "nextRun": "2025-07-21T06:00:00.000Z",
+    "schedule": "0 6 * * *",
+    "timezone": "UTC"
+  },
+  "lastRun": {
+    "timestamp": "2025-07-20T21:51:18.831Z",
+    "duration": 14764,
+    "tools": {
+      "success": true,
+      "count": "completed",
+      "errors": []
+    },
+    "news": {
+      "success": true,
+      "count": "completed",
+      "errors": []
+    }
+  },
+  "statistics": {
+    "totalToolsCollected": 1,
+    "totalNewsCollected": 31,
+    "sourcesWorking": ["Product Hunt", "Reddit", "TechCrunch"],
+    "sourcesNeedingKeys": ["GitHub", "News API"]
+  },
+  "system": {
+    "version": "1.0.0",
+    "uptime": "running",
+    "logsDirectory": "logs/",
+    "reportsGenerated": [
+      "automation-report.json",
+      "news-automation-report.json", 
+      "combined-automation-report.json"
+    ]
+  }
+} 

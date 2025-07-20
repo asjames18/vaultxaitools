@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-07-20T21:51:33.593Z",
+  "totalNews": 31,
+  "sources": {
+    "Reddit": 11,
+    "TechCrunch": 20
+  },
+  "categories": {
+    "General AI": 17,
+    "Video Generation": 1,
+    "AI Development": 2,
+    "Language Models": 2,
+    "Robotics": 1,
+    "AI Business": 6,
+    "AI Ethics": 1,
+    "Image Generation": 1
+  },
+  "sentiment": {
+    "neutral": 28,
+    "negative": 3
+  },
+  "summary": {
+    "newNews": 0,
+    "updatedNews": 0,
+    "errors": 0
+  }
+}
