@@ -330,10 +330,8 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
               {activeTab === 'reviews' && (
                 <div className="animate-fade-in">
                   <ReviewForm 
-                    toolId={tool.id} 
-                    currentRating={tool.rating} 
-                    currentReviewCount={tool.reviewCount} 
-                    onReviewSubmitted={handleReviewSubmitted} 
+                    toolName={tool.name}
+                    onSuccess={handleReviewSubmitted} 
                   />
                   <ReviewList
                     reviews={reviews}
