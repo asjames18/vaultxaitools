@@ -15,6 +15,13 @@ export default function AuthCallbackClient() {
     const handleAuthCallback = async () => {
       try {
         // Get the access_token and refresh_token from URL params
+        if (!searchParams) {
+          setStatus('error');
+          setMessage('No search parameters found');
+          setTimeout(() => router.push('/'), 3000);
+          return;
+        }
+        
         const accessToken = searchParams.get('access_token');
         const refreshToken = searchParams.get('refresh_token');
         const error = searchParams.get('error');

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/auth';
-import { createServerSupabaseClient } from '@/lib/supabase-server';
+import { createClient } from '@/lib/supabase-server';
 import { getUserRole } from '@/lib/auth';
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -22,9 +22,9 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     }
 
     // Check if current user is admin
-    const supabaseServer = await createServerSupabaseClient();
+    const supabaseServer = await createClient();
     const { data: { user } } = await supabaseServer.auth.getUser();
-    if (!user || getUserRole(user) !== 'admin') {
+    if (!user || (await getUserRole(user)) !== 'admin') {
       return NextResponse.json({ error: 'user not allowed' }, { status: 403 });
     }
 

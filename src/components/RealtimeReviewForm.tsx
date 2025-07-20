@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabaseClient';
+import { supabase } from '@/lib/supabaseClient';
 import AccessibleRating from './AccessibleRating';
 
 interface RealtimeReviewFormProps {
@@ -44,8 +44,6 @@ export default function RealtimeReviewForm({
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState<'recent' | 'helpful' | 'rating'>('recent');
 
-  const supabase = createClient();
-
   // Load existing reviews
   useEffect(() => {
     loadReviews();
@@ -61,7 +59,7 @@ export default function RealtimeReviewForm({
           table: 'reviews',
           filter: `tool_id=eq.${toolId}`
         },
-        (payload) => {
+        (payload: any) => {
           console.log('Real-time review update:', payload);
           loadReviews(); // Reload reviews when changes occur
         }
@@ -402,7 +400,7 @@ export default function RealtimeReviewForm({
                       </p>
                     </div>
                   </div>
-                  <AccessibleRating rating={review.rating} size="sm" readonly />
+                  <AccessibleRating rating={review.rating} size="sm" interactive={false} />
                 </div>
                 
                 {review.title && (
