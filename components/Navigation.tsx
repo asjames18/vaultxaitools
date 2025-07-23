@@ -224,18 +224,20 @@ export default function Navigation() {
         </div>
       </div>
 
-      {/* DEBUG: Show user and userRole for troubleshooting - ALWAYS SHOW FOR NOW */}
-      <div style={{ position: 'fixed', top: 60, right: 10, zIndex: 9999, background: '#222', color: '#fff', padding: 8, borderRadius: 8, fontSize: 11, maxWidth: 400, maxHeight: 300, overflow: 'auto' }}>
-        <div style={{ fontWeight: 'bold', marginBottom: 8, color: '#00ff00' }}>🔍 AUTH DEBUG</div>
-        <div>User: {user?.email || 'none'}</div>
-        <div>Role: {userRole || 'none'}</div>
-        <div style={{ marginTop: 8, fontSize: 10, color: '#ccc' }}>
-          Auth Debug: {authDebug && JSON.stringify(authDebug, null, 2)}
+      {/* DEBUG: Show user and userRole for troubleshooting (development only) */}
+      {process.env.NODE_ENV === 'development' && (
+        <div style={{ position: 'fixed', top: 60, right: 10, zIndex: 9999, background: '#222', color: '#fff', padding: 8, borderRadius: 8, fontSize: 11, maxWidth: 400, maxHeight: 300, overflow: 'auto' }}>
+          <div style={{ fontWeight: 'bold', marginBottom: 8, color: '#00ff00' }}>🔍 AUTH DEBUG</div>
+          <div>User: {user?.email || 'none'}</div>
+          <div>Role: {userRole || 'none'}</div>
+          <div style={{ marginTop: 8, fontSize: 10, color: '#ccc' }}>
+            Auth Debug: {authDebug && JSON.stringify(authDebug, null, 2)}
+          </div>
+          <div style={{ marginTop: 8, fontSize: 10, color: '#ccc' }}>
+            Role Debug: {roleDebug && JSON.stringify(roleDebug, null, 2)}
+          </div>
         </div>
-        <div style={{ marginTop: 8, fontSize: 10, color: '#ccc' }}>
-          Role Debug: {roleDebug && JSON.stringify(roleDebug, null, 2)}
-        </div>
-      </div>
+      )}
 
       {/* Mobile menu */}
       {isMenuOpen && (
