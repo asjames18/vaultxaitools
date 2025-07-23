@@ -115,36 +115,27 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // TEMPORARY: Disable ALL authentication for debugging
-  console.log(`[Middleware] BYPASSING ALL AUTHENTICATION - Route: ${pathname}`);
-  return response;
+  // Allow completely public routes without auth
+  if (isPublicRoute(pathname)) {
+    return response;
+  }
 
-  // // Allow public routes
-  // if (isPublicRoute(pathname)) {
-  //   return response;
-  // }
+  // If no session, redirect to sign-in or admin login
+  if (!user) {
+    if (isAdminRoute(pathname)) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+    const signInUrl = new URL('/sign-in', request.url);
+    signInUrl.searchParams.set('redirectTo', pathname);
+    return NextResponse.redirect(signInUrl);
+  }
 
-  // // Check if user is authenticated
-  // if (!user) {
-  //   // Redirect to appropriate login page based on route
-  //   if (isAdminRoute(pathname)) {
-  //     return NextResponse.redirect(new URL('/admin/login', request.url));
-  //   } else {
-  //     const signInUrl = new URL('/sign-in', request.url);
-  //     signInUrl.searchParams.set('redirectTo', pathname);
-  //     return NextResponse.redirect(signInUrl);
-  //   }
-  // }
-
-    // // Check admin routes - COMMENTED OUT FOR DEBUGGING
-  // if (isAdminRoute(pathname)) {
-  //   console.log(`[Middleware] Admin route accessed: ${pathname}`);
-  //   console.log(`[Middleware] User:`, user ? { id: user.id, email: user.email } : null);
-  //   
-  //   // TEMPORARY FIX: Completely bypass admin authentication for debugging
-  //   console.log(`[Middleware] BYPASSING ALL ADMIN AUTHENTICATION FOR DEBUGGING`);
-  //   return response;
-  // }
+  // Extra check for admin-only routes
+  if (isAdminRoute(pathname)) {
+    if (!isAdminEmail(user.email || '')) {
+      return NextResponse.redirect(new URL('/admin/unauthorized', request.url));
+    }
+  }
 
   return response;
 }
