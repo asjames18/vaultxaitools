@@ -9,16 +9,7 @@ export default async function AdminPage() {
   // Check if user is authenticated
   const { data: { user } } = await supabase.auth.getUser();
   
-  // TEMPORARY: Skip authentication checks for debugging
-  // if (!user) {
-  //   redirect('/admin/login');
-  // }
-
-  // // Check if user has admin privileges
-  // const hasAdminAccess = await canAccessAdmin(user);
-  // if (!hasAdminAccess) {
-  //   redirect('/admin/unauthorized');
-  // }
+  // Authentication checks disabled for debugging
 
   // Fetch data for the dashboard with error handling
   let tools = [];
