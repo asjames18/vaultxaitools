@@ -18,6 +18,16 @@ interface AutomationStatus {
   recentNews?: any[];
 }
 
+// Helper to get a writable logs directory in all environments
+const getLogsDir = async () => {
+  const path = await import('path');
+  // On Vercel/AWS (read-only FS) only /tmp is writable
+  if (process.env.NODE_ENV === 'production') {
+    return path.join('/tmp', 'logs');
+  }
+  return path.join(process.cwd(), 'logs');
+};
+
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
@@ -109,9 +119,11 @@ export async function POST(request: NextRequest) {
         
         try {
           // Write a quick status update to the logs
-          const fs = await import('fs/promises');
           const path = await import('path');
-          const combinedReportPath = path.join(process.cwd(), 'logs', 'combined-automation-report.json');
+          const fs = await import('fs/promises');
+          const logsDir = await getLogsDir();
+          await fs.mkdir(logsDir, { recursive: true });
+          const combinedReportPath = path.join(logsDir, 'combined-automation-report.json');
           await fs.writeFile(combinedReportPath, JSON.stringify({
             timestamp: currentTimestamp,
             tools: { success: true, count: 'refreshed', errors: [] },
@@ -214,8 +226,9 @@ export async function GET(request: NextRequest) {
     
     try {
       // Read automation status from log files
-      const automationReportPath = path.join(process.cwd(), 'logs', 'automation-report.json');
-      const combinedReportPath = path.join(process.cwd(), 'logs', 'combined-automation-report.json');
+      const logsDir = await getLogsDir();
+      const automationReportPath = path.join(logsDir, 'automation-report.json');
+      const combinedReportPath = path.join(logsDir, 'combined-automation-report.json');
       
              let status: AutomationStatus = { status: 'no-data' };
        
