@@ -27,6 +27,15 @@ interface AutomationStatus {
   status?: string;
   toolsFound?: number;
   errors?: string[];
+  summary?: {
+    errors: number;
+    newTools: number;
+    updatedTools: number;
+  };
+  sources?: { [key: string]: number };
+  categories?: { [key: string]: number };
+  newsCount?: number;
+  recentNews?: string[];
 }
 
 interface DataRefreshStatus {
@@ -64,6 +73,9 @@ export default function AutomationDashboard() {
       const response = await fetch('/api/admin/automation');
       if (response.ok) {
         const data = await response.json();
+        console.log('Automation status data:', data);
+        console.log('Sources:', data.sources);
+        console.log('Categories:', data.categories);
         setStatus(data);
       }
     } catch (error) {
@@ -137,13 +149,15 @@ export default function AutomationDashboard() {
       if (response.ok) {
         const result = await response.json();
         console.log(`${type} automation started:`, result);
-        
         // Refresh status after starting
         setTimeout(fetchStatus, 1000);
       } else {
-        console.error(`Failed to start ${type} automation`);
+        const errorData = await response.json();
+        alert(`Failed to start automation: ${errorData.error || response.statusText}`);
+        console.error(`Failed to start ${type} automation`, errorData);
       }
     } catch (error) {
+      alert(`Error starting automation: ${error}`);
       console.error(`Error starting ${type} automation:`, error);
     } finally {
       setRunningOperation(null);
@@ -302,15 +316,15 @@ export default function AutomationDashboard() {
                 </p>
               </div>
               <button
-                onClick={() => runAutomation('run')}
-                disabled={runningOperation === 'run'}
+                onClick={() => runAutomation('run-automation')}
+                disabled={runningOperation === 'run-automation'}
                 className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
-                  runningOperation === 'run'
+                  runningOperation === 'run-automation'
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
                 }`}
               >
-                {runningOperation === 'run' ? (
+                {runningOperation === 'run-automation' ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
                     Running...
@@ -387,6 +401,91 @@ export default function AutomationDashboard() {
           </div>
         </div>
 
+        {/* Automation Analytics */}
+        {status && (
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <BarChart3 className="w-6 h-6 text-blue-600" />
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Automation Analytics
+              </h3>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-lg">
+                <div className="text-2xl font-bold">{status.lastRun ? new Date(status.lastRun).toLocaleString() : 'Never'}</div>
+                <div className="text-blue-100 text-sm">Last Run</div>
+              </div>
+              <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-lg">
+                <div className="text-2xl font-bold">{status.status || 'Unknown'}</div>
+                <div className="text-green-100 text-sm">Status</div>
+              </div>
+              <div className="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-lg">
+                <div className="text-2xl font-bold">{status.toolsFound || 0}</div>
+                <div className="text-purple-100 text-sm">Tools Found</div>
+              </div>
+              <div className="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white p-4 rounded-lg">
+                <div className="text-2xl font-bold">{status.newsCount || 0}</div>
+                <div className="text-cyan-100 text-sm">News Articles</div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className={`p-4 rounded-lg ${(status.summary?.errors || 0) > 0 ? 'bg-gradient-to-r from-red-500 to-red-600 text-white' : 'bg-gradient-to-r from-gray-500 to-gray-600 text-white'}`}>
+                <div className="text-2xl font-bold">{status.summary?.errors || 0}</div>
+                <div className="text-gray-100 text-sm">Errors</div>
+              </div>
+              <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-4 rounded-lg">
+                <div className="text-2xl font-bold">{status.summary?.newTools || 0}</div>
+                <div className="text-orange-100 text-sm">New Tools</div>
+              </div>
+              <div className="bg-gradient-to-r from-teal-500 to-teal-600 text-white p-4 rounded-lg">
+                <div className="text-2xl font-bold">{status.summary?.updatedTools || 0}</div>
+                <div className="text-teal-100 text-sm">Updated Tools</div>
+              </div>
+              <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white p-4 rounded-lg">
+                <div className="text-2xl font-bold">{(status.recentNews || []).length}</div>
+                <div className="text-indigo-100 text-sm">Recent News</div>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
+              <div>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Sources</p>
+                <div className="text-gray-900 dark:text-white text-sm">
+                  {status.sources && Object.keys(status.sources).length > 0 ? (
+                    <ul className="space-y-1">
+                      {Object.entries(status.sources).map(([source, count]) => (
+                        <li key={source} className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">{source}:</span>
+                          <span className="font-medium">{count}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span className="text-gray-500 dark:text-gray-400 text-xs">No data</span>
+                  )}
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Categories</p>
+                <div className="text-gray-900 dark:text-white text-sm">
+                  {status.categories && Object.keys(status.categories).length > 0 ? (
+                    <ul className="space-y-1">
+                      {Object.entries(status.categories).map(([cat, count]) => (
+                        <li key={cat} className="flex justify-between">
+                          <span className="text-gray-600 dark:text-gray-400">{cat}:</span>
+                          <span className="font-medium">{count}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span className="text-gray-500 dark:text-gray-400 text-xs">No data</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Automation Schedule */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center gap-3 mb-6">
@@ -416,4 +515,4 @@ export default function AutomationDashboard() {
       </div>
     </div>
   );
-} 
+}

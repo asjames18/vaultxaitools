@@ -47,6 +47,7 @@
     "create:news-table": "node scripts/create-news-table.js"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.5",
     "@heroicons/react": "^2.1.1",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.51.0",

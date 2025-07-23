@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
 import { getUserRole } from '@/lib/auth';
+import { supabaseAdmin } from '@/lib/supabaseAdminClient';
 
 export async function PUT(
   request: NextRequest,
@@ -32,7 +33,7 @@ export async function PUT(
     }
 
     // Update user password using service role key
-    const { error } = await supabase.auth.admin.updateUserById(id, {
+    const { error } = await supabaseAdmin.auth.admin.updateUserById(id, {
       password: password
     });
 

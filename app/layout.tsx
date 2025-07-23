@@ -54,7 +54,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} pt-14`}>
         <Navigation />
         <ErrorBoundary>
           {children}

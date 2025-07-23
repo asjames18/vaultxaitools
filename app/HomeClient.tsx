@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase';
 import SponsoredContent from '@/components/SponsoredContent';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import DailyTool from '@/components/DailyTool';
@@ -141,6 +142,11 @@ export default function HomeClient({
   const [isVisible, setIsVisible] = useState(false);
   const [favoriteTools, setFavoriteTools] = useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
+  const [automationStatus, setAutomationStatus] = useState<any>(null);
+  const [showUpdateBanner, setShowUpdateBanner] = useState(false);
+  const [lastDataUpdate, setLastDataUpdate] = useState<Date>(new Date());
+  
+  const supabase = createClient();
 
   // Calculate real stats from tools data
   const totalReviews = allTools.reduce((sum, tool) => sum + (tool.reviewCount || 0), 0);
@@ -179,7 +185,41 @@ export default function HomeClient({
       setRecentlyViewed(JSON.parse(savedRecent));
     }
 
-    return () => clearInterval(headlineInterval);
+    // Subscribe to automation updates for real-time sync
+    const automationChannel = supabase
+      .channel('automation-updates')
+      .on('broadcast', { event: 'automation-completed' }, (payload) => {
+        console.log('🔄 Automation completed - refreshing homepage data', payload);
+        setLastDataUpdate(new Date());
+        setShowUpdateBanner(true);
+        
+        // Auto-hide banner after 10 seconds
+        setTimeout(() => setShowUpdateBanner(false), 10000);
+        
+        // Optionally refresh the page to get new data
+        setTimeout(() => window.location.reload(), 2000);
+      })
+      .subscribe();
+
+    // Fetch automation status
+    const fetchAutomationStatus = async () => {
+      try {
+        const response = await fetch('/api/admin/automation');
+        if (response.ok) {
+          const data = await response.json();
+          setAutomationStatus(data);
+        }
+      } catch (error) {
+        console.error('Error fetching automation status:', error);
+      }
+    };
+    
+    fetchAutomationStatus();
+
+    return () => {
+      clearInterval(headlineInterval);
+      automationChannel.unsubscribe();
+    };
   }, []);
 
   const handleResultsChange = useCallback((tools: Tool[]) => {
@@ -226,6 +266,24 @@ export default function HomeClient({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      {/* Automation Update Banner */}
+      {showUpdateBanner && (
+        <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-3 text-center relative">
+          <div className="flex items-center justify-center gap-2">
+            <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span className="font-medium">🚀 New AI tools discovered! Data updated with latest tools.</span>
+            <button
+              onClick={() => setShowUpdateBanner(false)}
+              className="ml-4 text-white/80 hover:text-white"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Error Banner */}
       {error && (
         <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
@@ -313,20 +371,28 @@ export default function HomeClient({
             {/* Enhanced stats with animations */}
             <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="text-center group">
-                                        <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{allTools.length}</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{allTools.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Curated Tools</div>
+                {automationStatus?.lastRun && (
+                  <div className="text-xs text-gray-500 mt-1">
+                    Updated: {new Date(automationStatus.lastRun).toLocaleDateString()}
+                  </div>
+                )}
               </div>
               <div className="text-center group">
                 <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{categories.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
               </div>
               <div className="text-center group">
-                                        <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{formatNumber(totalReviews)}</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{formatNumber(totalReviews)}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Community Reviews</div>
               </div>
               <div className="text-center group">
-                                        <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{formatNumber(totalUsers)}</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{formatNumber(totalUsers)}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Active Users</div>
+                <div className="text-xs text-green-600 mt-1">
+                  Live Data
+                </div>
               </div>
             </div>
           </div>

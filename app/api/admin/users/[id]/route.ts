@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
 import { getUserRole } from '@/lib/auth';
+import { supabaseAdmin } from '@/lib/supabaseAdminClient';
 
 export async function DELETE(
   request: NextRequest,
@@ -28,8 +29,8 @@ export async function DELETE(
       );
     }
 
-    // Delete user
-    const { error } = await supabase.auth.admin.deleteUser(userId);
+    // Delete user with service-role key
+    const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
     if (error) {
       console.error('Error deleting user:', error);

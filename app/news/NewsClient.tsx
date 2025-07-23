@@ -49,6 +49,43 @@ export default function NewsClient() {
 
   const supabase = createClient();
 
+  // Subscribe to automation updates for real-time news sync
+  useEffect(() => {
+    const automationChannel = supabase
+      .channel('automation-updates')
+      .on('broadcast', { event: 'automation-completed' }, (payload) => {
+        console.log('🔄 Automation completed, refreshing news...', payload);
+        setLastUpdated(new Date());
+        
+        // Show a notification that new content is available
+        const notification = document.createElement('div');
+        notification.innerHTML = `
+          <div style="position: fixed; top: 20px; right: 20px; background: linear-gradient(to right, #3b82f6, #8b5cf6); color: white; padding: 16px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1000; animation: slideInRight 0.3s ease-out;">
+            <div style="font-weight: bold; margin-bottom: 4px;">🎉 Fresh AI News Available!</div>
+            <div style="font-size: 14px; opacity: 0.9;">New articles have been discovered and added</div>
+          </div>
+        `;
+        document.body.appendChild(notification);
+        
+        // Auto-refresh news after a short delay
+        setTimeout(() => {
+          fetchAllNews();
+        }, 2000);
+        
+        // Remove notification after 5 seconds
+        setTimeout(() => {
+          if (notification && notification.parentNode) {
+            notification.remove();
+          }
+        }, 5000);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(automationChannel);
+    };
+  }, []);
+
   // Memoized filtered news for better performance
   const filteredNews = useMemo(() => {
     return news.filter(item => {
@@ -65,34 +102,35 @@ export default function NewsClient() {
   // Fetch AI news from multiple sources
   const fetchAINews = async () => {
     try {
-      // NewsAPI for general AI news
-      const newsApiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
-      if (newsApiKey) {
-        const response = await fetch(
-          `https://newsapi.org/v2/everything?q=artificial+intelligence+AI&language=en&sortBy=publishedAt&pageSize=20&apiKey=${newsApiKey}`
-        );
-        const data = await response.json();
-        
-        if (data.articles) {
-          const aiNews: NewsItem[] = data.articles.map((article: any, index: number) => ({
-            id: `ai-news-${index}`,
-            title: article.title,
-            description: article.description || article.content?.substring(0, 200) + '...',
-            url: article.url,
-            source: article.source.name,
-            publishedAt: article.publishedAt,
-            imageUrl: article.urlToImage,
-            category: 'ai-news' as const,
-            tags: extractTags(article.title + ' ' + article.description)
-          }));
-          
-          setNews(prev => [...prev.filter(item => item.category !== 'ai-news'), ...aiNews]);
-        }
-      } else {
-        // Use fallback news if no API key is available
+      // Fetch AI news from our automation-synced database
+      console.log('🔍 Fetching AI news from database...');
+      const { data: aiNewsData, error } = await supabase
+        .from('ai_news')
+        .select('*')
+        .order('published_at', { ascending: false })
+        .limit(20);
+      
+      if (error) {
+        console.error('Error fetching AI news:', error);
+        // Use fallback news if database fails
         const { getFallbackNews } = await import('./fallbackNews');
         const fallbackNews = getFallbackNews().filter(item => item.category === 'ai-news');
         setNews(prev => [...prev.filter(item => item.category !== 'ai-news'), ...fallbackNews]);
+      } else if (aiNewsData) {
+        const aiNews: NewsItem[] = aiNewsData.map((article: any) => ({
+          id: article.id,
+          title: article.title,
+          description: article.content || 'No description available',
+          url: article.url,
+          source: article.source,
+          publishedAt: article.published_at,
+          imageUrl: article.image_url,
+          category: 'ai-news' as const,
+          tags: article.topics || []
+        }));
+        
+        console.log(`✅ Loaded ${aiNews.length} AI news articles from database`);
+        setNews(prev => [...prev.filter(item => item.category !== 'ai-news'), ...aiNews]);
       }
     } catch (error) {
       console.error('Error fetching AI news:', error);
@@ -166,33 +204,36 @@ export default function NewsClient() {
   // Fetch industry news
   const fetchIndustryNews = async () => {
     try {
-      const newsApiKey = process.env.NEXT_PUBLIC_NEWS_API_KEY;
-      if (newsApiKey) {
-        const response = await fetch(
-          `https://newsapi.org/v2/everything?q=AI+technology+industry&language=en&sortBy=publishedAt&pageSize=10&apiKey=${newsApiKey}`
-        );
-        const data = await response.json();
-        
-        if (data.articles) {
-          const industryNews: NewsItem[] = data.articles.map((article: any, index: number) => ({
-            id: `industry-news-${index}`,
-            title: article.title,
-            description: article.description || article.content?.substring(0, 200) + '...',
-            url: article.url,
-            source: article.source.name,
-            publishedAt: article.publishedAt,
-            imageUrl: article.urlToImage,
-            category: 'industry' as const,
-            tags: extractTags(article.title + ' ' + article.description)
-          }));
-          
-          setNews(prev => [...prev.filter(item => item.category !== 'industry'), ...industryNews]);
-        }
-      } else {
+      // Fetch industry/business AI news from our database
+      console.log('🔍 Fetching industry AI news from database...');
+      const { data: industryNewsData, error } = await supabase
+        .from('ai_news')
+        .select('*')
+        .in('category', ['AI Business', 'AI Ethics', 'AI Productivity'])
+        .order('published_at', { ascending: false })
+        .limit(10);
+      
+      if (error) {
+        console.error('Error fetching industry news:', error);
         // Use fallback industry news
         const { getFallbackNews } = await import('./fallbackNews');
         const fallbackNews = getFallbackNews().filter(item => item.category === 'industry');
         setNews(prev => [...prev.filter(item => item.category !== 'industry'), ...fallbackNews]);
+      } else if (industryNewsData) {
+        const industryNews: NewsItem[] = industryNewsData.map((article: any) => ({
+          id: article.id,
+          title: article.title,
+          description: article.content || 'No description available',
+          url: article.url,
+          source: article.source,
+          publishedAt: article.published_at,
+          imageUrl: article.image_url,
+          category: 'industry' as const,
+          tags: article.topics || []
+        }));
+        
+        console.log(`✅ Loaded ${industryNews.length} industry news articles from database`);
+        setNews(prev => [...prev.filter(item => item.category !== 'industry'), ...industryNews]);
       }
     } catch (error) {
       console.error('Error fetching industry news:', error);
@@ -230,14 +271,28 @@ export default function NewsClient() {
   }, []);
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    if (!dateString) return 'No date';
     
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    if (diffInHours < 48) return 'Yesterday';
-    return date.toLocaleDateString();
+    try {
+      const date = new Date(dateString);
+      
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        console.warn('Invalid date string:', dateString);
+        return 'Invalid date';
+      }
+      
+      const now = new Date();
+      const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+      
+      if (diffInHours < 1) return 'Just now';
+      if (diffInHours < 24) return `${diffInHours}h ago`;
+      if (diffInHours < 48) return 'Yesterday';
+      return date.toLocaleDateString();
+    } catch (error) {
+      console.error('Error parsing date:', dateString, error);
+      return 'Invalid date';
+    }
   };
 
   const getCategoryColor = (category: string) => {

@@ -32,9 +32,28 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Failed to fetch news' }, { status: 500 });
     }
 
+    // Convert snake_case fields to camelCase for frontend
+    const transformedData = data?.map(item => ({
+      id: item.id,
+      title: item.title,
+      content: item.content,
+      url: item.url,
+      source: item.source,
+      author: item.author,
+      publishedAt: item.published_at, // Convert snake_case to camelCase
+      imageUrl: item.image_url,       // Convert snake_case to camelCase
+      category: item.category,
+      sentiment: item.sentiment,
+      topics: item.topics,
+      readTime: item.read_time,       // Convert snake_case to camelCase
+      engagement: item.engagement,
+      createdAt: item.created_at,     // Convert snake_case to camelCase
+      updatedAt: item.updated_at      // Convert snake_case to camelCase
+    })) || [];
+
     return NextResponse.json({ 
-      data: data || [],
-      count: data?.length || 0
+      data: transformedData,
+      count: transformedData.length
     });
 
   } catch (error) {

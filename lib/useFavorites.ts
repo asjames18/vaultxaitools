@@ -1,137 +1,88 @@
-'use client';
+import { useEffect, useState, useCallback } from 'react';
+import { createClient } from '@supabase/supabase-js';
 
-import { useState, useEffect, useCallback } from 'react';
-import { refreshToolsData, subscribeToToolsUpdates, calculateRealTimeStats } from './database-client';
-import type { Database } from './database.types';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-type Tool = Database['public']['Tables']['tools']['Row'];
-
-export interface StatsData {
-  totalTools: number;
-  totalReviews: number;
-  totalUsers: number;
-  totalCategories: number;
-  avgRating: number;
-  lastUpdated: string;
-}
-
-// Hook for real-time statistics
-export function useRealTimeStats(initialTools: Tool[] = []) {
-  const [stats, setStats] = useState<StatsData>(() => 
-    calculateRealTimeStats(initialTools)
-  );
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
-
-  // Manual refresh function
-  const refreshStats = useCallback(async () => {
-    setIsRefreshing(true);
-    try {
-      const freshTools = await refreshToolsData();
-      const newStats = calculateRealTimeStats(freshTools);
-      setStats(newStats);
-      setLastRefresh(new Date());
-    } catch (error) {
-      console.error('Error refreshing stats:', error);
-    } finally {
-      setIsRefreshing(false);
-    }
-  }, []);
-
-  // Set up real-time subscription
-  useEffect(() => {
-    const subscription = subscribeToToolsUpdates((payload) => {
-      console.log('Tools data updated:', payload);
-      // Refresh stats when data changes
-      refreshStats();
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [refreshStats]);
-
-  // Auto-refresh every 5 minutes as fallback
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refreshStats();
-    }, 5 * 60 * 1000); // 5 minutes
-
-    return () => clearInterval(interval);
-  }, [refreshStats]);
-
-  return {
-    stats,
-    isRefreshing,
-    lastRefresh,
-    refreshStats
-  };
-}
-
-// Enhanced favorites hook with real-time updates
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  // Load favorites from localStorage on mount
+  // Get current user
   useEffect(() => {
-    const loadFavorites = () => {
-      try {
-        const saved = localStorage.getItem('vaultx-favorites');
-        if (saved) {
-          setFavorites(JSON.parse(saved));
-        }
-      } catch (error) {
-        console.error('Error loading favorites:', error);
-      } finally {
-        setIsLoading(false);
+    let mounted = true;
+    supabase.auth.getUser().then(({ data, error }) => {
+      if (mounted) {
+        setUserId(data?.user?.id || null);
       }
-    };
-
-    loadFavorites();
+    });
+    return () => { mounted = false; };
   }, []);
 
-  // Save to localStorage whenever favorites change
-  useEffect(() => {
-    if (!isLoading) {
-      localStorage.setItem('vaultx-favorites', JSON.stringify(favorites));
+  // Fetch favorites for the user
+  const fetchFavorites = useCallback(async () => {
+    if (!userId) {
+      setFavorites([]);
+      setLoading(false);
+      return;
     }
-  }, [favorites, isLoading]);
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('favorites')
+      .select('tool_id')
+      .eq('user_id', userId);
+    if (error) {
+      setFavorites([]);
+    } else {
+      setFavorites(data.map((fav: any) => fav.tool_id));
+    }
+    setLoading(false);
+  }, [userId]);
 
-  const addFavorite = useCallback((toolId: string) => {
-    setFavorites(prev => {
-      if (!prev.includes(toolId)) {
-        return [...prev, toolId];
-      }
-      return prev;
-    });
-  }, []);
+  useEffect(() => {
+    fetchFavorites();
+  }, [fetchFavorites]);
 
-  const removeFavorite = useCallback((toolId: string) => {
-    setFavorites(prev => prev.filter(id => id !== toolId));
-  }, []);
+  // Add a tool to favorites
+  const addFavorite = async (toolId: string) => {
+    if (!userId) return;
+    setLoading(true);
+    const { error } = await supabase
+      .from('favorites')
+      .insert({ user_id: userId, tool_id: toolId });
+    if (!error) {
+      setFavorites((prev) => [...prev, toolId]);
+    }
+    setLoading(false);
+  };
 
-  const toggleFavorite = useCallback((toolId: string) => {
-    setFavorites(prev => {
-      if (prev.includes(toolId)) {
-        return prev.filter(id => id !== toolId);
-      } else {
-        return [...prev, toolId];
-      }
-    });
-  }, []);
+  // Remove a tool from favorites
+  const removeFavorite = async (toolId: string) => {
+    if (!userId) return;
+    setLoading(true);
+    const { error } = await supabase
+      .from('favorites')
+      .delete()
+      .eq('user_id', userId)
+      .eq('tool_id', toolId);
+    if (!error) {
+      setFavorites((prev) => prev.filter((id) => id !== toolId));
+    }
+    setLoading(false);
+  };
 
-  const isFavorite = useCallback((toolId: string) => {
-    return favorites.includes(toolId);
-  }, [favorites]);
+  // Check if a tool is a favorite
+  const isFavorite = (toolId: string) => favorites.includes(toolId);
 
   return {
     favorites,
-    isLoading,
+    loading,
     addFavorite,
     removeFavorite,
-    toggleFavorite,
     isFavorite,
-    count: favorites.length
+    refresh: fetchFavorites,
+    userId,
   };
 } 
