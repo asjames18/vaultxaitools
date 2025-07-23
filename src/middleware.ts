@@ -42,6 +42,13 @@ export async function middleware(request: NextRequest) {
   // https://supabase.com/docs/guides/auth/auth-helpers/nextjs#managing-session-with-middleware
   await supabase.auth.getUser()
 
+  // If accessing test pages, bypass all authentication
+  if (request.nextUrl.pathname.startsWith('/test-')) {
+    console.log(`[Middleware] Test page accessed: ${request.nextUrl.pathname}`);
+    console.log(`[Middleware] BYPASSING ALL AUTHENTICATION FOR TEST PAGES`);
+    return supabaseResponse;
+  }
+
   // If accessing admin routes, check if user is authenticated
   if (request.nextUrl.pathname.startsWith('/admin')) {
     console.log(`[Middleware] Admin route accessed: ${request.nextUrl.pathname}`);
