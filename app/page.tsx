@@ -1,8 +1,11 @@
 import Link from 'next/link';
-import { categories } from '@/data/tools';
+import { categories } from '@/data';
 import { getToolsFromDB } from '@/data';
 import HomeClient from './HomeClient';
 import type { Tool } from '@/data/tools';
+
+// Revalidate this page every 5 minutes to keep data fresh
+export const revalidate = 300;
 
 export default async function HomePage() {
   let allTools: Tool[] = [];
@@ -12,7 +15,7 @@ export default async function HomePage() {
   let error: string | null = null;
 
   try {
-    // Fetch tools from database
+    // Fetch tools from database with cache tags for fine-grained invalidation
     const toolsData = await getToolsFromDB();
     
     if (toolsData && toolsData.length > 0) {
@@ -32,71 +35,20 @@ export default async function HomePage() {
       // For now, sponsored tools will be empty since we don't have that field
       // In the future, you can add a sponsored field to the Tool interface
       sponsoredTools = [];
-    } else {
-      // Fallback to sample data if no tools found
-      error = "No tools found in database";
-      popularTools = [
-        {
-          id: '1',
-          name: 'ChatGPT',
-          logo: '🤖',
-          description: 'Advanced language model for conversation and text generation',
-          category: 'Language',
-          rating: 4.7,
-          reviewCount: 1200000,
-          weeklyUsers: 15420,
-          growth: '+45%',
-          website: 'https://chat.openai.com',
-          pricing: 'Freemium',
-          features: ['Text Generation', 'Conversation', 'Code Help'],
-          tags: ['AI', 'Language', 'Chatbot']
-        },
-        {
-          id: '2',
-          name: 'Midjourney',
-          logo: '🎨',
-          description: 'AI-powered image generation from text descriptions',
-          category: 'Image',
-          rating: 4.6,
-          reviewCount: 230000,
-          weeklyUsers: 12850,
-          growth: '+32%',
-          website: 'https://midjourney.com',
-          pricing: 'Paid',
-          features: ['Image Generation', 'Text-to-Image', 'Art'],
-          tags: ['AI', 'Image', 'Art']
-        }
-      ];
     }
   } catch (err) {
-    console.error('Error fetching tools:', err);
-    error = "Failed to load tools";
-    
-    // Fallback sample data
-    popularTools = [
-      {
-        id: '1',
-        name: 'ChatGPT',
-        logo: '🤖',
-        description: 'Advanced language model for conversation and text generation',
-        category: 'Language',
-        rating: 4.7,
-        reviewCount: 1200000,
-        weeklyUsers: 15420,
-        growth: '+45%',
-        website: 'https://chat.openai.com',
-        pricing: 'Freemium',
-        features: ['Text Generation', 'Conversation', 'Code Help'],
-        tags: ['AI', 'Language', 'Chatbot']
-      }
-    ];
+    console.error('Error loading tools for home page:', err);
+    error = 'Failed to load tools';
   }
 
-  return <HomeClient 
-    allTools={allTools}
-    popularTools={popularTools}
-    trendingTools={trendingTools}
-    sponsoredTools={sponsoredTools}
-    error={error}
-  />;
+  return (
+    <HomeClient 
+      allTools={allTools}
+      popularTools={popularTools}
+      trendingTools={trendingTools}
+      sponsoredTools={sponsoredTools}
+      error={error}
+      categories={categories}
+    />
+  );
 }

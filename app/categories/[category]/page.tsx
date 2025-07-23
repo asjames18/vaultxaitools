@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getToolsFromDB, categories } from '@/data';
 import CategoryPageClient from './CategoryPageClient';
 import { generateCategoryMetadata } from '@/lib/seo';
-import type { Tool } from '@/data';
+import type { Tool, Category } from '@/data';
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;

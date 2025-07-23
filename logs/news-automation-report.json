@@ -1,23 +1,23 @@
 {
-  "timestamp": "2025-07-20T22:59:04.960Z",
+  "timestamp": "2025-07-22T23:40:48.553Z",
   "totalNews": 31,
   "sources": {
     "Reddit": 11,
     "TechCrunch": 20
   },
   "categories": {
-    "General AI": 17,
     "Video Generation": 1,
-    "AI Development": 2,
-    "Language Models": 2,
-    "Robotics": 1,
-    "AI Business": 6,
-    "AI Ethics": 1,
-    "Image Generation": 1
+    "Language Models": 4,
+    "General AI": 13,
+    "AI Ethics": 2,
+    "AI Productivity": 1,
+    "AI Business": 9,
+    "AI Development": 1
   },
   "sentiment": {
     "neutral": 28,
-    "negative": 3
+    "negative": 2,
+    "positive": 1
   },
   "summary": {
     "newNews": 0,

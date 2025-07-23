@@ -2,6 +2,9 @@ import { getToolsFromDB } from '@/data';
 import CategoriesClient from './CategoriesClient';
 import type { Tool } from '@/data';
 
+// Revalidate this page every 5 minutes to keep data fresh
+export const revalidate = 300;
+
 export default async function Categories() {
   // Fetch data at the server level
   let tools: Tool[] = [];

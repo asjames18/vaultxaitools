@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import UserManagement from './UserManagement';
 import ToolForm from './ToolForm';
 import CategoryForm from './CategoryForm';
-import UserManagement from './UserManagement';
 import ContactManagementClient from './contact/ContactManagementClient';
 import SponsoredSlots from './SponsoredSlots';
 import AdminSignupForm from './AdminSignupForm';
@@ -462,14 +462,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
         )}
 
         {activeTab === 'users' && (
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              👥 User Management
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              User management features coming soon...
-            </p>
-          </div>
+          <UserManagement />
         )}
 
         {activeTab === 'contact' && (

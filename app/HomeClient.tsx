@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { categories } from '@/data/tools';
 import SponsoredContent from '@/components/SponsoredContent';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import DailyTool from '@/components/DailyTool';
@@ -11,8 +10,7 @@ import CommunityHighlights from '@/components/CommunityHighlights';
 
 import QuickActions from '@/components/QuickActions';
 import EnhancedNewsletter from '@/components/EnhancedNewsletter';
-import type { Tool } from '@/data/tools';
-
+import type { Tool, Category } from '@/data/tools';
 // Enhanced SVG icons with better styling
 const SparklesIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +90,8 @@ interface HomeClientProps {
   popularTools: Tool[];
   trendingTools: Tool[];
   sponsoredTools: Tool[];
-  error: string | null;
+  error?: string | null;
+  categories: Category[];
 }
 
 // Dynamic headlines that rotate to keep content fresh
@@ -134,13 +133,31 @@ export default function HomeClient({
   popularTools, 
   trendingTools, 
   sponsoredTools, 
-  error 
+  error,
+  categories 
 }: HomeClientProps) {
   const [filteredTools, setFilteredTools] = useState<Tool[]>(popularTools);
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [favoriteTools, setFavoriteTools] = useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
+
+  // Calculate real stats from tools data
+  const totalReviews = allTools.reduce((sum, tool) => sum + (tool.reviewCount || 0), 0);
+  const totalUsers = allTools.reduce((sum, tool) => sum + (tool.weeklyUsers || 0), 0);
+  const avgRating = allTools.length > 0 
+    ? allTools.reduce((sum, tool) => sum + (tool.rating || 0), 0) / allTools.length 
+    : 0;
+  
+  // Format numbers for display
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)}M`;
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(0)}K`;
+    }
+    return num.toString();
+  };
 
   // Animation and interaction effects
   useEffect(() => {
@@ -169,13 +186,13 @@ export default function HomeClient({
     setFilteredTools(tools);
   }, []);
 
+  // Toggle favorite
   const toggleFavorite = (toolId: string) => {
-    const newFavorites = favoriteTools.includes(toolId)
-      ? favoriteTools.filter(id => id !== toolId)
-      : [...favoriteTools, toolId];
-    
-    setFavoriteTools(newFavorites);
-    localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+    setFavoriteTools(prev =>
+      prev.includes(toolId)
+        ? prev.filter(id => id !== toolId)
+        : [...prev, toolId]
+    );
   };
 
   const addToRecentlyViewed = (toolId: string) => {
@@ -296,7 +313,7 @@ export default function HomeClient({
             {/* Enhanced stats with animations */}
             <div className={`grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <div className="text-center group">
-                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{allTools.length}</div>
+                                        <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{allTools.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Curated Tools</div>
               </div>
               <div className="text-center group">
@@ -304,12 +321,12 @@ export default function HomeClient({
                 <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
               </div>
               <div className="text-center group">
-                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">50+</div>
+                                        <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{formatNumber(totalReviews)}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Community Reviews</div>
               </div>
               <div className="text-center group">
-                <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">100%</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Hand-Picked</div>
+                                        <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{formatNumber(totalUsers)}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Active Users</div>
               </div>
             </div>
           </div>
