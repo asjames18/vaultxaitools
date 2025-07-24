@@ -60,7 +60,7 @@ app.use('/api/reviews', reviewsRouter);
 app.use('/api/users', usersRouter);
 
 // 404 handler
-app.use('*', (req, res) => {
+app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 

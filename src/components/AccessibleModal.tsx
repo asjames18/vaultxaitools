@@ -78,9 +78,10 @@ export default function AccessibleModal({
       className="fixed inset-0 z-50 flex items-center justify-center min-h-screen bg-black bg-opacity-50 backdrop-blur-sm"
       onClick={handleBackdropClick}
       role="dialog"
+      tabIndex={-1}
       aria-modal="true"
-      aria-labelledby={titleRef.current?.id}
-      aria-describedby={descriptionRef.current?.id}
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
     >
       <div
         ref={modalRef}
