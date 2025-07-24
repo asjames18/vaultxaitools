@@ -1,3 +1,4 @@
+/** @jest-environment node */
 import request from 'supertest';
 const app = require('../../../server/index.js');
 
