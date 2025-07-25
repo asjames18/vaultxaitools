@@ -1,6 +1,11 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // Environment variables
+  env: {
+    NODE_ENV: process.env.NODE_ENV || 'production',
+  },
+  
   // Performance optimizations
   experimental: {
     optimizeCss: false,

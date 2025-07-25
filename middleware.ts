@@ -109,9 +109,20 @@ export async function middleware(request: NextRequest) {
   );
 
   // Refresh session if expired - required for Server Components
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const { data, error } = await supabase.auth.getUser();
+    if (error && error.message?.includes('AuthSessionMissingError')) {
+      // Clear invalid session cookies
+      response.cookies.delete('sb-access-token');
+      response.cookies.delete('sb-refresh-token');
+    } else {
+      user = data.user;
+    }
+  } catch (error) {
+    // Handle any other auth errors
+    console.error('Middleware auth error:', error);
+  }
 
   const { pathname } = request.nextUrl;
 
