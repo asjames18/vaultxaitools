@@ -20,18 +20,33 @@ export default function Navigation() {
   useEffect(() => {
     const getUserAndRole = async () => {
       try {
-        console.log('🔍 Navigation: Fetching user and role...');
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('🔍 Navigation: Fetching user and role...');
+        }
         
         // Get current user
         const { data: { user }, error: userError } = await supabase.auth.getUser();
-        console.log('👤 User data:', user);
-        console.log('❌ User error:', userError);
+        
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('👤 User data:', user);
+          console.log('❌ User error:', userError);
+        }
+        
+        // Handle auth session missing error specifically
+        if (userError && userError.message?.includes('AuthSessionMissingError')) {
+          setUser(null);
+          setUserRole(null);
+          setAuthDebug({ user: null, userError, timestamp: new Date().toISOString() });
+          return;
+        }
         
         setUser(user);
         setAuthDebug({ user, userError, timestamp: new Date().toISOString() });
         
         if (user) {
-          console.log('🔐 User found, fetching role for user ID:', user.id);
+          if (process.env.NODE_ENV !== 'production') {
+            console.log('🔐 User found, fetching role for user ID:', user.id);
+          }
           
           // Get user role
           const { data, error } = await supabase
@@ -40,18 +55,26 @@ export default function Navigation() {
             .eq('user_id', user.id)
             .single();
             
-          console.log('👑 Role data:', data);
-          console.log('❌ Role error:', error);
+          if (process.env.NODE_ENV !== 'production') {
+            console.log('👑 Role data:', data);
+            console.log('❌ Role error:', error);
+          }
           
           setUserRole(data?.role || null);
           setRoleDebug({ data, error, userId: user.id, timestamp: new Date().toISOString() });
         } else {
-          console.log('🚫 No user found, clearing role');
+          if (process.env.NODE_ENV !== 'production') {
+            console.log('🚫 No user found, clearing role');
+          }
           setUserRole(null);
           setRoleDebug(null);
         }
       } catch (err) {
-        console.error('💥 Error in getUserAndRole:', err);
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('💥 Error in getUserAndRole:', err);
+        }
+        setUser(null);
+        setUserRole(null);
         setAuthDebug({ error: err, timestamp: new Date().toISOString() });
       }
     };
@@ -61,8 +84,16 @@ export default function Navigation() {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('🔄 Auth state change:', event, session?.user?.email);
-      getUserAndRole();
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('🔄 Auth state change:', event, session?.user?.email);
+      }
+      
+      // Handle specific auth events
+      if (event === 'SIGNED_OUT' || event === 'TOKEN_REFRESHED') {
+        getUserAndRole();
+      } else if (event === 'SIGNED_IN') {
+        getUserAndRole();
+      }
     });
 
     return () => {
@@ -225,7 +256,7 @@ export default function Navigation() {
       </div>
 
       {/* DEBUG: Show user and userRole for troubleshooting (development only) */}
-      {process.env.NODE_ENV === 'development' && (
+      {process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_DEBUG === 'true' && (
         <div style={{ position: 'fixed', top: 60, right: 10, zIndex: 9999, background: '#222', color: '#fff', padding: 8, borderRadius: 8, fontSize: 11, maxWidth: 400, maxHeight: 300, overflow: 'auto' }}>
           <div style={{ fontWeight: 'bold', marginBottom: 8, color: '#00ff00' }}>🔍 AUTH DEBUG</div>
           <div>User: {user?.email || 'none'}</div>
