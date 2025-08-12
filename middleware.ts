@@ -17,7 +17,7 @@ const publicRoutes = [
   '/gdpr',
   '/documentation',
   '/status',
-  '/trending',
+  '/consulting',
   '/news',
   '/sign-in',
   '/sign-up',

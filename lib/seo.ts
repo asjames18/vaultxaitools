@@ -194,31 +194,7 @@ export function generateSearchMetadata(query: string): Metadata {
   };
 }
 
-// Generate metadata for trending page
-export function generateTrendingMetadata(): Metadata {
-  const title = 'Trending AI Tools - Most Popular AI Software';
-  const description = 'Discover the most popular and trending AI tools. See what\'s hot in artificial intelligence software with real-time popularity rankings.';
-  
-  return {
-    title,
-    description,
-    keywords: ['trending AI tools', 'popular AI software', 'hot AI tools', 'artificial intelligence trends'],
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      url: 'https://vaultxaitools.com/trending',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-    },
-    alternates: {
-      canonical: '/trending',
-    },
-  };
-}
+
 
 // Generate metadata for about page
 export function generateAboutMetadata(): Metadata {

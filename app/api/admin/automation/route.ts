@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     const { action, config } = body;
 
     switch (action) {
-      case 'run-automation':
+      case 'run-automation': {
         // Import and run combined automation
         const { runCombinedAutomation } = await import('../../../../scripts/combined-automation.js');
         
@@ -67,7 +67,6 @@ export async function POST(request: NextRequest) {
             // Invalidate all cached pages to show fresh data
             revalidatePath('/');
             revalidatePath('/categories');
-            revalidatePath('/trending');
             revalidatePath('/search');
             revalidatePath('/dashboard');
             // revalidatePath('/news'); // Temporarily hidden
@@ -112,8 +111,9 @@ export async function POST(request: NextRequest) {
           timestamp: new Date().toISOString(),
           syncEnabled: true
         });
+      }
 
-      case 'refresh-data':
+      case 'refresh-data': {
         // Run data refresh script
         const currentTimestamp = new Date().toISOString();
         
@@ -151,8 +151,9 @@ export async function POST(request: NextRequest) {
           timestamp: currentTimestamp,
           syncEnabled: true
         });
+      }
 
-      case 'toggle-auto-refresh':
+      case 'toggle-auto-refresh': {
         // Handle auto-refresh toggle
         const enabled = config?.enabled || false;
         
@@ -183,8 +184,9 @@ export async function POST(request: NextRequest) {
           enabled,
           timestamp: new Date().toISOString()
         });
+      }
 
-      case 'get-automation-settings':
+      case 'get-automation-settings': {
         // Get current automation settings
         const { data: settings, error: settingsError } = await supabase
           .from('automation_settings')
@@ -198,6 +200,7 @@ export async function POST(request: NextRequest) {
           settings: settings || [],
           timestamp: new Date().toISOString()
         });
+      }
 
       default:
         return NextResponse.json({ 

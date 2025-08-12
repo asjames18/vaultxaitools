@@ -3,7 +3,7 @@ const CACHE_NAME = 'vaultx-v1';
 const urlsToCache = [
   '/',
   '/categories',
-  '/trending',
+  '/consulting',
   // '/news', // Temporarily hidden
   // '/api/news', // Temporarily hidden
   '/blog',

@@ -86,6 +86,12 @@ export default function Navigation() {
           >
             AI Tools
           </Link>
+          <Link 
+            href="/consulting" 
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/consulting' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+          >
+            Consulting
+          </Link>
           {/* <a className="px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" href="/news">News</a> */}
           <Link 
             href="/blog" 
@@ -226,6 +232,13 @@ export default function Navigation() {
               AI Tools
             </Link>
             <Link 
+              href="/consulting" 
+              onClick={() => setIsMenuOpen(false)}
+              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/consulting' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+            >
+              Consulting
+            </Link>
+            <Link 
               href="/blog" 
               onClick={() => setIsMenuOpen(false)}
               className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/blog' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
@@ -245,6 +258,15 @@ export default function Navigation() {
               className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/contact' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
             >
               Contact
+            </Link>
+            
+            {/* Mobile search */}
+            <Link 
+              href="/search" 
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            >
+              🔍 Search
             </Link>
             
             {/* Mobile actions */}

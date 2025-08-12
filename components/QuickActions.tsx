@@ -29,26 +29,34 @@ const PlusIcon = ({ className }: { className?: string }) => (
 
 const quickActions = [
   {
-    title: "Get Started",
-    description: "New to AI? Start here",
+    title: "AI Consulting",
+    description: "Expert AI guidance",
     icon: RocketIcon,
-    href: "/categories/getting-started",
+    href: "/consulting",
     color: "blue",
     gradient: "from-blue-500 to-cyan-500"
   },
   {
+    title: "Get Started",
+    description: "New to AI? Start here",
+    icon: StarIcon,
+    href: "/categories/getting-started",
+    color: "yellow",
+    gradient: "from-yellow-500 to-orange-500"
+  },
+  {
     title: "Top Rated",
     description: "Highest rated tools",
-    icon: StarIcon,
+    icon: FireIcon,
     href: "/search?sort=rating",
     color: "yellow",
     gradient: "from-yellow-500 to-orange-500"
   },
   {
-    title: "AI Tools",
-    description: "Browse all AI tools",
+    title: "Popular",
+    description: "Most used AI tools",
     icon: FireIcon,
-    href: "/categories",
+    href: "/search?sort=popular",
     color: "red",
     gradient: "from-red-500 to-pink-500"
   },

@@ -10,13 +10,13 @@ export default function Footer() {
 
   const footerLinks = {
     product: [
-      { name: 'Categories', href: '/categories' },
-      { name: 'Trending', href: '/trending' },
+      { name: 'AI Tools', href: '/categories' },
       { name: 'Submit Tool', href: '/submit-tool' },
       // { name: 'API', href: '/api' },
     ],
     company: [
       { name: 'About', href: '/about' },
+      { name: 'Consulting', href: '/consulting' },
       { name: 'Blog', href: '/blog' },
       // { name: 'Careers', href: '/careers' },
       { name: 'Contact', href: '/contact' },

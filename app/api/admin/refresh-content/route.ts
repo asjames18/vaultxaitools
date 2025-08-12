@@ -31,7 +31,6 @@ export async function POST(request: NextRequest) {
     // Revalidate relevant pages
     revalidatePath('/');
     revalidatePath('/categories');
-    revalidatePath('/trending');
     // revalidatePath('/news'); // Temporarily hidden
     revalidatePath('/blog');
 
