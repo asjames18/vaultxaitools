@@ -6,30 +6,29 @@ export function createClient() {
   
   // Check if we're using placeholder values
   if (supabaseUrl === 'https://placeholder.supabase.co' || supabaseKey === 'placeholder-key') {
-    console.warn('Supabase environment variables not configured. Using placeholder values.');
     // Return a mock client that won't make actual requests
     return {
       from: () => ({
         select: () => ({
-          order: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } })
+          order: () => Promise.resolve({ data: null, error: { message: 'Service temporarily unavailable' } })
         }),
         eq: () => ({
-          single: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } })
+          single: () => Promise.resolve({ data: null, error: { message: 'Service temporarily unavailable' } })
         }),
         insert: () => ({
           select: () => ({
-            single: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } })
+            single: () => Promise.resolve({ data: null, error: { message: 'Service temporarily unavailable' } })
           })
         }),
         update: () => ({
           eq: () => ({
             select: () => ({
-              single: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } })
+              single: () => Promise.resolve({ data: null, error: { message: 'Service temporarily unavailable' } })
             })
           })
         }),
         delete: () => ({
-          eq: () => Promise.resolve({ error: { message: 'Supabase not configured' } })
+          eq: () => Promise.resolve({ error: { message: 'Service temporarily unavailable' } })
         })
       })
     } as any;

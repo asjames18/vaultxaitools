@@ -51,9 +51,8 @@ export default function EmailSignupForm() {
       setMessage("🎉 Welcome to VaultX! We'll keep you updated with the latest AI tools.");
       setEmail("");
     } catch (error: any) {
-      console.error('Email signup error:', error);
       setStatus("error");
-      setMessage(error.message || "Something went wrong. Please try again.");
+      setMessage("Something went wrong. Please try again.");
     }
   };
 

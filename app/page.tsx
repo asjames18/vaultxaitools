@@ -37,7 +37,6 @@ export default async function HomePage() {
       sponsoredTools = [];
     }
   } catch (err) {
-    console.error('Error loading tools for home page:', err);
     error = 'Failed to load tools';
     
     // Fallback to static data if database fails
@@ -58,7 +57,6 @@ export default async function HomePage() {
       
       sponsoredTools = [];
     } catch (fallbackErr) {
-      console.error('Error loading fallback data:', fallbackErr);
       // If even fallback fails, provide empty arrays to prevent page crash
       allTools = [];
       popularTools = [];

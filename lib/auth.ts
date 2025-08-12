@@ -21,7 +21,6 @@ export interface UserRole {
 export function isAdmin(user: User | null): boolean {
   if (!user || !user.email) return false;
   const isAdminUser = ADMIN_EMAILS.includes(user.email.toLowerCase());
-  console.log('isAdmin check:', { email: user.email, isAdminUser, adminEmails: ADMIN_EMAILS });
   return isAdminUser;
 }
 
@@ -30,8 +29,6 @@ export function isAdmin(user: User | null): boolean {
  */
 export async function getUserRole(user: User | null): Promise<'admin' | 'user'> {
   if (!user) return 'user';
-  
-  console.log('getUserRole - User metadata:', user.user_metadata);
   
   try {
     // First, try to get role from database
@@ -47,25 +44,22 @@ export async function getUserRole(user: User | null): Promise<'admin' | 'user'> 
       .single();
     
     if (!error && userRole) {
-      console.log('getUserRole - Database role:', userRole.role);
       return userRole.role as 'admin' | 'user';
     }
   } catch (error) {
+    // Log error internally but don't expose to user
     console.error('Error fetching user role from database:', error);
   }
   
   // Fallback to email check
   if (user.user_metadata?.role) {
-    console.log('getUserRole - Metadata role:', user.user_metadata.role);
     return user.user_metadata.role;
   }
   
   if (isAdmin(user)) {
-    console.log('getUserRole - Email-based admin check passed');
     return 'admin';
   }
   
-  console.log('getUserRole - Defaulting to user role');
   return 'user';
 }
 
@@ -120,9 +114,7 @@ export async function getUsersWithRoles(): Promise<UserRole[]> {
  * Check if user can access admin area
  */
 export async function canAccessAdmin(user: User | null): Promise<boolean> {
-  console.log('canAccessAdmin - Starting check for user:', user?.email);
   const role = await getUserRole(user);
   const canAccess = role === 'admin';
-  console.log('canAccessAdmin - Result:', { email: user?.email, role, canAccess });
   return canAccess;
 } 

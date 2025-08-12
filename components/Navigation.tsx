@@ -13,26 +13,17 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
-  const [roleDebug, setRoleDebug] = useState<any>(null);
-  const [authDebug, setAuthDebug] = useState<any>(null);
   const supabase = createClient();
 
   useEffect(() => {
     const getUserAndRole = async () => {
       try {
-        console.log('🔍 Navigation: Fetching user and role...');
-        
         // Get current user
         const { data: { user }, error: userError } = await supabase.auth.getUser();
-        console.log('👤 User data:', user);
-        console.log('❌ User error:', userError);
         
         setUser(user);
-        setAuthDebug({ user, userError, timestamp: new Date().toISOString() });
         
         if (user) {
-          console.log('🔐 User found, fetching role for user ID:', user.id);
-          
           // Get user role
           const { data, error } = await supabase
             .from('user_roles')
@@ -40,19 +31,14 @@ export default function Navigation() {
             .eq('user_id', user.id)
             .single();
             
-          console.log('👑 Role data:', data);
-          console.log('❌ Role error:', error);
-          
           setUserRole(data?.role || null);
-          setRoleDebug({ data, error, userId: user.id, timestamp: new Date().toISOString() });
         } else {
-          console.log('🚫 No user found, clearing role');
           setUserRole(null);
-          setRoleDebug(null);
         }
       } catch (err) {
-        console.error('💥 Error in getUserAndRole:', err);
-        setAuthDebug({ error: err, timestamp: new Date().toISOString() });
+        // Handle error silently
+        setUser(null);
+        setUserRole(null);
       }
     };
 
@@ -60,8 +46,7 @@ export default function Navigation() {
     getUserAndRole();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('🔄 Auth state change:', event, session?.user?.email);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: string, session: any) => {
       getUserAndRole();
     });
 
@@ -220,12 +205,6 @@ export default function Navigation() {
           <div style={{ fontWeight: 'bold', marginBottom: 8, color: '#00ff00' }}>🔍 AUTH DEBUG</div>
           <div>User: {user?.email || 'none'}</div>
           <div>Role: {userRole || 'none'}</div>
-          <div style={{ marginTop: 8, fontSize: 10, color: '#ccc' }}>
-            Auth Debug: {authDebug && JSON.stringify(authDebug, null, 2)}
-          </div>
-          <div style={{ marginTop: 8, fontSize: 10, color: '#ccc' }}>
-            Role Debug: {roleDebug && JSON.stringify(roleDebug, null, 2)}
-          </div>
         </div>
       )}
 

@@ -64,17 +64,12 @@ export async function createEnhancedClient() {
   // Get all cookies
   const allCookies = cookieStore.getAll();
   
-  // Log cookies for debugging
-  console.log('Enhanced client - Cookies found:', allCookies.map(c => c.name));
-  
   // Check for Supabase-specific cookies
   const supabaseCookies = allCookies.filter(cookie => 
     cookie.name.includes('supabase') || 
     cookie.name.includes('auth') ||
     cookie.name.includes('session')
   );
-  
-  console.log('Enhanced client - Supabase cookies:', supabaseCookies.map(c => c.name));
   
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
