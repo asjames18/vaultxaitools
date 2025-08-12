@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
             revalidatePath('/trending');
             revalidatePath('/search');
             revalidatePath('/dashboard');
-            revalidatePath('/news');
+            // revalidatePath('/news'); // Temporarily hidden
             revalidateTag('tools-data');
             revalidateTag('news-data');
             

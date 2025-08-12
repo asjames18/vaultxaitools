@@ -1,84 +1,180 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { getUserRole } from '@/lib/auth';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
+// Use service role key to bypass RLS for admin operations
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+// Helper function to verify admin access
+async function verifyAdminAccess(request: NextRequest): Promise<boolean> {
+  try {
+    // Get the authorization header
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return false;
+    }
+
+    const token = authHeader.substring(7);
+    
+    // Verify the JWT token and check if user is admin
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+    
+    if (error || !user) {
+      return false;
+    }
+
+    // Check if user has admin role
+    const { data: userRole } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id)
+      .single();
+
+    return userRole?.role === 'admin';
+  } catch (error) {
+    console.error('Admin verification error:', error);
+    return false;
+  }
+}
 
 export async function GET(request: NextRequest) {
   try {
-    // Check if user is admin (you might want to add proper auth middleware)
-    // For now, we'll use the service role key which bypasses RLS
-    
+    // Verify admin access
+    if (!(await verifyAdminAccess(request))) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Admin access required' },
+        { status: 401 }
+      );
+    }
+
+    // Fetch real contact messages from Supabase
     const { data, error } = await supabase
       .from('contact_messages')
       .select('*')
       .order('created_at', { ascending: false });
-
+    
     if (error) {
-      console.error('Error fetching contact messages:', error);
-      return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });
+      console.error('Database error fetching contact messages:', error);
+      return NextResponse.json(
+        { error: 'Failed to fetch contact messages' },
+        { status: 500 }
+      );
     }
-
+    
     return NextResponse.json(data || []);
   } catch (error) {
-    console.error('Error in GET /api/admin/contact:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Unexpected error fetching contact messages:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch contact messages' },
+      { status: 500 }
+    );
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { id, status } = body;
+    // Verify admin access
+    if (!(await verifyAdminAccess(request))) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Admin access required' },
+        { status: 401 }
+      );
+    }
 
+    const { id, status } = await request.json();
+    
+    // Validate input
     if (!id || !status) {
-      return NextResponse.json({ error: 'ID and status are required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'ID and status are required' },
+        { status: 400 }
+      );
     }
 
-    const { data, error } = await supabase
+    // Validate status values
+    const validStatuses = ['unread', 'read', 'replied', 'archived'];
+    if (!validStatuses.includes(status)) {
+      return NextResponse.json(
+        { error: 'Invalid status value' },
+        { status: 400 }
+      );
+    }
+    
+    // Update message status in Supabase
+    const { error } = await supabase
       .from('contact_messages')
-      .update({ status })
-      .eq('id', id)
-      .select()
-      .single();
-
+      .update({ status, updated_at: new Date().toISOString() })
+      .eq('id', id);
+    
     if (error) {
-      console.error('Error updating contact message:', error);
-      return NextResponse.json({ error: 'Failed to update message' }, { status: 500 });
+      console.error('Database error updating message status:', error);
+      return NextResponse.json(
+        { error: 'Failed to update message status' },
+        { status: 500 }
+      );
     }
-
-    return NextResponse.json(data);
+    
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error in PUT /api/admin/contact:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Unexpected error updating message status:', error);
+    return NextResponse.json(
+      { error: 'Failed to update message status' },
+      { status: 500 }
+    );
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-
-    if (!id) {
-      return NextResponse.json({ error: 'Message ID is required' }, { status: 400 });
+    // Verify admin access
+    if (!(await verifyAdminAccess(request))) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Admin access required' },
+        { status: 401 }
+      );
     }
 
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    
+    if (!id) {
+      return NextResponse.json(
+        { error: 'Message ID is required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'Invalid message ID format' },
+        { status: 400 }
+      );
+    }
+    
+    // Delete message from Supabase
     const { error } = await supabase
       .from('contact_messages')
       .delete()
       .eq('id', id);
-
+    
     if (error) {
-      console.error('Error deleting contact message:', error);
-      return NextResponse.json({ error: 'Failed to delete message' }, { status: 500 });
+      console.error('Database error deleting message:', error);
+      return NextResponse.json(
+        { error: 'Failed to delete message' },
+        { status: 400 }
+      );
     }
-
+    
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error in DELETE /api/admin/contact:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('Unexpected error deleting message:', error);
+    return NextResponse.json(
+      { error: 'Failed to delete message' },
+      { status: 500 }
+    );
   }
 } 

@@ -1,8 +1,6 @@
-import { createClient } from '@/lib/supabase-server';
-import NewsClient from './NewsClient';
+import { redirect } from 'next/navigation';
 
 export default async function NewsPage() {
-  return (
-    <NewsClient />
-  );
+  // Temporarily redirect to homepage while we work on the news functionality
+  redirect('/');
 } 

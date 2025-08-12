@@ -27,12 +27,11 @@ const publicRoutes = [
   '/submit-tool/thank-you',
   '/admin/login',
   '/admin/unauthorized',
-  // Test pages - completely public for debugging
-  '/test-admin',
-  '/test-automation', 
-  '/test-simple',
-  '/test-(.*)', // Allow all test pages
-  '/debug-admin', // Debug admin page
+  // REMOVED: Test pages - completely public for debugging (SECURITY RISK)
+  // '/test-admin',
+  // '/test-automation', 
+  // '/test-(.*)', // Allow all test pages
+  // '/debug-admin', // Debug admin page
 ];
 
 // Define admin routes that require admin privileges
@@ -66,11 +65,10 @@ function isAdminRoute(pathname: string): boolean {
   });
 }
 
-// Admin emails that have admin privileges
-const ADMIN_EMAILS = [
-  'asjames18@gmail.com',
-  'asjames18@proton.me',
-];
+// Admin emails that have admin privileges - now configurable via environment
+const ADMIN_EMAILS = process.env.ADMIN_EMAILS 
+  ? process.env.ADMIN_EMAILS.split(',').map(email => email.trim().toLowerCase())
+  : ['asjames18@gmail.com', 'asjames18@proton.me']; // Fallback for development
 
 function isAdminEmail(email: string): boolean {
   return ADMIN_EMAILS.includes(email.toLowerCase());
@@ -137,7 +135,32 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return response;
+  // Protected routes that require authentication
+  const protectedRoutes = [
+    '/admin',
+    '/admin/login',
+    '/admin/unauthorized',
+    '/admin/users',
+    '/admin/tools',
+    '/admin/categories',
+    '/admin/automation',
+    '/admin/refresh-content',
+    // '/news', // Temporarily hidden
+  ];
+
+  // Ensure cookies are properly set in the response
+  const responseWithCookies = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
+
+  // Copy all cookies from the request to the response
+  request.cookies.getAll().forEach(cookie => {
+    responseWithCookies.cookies.set(cookie.name, cookie.value, cookie);
+  });
+
+  return responseWithCookies;
 }
 
 export const config = {

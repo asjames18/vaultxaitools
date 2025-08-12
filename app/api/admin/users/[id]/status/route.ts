@@ -7,10 +7,10 @@ import { supabaseAdmin } from '@/lib/supabaseAdminClient';
 // Body: { disabled: boolean }
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: userId } = params;
+    const { id: userId } = await params;
     const { disabled } = await request.json();
 
     if (typeof disabled !== 'boolean') {

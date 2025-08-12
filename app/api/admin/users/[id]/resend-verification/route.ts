@@ -6,10 +6,10 @@ import { supabaseAdmin } from '@/lib/supabaseAdminClient';
 // POST /api/admin/users/[id]/resend-verification
 export async function POST(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id: userId } = params;
+    const { id: userId } = await params;
 
     // Verify caller is admin
     const supabase = await createClient();

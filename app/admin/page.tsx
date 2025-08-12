@@ -1,15 +1,59 @@
 import { redirect } from 'next/navigation';
-import { createClient } from '@/lib/supabase-server';
+import { createClient, createClientWithCookies } from '@/lib/supabase-server';
 import { canAccessAdmin } from '@/lib/auth';
 import AdminDashboard from './AdminDashboard';
+import { cookies } from 'next/headers';
 
 export default async function AdminPage() {
-  const supabase = await createClient();
+  // Debug: Check what cookies we're receiving
+  const cookieStore = await cookies();
+  const allCookies = cookieStore.getAll();
+  console.log('Admin page - All cookies:', allCookies.map(c => ({ name: c.name, value: c.value.substring(0, 20) + '...' })));
+  
+  // Try the alternative client first
+  const supabase = await createClientWithCookies();
+  
+  // Check session first
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+  console.log('Admin page - Session check:', { 
+    hasSession: !!session, 
+    sessionError,
+    userId: session?.user?.id,
+    userEmail: session?.user?.email 
+  });
   
   // Check if user is authenticated
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
   
-  // Authentication checks disabled for debugging
+  console.log('Admin page - Auth check:', { 
+    user: user?.email, 
+    error: authError,
+    userMetadata: user?.user_metadata 
+  });
+  
+  if (sessionError) {
+    console.error('Session error in admin page:', sessionError);
+    redirect('/admin/login');
+  }
+  
+  if (authError) {
+    console.error('Auth error in admin page:', authError);
+    redirect('/admin/login');
+  }
+  
+  if (!user) {
+    console.log('No user found, redirecting to login');
+    redirect('/admin/login');
+  }
+  
+  // Check if user can access admin
+  const canAccess = await canAccessAdmin(user);
+  console.log('Admin access check:', { email: user.email, canAccess });
+  
+  if (!canAccess) {
+    console.log('User cannot access admin, redirecting to unauthorized');
+    redirect('/admin/unauthorized');
+  }
 
   // Fetch data for the dashboard with error handling
   let tools = [];

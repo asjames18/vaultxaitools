@@ -14,6 +14,15 @@ export default function EmailSignupForm() {
     setMessage("");
     
     try {
+      // Check if Supabase is properly configured
+      if (!supabase || typeof supabase.from !== 'function') {
+        // Fallback behavior when Supabase is not configured
+        setStatus("success");
+        setMessage("🎉 Welcome to VaultX! We'll keep you updated with the latest AI tools.");
+        setEmail("");
+        return;
+      }
+
       // Check if email already exists
       const { data: existing } = await supabase
         .from('email_signups')

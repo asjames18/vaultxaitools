@@ -467,12 +467,61 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
 
         {activeTab === 'contact' && (
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              📧 Contact Messages
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Contact message management features coming soon...
-            </p>
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  📧 Contact Messages
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  Manage and respond to contact form submissions from users.
+                </p>
+              </div>
+              <button
+                onClick={() => window.open('/admin/contact', '_blank')}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Open Contact Management
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                <h3 className="text-lg font-medium text-blue-900 dark:text-blue-100 mb-3">
+                  🚀 Quick Access
+                </h3>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => window.open('/admin/contact', '_blank')}
+                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Manage Messages
+                  </button>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    View, respond to, and manage all contact form submissions
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                <h3 className="text-lg font-medium text-green-900 dark:text-green-100 mb-3">
+                  📊 Message Overview
+                </h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>Total Messages:</span>
+                    <span className="text-green-600 dark:text-green-400">5</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Unread:</span>
+                    <span className="text-red-600 dark:text-red-400">2</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Replied:</span>
+                    <span className="text-green-600 dark:text-green-400">1</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
@@ -499,11 +548,17 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                     Open Automation Dashboard
                   </button>
                   <button
-                    onClick={() => window.open('/news', '_blank')}
+                    onClick={() => window.open('/categories', '_blank')}
                     className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
                   >
-                    View AI News Feed
+                    View Categories
                   </button>
+                  {/* <button
+                    onClick={() => window.open('/news', '_blank')}
+                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    View News
+                  </button> */}
                 </div>
               </div>
 

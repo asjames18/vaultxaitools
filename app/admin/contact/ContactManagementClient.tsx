@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Mail, Clock, User, MessageSquare, Archive, Trash2, Reply, Copy } from 'lucide-react';
 
 interface ContactMessage {
   id: string;
@@ -18,8 +19,64 @@ export default function ContactManagementClient() {
   const [loading, setLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Temporary mock data for development
+  const mockMessages: ContactMessage[] = [
+    {
+      id: '1',
+      name: 'John Smith',
+      email: 'john.smith@example.com',
+      subject: 'AI Tool Recommendation Request',
+      message: 'Hi, I\'m looking for AI tools that can help with content creation for my marketing agency. Could you recommend some tools that are particularly good for generating blog posts and social media content?',
+      status: 'unread' as const,
+      created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+      updated_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+    },
+    {
+      id: '2',
+      name: 'Sarah Johnson',
+      email: 'sarah.j@techstartup.com',
+      subject: 'Partnership Inquiry',
+      message: 'Hello! I\'m the founder of a tech startup and I\'d love to discuss potential partnership opportunities. Your curated AI tools platform looks amazing and I think we could create some great synergies.',
+      status: 'read' as const,
+      created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      updated_at: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
+    },
+    {
+      id: '3',
+      name: 'Mike Chen',
+      email: 'mike.chen@ai-research.org',
+      subject: 'Tool Submission',
+      message: 'I\'ve developed a new AI tool for data analysis that I think would be a great fit for your platform. It uses advanced machine learning algorithms to provide insights from complex datasets. Would you be interested in reviewing it?',
+      status: 'replied' as const,
+      created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+      updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    {
+      id: '4',
+      name: 'Emily Rodriguez',
+      email: 'emily.r@designstudio.com',
+      subject: 'Feature Request',
+      message: 'I love your platform! It would be really helpful if you could add a feature to compare multiple AI tools side by side. This would make it much easier to choose the right tool for specific projects.',
+      status: 'unread' as const,
+      created_at: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
+      updated_at: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString()
+    },
+    {
+      id: '5',
+      name: 'David Thompson',
+      email: 'david.t@consulting.com',
+      subject: 'Bulk License Inquiry',
+      message: 'I\'m interested in purchasing bulk licenses for several AI tools for my consulting firm. We have about 25 consultants who would need access. Do you offer enterprise pricing or bulk discounts?',
+      status: 'archived' as const,
+      created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+      updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+    }
+  ];
 
   useEffect(() => {
+    // Load real messages from the database
     loadMessages();
   }, []);
 
@@ -42,6 +99,7 @@ export default function ContactManagementClient() {
 
   const updateMessageStatus = async (id: string, status: string) => {
     try {
+      // Update in the database
       const response = await fetch('/api/admin/contact', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -49,9 +107,15 @@ export default function ContactManagementClient() {
       });
       
       if (response.ok) {
+        // Update local state after successful database update
         setMessages(messages.map(msg => 
-          msg.id === id ? { ...msg, status: status as ContactMessage['status'] } : msg
+          msg.id === id ? { ...msg, status: status as ContactMessage['status'], updated_at: new Date().toISOString() } : msg
         ));
+        if (selectedMessage?.id === id) {
+          setSelectedMessage({ ...selectedMessage, status: status as ContactMessage['status'], updated_at: new Date().toISOString() });
+        }
+      } else {
+        console.error('Failed to update message status');
       }
     } catch (error) {
       console.error('Error updating message status:', error);
@@ -59,17 +123,21 @@ export default function ContactManagementClient() {
   };
 
   const deleteMessage = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this message?')) {
+    if (window.confirm('Are you sure you want to delete this message? This action cannot be undone.')) {
       try {
+        // Delete from the database
         const response = await fetch(`/api/admin/contact?id=${id}`, {
           method: 'DELETE'
         });
         
         if (response.ok) {
+          // Update local state after successful database deletion
           setMessages(messages.filter(msg => msg.id !== id));
           if (selectedMessage?.id === id) {
             setSelectedMessage(null);
           }
+        } else {
+          console.error('Failed to delete message');
         }
       } catch (error) {
         console.error('Error deleting message:', error);
@@ -77,24 +145,51 @@ export default function ContactManagementClient() {
     }
   };
 
-  const filteredMessages = messages.filter(message => 
-    statusFilter === 'all' || message.status === statusFilter
-  );
+  const filteredMessages = messages.filter(message => {
+    const matchesStatus = statusFilter === 'all' || message.status === statusFilter;
+    const matchesSearch = searchTerm === '' || 
+      message.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      message.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      message.email.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesStatus && matchesSearch;
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'unread': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
-      case 'read': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'replied': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      case 'archived': return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+      case 'unread': return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200 border-red-200 dark:border-red-700';
+      case 'read': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200 border-yellow-200 dark:border-yellow-700';
+      case 'replied': return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-200 border-green-200 dark:border-green-700';
+      case 'archived': return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-200 border-gray-200 dark:border-gray-700';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-200 border-gray-200 dark:border-gray-700';
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'unread': return <Mail className="w-4 h-4" />;
+      case 'read': return <Clock className="w-4 h-4" />;
+      case 'replied': return <Reply className="w-4 h-4" />;
+      case 'archived': return <Archive className="w-4 h-4" />;
+      default: return <Mail className="w-4 h-4" />;
+    }
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // You could add a toast notification here
+    } catch (error) {
+      console.error('Failed to copy text:', error);
     }
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading contact messages...</p>
+        </div>
       </div>
     );
   }
@@ -102,11 +197,34 @@ export default function ContactManagementClient() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Contact Management
-          </h1>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+              <Mail className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Contact Management
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400">
+                Manage and respond to contact form submissions
+              </p>
+            </div>
+          </div>
+          
           <div className="flex items-center gap-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search messages..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white w-64"
+              />
+              <MessageSquare className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
+            </div>
+            
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -121,9 +239,68 @@ export default function ContactManagementClient() {
           </div>
         </div>
 
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+                <Mail className="w-4 h-4 text-red-600 dark:text-red-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Unread</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {messages.filter(m => m.status === 'unread').length}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                <Clock className="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Read</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {messages.filter(m => m.status === 'read').length}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                <Reply className="w-4 h-4 text-green-600 dark:text-green-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Replied</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {messages.filter(m => m.status === 'replied').length}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gray-100 dark:bg-gray-900/30 rounded-lg flex items-center justify-center">
+                <Archive className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Total</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {messages.length}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Messages List */}
-          <div className="lg:col-span-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+          <div className="lg:col-span-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="p-6 border-b border-gray-200 dark:border-gray-700">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Messages ({filteredMessages.length})
@@ -132,29 +309,35 @@ export default function ContactManagementClient() {
             <div className="max-h-96 overflow-y-auto">
               {filteredMessages.length === 0 ? (
                 <div className="p-6 text-center text-gray-500 dark:text-gray-400">
-                  No messages found
+                  <MessageSquare className="w-12 h-12 mx-auto mb-3 text-gray-300 dark:text-gray-600" />
+                  <p>No messages found</p>
+                  {searchTerm && <p className="text-sm mt-1">Try adjusting your search or filters</p>}
                 </div>
               ) : (
                 filteredMessages.map((message) => (
                   <div
                     key={message.id}
                     className={`p-4 border-b border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
-                      selectedMessage?.id === message.id ? 'bg-blue-50 dark:bg-blue-900/20' : ''
+                      selectedMessage?.id === message.id ? 'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-l-blue-600' : ''
                     }`}
                     onClick={() => setSelectedMessage(message)}
                   >
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-semibold text-gray-900 dark:text-white truncate">
-                        {message.name}
-                      </h3>
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(message.status)}`}>
-                        {message.status}
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-gray-400" />
+                        <h3 className="font-semibold text-gray-900 dark:text-white truncate">
+                          {message.name}
+                        </h3>
+                      </div>
+                      <span className={`px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(message.status)}`}>
+                        {getStatusIcon(message.status)}
                       </span>
                     </div>
                     <p className="text-sm text-gray-600 dark:text-gray-400 mb-1 truncate">
                       {message.subject}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500">
+                    <p className="text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
                       {new Date(message.created_at).toLocaleDateString()}
                     </p>
                   </div>
@@ -164,7 +347,7 @@ export default function ContactManagementClient() {
           </div>
 
           {/* Message Details */}
-          <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+          <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
             {selectedMessage ? (
               <div className="p-6">
                 <div className="flex justify-between items-start mb-6">
@@ -172,18 +355,29 @@ export default function ContactManagementClient() {
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                       {selectedMessage.subject}
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      From: {selectedMessage.name} ({selectedMessage.email})
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">
-                      {new Date(selectedMessage.created_at).toLocaleString()}
+                    <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4" />
+                        <span>{selectedMessage.name}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail className="w-4 h-4" />
+                        <span>{selectedMessage.email}</span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-500 flex items-center gap-2 mt-2">
+                      <Clock className="w-4 h-4" />
+                      Received: {new Date(selectedMessage.created_at).toLocaleString()}
+                      {selectedMessage.updated_at !== selectedMessage.created_at && (
+                        <span className="text-gray-400">• Updated: {new Date(selectedMessage.updated_at).toLocaleString()}</span>
+                      )}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <select
                       value={selectedMessage.status}
                       onChange={(e) => updateMessageStatus(selectedMessage.id, e.target.value)}
-                      className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                      className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                     >
                       <option value="unread">Unread</option>
                       <option value="read">Read</option>
@@ -192,38 +386,53 @@ export default function ContactManagementClient() {
                     </select>
                     <button
                       onClick={() => deleteMessage(selectedMessage.id)}
-                      className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition-colors"
+                      className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                      title="Delete message"
                     >
-                      Delete
+                      <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Message:</h3>
-                  <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                    <MessageSquare className="w-5 h-5" />
+                    Message Content
+                  </h3>
+                  <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
                     {selectedMessage.message}
                   </p>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                   <a
                     href={`mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject}`}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                   >
+                    <Reply className="w-4 h-4" />
                     Reply via Email
                   </a>
                   <button
-                    onClick={() => navigator.clipboard.writeText(selectedMessage.email)}
-                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                    onClick={() => copyToClipboard(selectedMessage.email)}
+                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
                   >
+                    <Copy className="w-4 h-4" />
                     Copy Email
+                  </button>
+                  <button
+                    onClick={() => copyToClipboard(selectedMessage.message)}
+                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
+                  >
+                    <Copy className="w-4 h-4" />
+                    Copy Message
                   </button>
                 </div>
               </div>
             ) : (
               <div className="p-6 text-center text-gray-500 dark:text-gray-400">
-                Select a message to view details
+                <MessageSquare className="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-gray-600" />
+                <h3 className="text-lg font-medium mb-2">No Message Selected</h3>
+                <p>Select a message from the list to view details and take action</p>
               </div>
             )}
           </div>

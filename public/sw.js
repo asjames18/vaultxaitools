@@ -1,9 +1,16 @@
 // Service Worker for News Page Caching
-const CACHE_NAME = 'vaultx-news-v1';
+const CACHE_NAME = 'vaultx-v1';
 const urlsToCache = [
-  '/news',
-  '/api/news',
-  '/static/css/news.css'
+  '/',
+  '/categories',
+  '/trending',
+  // '/news', // Temporarily hidden
+  // '/api/news', // Temporarily hidden
+  '/blog',
+  '/about',
+  '/contact',
+  '/search',
+  // '/static/css/news.css' // Temporarily hidden
 ];
 
 // Install event - cache resources

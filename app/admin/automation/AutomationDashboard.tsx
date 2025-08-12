@@ -95,11 +95,11 @@ export default function AutomationDashboard() {
       if (!error && tools) {
         const stats = {
           totalTools: tools.length,
-          totalReviews: tools.reduce((sum, tool) => sum + (tool.review_count || 0), 0),
-          totalUsers: tools.reduce((sum, tool) => sum + (tool.weekly_users || 0), 0),
-          totalCategories: new Set(tools.map(tool => tool.category)).size,
+          totalReviews: tools.reduce((sum: number, tool: any) => sum + (tool.review_count || 0), 0),
+          totalUsers: tools.reduce((sum: number, tool: any) => sum + (tool.weekly_users || 0), 0),
+          totalCategories: new Set(tools.map((tool: any) => tool.category)).size,
           avgRating: tools.length > 0 
-            ? tools.reduce((sum, tool) => sum + (tool.rating || 0), 0) / tools.length 
+            ? tools.reduce((sum: number, tool: any) => sum + (tool.rating || 0), 0) / tools.length
             : 0
         };
         
@@ -121,7 +121,7 @@ export default function AutomationDashboard() {
     // Set up real-time subscription for stats updates
     const subscription = supabase
       .channel('admin-stats-updates')
-      .on('broadcast', { event: 'stats-refresh' }, (payload) => {
+      .on('broadcast', { event: 'stats-refresh' }, (payload: any) => {
         if (payload.payload?.stats) {
           setDataRefreshStatus(prev => ({
             ...prev,

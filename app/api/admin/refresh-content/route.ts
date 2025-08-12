@@ -28,32 +28,12 @@ export async function POST(request: NextRequest) {
     // Log the refresh request
     console.log(`Content refresh triggered for type: ${type}, contentId: ${contentId}`);
 
-    // Revalidate specific paths based on content type
-    switch (type) {
-      case 'tools':
-        revalidatePath('/');
-        revalidatePath('/categories');
-        revalidatePath('/trending');
-        revalidatePath('/search');
-        revalidateTag('tools-data');
-        break;
-      case 'news':
-        revalidatePath('/news');
-        revalidateTag('news-data');
-        break;
-      case 'blog':
-        revalidatePath('/blog');
-        revalidateTag('blog-data');
-        break;
-      default:
-        // Revalidate all major pages
-        revalidatePath('/');
-        revalidatePath('/categories');
-        revalidatePath('/trending');
-        revalidatePath('/news');
-        revalidatePath('/blog');
-        break;
-    }
+    // Revalidate relevant pages
+    revalidatePath('/');
+    revalidatePath('/categories');
+    revalidatePath('/trending');
+    // revalidatePath('/news'); // Temporarily hidden
+    revalidatePath('/blog');
 
     // Update content cache timestamp to trigger frontend refresh
     const { error: cacheError } = await supabase
