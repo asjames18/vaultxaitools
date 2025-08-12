@@ -256,8 +256,8 @@ export async function syncCategoriesClient(): Promise<{ added: number; total: nu
       throw fetchError;
     }
     
-    const existingNames = existingCategories.map(c => c.name);
-    const newCategories = staticCategories.filter(cat => !existingNames.includes(cat.name));
+    const existingNames = existingCategories.map((c: any) => c.name);
+    const newCategories = staticCategories.filter((cat: any) => !existingNames.includes(cat.name));
     
     if (newCategories.length === 0) {
       console.log('All categories already exist in the database!');

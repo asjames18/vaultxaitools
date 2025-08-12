@@ -39,11 +39,11 @@ export default function QuickVote({ toolId }: QuickVoteProps) {
       if (votesError) throw votesError;
 
       // Count votes
-      const upvotes = votes?.filter(v => v.vote_type === 'up').length || 0;
-      const downvotes = votes?.filter(v => v.vote_type === 'down').length || 0;
+      const upvotes = votes?.filter((v: any) => v.vote_type === 'up').length || 0;
+      const downvotes = votes?.filter((v: any) => v.vote_type === 'down').length || 0;
       
       // Find user's vote
-      const userVote = user ? votes?.find(v => v.user_id === user.id)?.vote_type || null : null;
+      const userVote = user ? votes?.find((v: any) => v.user_id === user.id)?.vote_type || null : null;
 
       setVoteData({
         upvotes,

@@ -320,22 +320,19 @@ export default function ToolDetailsClient({ toolId }: { toolId: string }) {
               {activeTab === 'overview' && (
                 <div className="animate-fade-in">
                   <QuickVote 
-                    toolId={tool.id} 
-                    currentRating={tool.rating} 
-                    currentReviewCount={tool.reviewCount} 
-                    onVoteSubmitted={handleVoteSubmitted} 
+                    toolId={tool.id}
                   />
                 </div>
               )}
               {activeTab === 'reviews' && (
                 <div className="animate-fade-in">
                   <ReviewForm 
-                    toolName={tool.name}
-                    onSuccess={handleReviewSubmitted} 
+                    toolId={tool.id}
+                    onReviewSubmitted={handleReviewSubmitted}
                   />
                   <ReviewList
-                    reviews={reviews}
-                    onReviewUpdated={handleReviewUpdated}
+                    toolId={tool.id}
+                    refreshTrigger={reviews.length}
                   />
                 </div>
               )}
