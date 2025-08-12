@@ -55,9 +55,7 @@ export async function getToolsFromDB(): Promise<StaticTool[]> {
     return dbTools.map(mapDatabaseToolToTool);
   } catch (error) {
     console.error('Error fetching tools from database:', error);
-    // Fallback to static data if database fails
-    const { tools } = await import('./tools');
-    return tools;
+    throw error; // Don't fallback to static data, let the error propagate
   }
 }
 
@@ -67,9 +65,7 @@ export async function getToolsByCategoryFromDB(category: string): Promise<Static
     return dbTools.map(mapDatabaseToolToTool);
   } catch (error) {
     console.error('Error fetching tools by category from database:', error);
-    // Fallback to static data if database fails
-    const { getToolsByCategory: staticGetToolsByCategory } = await import('./tools');
-    return staticGetToolsByCategory(category);
+    throw error; // Don't fallback to static data, let the error propagate
   }
 }
 
@@ -79,9 +75,7 @@ export async function searchToolsFromDB(query: string): Promise<StaticTool[]> {
     return dbTools.map(mapDatabaseToolToTool);
   } catch (error) {
     console.error('Error searching tools from database:', error);
-    // Fallback to static data if database fails
-    const { searchTools: staticSearchTools } = await import('./tools');
-    return staticSearchTools(query);
+    throw error; // Don't fallback to static data, let the error propagate
   }
 }
 
@@ -91,10 +85,7 @@ export async function getToolByIdFromDB(id: string): Promise<StaticTool | null> 
     return dbTool ? mapDatabaseToolToTool(dbTool) : null;
   } catch (error) {
     console.error('Error fetching tool by ID from database:', error);
-    // Fallback to static data if database fails
-    const { getToolById: staticGetToolById } = await import('./tools');
-    const staticTool = staticGetToolById(id);
-    return staticTool || null;
+    throw error; // Don't fallback to static data, let the error propagate
   }
 }
 
@@ -117,21 +108,7 @@ export async function getReviewsByToolIdFromDB(toolId: string): Promise<Database
     return await getReviewsByToolIdClient(toolId);
   } catch (error) {
     console.error('Error fetching reviews from database:', error);
-    // Fallback to static data if database fails
-    const { getReviewsByToolId: staticGetReviewsByToolId } = await import('./reviews');
-    const staticReviews = staticGetReviewsByToolId(toolId);
-    // Convert static reviews to database format
-    return staticReviews.map(review => ({
-      id: review.id,
-      tool_id: review.toolId,
-      user_name: review.user,
-      rating: review.rating,
-      date: review.date,
-      comment: review.comment,
-      helpful: review.helpful,
-      verified: review.verified,
-      created_at: new Date().toISOString()
-    }));
+    throw error; // Don't fallback to static data, let the error propagate
   }
 }
 

@@ -1,9 +1,10 @@
 import { MetadataRoute } from 'next';
-import { tools } from '@/data/tools';
+import { getToolsFromDB } from '@/data';
 import { categories } from '@/data';
 import { blogPosts } from '@/data/blog';
+import { Tool } from '@/lib/database';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://vaultxaitools.com';
   
   // Static pages
@@ -34,6 +35,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
   ];
+
+  // Fetch tools from database
+  let tools: Tool[] = [];
+  try {
+    tools = await getToolsFromDB();
+  } catch (error) {
+    console.error('Failed to fetch tools for sitemap:', error);
+    // Fallback to empty array if database fails
+    tools = [];
+  }
 
   // Tool pages
   const toolPages = tools.map((tool) => ({

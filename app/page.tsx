@@ -38,31 +38,13 @@ export default async function HomePage() {
     }
   } catch (err) {
     error = 'Failed to load tools';
+    console.error('Error loading tools:', err);
     
-    // Fallback to static data if database fails
-    try {
-      const { tools } = await import('@/data/tools');
-      allTools = tools;
-      
-      // Get popular tools (top rated)
-      popularTools = tools
-        .filter(tool => tool.rating >= 4.0)
-        .sort((a, b) => b.rating - a.rating)
-        .slice(0, 6);
-      
-      // Get trending tools (most reviews)
-      trendingTools = tools
-        .sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0))
-        .slice(0, 6);
-      
-      sponsoredTools = [];
-    } catch (fallbackErr) {
-      // If even fallback fails, provide empty arrays to prevent page crash
-      allTools = [];
-      popularTools = [];
-      trendingTools = [];
-      sponsoredTools = [];
-    }
+    // Don't fallback to static data - let the error propagate
+    allTools = [];
+    popularTools = [];
+    trendingTools = [];
+    sponsoredTools = [];
   }
 
   return (

@@ -21,60 +21,6 @@ export default function ContactManagementClient() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Temporary mock data for development
-  const mockMessages: ContactMessage[] = [
-    {
-      id: '1',
-      name: 'John Smith',
-      email: 'john.smith@example.com',
-      subject: 'AI Tool Recommendation Request',
-      message: 'Hi, I\'m looking for AI tools that can help with content creation for my marketing agency. Could you recommend some tools that are particularly good for generating blog posts and social media content?',
-      status: 'unread' as const,
-      created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-      updated_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
-    },
-    {
-      id: '2',
-      name: 'Sarah Johnson',
-      email: 'sarah.j@techstartup.com',
-      subject: 'Partnership Inquiry',
-      message: 'Hello! I\'m the founder of a tech startup and I\'d love to discuss potential partnership opportunities. Your curated AI tools platform looks amazing and I think we could create some great synergies.',
-      status: 'read' as const,
-      created_at: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-      updated_at: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString()
-    },
-    {
-      id: '3',
-      name: 'Mike Chen',
-      email: 'mike.chen@ai-research.org',
-      subject: 'Tool Submission',
-      message: 'I\'ve developed a new AI tool for data analysis that I think would be a great fit for your platform. It uses advanced machine learning algorithms to provide insights from complex datasets. Would you be interested in reviewing it?',
-      status: 'replied' as const,
-      created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-      updated_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-    },
-    {
-      id: '4',
-      name: 'Emily Rodriguez',
-      email: 'emily.r@designstudio.com',
-      subject: 'Feature Request',
-      message: 'I love your platform! It would be really helpful if you could add a feature to compare multiple AI tools side by side. This would make it much easier to choose the right tool for specific projects.',
-      status: 'unread' as const,
-      created_at: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
-      updated_at: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString()
-    },
-    {
-      id: '5',
-      name: 'David Thompson',
-      email: 'david.t@consulting.com',
-      subject: 'Bulk License Inquiry',
-      message: 'I\'m interested in purchasing bulk licenses for several AI tools for my consulting firm. We have about 25 consultants who would need access. Do you offer enterprise pricing or bulk discounts?',
-      status: 'archived' as const,
-      created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-      updated_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-    }
-  ];
-
   useEffect(() => {
     // Load real messages from the database
     loadMessages();

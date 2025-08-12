@@ -234,34 +234,10 @@ export default function SponsoredSlots() {
         const toolsData = await getToolsClient();
         setTools(toolsData as DatabaseTool[]);
         
-        // Load sponsored slots (mock data for now)
-        const mockSlots: SponsoredSlot[] = [
-          {
-            id: '1',
-            toolId: toolsData[0]?.id || '',
-            position: 'top',
-            startDate: new Date(),
-            endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-            priority: 1,
-            budget: 1000,
-            impressions: 1500,
-            clicks: 45
-          }
-        ];
-        setSponsoredSlots(mockSlots);
-        
-        // Load affiliate links (mock data for now)
-        const mockAffiliateLinks: AffiliateLink[] = [
-          {
-            originalUrl: 'https://example.com',
-            affiliateUrl: 'https://example.com?ref=vaultx',
-            toolId: toolsData[0]?.id || '',
-            clicks: 120,
-            revenue: 240,
-            lastClicked: new Date()
-          }
-        ];
-        setAffiliateLinks(mockAffiliateLinks);
+        // TODO: Load real sponsored slots from database
+        // For now, start with empty arrays until database tables are set up
+        setSponsoredSlots([]);
+        setAffiliateLinks([]);
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {

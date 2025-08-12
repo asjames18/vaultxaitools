@@ -1,4 +1,4 @@
-import { getToolsFromDB } from '@/data';
+import { getToolsFromDB, categories } from '@/data';
 import SearchClient from './SearchClient';
 import type { Tool } from '@/data/tools';
 
@@ -14,5 +14,5 @@ export default async function SearchPage() {
     tools = [];
   }
 
-  return <SearchClient tools={tools} />;
+  return <SearchClient tools={tools} categories={categories} />;
 } 

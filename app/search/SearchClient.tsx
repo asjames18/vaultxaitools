@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
-import { categories } from '@/data/tools';
-import type { Tool } from '@/data/tools';
+import type { Tool, Category } from '@/data/tools';
 import { Search, Filter, Grid, List, Star, TrendingUp, Users, Zap, Clock, Sparkles, Flame, Target, Bookmark, Mic, MicOff, Eye, EyeOff, Share2, Download, Filter as FilterIcon, SortAsc, SortDesc, RefreshCw, Heart, MessageCircle, BarChart3, X, ChevronDown } from 'lucide-react';
 import Fuse from 'fuse.js';
 
 interface SearchClientProps {
   tools: Tool[];
+  categories: Category[];
 }
 
 // Popular search terms based on user behavior
@@ -42,7 +42,7 @@ const searchSuggestions = [
 
 
 
-export default function SearchClient({ tools }: SearchClientProps) {
+export default function SearchClient({ tools, categories }: SearchClientProps) {
   const [filteredTools, setFilteredTools] = useState<Tool[]>(tools);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<'rating' | 'users' | 'growth' | 'name' | 'recent'>('rating');
@@ -102,7 +102,7 @@ export default function SearchClient({ tools }: SearchClientProps) {
     }
     
     return [...new Set(suggestions)].slice(0, 6);
-  }, [tools]);
+  }, [tools, categories]);
 
   // Load user preferences from localStorage
   useEffect(() => {
