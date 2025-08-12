@@ -45,10 +45,10 @@ const quickActions = [
     gradient: "from-yellow-500 to-orange-500"
   },
   {
-    title: "AI Tools",
-    description: "Browse all AI tools",
+    title: "Trending",
+    description: "What's hot right now",
     icon: FireIcon,
-    href: "/categories",
+    href: "/trending",
     color: "red",
     gradient: "from-red-500 to-pink-500"
   },

@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase';
 import SponsoredContent from '@/components/SponsoredContent';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import DailyTool from '@/components/DailyTool';
-import TrendingNow from '@/components/TrendingNow';
+
 import CommunityHighlights from '@/components/CommunityHighlights';
 
 import QuickActions from '@/components/QuickActions';
@@ -365,11 +365,11 @@ export default function HomeClient({
                   <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  href="/trending"
+                  href="/categories"
                   className="group inline-flex items-center gap-3 px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-105 border border-gray-200"
                 >
                   <FireIcon className="w-5 h-5 text-orange-500 group-hover:animate-pulse" />
-                  See Trending Tools
+                  Browse AI Tools
                 </Link>
               </div>
             </div>
@@ -385,7 +385,7 @@ export default function HomeClient({
               </div>
               <div className="text-center group">
                 <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{categories.length}</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
               </div>
               <div className="text-center group">
                 <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{formatNumber(totalReviews)}</div>
@@ -409,8 +409,7 @@ export default function HomeClient({
       {/* Daily Tool Section - New! */}
       <DailyTool tools={allTools} />
 
-      {/* Trending Now Section - New! */}
-      <TrendingNow tools={allTools} />
+
 
       {/* Community Highlights Section - New! */}
       <CommunityHighlights />
@@ -739,7 +738,7 @@ export default function HomeClient({
             </p>
           </div>
 
-          {/* Top Categories Grid */}
+                      {/* Top AI Tools Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.slice(0, 6).map((category) => (
               <div
@@ -779,7 +778,7 @@ export default function HomeClient({
               href="/categories"
               className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
-              View All Categories
+                              View All AI Tools
               <ArrowRightIcon className="w-4 h-4" />
             </Link>
           </div>

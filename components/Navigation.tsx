@@ -84,9 +84,8 @@ export default function Navigation() {
             href="/categories" 
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/categories' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
           >
-            Categories
+            AI Tools
           </Link>
-          <a className="px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" href="/trending">Trending 🔥</a>
           {/* <a className="px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" href="/news">News</a> */}
           <Link 
             href="/blog" 
@@ -224,14 +223,7 @@ export default function Navigation() {
               onClick={() => setIsMenuOpen(false)}
               className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/categories' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
             >
-              Categories
-            </Link>
-            <Link 
-              href="/trending" 
-              onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/trending' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
-            >
-              Trending 🔥
+              AI Tools
             </Link>
             <Link 
               href="/blog" 

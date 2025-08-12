@@ -51,10 +51,7 @@ export default function DocumentationClient() {
                 <div className="font-medium text-gray-900 dark:text-white">Categories</div>
                 <div className="text-sm text-gray-600 dark:text-gray-300">Browse tools by category</div>
               </Link>
-              <Link href="/trending" className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <div className="font-medium text-gray-900 dark:text-white">Trending</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">See what's popular</div>
-              </Link>
+
               <Link href="/submit-tool" className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 <div className="font-medium text-gray-900 dark:text-white">Submit Tool</div>
                 <div className="text-sm text-gray-600 dark:text-gray-300">Add your AI tool</div>

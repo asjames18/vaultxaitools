@@ -20,12 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/trending`,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
-      priority: 0.8,
-    },
+
     {
       url: `${baseUrl}/blog`,
       lastModified: new Date(),

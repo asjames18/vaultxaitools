@@ -10,7 +10,8 @@ export default function Footer() {
 
   const footerLinks = {
     product: [
-      { name: 'AI Tools', href: '/categories' },
+      { name: 'Categories', href: '/categories' },
+      { name: 'Trending', href: '/trending' },
       { name: 'Submit Tool', href: '/submit-tool' },
       // { name: 'API', href: '/api' },
     ],

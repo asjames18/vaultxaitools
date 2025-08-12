@@ -51,7 +51,7 @@ export default function AboutClient() {
                     15+
                   </div>
                   <div className="text-gray-600 dark:text-gray-300">
-                    Categories
+                    AI Tools
                   </div>
                 </div>
               </div>
