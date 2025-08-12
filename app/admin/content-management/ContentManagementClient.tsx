@@ -102,7 +102,7 @@ export default function ContentManagementClient() {
       if (toolsError) throw toolsError;
       
       // Convert tools to tool updates format
-      const toolUpdatesData: ToolUpdate[] = tools.map((tool, index) => ({
+      const toolUpdatesData: ToolUpdate[] = tools.map((tool: any, index: number) => ({
         id: `tool-${tool.id}`,
         toolId: tool.id,
         toolName: tool.name,

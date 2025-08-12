@@ -194,7 +194,7 @@ export default function HomeClient({
     // Subscribe to automation updates for real-time sync
     const automationChannel = supabase
       .channel('automation-updates')
-      .on('broadcast', { event: 'automation-completed' }, (payload) => {
+      .on('broadcast', { event: 'automation-completed' }, (payload: any) => {
         console.log('🔄 Automation completed - refreshing homepage data', payload);
         setLastDataUpdate(new Date());
         setShowUpdateBanner(true);

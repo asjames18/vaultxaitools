@@ -26,12 +26,11 @@ export async function POST(
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const email = targetUser.email;
+    const email = (targetUser as any).email;
 
     // Send a new confirmation email
-    // @ts-ignore typings may vary; generateLink supports email_confirmation type
     const { error: linkError } = await supabaseAdmin.auth.admin.generateLink({
-      type: 'email_confirmation',
+      type: 'email_confirmation' as any,
       email,
       options: {
         redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/callback`

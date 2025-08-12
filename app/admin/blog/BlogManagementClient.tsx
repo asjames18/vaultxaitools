@@ -285,7 +285,7 @@ export default function BlogManagementClient() {
                   Content
                 </label>
                 <RichTextEditor
-                  content={formData.content}
+                  value={formData.content}
                   onChange={(content) => setFormData({ ...formData, content })}
                 />
               </div>
