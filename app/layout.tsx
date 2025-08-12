@@ -9,9 +9,9 @@ import ErrorBoundary from '@/components/ErrorBoundary'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'VaultX AI Tools - Discover the Best AI Tools',
-  description: 'Find and compare the best AI tools for your needs. From language models to image generators, discover powerful AI solutions.',
-  keywords: 'AI tools, artificial intelligence, machine learning, productivity tools',
+  title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+  description: 'Access only the best AI tools, hand-picked and tested by our experts. Quality over quantity - every tool is verified for effectiveness and reliability.',
+  keywords: 'curated AI tools, expert-tested AI, verified AI solutions, quality AI tools, hand-picked AI',
   authors: [{ name: 'VaultX' }],
   creator: 'VaultX',
   publisher: 'VaultX',
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL('https://vaultxaitools.com'),
   openGraph: {
-    title: 'VaultX AI Tools - Discover the Best AI Tools',
-    description: 'Find and compare the best AI tools for your needs.',
+    title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+    description: 'Access only the best AI tools, hand-picked and tested by our experts.',
     url: 'https://vaultxaitools.com',
     siteName: 'VaultX AI Tools',
     locale: 'en_US',
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VaultX AI Tools - Discover the Best AI Tools',
-    description: 'Find and compare the best AI tools for your needs.',
+    title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+    description: 'Access only the best AI tools, hand-picked and tested by our experts.',
   },
   robots: {
     index: true,

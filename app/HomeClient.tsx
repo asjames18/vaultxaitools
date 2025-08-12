@@ -95,36 +95,36 @@ interface HomeClientProps {
   categories: Category[];
 }
 
-// Dynamic headlines that rotate to keep content fresh
+// Dynamic headlines that emphasize curation and quality
 const dynamicHeadlines = [
-  "The AI tools that actually work, hand-picked for you.",
-  "Stop searching. Start building with the right AI tools.",
-  "Your curated guide to the most powerful AI apps.",
-  "From AI newbie to power user in minutes.",
-  "Drowning in AI tools? We've got the lifeline."
+  "Only the best AI tools make our curated list.",
+  "We test hundreds of tools so you don't have to.",
+  "Quality over quantity - every tool is expert-verified.",
+  "Your trusted source for hand-picked AI solutions.",
+  "From 500+ tested tools, we select only the elite."
 ];
 
-// Testimonials for social proof
+// Testimonials emphasizing curation quality
 const testimonials = [
   {
     name: "Sarah Chen",
     role: "Product Manager",
     company: "TechCorp",
-    content: "VaultX helped me find the perfect AI tools for our team. We've increased productivity by 40%!",
+    content: "VaultX's curated approach saved us weeks of tool testing. Every AI solution we've tried has been exceptional!",
     avatar: "👩‍💼"
   },
   {
     name: "Marcus Rodriguez",
     role: "Freelance Developer",
     company: "Independent",
-    content: "I was overwhelmed by AI tools until I found VaultX. Now I know exactly what to use for each project.",
+    content: "I love that VaultX only shows the best tools. No more wasting time on mediocre AI solutions.",
     avatar: "👨‍💻"
   },
   {
     name: "Dr. Emily Watson",
     role: "Research Director",
     company: "Innovation Labs",
-    content: "The quality of tools here is exceptional. Every recommendation has been spot-on for our research needs.",
+    content: "The curation quality is outstanding. We trust VaultX to find us the most effective AI tools for research.",
     avatar: "👩‍🔬"
   }
 ];
@@ -326,7 +326,7 @@ export default function HomeClient({
             </h1>
             
             <p className={`text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              Discover the best AI tools. No hype, just results.
+              We curate only the most effective AI tools through rigorous testing and expert evaluation. No hype, just proven results.
             </p>
 
             {/* Enhanced value proposition with animations */}
@@ -334,15 +334,15 @@ export default function HomeClient({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-3xl mx-auto">
                 <div className="flex items-center gap-3 text-sm text-gray-300 bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-lg border border-gray-700/50">
                   <CheckIcon className="w-4 h-4 md:w-5 md:h-5 text-green-500 flex-shrink-0" />
-                  <span className="font-medium">Hand-picked quality tools</span>
+                  <span className="font-medium">Expert-tested & verified</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-300 bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-lg border border-gray-700/50">
                   <CheckIcon className="w-4 h-4 md:w-5 md:h-5 text-green-500 flex-shrink-0" />
-                  <span className="font-medium">Real user reviews & ratings</span>
+                  <span className="font-medium">Quality over quantity</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-300 bg-gray-800/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-lg border border-gray-700/50">
                   <CheckIcon className="w-4 h-4 md:w-5 md:h-5 text-green-500 flex-shrink-0" />
-                  <span className="font-medium">Always up-to-date</span>
+                  <span className="font-medium">Rigorous curation process</span>
                 </div>
               </div>
             </div>
@@ -373,11 +373,9 @@ export default function HomeClient({
               <div className="text-center group">
                 <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{allTools.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Curated Tools</div>
-                {automationStatus?.lastRun && (
-                  <div className="text-xs text-gray-500 mt-1">
-                    Updated: {new Date(automationStatus.lastRun).toLocaleDateString()}
-                  </div>
-                )}
+                <div className="text-xs text-green-600 mt-1">
+                  Expert Selected
+                </div>
               </div>
               <div className="text-center group">
                 <div className="text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{categories.length}</div>
@@ -491,15 +489,80 @@ export default function HomeClient({
         </section>
       )}
 
+      {/* Our Curation Process Section - New! */}
+      <section className="py-20 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+              Our Rigorous Curation Process
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              We don't just list tools - we thoroughly test and evaluate each one to ensure only the best make it to our curated directory
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                <span className="text-2xl text-white font-bold">1</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Tool Discovery</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                We monitor the AI landscape to identify promising new tools and updates to existing ones
+              </p>
+            </div>
+            
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                <span className="text-2xl text-white font-bold">2</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Expert Testing</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Our team of AI specialists thoroughly tests each tool for functionality, reliability, and value
+              </p>
+            </div>
+            
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                <span className="text-2xl text-white font-bold">3</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Quality Assessment</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                We evaluate performance, user experience, pricing, and real-world effectiveness
+              </p>
+            </div>
+            
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                <span className="text-2xl text-white font-bold">4</span>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Final Selection</h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Only tools that meet our strict quality standards are added to the curated directory
+              </p>
+            </div>
+          </div>
+          
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-full px-6 py-3">
+              <ShieldIcon className="w-5 h-5 text-indigo-600" />
+              <span className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">
+                Quality Guarantee: Every tool is tested and verified by our experts
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section - New! */}
       <section className="py-20 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Trusted by AI Enthusiasts Worldwide
+              Trusted by AI Professionals Worldwide
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              See what our community says about finding the perfect AI tools
+              See what our community says about our curated AI tool selection
             </p>
           </div>
 
@@ -537,10 +600,10 @@ export default function HomeClient({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              How VaultX Works
+              How to Use Our Curated Directory
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Find the perfect AI tool in three simple steps
+              Access the best AI tools in three simple steps
             </p>
           </div>
 

@@ -1,11 +1,11 @@
- 'use client';
+'use client';
 
 import { useState } from 'react';
 import EmailSignupForm from './EmailSignupForm';
 
-const GiftIcon = ({ className }: { className?: string }) => (
+const SparklesIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
   </svg>
 );
 
@@ -15,25 +15,31 @@ const CheckIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const ShieldIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+  </svg>
+);
+
 const benefits = [
-  "Weekly curated AI tool recommendations",
-  "Exclusive early access to new tools",
-  "AI productivity tips and tutorials",
-  "Special discounts and deals",
-  "Community insights and trends"
+  "Hand-picked AI tools tested by our experts",
+  "Weekly deep-dive reviews of the best tools",
+  "Exclusive access to beta tools and early releases",
+  "Detailed comparison guides and use cases",
+  "Community insights from power users"
 ];
 
-const socialProof = [
-  { number: "15,000+", label: "Subscribers" },
-  { number: "4.9/5", label: "Rating" },
-  { number: "98%", label: "Open Rate" }
+const curationStats = [
+  { number: "500+", label: "Tools Tested" },
+  { number: "50+", label: "Curated Tools" },
+  { number: "99%", label: "Quality Score" }
 ];
 
 export default function EnhancedNewsletter() {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   return (
-    <section className="py-20 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-black/10"></div>
       <div className="absolute top-0 left-0 w-full h-full">
@@ -46,37 +52,40 @@ export default function EnhancedNewsletter() {
           {/* Content */}
           <div className="text-white">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-              <GiftIcon className="w-5 h-5" />
-              <span className="text-sm font-semibold">Free Weekly Newsletter</span>
+              <SparklesIcon className="w-5 h-5" />
+              <span className="text-sm font-semibold">Expert-Curated AI Tools</span>
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Stay Ahead of the AI Revolution
+              Only the Best AI Tools Make the Cut
             </h2>
             
-            <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Get the latest AI tools, tips, and insights delivered to your inbox every week. Join thousands of professionals who are already using AI to boost their productivity.
+            <p className="text-xl text-indigo-100 mb-8 leading-relaxed">
+              We test hundreds of AI tools so you don't have to. Get weekly recommendations of only the most effective, reliable, and innovative AI solutions that actually deliver results.
             </p>
 
-            {/* Benefits */}
+            {/* Curation Process */}
             <div className="mb-8">
-              <h3 className="text-lg font-semibold mb-4">What you'll get:</h3>
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <ShieldIcon className="w-5 h-5 text-green-400" />
+                Our Curation Process:
+              </h3>
               <div className="space-y-3">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-center gap-3">
                     <CheckIcon className="w-5 h-5 text-green-400 flex-shrink-0" />
-                    <span className="text-blue-100">{benefit}</span>
+                    <span className="text-indigo-100">{benefit}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Social Proof */}
+            {/* Curation Stats */}
             <div className="flex gap-8">
-              {socialProof.map((stat, index) => (
+              {curationStats.map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-2xl font-bold text-white mb-1">{stat.number}</div>
-                  <div className="text-sm text-blue-200">{stat.label}</div>
+                  <div className="text-sm text-indigo-200">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -86,17 +95,17 @@ export default function EnhancedNewsletter() {
           <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-white mb-2">
-                Join the AI Revolution
+                Join the Curated AI Community
               </h3>
-              <p className="text-blue-100">
-                Get started in 30 seconds. No spam, unsubscribe anytime.
+              <p className="text-indigo-100">
+                Get the best AI tools delivered to your inbox every week.
               </p>
             </div>
 
             {!isSubscribed ? (
               <div className="space-y-4">
                 <EmailSignupForm />
-                <p className="text-xs text-blue-200 text-center">
+                <p className="text-xs text-indigo-200 text-center">
                   🔒 We respect your privacy. Unsubscribe at any time.
                 </p>
               </div>
@@ -106,20 +115,20 @@ export default function EnhancedNewsletter() {
                   <CheckIcon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
-                  Welcome to the Community!
+                  Welcome to the Curated Community!
                 </h3>
-                <p className="text-blue-100">
-                  Check your email for your first AI tool recommendation.
+                <p className="text-indigo-100">
+                  Check your email for your first curated AI tool recommendation.
                 </p>
               </div>
             )}
 
             {/* Trust indicators */}
             <div className="mt-6 pt-6 border-t border-white/20">
-              <div className="flex items-center justify-center gap-6 text-xs text-blue-200">
-                <span>✓ GDPR Compliant</span>
+              <div className="flex items-center justify-center gap-6 text-xs text-indigo-200">
+                <span>✓ Expert Tested</span>
+                <span>✓ Quality Guaranteed</span>
                 <span>✓ No Spam</span>
-                <span>✓ Instant Unsubscribe</span>
               </div>
             </div>
           </div>

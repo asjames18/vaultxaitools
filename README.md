@@ -1,8 +1,17 @@
 # VaultX AI Tools
 
-A comprehensive directory and discovery platform for AI tools, built with Next.js, Express.js, and Supabase.
+**Expert-Curated AI Tool Directory** - A quality-focused platform that hand-picks and tests only the most effective AI tools, built with Next.js, Express.js, and Supabase.
+
+> **Quality over Quantity**: We test hundreds of AI tools so you don't have to. Every tool in our directory is expert-verified for effectiveness and reliability.
 
 ## Features
+
+### 🎯 **Expert Curation Process**
+- **Rigorous Testing**: Every tool undergoes thorough evaluation by AI specialists
+- **Quality Standards**: Only tools meeting strict criteria are added to the directory
+- **Continuous Review**: Regular assessment of existing tools to maintain quality
+- **User Feedback Integration**: Community insights help refine our selection process
+- **Transparent Process**: Clear explanation of how tools are selected and rated
 
 ### 🔥 Dynamic Trending System
 - **Real-time Trending Algorithm**: Sophisticated scoring system based on multiple factors:
