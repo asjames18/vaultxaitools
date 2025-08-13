@@ -656,27 +656,112 @@ export default function ConsultingClient() {
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 Get in Touch
               </h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <UsersIcon className="w-5 h-5 text-blue-600 mr-3" />
-                  <span className="text-gray-700 dark:text-gray-300">Expert AI consultants</span>
+              
+              {/* Consultation Form */}
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const data = {
+                  name: formData.get('name'),
+                  email: formData.get('email'),
+                  subject: `AI Consultation: ${formData.get('consultation-subject')}`,
+                  message: formData.get('message')
+                };
+                
+                try {
+                  const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                  });
+                  
+                  if (response.ok) {
+                    alert('Thank you! We\'ll get back to you within 24 hours to schedule your consultation.');
+                    e.currentTarget.reset();
+                  } else {
+                    alert('There was an error sending your message. Please try again or contact us directly.');
+                  }
+                } catch (error) {
+                  alert('There was an error sending your message. Please try again or contact us directly.');
+                }
+              }} className="space-y-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                  />
                 </div>
-                <div className="flex items-center">
-                  <RocketIcon className="w-5 h-5 text-blue-600 mr-3" />
-                  <span className="text-gray-700 dark:text-gray-300">Proven implementation track record</span>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder="your.email@example.com"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                  />
                 </div>
-                <div className="flex items-center">
-                  <ChartIcon className="w-5 h-5 text-blue-600 mr-3" />
-                  <span className="text-gray-700 dark:text-gray-300">Data-driven approach</span>
+                
+                <div>
+                  <label htmlFor="consultation-subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Consultation Subject *
+                  </label>
+                  <select
+                    id="consultation-subject"
+                    name="consultation-subject"
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  >
+                    <option value="">Select a consultation subject</option>
+                    <option value="ai-strategy">AI Strategy & Roadmap</option>
+                    <option value="ai-implementation">AI Implementation & Integration</option>
+                    <option value="ai-analytics">AI Analytics & Insights</option>
+                    <option value="ai-automation">AI Process Automation</option>
+                    <option value="ai-education">AI Education & Training</option>
+                    <option value="tool-selection">AI Tool Selection</option>
+                    <option value="ai-readiness">AI Readiness Assessment</option>
+                    <option value="general-consultation">General AI Consultation</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={4}
+                    placeholder="Tell us about your AI needs and goals..."
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+                  ></textarea>
+                </div>
+                
+                <button
+                  type="submit"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center"
+                >
+                  Send Consultation Request
+                  <ArrowRightIcon className="w-5 h-5 ml-2" />
+                </button>
+              </form>
+              
+              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-600">
+                <div className="text-sm text-gray-600 dark:text-gray-400 text-center">
+                  We'll respond within 24 hours to schedule your free consultation
                 </div>
               </div>
-              <Link
-                href="/contact"
-                className="mt-6 w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center"
-              >
-                Contact Us
-                <ArrowRightIcon className="w-5 h-5 ml-2" />
-              </Link>
             </div>
           </div>
         </div>

@@ -86,7 +86,8 @@ export async function POST(request: NextRequest) {
       name: sanitizeInput(name),
       email: sanitizeInput(email).toLowerCase(),
       subject: sanitizeInput(subject),
-      message: sanitizeInput(message)
+      message: sanitizeInput(message),
+      status: 'unread' // Use valid status value
     };
 
     // Insert the contact message into the database

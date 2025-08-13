@@ -144,6 +144,7 @@ export default function ContactClient() {
                   <option value="feedback">Feedback & Suggestions</option>
                   <option value="bug-report">Bug Report</option>
                   <option value="feature-request">Feature Request</option>
+                  <option value="consultation">Consultation</option>
                 </select>
               </div>
 
