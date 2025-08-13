@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react', '@supabase/supabase-js'],
   },
   
+  // Core security/perf flags moved from next.config.js
+  poweredByHeader: false,
+  trailingSlash: false,
+  productionBrowserSourceMaps: false,
+  // Server external packages (parity with previous .js config)
+  serverExternalPackages: [],
+
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
@@ -44,7 +51,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/(.*)',
-        headers: [
+         headers: [
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
@@ -57,6 +64,18 @@ const nextConfig: NextConfig = {
             key: 'X-XSS-Protection',
             value: '1; mode=block',
           },
+           {
+             key: 'Referrer-Policy',
+             value: 'strict-origin-when-cross-origin',
+           },
+           {
+             key: 'Permissions-Policy',
+             value: 'camera=(), microphone=(), geolocation=()'
+           },
+           {
+             key: 'X-DNS-Prefetch-Control',
+             value: 'on'
+           },
         ],
       },
       // Long-term cache only for Next.js compiled/static assets
