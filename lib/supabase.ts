@@ -8,6 +8,26 @@ export function createClient() {
   if (supabaseUrl === 'https://placeholder.supabase.co' || supabaseKey === 'placeholder-key') {
     // Return a mock client that won't make actual requests
     return {
+      auth: {
+        getSession: () => Promise.resolve({ 
+          data: { 
+            session: { 
+              access_token: 'mock-token' 
+            } 
+          }, 
+          error: null 
+        }),
+        getUser: () => Promise.resolve({ 
+          data: { 
+            user: { 
+              id: 'mock-user-id', 
+              email: 'mock@example.com' 
+            } 
+          }, 
+          error: null 
+        }),
+        signOut: () => Promise.resolve({ error: null })
+      },
       from: () => ({
         select: () => ({
           order: () => Promise.resolve({ data: null, error: { message: 'Service temporarily unavailable' } })
