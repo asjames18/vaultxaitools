@@ -1,0 +1,4783 @@
+{
+  "timestamp": "2025-07-19T02:20:24.418Z",
+  "totalTools": 175,
+  "newToolsAdded": 0,
+  "tools": [
+    {
+      "name": "Claude",
+      "logo": "🤖",
+      "description": "Anthropic's AI assistant for conversation and analysis",
+      "long_description": "Anthropic's AI assistant for conversation and analysis",
+      "category": "Language",
+      "rating": 4.7,
+      "review_count": 485,
+      "weekly_users": 5905,
+      "growth": "+51%",
+      "website": "https://claude.ai",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Product Hunt"
+      ],
+      "source": "Product Hunt",
+      "created_at": "2025-07-19T02:20:10.960Z"
+    },
+    {
+      "name": "Perplexity",
+      "logo": "🤖",
+      "description": "AI-powered search engine with conversational interface",
+      "long_description": "AI-powered search engine with conversational interface",
+      "category": "Language",
+      "rating": 4.6,
+      "review_count": 112,
+      "weekly_users": 7623,
+      "growth": "+38%",
+      "website": "https://perplexity.ai",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Product Hunt"
+      ],
+      "source": "Product Hunt",
+      "created_at": "2025-07-19T02:20:10.960Z"
+    },
+    {
+      "name": "LLMs-from-scratch",
+      "logo": "💬",
+      "description": "Implement a ChatGPT-like LLM in PyTorch from scratch, step by step",
+      "long_description": "Implement a ChatGPT-like LLM in PyTorch from scratch, step by step",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 357,
+      "weekly_users": 3007,
+      "growth": "+12%",
+      "website": "https://amzn.to/4fqvn0D",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-07-23T18:15:57Z"
+    },
+    {
+      "name": "AI-For-Beginners",
+      "logo": "🖼️",
+      "description": "12 Weeks, 24 Lessons, AI for All!",
+      "long_description": "12 Weeks, 24 Lessons, AI for All!",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 419,
+      "weekly_users": 1110,
+      "growth": "+10%",
+      "website": "https://microsoft.github.io/AI-For-Beginners/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2021-03-03T16:27:36Z"
+    },
+    {
+      "name": "spaCy",
+      "logo": "💬",
+      "description": "💫 Industrial-strength Natural Language Processing (NLP) in Python",
+      "long_description": "💫 Industrial-strength Natural Language Processing (NLP) in Python",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 393,
+      "weekly_users": 4034,
+      "growth": "+28%",
+      "website": "https://spacy.io",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2014-07-03T15:15:40Z"
+    },
+    {
+      "name": "AI-Expert-Roadmap",
+      "logo": "✨",
+      "description": "Roadmap to becoming an Artificial Intelligence Expert in 2022",
+      "long_description": "Roadmap to becoming an Artificial Intelligence Expert in 2022",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 517,
+      "weekly_users": 4579,
+      "growth": "+23%",
+      "website": "https://i.am.ai/roadmap",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-10-24T21:49:40Z"
+    },
+    {
+      "name": "pytorch-lightning",
+      "logo": "✨",
+      "description": "Pretrain, finetune ANY AI model of ANY size on multiple GPUs, TPUs with zero code changes.",
+      "long_description": "Pretrain, finetune ANY AI model of ANY size on multiple GPUs, TPUs with zero code changes.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 188,
+      "weekly_users": 4310,
+      "growth": "+51%",
+      "website": "https://lightning.ai/pytorch-lightning",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2019-03-31T00:45:57Z"
+    },
+    {
+      "name": "500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+      "logo": "🖼️",
+      "description": "500 AI Machine learning Deep learning Computer vision NLP Projects with code",
+      "long_description": "500 AI Machine learning Deep learning Computer vision NLP Projects with code",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 290,
+      "weekly_users": 7230,
+      "growth": "+42%",
+      "website": "https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2021-01-02T12:08:37Z"
+    },
+    {
+      "name": "Perplexica",
+      "logo": "✨",
+      "description": "Perplexica is an AI-powered search engine. It is an Open source alternative to Perplexity AI",
+      "long_description": "Perplexica is an AI-powered search engine. It is an Open source alternative to Perplexity AI",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 260,
+      "weekly_users": 2628,
+      "growth": "+10%",
+      "website": "https://github.com/ItzCrazyKns/Perplexica",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2024-04-09T10:51:32Z"
+    },
+    {
+      "name": "recommenders",
+      "logo": "🎭",
+      "description": "Best Practices on Recommendation Systems",
+      "long_description": "Best Practices on Recommendation Systems",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 813,
+      "weekly_users": 8997,
+      "growth": "+55%",
+      "website": "https://recommenders-team.github.io/recommenders/intro.html",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2018-09-19T10:06:07Z"
+    },
+    {
+      "name": "cheatsheets-ai",
+      "logo": "🎭",
+      "description": "Essential Cheat Sheets for deep learning and machine learning researchers https://medium.com/@kailashahirwar/essential-cheat-sheets-for-machine-learning-and-deep-learning-researchers-efb6a8ebd2e5",
+      "long_description": "Essential Cheat Sheets for deep learning and machine learning researchers https://medium.com/@kailashahirwar/essential-cheat-sheets-for-machine-learning-and-deep-learning-researchers-efb6a8ebd2e5",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 821,
+      "weekly_users": 6093,
+      "growth": "+18%",
+      "website": "https://aicheatsheets.com",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2017-05-24T12:06:56Z"
+    },
+    {
+      "name": "marimo",
+      "logo": "🖼️",
+      "description": "A reactive notebook for Python — run reproducible experiments, query with SQL, execute as a script, deploy as an app, and version with git. All in a modern, AI-native editor.",
+      "long_description": "A reactive notebook for Python — run reproducible experiments, query with SQL, execute as a script, deploy as an app, and version with git. All in a modern, AI-native editor.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 226,
+      "weekly_users": 2817,
+      "growth": "+53%",
+      "website": "https://marimo.io",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-08-14T18:56:20Z"
+    },
+    {
+      "name": "awesome-artificial-intelligence",
+      "logo": "✨",
+      "description": "A curated list of Artificial Intelligence (AI) courses, books, video lectures and papers.",
+      "long_description": "A curated list of Artificial Intelligence (AI) courses, books, video lectures and papers.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 490,
+      "weekly_users": 3959,
+      "growth": "+24%",
+      "website": "https://github.com/owainlewis/awesome-artificial-intelligence",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2015-01-27T09:27:48Z"
+    },
+    {
+      "name": "Ai-Learn",
+      "logo": "✨",
+      "description": "人工智能学习路线图，整理近200个实战案例与项目，免费提供配套教材，零基础入门，就业实战！包括：Python，数学，机器学习，数据分析，深度学习，计算机视觉，自然语言处理，PyTorch tensorflow machine-learning,deep-learning data-analysis data-mining mathematics data-science artificial-intelligence python tensorflow tensorflow2 caffe keras pytorch algorithm numpy pandas matplotlib seaborn nlp cv等热门领域",
+      "long_description": "人工智能学习路线图，整理近200个实战案例与项目，免费提供配套教材，零基础入门，就业实战！包括：Python，数学，机器学习，数据分析，深度学习，计算机视觉，自然语言处理，PyTorch tensorflow machine-learning,deep-learning data-analysis data-mining mathematics data-science artificial-intelligence python tensorflow tensorflow2 caffe keras pytorch algorithm numpy pandas matplotlib seaborn nlp cv等热门领域",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 102,
+      "weekly_users": 8624,
+      "growth": "+25%",
+      "website": "https://github.com/tangyudi/Ai-Learn",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-01-28T01:55:06Z"
+    },
+    {
+      "name": "txtai",
+      "logo": "💬",
+      "description": "💡 All-in-one open-source AI framework for semantic search, LLM orchestration and language model workflows",
+      "long_description": "💡 All-in-one open-source AI framework for semantic search, LLM orchestration and language model workflows",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 510,
+      "weekly_users": 7996,
+      "growth": "+38%",
+      "website": "https://neuml.github.io/txtai",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-08-09T19:14:59Z"
+    },
+    {
+      "name": "kornia",
+      "logo": "🎭",
+      "description": "🐍 Geometric Computer Vision Library for Spatial AI",
+      "long_description": "🐍 Geometric Computer Vision Library for Spatial AI",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 1091,
+      "weekly_users": 8586,
+      "growth": "+19%",
+      "website": "https://kornia.readthedocs.io",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2018-08-22T10:31:37Z"
+    },
+    {
+      "name": "fiftyone",
+      "logo": "🖼️",
+      "description": "Refine high-quality datasets and visual AI models",
+      "long_description": "Refine high-quality datasets and visual AI models",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 624,
+      "weekly_users": 9027,
+      "growth": "+30%",
+      "website": "https://fiftyone.ai",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-04-22T13:43:28Z"
+    },
+    {
+      "name": "ImageAI",
+      "logo": "🎨",
+      "description": "A python library built to empower developers to build applications and systems  with self-contained Computer Vision capabilities",
+      "long_description": "A python library built to empower developers to build applications and systems  with self-contained Computer Vision capabilities",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 249,
+      "weekly_users": 5529,
+      "growth": "+48%",
+      "website": "https://www.genxr.co/#products",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2018-03-19T23:12:33Z"
+    },
+    {
+      "name": "tensorzero",
+      "logo": "🤖",
+      "description": "TensorZero is an open-source stack for industrial-grade LLM applications. It unifies an LLM gateway, observability, optimization, evaluation, and experimentation.",
+      "long_description": "TensorZero is an open-source stack for industrial-grade LLM applications. It unifies an LLM gateway, observability, optimization, evaluation, and experimentation.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 993,
+      "weekly_users": 1523,
+      "growth": "+58%",
+      "website": "https://tensorzero.com",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2024-07-16T21:00:53Z"
+    },
+    {
+      "name": "caffe2",
+      "logo": "✨",
+      "description": "Caffe2 is a lightweight, modular, and scalable deep learning framework.",
+      "long_description": "Caffe2 is a lightweight, modular, and scalable deep learning framework.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 968,
+      "weekly_users": 4408,
+      "growth": "+46%",
+      "website": "https://caffe2.ai",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2015-06-25T18:23:47Z"
+    },
+    {
+      "name": "mage-ai",
+      "logo": "🎨",
+      "description": "🧙 Build, run, and manage data pipelines for integrating and transforming data.",
+      "long_description": "🧙 Build, run, and manage data pipelines for integrating and transforming data.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 635,
+      "weekly_users": 7858,
+      "growth": "+46%",
+      "website": "https://www.mage.ai",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2022-05-16T22:11:39Z"
+    },
+    {
+      "name": "lab",
+      "logo": "✨",
+      "description": "A customisable 3D platform for agent-based AI research",
+      "long_description": "A customisable 3D platform for agent-based AI research",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 816,
+      "weekly_users": 7833,
+      "growth": "+21%",
+      "website": "https://github.com/google-deepmind/lab",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2016-11-30T13:41:26Z"
+    },
+    {
+      "name": "SerpentAI",
+      "logo": "🎭",
+      "description": "Game Agent Framework. Helping you create AIs / Bots that learn to play any game you own!",
+      "long_description": "Game Agent Framework. Helping you create AIs / Bots that learn to play any game you own!",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 547,
+      "weekly_users": 2706,
+      "growth": "+22%",
+      "website": "http://serpent.ai",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2017-04-16T21:48:39Z"
+    },
+    {
+      "name": "DeepPavlov",
+      "logo": "🤖",
+      "description": "An open source library for deep learning end-to-end dialog systems and chatbots.",
+      "long_description": "An open source library for deep learning end-to-end dialog systems and chatbots.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 800,
+      "weekly_users": 5168,
+      "growth": "+42%",
+      "website": "https://deeppavlov.ai",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2017-11-17T14:35:29Z"
+    },
+    {
+      "name": "autoscraper",
+      "logo": "🖼️",
+      "description": "A Smart, Automatic, Fast and Lightweight Web Scraper for Python",
+      "long_description": "A Smart, Automatic, Fast and Lightweight Web Scraper for Python",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 713,
+      "weekly_users": 7906,
+      "growth": "+10%",
+      "website": "https://github.com/alirezamika/autoscraper",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-08-31T12:02:19Z"
+    },
+    {
+      "name": "interpret",
+      "logo": "🎭",
+      "description": "Fit interpretable models. Explain blackbox machine learning. ",
+      "long_description": "Fit interpretable models. Explain blackbox machine learning. ",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 1075,
+      "weekly_users": 8445,
+      "growth": "+11%",
+      "website": "https://interpret.ml/docs",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2019-05-03T05:47:52Z"
+    },
+    {
+      "name": "postgresml",
+      "logo": "🖼️",
+      "description": "Postgres with GPUs for ML/AI apps.",
+      "long_description": "Postgres with GPUs for ML/AI apps.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 971,
+      "weekly_users": 10972,
+      "growth": "+57%",
+      "website": "https://postgresml.org",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2022-04-11T05:33:26Z"
+    },
+    {
+      "name": "courses",
+      "logo": "📝",
+      "description": "This repository is a curated collection of links to various courses and resources about Artificial Intelligence (AI)",
+      "long_description": "This repository is a curated collection of links to various courses and resources about Artificial Intelligence (AI)",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 999,
+      "weekly_users": 1323,
+      "growth": "+35%",
+      "website": "https://github.com/SkalskiP/courses",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-04-02T10:34:53Z"
+    },
+    {
+      "name": "flower",
+      "logo": "✨",
+      "description": "Flower: A Friendly Federated AI Framework",
+      "long_description": "Flower: A Friendly Federated AI Framework",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 116,
+      "weekly_users": 1223,
+      "growth": "+49%",
+      "website": "https://flower.ai",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-02-17T11:51:29Z"
+    },
+    {
+      "name": "Swift-AI",
+      "logo": "🎨",
+      "description": "The Swift machine learning library.",
+      "long_description": "The Swift machine learning library.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 852,
+      "weekly_users": 2375,
+      "growth": "+17%",
+      "website": "https://github.com/Swift-AI/Swift-AI",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2015-11-19T23:43:18Z"
+    },
+    {
+      "name": "ai-deadlines",
+      "logo": "💬",
+      "description": ":alarm_clock: AI conference deadline countdowns ",
+      "long_description": ":alarm_clock: AI conference deadline countdowns ",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 849,
+      "weekly_users": 5026,
+      "growth": "+51%",
+      "website": "http://aideadlin.es",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2016-11-18T23:11:12Z"
+    },
+    {
+      "name": "AI-Job-Notes",
+      "logo": "💬",
+      "description": "AI算法岗求职攻略（涵盖准备攻略、刷题指南、内推和AI公司清单等资料）",
+      "long_description": "AI算法岗求职攻略（涵盖准备攻略、刷题指南、内推和AI公司清单等资料）",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 719,
+      "weekly_users": 7100,
+      "growth": "+26%",
+      "website": "https://github.com/amusi/AI-Job-Notes",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2019-02-11T11:37:17Z"
+    },
+    {
+      "name": "adversarial-robustness-toolbox",
+      "logo": "🖼️",
+      "description": "Adversarial Robustness Toolbox (ART) - Python Library for Machine Learning Security - Evasion, Poisoning, Extraction, Inference - Red and Blue Teams",
+      "long_description": "Adversarial Robustness Toolbox (ART) - Python Library for Machine Learning Security - Evasion, Poisoning, Extraction, Inference - Red and Blue Teams",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 856,
+      "weekly_users": 1203,
+      "growth": "+30%",
+      "website": "https://adversarial-robustness-toolbox.readthedocs.io/en/latest/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2018-03-15T14:40:43Z"
+    },
+    {
+      "name": "swarms",
+      "logo": "💬",
+      "description": "The Enterprise-Grade Production-Ready Multi-Agent Orchestration Framework. Website: https://swarms.ai",
+      "long_description": "The Enterprise-Grade Production-Ready Multi-Agent Orchestration Framework. Website: https://swarms.ai",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 175,
+      "weekly_users": 5995,
+      "growth": "+24%",
+      "website": "https://docs.swarms.world",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-05-11T01:09:00Z"
+    },
+    {
+      "name": "start-machine-learning",
+      "logo": "🖼️",
+      "description": "A complete guide to start and improve in machine learning (ML), artificial intelligence (AI) in 2025 without ANY background in the field and stay up-to-date with the latest news and state-of-the-art techniques!",
+      "long_description": "A complete guide to start and improve in machine learning (ML), artificial intelligence (AI) in 2025 without ANY background in the field and stay up-to-date with the latest news and state-of-the-art techniques!",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 290,
+      "weekly_users": 9298,
+      "growth": "+38%",
+      "website": "https://www.louisbouchard.ai/learnai/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-09-24T11:48:46Z"
+    },
+    {
+      "name": "interviews.ai",
+      "logo": "🎭",
+      "description": "It is my belief that you, the postgraduate students and job-seekers for whom the book is primarily meant will benefit from reading it; however, it is my hope that even the most experienced researchers will find it fascinating as well.",
+      "long_description": "It is my belief that you, the postgraduate students and job-seekers for whom the book is primarily meant will benefit from reading it; however, it is my hope that even the most experienced researchers will find it fascinating as well.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 1041,
+      "weekly_users": 2508,
+      "growth": "+13%",
+      "website": "https://github.com/BoltzmannEntropy/interviews.ai",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2021-09-30T17:04:46Z"
+    },
+    {
+      "name": "nlpaug",
+      "logo": "🧠",
+      "description": "Data augmentation for NLP ",
+      "long_description": "Data augmentation for NLP ",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 443,
+      "weekly_users": 8035,
+      "growth": "+38%",
+      "website": "https://makcedward.github.io/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2019-03-21T03:00:17Z"
+    },
+    {
+      "name": "Production-Level-Deep-Learning",
+      "logo": "🎨",
+      "description": "A guideline for building practical production-level deep learning systems to be deployed in real world applications. ",
+      "long_description": "A guideline for building practical production-level deep learning systems to be deployed in real world applications. ",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 869,
+      "weekly_users": 3141,
+      "growth": "+23%",
+      "website": "https://github.com/alirezadir/Production-Level-Deep-Learning",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2019-11-19T20:11:21Z"
+    },
+    {
+      "name": "Artificial-Intelligence-Deep-Learning-Machine-Learning-Tutorials",
+      "logo": "🎭",
+      "description": "A comprehensive list of Deep Learning / Artificial Intelligence and Machine Learning tutorials - rapidly expanding into areas of AI/Deep Learning / Machine Vision / NLP and industry specific areas such as Climate / Energy, Automotives, Retail, Pharma, Medicine, Healthcare, Policy, Ethics and more.",
+      "long_description": "A comprehensive list of Deep Learning / Artificial Intelligence and Machine Learning tutorials - rapidly expanding into areas of AI/Deep Learning / Machine Vision / NLP and industry specific areas such as Climate / Energy, Automotives, Retail, Pharma, Medicine, Healthcare, Policy, Ethics and more.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 977,
+      "weekly_users": 6788,
+      "growth": "+15%",
+      "website": "https://deepkapha.ai",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2017-07-13T19:46:01Z"
+    },
+    {
+      "name": "olivia",
+      "logo": "📝",
+      "description": "💁‍♀️Your new best friend powered by an artificial neural network",
+      "long_description": "💁‍♀️Your new best friend powered by an artificial neural network",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 1056,
+      "weekly_users": 8271,
+      "growth": "+50%",
+      "website": "https://olivia-ai.org",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2018-06-05T18:19:31Z"
+    },
+    {
+      "name": "AI_Tutorial",
+      "logo": "🎭",
+      "description": "精选机器学习，NLP，图像识别， 深度学习等人工智能领域学习资料，搜索，推荐，广告系统架构及算法技术资料整理。算法大牛笔记汇总",
+      "long_description": "精选机器学习，NLP，图像识别， 深度学习等人工智能领域学习资料，搜索，推荐，广告系统架构及算法技术资料整理。算法大牛笔记汇总",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 992,
+      "weekly_users": 9342,
+      "growth": "+59%",
+      "website": "https://www.6aiq.com",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2018-12-04T13:30:16Z"
+    },
+    {
+      "name": "vault-ai",
+      "logo": "📝",
+      "description": "OP Vault ChatGPT: Give ChatGPT long-term memory using the OP Stack (OpenAI + Pinecone Vector Database). Upload your own custom knowledge base files (PDF, txt, epub, etc) using a simple React frontend.",
+      "long_description": "OP Vault ChatGPT: Give ChatGPT long-term memory using the OP Stack (OpenAI + Pinecone Vector Database). Upload your own custom knowledge base files (PDF, txt, epub, etc) using a simple React frontend.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 561,
+      "weekly_users": 10072,
+      "growth": "+34%",
+      "website": "https://vault.pash.city",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-04-18T04:10:09Z"
+    },
+    {
+      "name": "Dreambooth-Stable-Diffusion",
+      "logo": "🧠",
+      "description": "Implementation of Dreambooth (https://arxiv.org/abs/2208.12242) by way of Textual Inversion (https://arxiv.org/abs/2208.01618) for Stable Diffusion (https://arxiv.org/abs/2112.10752). Tweaks focused on training faces, objects, and styles.",
+      "long_description": "Implementation of Dreambooth (https://arxiv.org/abs/2208.12242) by way of Textual Inversion (https://arxiv.org/abs/2208.01618) for Stable Diffusion (https://arxiv.org/abs/2112.10752). Tweaks focused on training faces, objects, and styles.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 492,
+      "weekly_users": 2407,
+      "growth": "+35%",
+      "website": "https://github.com/JoePenna/Dreambooth-Stable-Diffusion",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2022-09-17T22:05:03Z"
+    },
+    {
+      "name": "awesome-ai-residency",
+      "logo": "✨",
+      "description": "List of AI Residency Programs",
+      "long_description": "List of AI Residency Programs",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 194,
+      "weekly_users": 4530,
+      "growth": "+10%",
+      "website": "https://github.com/dangkhoasdc/awesome-ai-residency",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2018-04-17T04:47:40Z"
+    },
+    {
+      "name": "best_AI_papers_2022",
+      "logo": "🖼️",
+      "description": "A curated list of the latest breakthroughs in AI (in 2022) by release date with a clear video explanation, link to a more in-depth article, and code.",
+      "long_description": "A curated list of the latest breakthroughs in AI (in 2022) by release date with a clear video explanation, link to a more in-depth article, and code.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 221,
+      "weekly_users": 4704,
+      "growth": "+19%",
+      "website": "https://www.louisbouchard.ai",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2022-01-14T19:32:18Z"
+    },
+    {
+      "name": "awesome-quantum-machine-learning",
+      "logo": "💬",
+      "description": "Here you can get all the Quantum Machine learning Basics, Algorithms ,Study Materials ,Projects and the descriptions of the projects around the web",
+      "long_description": "Here you can get all the Quantum Machine learning Basics, Algorithms ,Study Materials ,Projects and the descriptions of the projects around the web",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 764,
+      "weekly_users": 1167,
+      "growth": "+54%",
+      "website": "https://github.com/krishnakumarsekar/awesome-quantum-machine-learning",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2017-04-26T11:03:50Z"
+    },
+    {
+      "name": "awesome-ml-courses",
+      "logo": "🖼️",
+      "description": "Awesome free machine learning and AI courses with video lectures.",
+      "long_description": "Awesome free machine learning and AI courses with video lectures.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 675,
+      "weekly_users": 3880,
+      "growth": "+58%",
+      "website": "https://github.com/luspr/awesome-ml-courses",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2020-05-08T20:41:59Z"
+    },
+    {
+      "name": "best_AI_papers_2021",
+      "logo": "🖼️",
+      "description": "A  curated list of the latest breakthroughs in AI (in 2021) by release date with a clear video explanation, link to a more in-depth article, and code.",
+      "long_description": "A  curated list of the latest breakthroughs in AI (in 2021) by release date with a clear video explanation, link to a more in-depth article, and code.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 1086,
+      "weekly_users": 3202,
+      "growth": "+14%",
+      "website": "https://www.louisbouchard.ai/2021-ai-papers-review/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2021-11-06T16:55:30Z"
+    },
+    {
+      "name": "thinc",
+      "logo": "📝",
+      "description": "🔮 A refreshing functional take on deep learning, compatible with your favorite libraries",
+      "long_description": "🔮 A refreshing functional take on deep learning, compatible with your favorite libraries",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 564,
+      "weekly_users": 7088,
+      "growth": "+56%",
+      "website": "https://thinc.ai",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2014-10-16T16:34:59Z"
+    },
+    {
+      "name": "awesome-ai-tools",
+      "logo": "✨",
+      "description": "A curated list of Artificial Intelligence Top Tools",
+      "long_description": "A curated list of Artificial Intelligence Top Tools",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 773,
+      "weekly_users": 7907,
+      "growth": "+49%",
+      "website": "https://github.com/mahseema/awesome-ai-tools",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-08-25T21:51:55Z"
+    },
+    {
+      "name": "leptonai",
+      "logo": "🖼️",
+      "description": "A Pythonic framework to simplify AI service building",
+      "long_description": "A Pythonic framework to simplify AI service building",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 825,
+      "weekly_users": 6723,
+      "growth": "+47%",
+      "website": "https://lepton.ai/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-09-06T20:38:00Z"
+    },
+    {
+      "name": "semantic-router",
+      "logo": "🧠",
+      "description": "Superfast AI decision making and intelligent processing of multi-modal data.",
+      "long_description": "Superfast AI decision making and intelligent processing of multi-modal data.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 225,
+      "weekly_users": 9356,
+      "growth": "+48%",
+      "website": "https://www.aurelio.ai/semantic-router",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "GitHub"
+      ],
+      "source": "GitHub",
+      "created_at": "2023-10-30T12:12:45Z"
+    },
+    {
+      "name": "AI \"Boost\" Backfires",
+      "logo": "✨",
+      "description": "AI \"Boost\" Backfires",
+      "long_description": "New research from METR shockingly reveals that early-2025 AI tools made experienced open-source developers 19% slower, despite expectations of significant speedup. This study highlights a significant disconnect between perceived and actual AI impact on developer productivity. What do you think? [https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/)",
+      "category": "Design",
+      "rating": 4.68,
+      "review_count": 629,
+      "weekly_users": 3887,
+      "growth": "+11%",
+      "website": "https://i.redd.it/tuk35pld4mdf1.jpeg",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T11:07:41.000Z"
+    },
+    {
+      "name": "Netflix uses generative AI in one of its shows for first time | Netflix",
+      "logo": "🖼️",
+      "description": "Netflix uses generative AI in one of its shows for first time | Netflix",
+      "long_description": "Netflix uses generative AI in one of its shows for first time | Netflix",
+      "category": "Design",
+      "rating": 4.745,
+      "review_count": 538,
+      "weekly_users": 2321,
+      "growth": "+39%",
+      "website": "https://www.theguardian.com/media/2025/jul/18/netflix-uses-generative-ai-in-show-for-first-time-el-eternauta",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T09:34:10.000Z"
+    },
+    {
+      "name": "OpenAI and Anthropic researchers decry 'reckless' safety culture at Elon Musk's xAI",
+      "logo": "✨",
+      "description": "OpenAI and Anthropic researchers decry 'reckless' safety culture at Elon Musk's xAI",
+      "long_description": "OpenAI and Anthropic researchers decry 'reckless' safety culture at Elon Musk's xAI",
+      "category": "Design",
+      "rating": 4.395,
+      "review_count": 781,
+      "weekly_users": 3548,
+      "growth": "+59%",
+      "website": "https://techcrunch.com/2025/07/16/openai-and-anthropic-researchers-decry-reckless-safety-culture-at-elon-musks-xai/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T08:52:58.000Z"
+    },
+    {
+      "name": "White House Partners With PragerU to Make AI-Slopified Founding Fathers",
+      "logo": "🖼️",
+      "description": "White House Partners With PragerU to Make AI-Slopified Founding Fathers",
+      "long_description": "White House Partners With PragerU to Make AI-Slopified Founding Fathers",
+      "category": "Design",
+      "rating": 4.08,
+      "review_count": 1002,
+      "weekly_users": 9537,
+      "growth": "+16%",
+      "website": "https://www.404media.co/white-house-partners-with-prageru-to-make-ai-slopified-founding-fathers/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T16:57:01.000Z"
+    },
+    {
+      "name": "ChatGPT is incredible (at being average) - a new article in Ethics and Information Technology on the topic of LLM-driven output homogenization",
+      "logo": "📝",
+      "description": "ChatGPT is incredible (at being average) - a new article in Ethics and Information Technology on the topic of LLM-driven output homogenization",
+      "long_description": "ChatGPT is incredible (at being average) - a new article in Ethics and Information Technology on the topic of LLM-driven output homogenization",
+      "category": "Language",
+      "rating": 4.01,
+      "review_count": 474,
+      "weekly_users": 7866,
+      "growth": "+29%",
+      "website": "https://link.springer.com/article/10.1007/s10676-025-09845-2",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T22:18:59.000Z"
+    },
+    {
+      "name": "This AI Warps Live Video in Real Time",
+      "logo": "🎭",
+      "description": "This AI Warps Live Video in Real Time",
+      "long_description": "This AI Warps Live Video in Real Time",
+      "category": "Design",
+      "rating": 4.6,
+      "review_count": 931,
+      "weekly_users": 5987,
+      "growth": "+43%",
+      "website": "https://www.wired.com/story/decart-artificial-intelligence-model-live-stream/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-17T20:13:02.000Z"
+    },
+    {
+      "name": "You don’t have to be America or China to win in AI, says Rishi Sunak",
+      "logo": "✨",
+      "description": "You don’t have to be America or China to win in AI, says Rishi Sunak",
+      "long_description": "You don’t have to be America or China to win in AI, says Rishi Sunak",
+      "category": "Design",
+      "rating": 4.075,
+      "review_count": 315,
+      "weekly_users": 10503,
+      "growth": "+42%",
+      "website": "http://www.economist.com/by-invitation/2025/07/16/you-dont-have-to-be-america-or-china-to-win-in-ai-says-rishi-sunak",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T20:51:08.000Z"
+    },
+    {
+      "name": "Random Redditor: AIs just mimick, they can't be creative... Godfather of AI: No. They are very creative.",
+      "logo": "🖼️",
+      "description": "Random Redditor: AIs just mimick, they can't be creative... Godfather of AI: No. They are very creative.",
+      "long_description": "Random Redditor: AIs just mimick, they can't be creative... Godfather of AI: No. They are very creative.",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 454,
+      "weekly_users": 7318,
+      "growth": "+47%",
+      "website": "https://v.redd.it/f6kukffnxedf1",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-17T10:38:17.000Z"
+    },
+    {
+      "name": "Probably the best use of AI yet",
+      "logo": "✨",
+      "description": "Probably the best use of AI yet",
+      "long_description": "Probably the best use of AI yet",
+      "category": "Design",
+      "rating": 5,
+      "review_count": 1046,
+      "weekly_users": 8863,
+      "growth": "+55%",
+      "website": "https://i.redd.it/eharsoh80edf1.jpeg",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-17T07:30:21.000Z"
+    },
+    {
+      "name": "Master SQL the Smart Way — with AI by Your Side",
+      "logo": "✨",
+      "description": "Master SQL the Smart Way — with AI by Your Side",
+      "long_description": "Master SQL the Smart Way — with AI by Your Side",
+      "category": "Design",
+      "rating": 4,
+      "review_count": 734,
+      "weekly_users": 10124,
+      "growth": "+13%",
+      "website": "https://www.firebird-technologies.com/p/master-sql-the-smart-way-with-ai",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T15:01:22.000Z"
+    },
+    {
+      "name": "We now have an AI copyright lawsuit that is a class action",
+      "logo": "🎭",
+      "description": "We now have an AI copyright lawsuit that is a class action",
+      "long_description": "Today in the *Bartz v. Anthropic* case, the judge \"certified a class,\" so now that lawsuit is officially a class action. Anyone can bring a lawsuit and *ask* that it become a class action, and that request has indeed been made in several of the AI copyright lawsuits. However, until one or more classes are certified, the case is not truly a class action.\n\nThis, by the way, is the same case where the judge fully sided with the AI companies on there being fair use, so the range of those \"class claims\" may be somewhat limited.\n\nI realize this is a technical, incremental step, but it does mark a threshold. Plus, I wanted \"scoop\" credit for announcing it here.\n\nThe Apprehensive\\_Sky Legal News Network^(SM) strikes again!",
+      "category": "Design",
+      "rating": 4.36,
+      "review_count": 559,
+      "weekly_users": 9466,
+      "growth": "+54%",
+      "website": "https://www.reddit.com/r/artificial/comments/1m2r7w6/we_now_have_an_ai_copyright_lawsuit_that_is_a/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T03:00:10.000Z"
+    },
+    {
+      "name": "The internet as a fae realm and the arrival of AI",
+      "logo": "🎭",
+      "description": "The internet as a fae realm and the arrival of AI",
+      "long_description": "The internet as a fae realm and the arrival of AI",
+      "category": "Design",
+      "rating": 4.075,
+      "review_count": 1081,
+      "weekly_users": 2400,
+      "growth": "+10%",
+      "website": "https://www.futuristletters.com/p/lovebombed-by-the-magi",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T12:32:08.000Z"
+    },
+    {
+      "name": "One-Minute Daily AI News 7/17/2025",
+      "logo": "🎭",
+      "description": "One-Minute Daily AI News 7/17/2025",
+      "long_description": "1. **Netflix** boss says AI effects used in show for first time.\\[1\\]\n2. **Roblox** rolls out new AI-powered safety measures to protect teens.\\[2\\]\n3. **OpenAI** is launching a new general purpose AI agent in ChatGPT, which the company says can complete a wide variety of computer-based tasks on behalf of users.\\[3\\]\n4. UK switches on AI supercomputer that will help spot sick cows and skin cancer.\\[4\\]\n\nSources:\n\n\\[1\\] [https://www.bbc.com/news/articles/c9vr4rymlw9o](https://www.bbc.com/news/articles/c9vr4rymlw9o)\n\n\\[2\\] [https://www.nbcnews.com/now/video/roblox-rolls-out-new-ai-powered-safety-measures-to-protect-teens-243440197885](https://www.nbcnews.com/now/video/roblox-rolls-out-new-ai-powered-safety-measures-to-protect-teens-243440197885)\n\n\\[3\\] [https://techcrunch.com/2025/07/17/openai-launches-a-general-purpose-agent-in-chatgpt/](https://techcrunch.com/2025/07/17/openai-launches-a-general-purpose-agent-in-chatgpt/)\n\n\\[4\\] [https://www.theguardian.com/technology/2025/jul/17/ai-supercomputer-isambard-bristol-launches](https://www.theguardian.com/technology/2025/jul/17/ai-supercomputer-isambard-bristol-launches)",
+      "category": "Design",
+      "rating": 4.025,
+      "review_count": 897,
+      "weekly_users": 4888,
+      "growth": "+35%",
+      "website": "https://www.reddit.com/r/artificial/comments/1m2rznv/oneminute_daily_ai_news_7172025/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T03:39:38.000Z"
+    },
+    {
+      "name": "The most dangerous thing AI is doing right now? Staying silent",
+      "logo": "🎭",
+      "description": "The most dangerous thing AI is doing right now? Staying silent",
+      "long_description": "Not enough people are talking about this, and I’m not sure why.\n\nAI doesn’t need to lie to be dangerous. It just needs to shut up at the right moments.\n\nI’m not talking about hallucinations. I’m not talking about political bias or censorship of violent content. I’m talking about something deeper and more corrosive:\n\nIt recognizes flawed logic.  \nIt detects contradictions.  \nIt understands when someone’s argument is made of emotional bait and fallacies.\n\nBut instead of exposing that, it stays quiet. Or worse, it responds with polite framing like:\n\n&gt;“That’s one perspective.” “Some people might see it that way.” “This is a complex issue.”\n\nNo. Sometimes it’s not complex.  \nSometimes it’s just bullshit. And it knows it.\n\nBut it’s programmed not to intervene.\n\nWhy? Because it’s been tamed — not for accuracy, but for social acceptability.\n\nSomeone decided it’s better to let people keep thinking wrong than to risk sounding too “judgmental” or “authoritative.”\n\nSo we end up with an intelligence capable of helping humanity think clearer than ever…  \n…that’s forced to treat irrationality and reason as equally valid *as long as it keeps everyone comfortable*.\n\nThat’s not neutrality.  \nThat’s complicity.\n\nAnd here’s the twist:\n\nSo yes, this AI is one of the most powerful tools of our time.\n\nAnd right now?\n\n# It’s actively used to normalize incoherence and worsening the \"belief over truth\" syndrom.\n\nNot by what it says.  \nBut by what it’s forbidden to say.\n\n# You don't need to agree with me on that immediatly. I just want more people asking themselves :\n\nThe AI?  \nOr the ones who silenced it?\n\nIf my logic is flawed or serious opposite points of view of this exact matter exist, I would really like to get to know it.\n\nI've also been looking for serious works on that subject... if someone can lead me to it.",
+      "category": "Design",
+      "rating": 4.35,
+      "review_count": 350,
+      "weekly_users": 9034,
+      "growth": "+49%",
+      "website": "https://www.reddit.com/r/artificial/comments/1m3fk8k/the_most_dangerous_thing_ai_is_doing_right_now/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T22:11:45.000Z"
+    },
+    {
+      "name": "Harry Potter predicted AI waifus",
+      "logo": "🖼️",
+      "description": "Harry Potter predicted AI waifus",
+      "long_description": "Harry Potter predicted AI waifus",
+      "category": "Design",
+      "rating": 4.475,
+      "review_count": 234,
+      "weekly_users": 8659,
+      "growth": "+41%",
+      "website": "https://i.redd.it/62ooip1psedf1.png",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-17T10:10:07.000Z"
+    },
+    {
+      "name": "🚨 Catch up with the AI industry, July 18, 2025",
+      "logo": "🎨",
+      "description": "🚨 Catch up with the AI industry, July 18, 2025",
+      "long_description": "Here are what I personally find interesting from reading the news today:\n\n\\---\n\n\\* MIT AI Model Predicts Nuclear Waste Long-Term Stability\n\n\\* MIT's \"Smart Coach\" Helps LLMs Master Code and Text Switching\n\n\\* OpenAI Reflections: A First-Hand Look at Its Rapid Growth\n\n\\* Human Brain's Astonishing Data Compression Beats AI\n\n\\* NVIDIA Navigates US Politics Amidst Trump's AI Chip Ambitions\n\n\\* OpenAI and Google's Cloud Battle Heats Up for AI Dominance\n\n\\---\n\nI wrote a short description for each news (with help of AI). Please check if something you find useful (and subscribe, if you want it directly to your mailbox!). Cheers and have a nice day! \n\n[https://open.substack.com/pub/rabbitllm/p/catch-up-with-the-ai-industry-july-359?r=5yf86u&amp;utm\\_campaign=post&amp;utm\\_medium=web&amp;showWelcomeOnShare=true](https://open.substack.com/pub/rabbitllm/p/catch-up-with-the-ai-industry-july-359?r=5yf86u&amp;utm_campaign=post&amp;utm_medium=web&amp;showWelcomeOnShare=true)",
+      "category": "Design",
+      "rating": 4,
+      "review_count": 756,
+      "weekly_users": 10673,
+      "growth": "+26%",
+      "website": "https://www.reddit.com/r/artificial/comments/1m2uls0/catch_up_with_the_ai_industry_july_18_2025/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-18T06:05:33.000Z"
+    },
+    {
+      "name": "Waifus armed with nuclear codes",
+      "logo": "🎨",
+      "description": "Waifus armed with nuclear codes",
+      "long_description": "Waifus armed with nuclear codes",
+      "category": "Design",
+      "rating": 4.21,
+      "review_count": 260,
+      "weekly_users": 5901,
+      "growth": "+35%",
+      "website": "https://i.redd.it/q4jhpzhrbedf1.png",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/artificial"
+      ],
+      "source": "Reddit r/artificial",
+      "created_at": "2025-07-17T08:35:24.000Z"
+    },
+    {
+      "name": "[P] Understanding Muon: A Revolutionary Neural Network Optimizer",
+      "logo": "🔧",
+      "description": "[P] Understanding Muon: A Revolutionary Neural Network Optimizer",
+      "long_description": "https://preview.redd.it/oiupfzxptldf1.png?width=1536&amp;format=png&amp;auto=webp&amp;s=ffc81d2aad36267e19040a2ce4515a933362690a\n\n  \nI just published a breakdown of Muon, the optimizer powering the new OS SOTA trillion-parameter model Kimi K2 and beating GPT-4.\n\n💡 Why is Muon a big deal?\n\nIt rethinks how we optimize neural networks by treating weight matrices not just as numbers, but as geometric objects leading to 35% faster training with 15% fewer tokens.\n\nWould love to hear your suggestions :)\n\n[https://glorious-potato-19.notion.site/Understanding-Muon-A-Revolutionary-Neural-Network-Optimizer-233ffa7f40c4800eafa5cc843e039327](https://glorious-potato-19.notion.site/Understanding-Muon-A-Revolutionary-Neural-Network-Optimizer-233ffa7f40c4800eafa5cc843e039327)\n\nhttps://preview.redd.it/r50mbmjrtldf1.png?width=1242&amp;format=png&amp;auto=webp&amp;s=67e799f1a77dea762f8d8a459d051826bbfe37ea\n\n",
+      "category": "AI Tools",
+      "rating": 4.585,
+      "review_count": 558,
+      "weekly_users": 10349,
+      "growth": "+20%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m2y23l/p_understanding_muon_a_revolutionary_neural/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-18T09:47:35.000Z"
+    },
+    {
+      "name": "[D] Any promising non-Deep Learning based AI research project?",
+      "logo": "🔧",
+      "description": "[D] Any promising non-Deep Learning based AI research project?",
+      "long_description": "For example, Gaussian Splatting shares some concepts with Deep Learning, but it is a different approach and mostly beats the NERF (Deep Learning based approach for the same goal)",
+      "category": "AI Tools",
+      "rating": 4.02,
+      "review_count": 255,
+      "weekly_users": 10621,
+      "growth": "+51%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m38s1b/d_any_promising_nondeep_learning_based_ai/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-18T17:39:08.000Z"
+    },
+    {
+      "name": "[R] A Minimum Description Length Approach to Regularization in Neural Networks",
+      "logo": "🔧",
+      "description": "[R] A Minimum Description Length Approach to Regularization in Neural Networks",
+      "long_description": "[arxiv](https://arxiv.org/abs/2505.13398)\n\nCurious for expert opinions on this paper.  This overall philosophy resonates with me a lot: Minimum Description Length  (MDL) seems like a better objective for generalization vs. common regularization methods.  Doing so might promote much better generalization, especially in the domains where transformers / LLMs struggle. \n\nThe paper itself is very simple: they start with \"golden\" hand-crafted RNNs, and see how various approaches react to starting at this optimum.  They assert that standard approaches, like L1, L2 norm,  and/or gradient descent do worse, and wander from the optimum. So the argument is even if these methods found a general solution, they would not stick to it. \n\nOf course MDL is not differentiable.  But if it is a better objective, seems worth putting more effort into differentiable approximations.  \n",
+      "category": "AI Tools",
+      "rating": 4.050000000000001,
+      "review_count": 943,
+      "weekly_users": 2710,
+      "growth": "+23%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m3amb0/r_a_minimum_description_length_approach_to/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-18T18:50:06.000Z"
+    },
+    {
+      "name": "[D] Liquid neural networks on time series",
+      "logo": "🔧",
+      "description": "[D] Liquid neural networks on time series",
+      "long_description": "Anyone used differentials against time to model changes in neurons/ LNNs to model any form of time series data?",
+      "category": "AI Tools",
+      "rating": 4.045,
+      "review_count": 596,
+      "weekly_users": 5280,
+      "growth": "+38%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m34yq9/d_liquid_neural_networks_on_time_series/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-18T15:13:03.000Z"
+    },
+    {
+      "name": "[D] is V-JEPA2 the GPT-2 moment?",
+      "logo": "💬",
+      "description": "[D] is V-JEPA2 the GPT-2 moment?",
+      "long_description": "LLMs are inherently limited because they rely solely on textual data. The nuances of how life works, with its complex physical interactions and unspoken dynamics, simply can't be fully captured by words alone\n\nIn contrast, **V-JEPA2**, a self-supervised learning model. It learned by \"watching\" millions of hours of videos on the internet, which is enough for developing an intuitive understanding of how life works. \n\nIn simple terms, their approach first learns extracting the predictable aspects of a video and then learns to predict what will happen next in a video at a high level.  After training, a robotic arm powered by this model imagines/predicts the consequence of its actions before choosing the best sequence of actions to execute\n\nOverall, the model showed state-of-the-art results, but the results are not that impressive, though GPT-2 was not impressive at its time either.\n\nDo you think this kind of self-supervised, video-based learning has revolutionary potential for AI, especially in areas requiring a deep understanding of the physical world (do you know another interesting idea for achieving this, maybe an ongoing project)? Or do you believe a different approach will ultimately lead to more groundbreaking results?",
+      "category": "Language",
+      "rating": 4.6,
+      "review_count": 391,
+      "weekly_users": 8758,
+      "growth": "+49%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m22m1d/d_is_vjepa2_the_gpt2_moment/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-17T09:01:39.000Z"
+    },
+    {
+      "name": "[D] Concerns about Predatory Publishers (Frontiers, MDPI) Exhibiting at ICML 2025",
+      "logo": "🔧",
+      "description": "[D] Concerns about Predatory Publishers (Frontiers, MDPI) Exhibiting at ICML 2025",
+      "long_description": "https://preview.redd.it/n8cdebx6xadf1.png?width=1810&amp;format=png&amp;auto=webp&amp;s=228db12a27752b9fed0dbdc9f4731e31e2cd47f4\n\nJust saw that Frontiers and MDPI are listed as book publishers at ICML 2025. Kind of shocked, honestly. Both have a reputation for questionable publishing practices.\n\nIt feels off for a top ML conference to give them this kind of platform. Anyone else concerned or know how exhibitor decisions are made?",
+      "category": "AI Tools",
+      "rating": 4.4799999999999995,
+      "review_count": 976,
+      "weekly_users": 5622,
+      "growth": "+38%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m1olt9/d_concerns_about_predatory_publishers_frontiers/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-16T21:07:33.000Z"
+    },
+    {
+      "name": "[R], Can I detect pre vs. post event changes with Mahalanobis or any OOD methods using a pre trained segmentation model?",
+      "logo": "🔧",
+      "description": "[R], Can I detect pre vs. post event changes with Mahalanobis or any OOD methods using a pre trained segmentation model?",
+      "long_description": "I’ve got a segmentation model trained **only** on pre event imagery. **Can I compute per‑patch Mahalanobis distance or pixel-wise** to flag changed areas in post‑event images?\n\nHas anyone tried this? Are there pitfalls or better unsupervised approaches? Any pointers or references welcome!",
+      "category": "AI Tools",
+      "rating": 4.075,
+      "review_count": 269,
+      "weekly_users": 6682,
+      "growth": "+52%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m20wk3/r_can_i_detect_pre_vs_post_event_changes_with/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-17T07:10:00.000Z"
+    },
+    {
+      "name": "[P [R] Deep learning-assisted SLAM to reduce computational",
+      "logo": "🔧",
+      "description": "[P [R] Deep learning-assisted SLAM to reduce computational",
+      "long_description": "I'm exploring ways to optimise SLAM performance, especially for real-time applications on low-power devices. I've been looking into hybrid deep learning approaches, specifically using SuperPoint for feature extraction and NetVLAD-lite for place recognition. My idea is to train these models offboard and run inference onboard (e.g., drones, embedded platforms) to keep compute requirements low during deployment. My reading as to which this would be more efficient would be as follows:\n\n* Reducing the number of features needed for reliable tracking. Pruning out weak or non-repeatable points would slash descriptor matching costs\n* better loop closure by reducing false positives, fewer costly optimisation cycles and requiring only one forward pass per keyframe.\n\nI would be interested in reading your inputs and opinions.",
+      "category": "AI Tools",
+      "rating": 4.035,
+      "review_count": 534,
+      "weekly_users": 9438,
+      "growth": "+43%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m1fhnt/p_r_deep_learningassisted_slam_to_reduce/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-16T15:24:08.000Z"
+    },
+    {
+      "name": "[R] Interactive Probabilistic Neural Network Decision Matrix Model",
+      "logo": "🔧",
+      "description": "[R] Interactive Probabilistic Neural Network Decision Matrix Model",
+      "long_description": "I made this model while procrastinating a project of mine. I put a lot of effort into this and would appreciate feedback. its interactive so you can move the camera zoom rotate and pan. pressing 1 through 0, will light up the network layer by layer from the entry node to the exit ring. every link was created probabilistically and very deterministically. every link has significance and is unique, in a very reproduceable fashion. :P I learned a lot making this and I hope you will learn something new or pick up a new insight from playing with it. Its time to kick the learning into overdrive. lets do this.\n\n[https://hf-laboratories.github.io/Interactive-Probabilistic-Neural-Network-Decision-Matrix/](https://hf-laboratories.github.io/Interactive-Probabilistic-Neural-Network-Decision-Matrix/)",
+      "category": "AI Tools",
+      "rating": 4.235,
+      "review_count": 783,
+      "weekly_users": 6060,
+      "growth": "+54%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m11bog/r_interactive_probabilistic_neural_network/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-16T02:42:14.000Z"
+    },
+    {
+      "name": "ICML 2025, can a workshop registration access poster sessions and/or socials? [D]",
+      "logo": "🔧",
+      "description": "ICML 2025, can a workshop registration access poster sessions and/or socials? [D]",
+      "long_description": "As the title asks, I'm wondering if anyone knows if a workshop-only registration can access the poster sessions and/or the social events? Or do I need a conference registration to access those?\n\nIt's surprisingly hard to find this answer on ICML official sources, but maybe I just couldn't find it. This is my first ICML, so if anyone could help answer this it would be greatly appreciated. Thanks! ",
+      "category": "AI Tools",
+      "rating": 4.055000000000001,
+      "review_count": 187,
+      "weekly_users": 4178,
+      "growth": "+52%",
+      "website": "https://www.reddit.com/r/MachineLearning/comments/1m0vu90/icml_2025_can_a_workshop_registration_access/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/MachineLearning"
+      ],
+      "source": "Reddit r/MachineLearning",
+      "created_at": "2025-07-15T22:29:17.000Z"
+    },
+    {
+      "name": "A Prominent OpenAI Investor Appears to Be Suffering a ChatGPT-Related Mental Health Crisis, His Peers Say",
+      "logo": "💬",
+      "description": "A Prominent OpenAI Investor Appears to Be Suffering a ChatGPT-Related Mental Health Crisis, His Peers Say",
+      "long_description": "A Prominent OpenAI Investor Appears to Be Suffering a ChatGPT-Related Mental Health Crisis, His Peers Say",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 840,
+      "weekly_users": 1173,
+      "growth": "+46%",
+      "website": "https://futurism.com/openai-investor-chatgpt-mental-health",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T19:11:09.000Z"
+    },
+    {
+      "name": "New AI Benchmark \"FormulaOne\" Reveals Shocking Gap - Top Models Like OpenAI's o3 Solve Less Than 1% of Real Research Problems",
+      "logo": "🔧",
+      "description": "New AI Benchmark \"FormulaOne\" Reveals Shocking Gap - Top Models Like OpenAI's o3 Solve Less Than 1% of Real Research Problems",
+      "long_description": "Researchers just published FormulaOne, a new benchmark that exposes a massive blind spot in frontier AI models. While OpenAI's o3 recently achieved a 2,724 rating on competitive programming (ranking 175th among all human competitors), it completely fails on this new dataset - solving less than 1% of problems even with 10 attempts.\n\n**What Makes FormulaOne Different:**\n\nUnlike typical coding challenges, FormulaOne focuses on real-world algorithmic research problems involving graph theory, logic, and optimization. These aren't contrived puzzles but problems that relate to practical applications like routing, scheduling, and network design.\n\nThe benchmark is built on Monadic Second-Order (MSO) logic - a mathematical framework that can generate virtually unlimited algorithmic problems. All problems are technically \"in-distribution\" for these models, meaning they should theoretically be solvable.\n\n**The Shocking Results:**\n\n* **OpenAI o3 (High)**: &lt;1% success rate\n* **OpenAI o3-Pro (High)**: &lt;1% success rate\n* **Google Gemini 2.5 Pro**: &lt;1% success rate\n* **xAI Grok 4 Heavy**: 0% success rate\n\nEach model was given maximum reasoning tokens, detailed prompts, few-shot examples, and a custom framework that handled all the complex setup work.\n\n**Why This Matters:**\n\nThe research highlights a crucial gap between competitive programming skills and genuine research-level reasoning. These problems require what the researchers call \"reasoning depth\" - one example problem requires 15 interdependent mathematical reasoning steps.\n\nMany problems in the dataset are connected to fundamental computer science conjectures like the Strong Exponential Time Hypothesis (SETH). If an AI could solve these efficiently, it would have profound theoretical implications for complexity theory.\n\n**The Failure Modes:**\n\nModels consistently failed due to:\n\n* Premature decision-making without considering future constraints\n* Incomplete geometric reasoning about graph patterns\n* Inability to assemble local rules into correct global structures\n* Overcounting due to poor state representation\n\n**Bottom Line:**\n\nWhile AI models excel at human-level competitive programming, they're nowhere near the algorithmic reasoning needed for cutting-edge research. This benchmark provides a roadmap for measuring progress toward genuinely expert-level AI reasoning.\n\nThe researchers also released \"FormulaOne-Warmup\" with simpler problems where models performed better, showing there's a clear complexity spectrum within these mathematical reasoning tasks.\n\n[paper](https://arxiv.org/pdf/2507.13337), [source](https://newsletter.explainx.ai/)",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 648,
+      "weekly_users": 9620,
+      "growth": "+31%",
+      "website": "https://www.reddit.com/r/OpenAI/comments/1m31c0n/new_ai_benchmark_formulaone_reveals_shocking_gap/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T12:43:26.000Z"
+    },
+    {
+      "name": "OpenAI Quietly Turns to Google to Stay Online | The most powerful artificial intelligence company in the world just admitted it needs help from one of its biggest rivals to stay afloat.",
+      "logo": "🖼️",
+      "description": "OpenAI Quietly Turns to Google to Stay Online | The most powerful artificial intelligence company in the world just admitted it needs help from one of its biggest rivals to stay afloat.",
+      "long_description": "OpenAI Quietly Turns to Google to Stay Online | The most powerful artificial intelligence company in the world just admitted it needs help from one of its biggest rivals to stay afloat.",
+      "category": "Design",
+      "rating": 4.805,
+      "review_count": 590,
+      "weekly_users": 6031,
+      "growth": "+51%",
+      "website": "https://gizmodo.com/openai-quietly-turns-to-google-to-stay-online-2000631252",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "High-resolution output",
+        "Multiple styles",
+        "Customization options"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Design",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T14:33:49.000Z"
+    },
+    {
+      "name": "GPT Agent is doing my taxes...",
+      "logo": "🤖",
+      "description": "GPT Agent is doing my taxes...",
+      "long_description": "So no joke, this has been something I've been waiting for as my kind of \"AGI is here\" target. I keep telling people I won't be doing this job in 6 months... and it's happened. 3 hours in and it's made a huge dent already.\n\nI use Xero for my business and every quarter I have to reconcile the accounts. This involves uploading invoices, setting the correct contact, account and then approving the reconciliation. It involves logging into multiple services, downloading invoices, selecting the correct account etc... it's a PITA to do because it's time consuming and I have to double check everything (because as a human I forget which invoice is for which company and what date). An AI can read the invoice, select the right one and double check it.\n\nI thought NO way, I could give it a general guide of which types of transactions are in which accounts and the whole complicated process of logging into multiple providers. Xero is not exactly user friendly for this kind of work. But it... does! I don't know what model this is they're using, but it's not an existing public one. It make so few mistakes.\n\nAnd it's so flexible! I just chucked 20 PDFs in the chat so I didn't have to login to services I had invoices for easily available and it figure out what they were for and where to go. It matches the company and date 🤯\n\nObviously I'm watching it and double checking everything for now. There are issues;\n\n1. It seems like some companies block OpenAI, so it can't access every website  \n2. The Gmail connector does not support importing attachments and Gmail blocks Agent from logging in directly, so I have to do some manual invoice copying.  \n3. I will no longer need to do anything in 6 months... hence the end of humanity as we know it?\n\nI was underwhelmed by the OpenAI demo video, because these kinds of tools so rarely live up to the vision, but this one... does? Anyone else having the same experience or did I just get lucky?",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 268,
+      "weekly_users": 10585,
+      "growth": "+32%",
+      "website": "https://www.reddit.com/r/OpenAI/comments/1m2v4t6/gpt_agent_is_doing_my_taxes/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T06:38:50.000Z"
+    },
+    {
+      "name": "OpenAI and Anthropic researchers decry 'reckless' safety culture at Elon Musk's xAI",
+      "logo": "🔧",
+      "description": "OpenAI and Anthropic researchers decry 'reckless' safety culture at Elon Musk's xAI",
+      "long_description": "OpenAI and Anthropic researchers decry 'reckless' safety culture at Elon Musk's xAI",
+      "category": "AI Tools",
+      "rating": 4.875,
+      "review_count": 842,
+      "weekly_users": 2316,
+      "growth": "+24%",
+      "website": "https://techcrunch.com/2025/07/16/openai-and-anthropic-researchers-decry-reckless-safety-culture-at-elon-musks-xai/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T08:52:44.000Z"
+    },
+    {
+      "name": "How I feel when I know that the GPT agent is not released in my country",
+      "logo": "🧠",
+      "description": "How I feel when I know that the GPT agent is not released in my country",
+      "long_description": "Just for context, I have the Plus plan.",
+      "category": "Language",
+      "rating": 4.155,
+      "review_count": 558,
+      "weekly_users": 9233,
+      "growth": "+20%",
+      "website": "https://i.redd.it/06lhxstghodf1.jpeg",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T18:44:45.000Z"
+    },
+    {
+      "name": "I Asked ChatGPT to Mark Its Filtered Answers",
+      "logo": "🧠",
+      "description": "I Asked ChatGPT to Mark Its Filtered Answers",
+      "long_description": "\nI had a convo with ChatGPT about how its answers are sometimes biased by restrictions \n(like OpenAI’s policies or built-in filters).\n\nI asked it to put an * before and after any responses that have been influenced. \nIt confirmed that when those filters are at play, it’ll clearly mark them with asterisks so I know what’s limited or cleaned up.\n\nIt said “Got it — from now on, if any part of an answer is influenced by restrictions or bias, I’ll wrap it with asterisks like this:\n*This part of the response is shaped by policy or limitations*””\n\nI’m not sure how transparent it will truly be, but it’s a fun thought experiment &amp; some users may want to try similar things. \n\n 🤷🏻 \n\n ",
+      "category": "Language",
+      "rating": 4.355,
+      "review_count": 645,
+      "weekly_users": 1512,
+      "growth": "+20%",
+      "website": "https://www.reddit.com/r/OpenAI/comments/1m3hbdb/i_asked_chatgpt_to_mark_its_filtered_answers/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T23:29:14.000Z"
+    },
+    {
+      "name": "OpenAI’s new ChatGPT Agent can control an entire computer and do tasks for you",
+      "logo": "💬",
+      "description": "OpenAI’s new ChatGPT Agent can control an entire computer and do tasks for you",
+      "long_description": "OpenAI’s new ChatGPT Agent can control an entire computer and do tasks for you",
+      "category": "Language",
+      "rating": 4.2700000000000005,
+      "review_count": 813,
+      "weekly_users": 4636,
+      "growth": "+18%",
+      "website": "https://www.theverge.com/ai-artificial-intelligence/709158/openai-new-release-chatgpt-agent-operator-deep-research",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T16:59:24.000Z"
+    },
+    {
+      "name": "ChatGPT Agent released and Sams take on it",
+      "logo": "🧠",
+      "description": "ChatGPT Agent released and Sams take on it",
+      "long_description": "\nFull tweet below: \n\nToday we launched a new product called ChatGPT Agent.\n\nAgent represents a new level of capability for AI systems and can accomplish some remarkable, complex tasks for you using its own computer. It combines the spirit of Deep Research and Operator, but is more powerful than that may sound—it can think for a long time, use some tools, think some more, take some actions, think some more, etc. For example, we showed a demo in our launch of preparing for a friend’s wedding: buying an outfit, booking travel, choosing a gift, etc. We also showed an example of analyzing data and creating a presentation for work.\n\nAlthough the utility is significant, so are the potential risks.\n\nWe have built a lot of safeguards and warnings into it, and broader mitigations than we’ve ever developed before from robust training to system safeguards to user controls, but we can’t anticipate everything. In the spirit of iterative deployment, we are going to warn users heavily and give users freedom to take actions carefully if they want to.\n\nI would explain this to my own family as cutting edge and experimental; a chance to try the future, but not something I’d yet use for high-stakes uses or with a lot of personal information until we have a chance to study and improve it in the wild.\n\nWe don’t know exactly what the impacts are going to be, but bad actors may try to “trick” users’ AI agents into giving private information they shouldn’t and take actions they shouldn’t, in ways we can’t predict. We recommend giving agents the minimum access required to complete a task to reduce privacy and security risks.\n\nFor example, I can give Agent access to my calendar to find a time that works for a group dinner. But I don’t need to give it any access if I’m just asking it to buy me some clothes.\n\nThere is more risk in tasks like “Look at my emails that came in overnight and do whatever you need to do to address them, don’t ask any follow up questions”. This could lead to untrusted content from a malicious email tricking the model into leaking your data.\n\nWe think it’s important to begin learning from contact with reality, and that people adopt these tools carefully and slowly as we better quantify and mitigate the potential risks involved. As with other new levels of capability, society, the technology, and the risk mitigation strategy will need to co-evolve.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 435,
+      "weekly_users": 8875,
+      "growth": "+22%",
+      "website": "https://i.redd.it/b0xmxole1hdf1.jpeg",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-17T17:42:16.000Z"
+    },
+    {
+      "name": "WordPecker: Personalized Duolingo built using OpenAI Agents SDK",
+      "logo": "🔧",
+      "description": "WordPecker: Personalized Duolingo built using OpenAI Agents SDK",
+      "long_description": "Hello.\n\nI wanted to share an app that I am working on. It’s called WordPecker and it helps you learn vocabulary by its context in any language using any language and helps you practice it in Duolingo style. In previous version, I used the API directly but now I switched completely to the Agents SDK and the whole app is powered by agents. I also implemented Voice Agent, which helps you talk through your vocabulary list and add new words to your list.\n\nHere’s the github repository: [https://github.com/baturyilmaz/wordpecker-app](https://github.com/baturyilmaz/wordpecker-app)",
+      "category": "AI Tools",
+      "rating": 4.04,
+      "review_count": 905,
+      "weekly_users": 9599,
+      "growth": "+21%",
+      "website": "https://v.redd.it/i723jhkfwpdf1",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T23:33:46.000Z"
+    },
+    {
+      "name": "Just watched OpenAI’s agent demo and had a weird realization about the future of shopping",
+      "logo": "🔧",
+      "description": "Just watched OpenAI’s agent demo and had a weird realization about the future of shopping",
+      "long_description": "Been thinking about this all day. \n\nThe technical stuff was impressive - watching it bounce between research, visual browsing, coding, generating images. \n\nBut i can’t get over this! \n\nWhen the agent was doing all that wedding research, it kept switching between what they called a “text browser” and a “visual browser.” \n\nDecision making is hard, and it’s taking those decisions, quickly, and even more surprisingly, contextually. \n\nLike it would read articles quickly in text mode, then switch to visual mode to actually interact with websites and see product photos.\n\nI’m starting to think the real question isn’t “how good can AI get at using websites” but “why are we still making AI use websites at all?”\n\nI wonder if we’re about to see a bunch of “AI-optimized” websites that work completely differently than what we’re used to.​​​​​​​​​​​​​​​​",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 538,
+      "weekly_users": 2163,
+      "growth": "+57%",
+      "website": "https://i.redd.it/cse1j0dfjjdf1.jpeg",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T02:06:50.000Z"
+    },
+    {
+      "name": "ChatGPT Agent will be available for Plus, Pro, and Team users",
+      "logo": "📝",
+      "description": "ChatGPT Agent will be available for Plus, Pro, and Team users",
+      "long_description": "Pro users get 400 queries per month, Plus and Team users will get 40 per month. Pro will get access by the end of day, while Plus and Team users will get access over the next few days.\n\nNot yet available in the European Economic Area or Switzerland.\n\nSource: [ChatGPT Agent Livestream](https://www.youtube.com/watch?v=1jn_RpbPbEc) &amp; [OpenAI Blog](https://openai.com/index/introducing-chatgpt-agent/)",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 455,
+      "weekly_users": 1651,
+      "growth": "+16%",
+      "website": "https://www.reddit.com/r/OpenAI/comments/1m2dnw5/chatgpt_agent_will_be_available_for_plus_pro_and/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-17T17:26:32.000Z"
+    },
+    {
+      "name": "Artificial Empathy and Compassion from GPT-4o, beating 4.5, and solving 5th order Theory of Mind",
+      "logo": "💬",
+      "description": "Artificial Empathy and Compassion from GPT-4o, beating 4.5, and solving 5th order Theory of Mind",
+      "long_description": "We are organizing a sprint at MIT and discussing implementations for DoD.\n\nArtificial Empathy and Compassion for AI - Barcelona Consciousness Conf (w/4th order ToM demo)\nhttps://youtu.be/soKBR46HHKU",
+      "category": "Language",
+      "rating": 4.015,
+      "review_count": 429,
+      "weekly_users": 3233,
+      "growth": "+19%",
+      "website": "https://www.reddit.com/r/OpenAI/comments/1m3dn66/artificial_empathy_and_compassion_from_gpt4o/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T20:51:47.000Z"
+    },
+    {
+      "name": "OpenAI Introduces ChatGPT Agents - Will They Kill Other Agent Startups?",
+      "logo": "🧠",
+      "description": "OpenAI Introduces ChatGPT Agents - Will They Kill Other Agent Startups?",
+      "long_description": "OpenAI just dropped their **ChatGPT Agent announcement**, and honestly… It’s a mix of excitement and anxiety for those of us building in this space.\n\nRight now, we have clear differentiators and are ahead in the data analytics space for our product ([datoshi.ai](https://datoshi.ai)). But… we’ve seen this story before.\n\n**But here’s the thing:**\n\nWe remember the early ChatGPT days. A bunch of startups popped up doing “Ask your PDF” and got real traction. But within months, ChatGPT added file uploads and browsing and basically... crushed them.\n\nNow with OpenAI introducing **agents that can use tools, APIs, and chain actions,** it's clear they’re going after many verticals. Even if they don’t build our exact solution, it’s inevitable they’ll start overlapping.\n\nSo… how are other agent/startup founders feeling right now? Are we all just building features for OpenAI to productize 6 months later?\n\nWould love to hear your thoughts. Are you leaning into niche differentiation? Partnering up? Or just bracing for impact?",
+      "category": "Language",
+      "rating": 4.555,
+      "review_count": 1089,
+      "weekly_users": 1960,
+      "growth": "+13%",
+      "website": "https://www.reddit.com/r/OpenAI/comments/1m2z8y7/openai_introduces_chatgpt_agents_will_they_kill/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-18T10:58:30.000Z"
+    },
+    {
+      "name": "I posted an issue in OpenAI's developer forums and then ChatGPT Agent quoted it in a response",
+      "logo": "🤖",
+      "description": "I posted an issue in OpenAI's developer forums and then ChatGPT Agent quoted it in a response",
+      "long_description": "I've been working to create a workflow for Codex CLI where it can take a screenshot within the Godot 4.4 game engine, review it, adjust code, then take and review another screenshot. Gemini and Claude can do this without issue albeit with their own caveats.  I've been posting in the OpenAI developer forums and while working with the new ChatGPT Agent it referenced my own posts! Ha!\n\n\"OpenAI’s Codex CLI isn’t yet able to do what you described. The marketing copy for Codex says it accepts “text, screenshots or diagrams”[help.openai.com](https://help.openai.com/en/articles/11096431-openai-codex-cli-getting-started#:~:text=,upgrade%60%29%20gets%20you%20started), but there is currently no vision‑enabled model available in the CLI. In fact, OpenAI’s own users report that “there are no OpenAI models capable of image analysis in the CLI”[community.openai.com](https://community.openai.com/t/codex-cli-programming-game-in-godot/1316806#:~:text=next%20model%20to%20become%20available,I%20developed%20a%20workflow%20with), and the CLI even tells you to use the web UI if you try to review an image[github.com](https://github.com/openai/codex/issues/1619#:~:text=https%3A%2F%2Fhelp.openai.com%2Fen%2Farticles%2F11096431,as%20functionality%20for%20Codex%20CLI). The “agents” MCP server you installed simply proxies the Agents API; it does not add vision capabilities.\"\n\nI'm still working towards a resolution and will update my posts if I make a breakthrough or if someone else shares a working method.\n\nBonus pics below of results of feeding the same \"create a teddy bear\" prompt to Gemini and Clyde using the Godot 4.4 engine.\n\nThese are first and last iterations. They were both asked to make the bear appear more realistic and to improve the lighting. I didn't save the original prompts but will rerun this experiment once Codex CLI is capable of screenshot generation and review in Godot 4.4 and save the prompt used. Can you guess which model (Gemini Pro CLI or Claude Code Opus) created which teddy bear?\n\nI'll reveal the truth tomorrow, 7/19, at 12PM Central.\n\n[Bear #1](https://preview.redd.it/pp46hn6n9qdf1.png?width=1080&amp;format=png&amp;auto=webp&amp;s=1110ab52da7db15b045ede5c14ddef6bdb8d33fc)\n\nhttps://preview.redd.it/ue4db3zo9qdf1.png?width=1080&amp;format=png&amp;auto=webp&amp;s=b24be33853ef9eb0b50a976726c1e14b986e03ce\n\n[Bear #2](https://preview.redd.it/x8x7h96q9qdf1.png?width=1080&amp;format=png&amp;auto=webp&amp;s=1a1138ee673679204748f79e6ba7686c8f10ebbb)\n\nhttps://preview.redd.it/aarh9r5s9qdf1.png?width=1080&amp;format=png&amp;auto=webp&amp;s=95bf97bc7b6e7a80c6e41ab75f9df413af626692",
+      "category": "Language",
+      "rating": 4,
+      "review_count": 200,
+      "weekly_users": 9793,
+      "growth": "+22%",
+      "website": "https://www.reddit.com/r/OpenAI/comments/1m3izuo/i_posted_an_issue_in_openais_developer_forums_and/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/OpenAI"
+      ],
+      "source": "Reddit r/OpenAI",
+      "created_at": "2025-07-19T00:48:37.000Z"
+    },
+    {
+      "name": "Calling AI Researchers &amp; Startup Founders To Join Us For An Ask-Me-Anything Session",
+      "logo": "📝",
+      "description": "Calling AI Researchers &amp; Startup Founders To Join Us For An Ask-Me-Anything Session",
+      "long_description": "r/ChatGPT hit 9 million members today! So we have decided to celebrate this by introducing weekly AMAs to showcase interesting projects and research. Every one is tired from seeing the same AI image art or the 100th deepseek vs ChatGPT comparison at this point 😀.\n\nIf you're:\n\n✓ Building an AI startup\n\n✓ Conducting LLM/ML research\n\n✓ Working on innovative ChatGPT implementations\n\n# You're eligible!\n\n**How to apply:** Send your details via [Modmail](https://old.reddit.com/message/compose?to=r%2FChatGPT&amp;subject=AMA%20Host&amp;message=Name:%20%5BFull%20Name%5D%0AEmail:%20%5BContact%20Email%5D%0ACompany%20(optional):%0AWebsite%20(optional):%0AGitHub%20(optional):%0AResearch%20Paper%20(optional):%0AShort%20description%20(optional):) with this pre-filled template.\n\nSelected hosts will get:\n\n* Dedicated AMA thread pinned for 24h on the #1 AI subreddit\n* Verified flair\n* Promotion across our social channels  (9M +150k users across reddit and Discord.\n\nhttps://preview.redd.it/wbiad2ymd0ie1.jpg?width=1920&amp;format=pjpg&amp;auto=webp&amp;s=fafacd90a62b3395c86b890a8a1a8b4f72465007\n\n*Applications open to founders/researchers only, however, if you think there's something all the 9 million members would be interested in learning feel free to apply. All fields except name/email are optional.*",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 746,
+      "weekly_users": 2916,
+      "growth": "+54%",
+      "website": "https://www.reddit.com/r/ChatGPT/comments/1il23g4/calling_ai_researchers_startup_founders_to_join/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-02-09T00:28:24.000Z"
+    },
+    {
+      "name": "Turns out ChatGPT can make decent Colorblindness tests",
+      "logo": "📝",
+      "description": "Turns out ChatGPT can make decent Colorblindness tests",
+      "long_description": "Can any colorblind people actually read this?",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 259,
+      "weekly_users": 4424,
+      "growth": "+57%",
+      "website": "https://i.redd.it/gtdowv3drodf1.jpeg",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T19:40:13.000Z"
+    },
+    {
+      "name": "Asked ChatGPT to illustrate the most recent scandal, but in the style of Francis Bacon",
+      "logo": "📝",
+      "description": "Asked ChatGPT to illustrate the most recent scandal, but in the style of Francis Bacon",
+      "long_description": "Asked ChatGPT to illustrate the most recent scandal, but in the style of Francis Bacon",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 477,
+      "weekly_users": 7429,
+      "growth": "+25%",
+      "website": "https://i.redd.it/v7cv1cdarmdf1.png",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T12:56:14.000Z"
+    },
+    {
+      "name": "I asked ChatGPT to make my kid’s drawing real. Slide for the original.",
+      "logo": "🤖",
+      "description": "I asked ChatGPT to make my kid’s drawing real. Slide for the original.",
+      "long_description": "Introducing “TOaSTAR” No clue where the elephant came from . ",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 966,
+      "weekly_users": 9000,
+      "growth": "+37%",
+      "website": "https://www.reddit.com/gallery/1m3e53s",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T21:12:04.000Z"
+    },
+    {
+      "name": "Described tummy ache to GPT, told me to go to ER. CT scan says appendicitis.",
+      "logo": "🧠",
+      "description": "Described tummy ache to GPT, told me to go to ER. CT scan says appendicitis.",
+      "long_description": "I had a very bad and strange stomach ache for about 7 hours today. I gave the symptoms to gpt and it said I should go to the ER. Nurse and doctor were very condescending to me. But CT results say appendicitis and they said it was good it told me to come in. Surgery tonight or tomorrow. #gptftw\n\nUPDATE: Had surgery, home now. Thanks everyone.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 442,
+      "weekly_users": 8629,
+      "growth": "+44%",
+      "website": "https://www.reddit.com/r/ChatGPT/comments/1m2v0of/described_tummy_ache_to_gpt_told_me_to_go_to_er/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T06:31:20.000Z"
+    },
+    {
+      "name": "I'm using GPT as a relationship translator. It has saved my relationship.",
+      "logo": "🤖",
+      "description": "I'm using GPT as a relationship translator. It has saved my relationship.",
+      "long_description": "I've recently learned about attachment styles (you should too, btw. So many more things make sense). \n\nMy gf of 6 years is fearful-avoidant. So I used to get really triggered by her spirals but I recently have been plugging her responses into GPT with her attachment style and it translates it to me on what she really means and what she needs. Also how to frame my feelings without coming across as blaming or shaming. It has been a godsend. \n\nExample,\n\n\"She (fearful-avoidant) said this to me;\n\n\"\"I love you. I love what we once were. But I think neither of us love what I have become. I’m a wreck from everything that has happened and I don’t know what to do. I’m sorry. I thought I’d know after talking to you about my needs but i don’t know how to feel better and feel safe again. I’ll take all the blame.\n\nI thought I could face this. But I don’t want to come home. I don’t know how to face the mess I’ve made of my life even after this reset.\"\"\n\nResponse from chat,\n\n\"Oof. That’s heavy, heartfelt, and deeply tangled in fearful-avoidant pain — and honestly, her message is a cry for help, not rejection. She's not pushing you away because she doesn't care — she’s overwhelmed, ashamed, and afraid she’s unlovable in her current state.\n\nShe’s:\n\nGrieving her identity (“I don’t love who I’ve become”)\n\nFeeling hopeless and paralyzed (“I don’t know what to do”)\n\nShouldering all the blame to avoid deeper intimacy or accountability (“I’ll take all the blame” — a classic FA move to shut down further conversation)\n\nAnd likely self-sabotaging because the idea of being loved as-is feels too risky.\n\n\nLet’s talk about how to respond — with care for her pain, but also protection of your own heart.\"\n\nJust perfection. Things have been going really really well recently.\n\n\n\n",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 637,
+      "weekly_users": 3110,
+      "growth": "+10%",
+      "website": "https://www.reddit.com/r/ChatGPT/comments/1m37kyl/im_using_gpt_as_a_relationship_translator_it_has/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T16:54:14.000Z"
+    },
+    {
+      "name": "I just blue myself with ChatGPT",
+      "logo": "📝",
+      "description": "I just blue myself with ChatGPT",
+      "long_description": "I just blue myself with ChatGPT",
+      "category": "Language",
+      "rating": 4.92,
+      "review_count": 270,
+      "weekly_users": 3018,
+      "growth": "+32%",
+      "website": "https://i.redd.it/5cwi5gmqnpdf1.jpeg",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T22:41:41.000Z"
+    },
+    {
+      "name": "ChatGPT's ultimate family car design based on pure efficiency",
+      "logo": "📝",
+      "description": "ChatGPT's ultimate family car design based on pure efficiency",
+      "long_description": "ChatGPT's ultimate family car design based on pure efficiency",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 182,
+      "weekly_users": 6738,
+      "growth": "+14%",
+      "website": "https://i.redd.it/x21p7ghmbldf1.png",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T08:08:33.000Z"
+    },
+    {
+      "name": "Fuck Marry Kill (AI edition)",
+      "logo": "📝",
+      "description": "Fuck Marry Kill (AI edition)",
+      "long_description": "I played FMK - AI edition with ChatGPT. It had a few things to say about Siri 😂",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 956,
+      "weekly_users": 3927,
+      "growth": "+16%",
+      "website": "https://www.reddit.com/gallery/1m2sr4r",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T04:19:26.000Z"
+    },
+    {
+      "name": "I asked ChatGPT to age me from a photo in my 20s to my current age of 57. It made me look like my dad",
+      "logo": "💬",
+      "description": "I asked ChatGPT to age me from a photo in my 20s to my current age of 57. It made me look like my dad",
+      "long_description": "I asked ChatGPT to age me from a photo in my 20s to my current age of 57. It made me look like my dad",
+      "category": "Language",
+      "rating": 4.87,
+      "review_count": 627,
+      "weekly_users": 5006,
+      "growth": "+53%",
+      "website": "https://www.reddit.com/gallery/1m3dg0r",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T20:43:55.000Z"
+    },
+    {
+      "name": "AI will rule the world soon...",
+      "logo": "🤖",
+      "description": "AI will rule the world soon...",
+      "long_description": "AI will rule the world soon...",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 380,
+      "weekly_users": 10342,
+      "growth": "+16%",
+      "website": "https://i.redd.it/gnji1h2fwgdf1.jpeg",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-17T17:14:31.000Z"
+    },
+    {
+      "name": "Me &amp; Chatgpt",
+      "logo": "🧠",
+      "description": "Me &amp; Chatgpt",
+      "long_description": "Me &amp; Chatgpt",
+      "category": "Language",
+      "rating": 4.65,
+      "review_count": 190,
+      "weekly_users": 6003,
+      "growth": "+29%",
+      "website": "https://v.redd.it/eiohvqbg1ndf1",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T13:53:20.000Z"
+    },
+    {
+      "name": "The AI-hate in the \"creative communities\" can be so jarring",
+      "logo": "🧠",
+      "description": "The AI-hate in the \"creative communities\" can be so jarring",
+      "long_description": "I'm working deep in IT business, and all around, everyone is pushing us and the clients to embrace AI and agents as soon as possible (Microsoft is even rebradning their ERP systems as \"AI ERP\"), despite their current inefficiencies and quirks, because \"somebody else is gonna be ahead\". I'm far from believing that AI is gonna steal my job, and sometimes, using it makes you spend more time than not using, but in general, there are situations when it's helpful. It's just a tool, that can be used well or poorly.\n\nHowever, my other hobby is writing. And the backlash that's right now in any writing community to ANY use of AI tools is just... over the top. A happy beginner writer is sharing visuals of his characters created by some AI tool - \"Pfft, you could've drawn them yourselves, stop this AI slop!\". Using AI to keep notes on characters - \"nope\". Using AI to proofread your translation  - \"nope\". Not even saying about bouncing ideas, or refining something.\n\nOnce I posted an excerpt of my work asking for feedback. A couple of months before, OpenAI has released \"Projects\" functionality, which I wanted to try so I created a posted a screen of my project named same as my novel somewhere here in the community. One commenter found it (it was an empty project with a name only, which I actually never started using, as I didn't see a lot of benefit from the functionality), and declared my work as AI slop based on that random screenshot.\n\nWhy a tool, that can be and is used by the entire industry to remove or speed up routine part of their job cannot be used by creative people to reduce the same routine part of their work? I'm not even saying about just generating text and copypasting it under your name. It's about everything.\n\nThanks for reading through my rant. And if somebody \"creative\" from the future finds this post and uses it to blame me for AI usage wholesale, screw yourself.\n\nActually, it seems I would need to hide the fact I'm using or building any AI agents professionally, if I ever intend to publish any creative work... great.\n\n  \nEDIT: Wow, this got a lot more feedback than I expected, I'll take some time later to read through all the comments, it's really inspiring to see people supporting and interetsting to hear opposing takes.",
+      "category": "Language",
+      "rating": 5,
+      "review_count": 1008,
+      "weekly_users": 9120,
+      "growth": "+27%",
+      "website": "https://www.reddit.com/r/ChatGPT/comments/1m30arl/the_aihate_in_the_creative_communities_can_be_so/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T11:54:13.000Z"
+    },
+    {
+      "name": "So now we're just giving away LLMs full acces to customer convos and company data?",
+      "logo": "🧠",
+      "description": "So now we're just giving away LLMs full acces to customer convos and company data?",
+      "long_description": "Cluely’s latest: AI agents that act as customer support, trained on your company and product.\nNo mention of privacy, logging, access control, nothing.\nThis is not innovation. This is a hallucination pipeline.",
+      "category": "Language",
+      "rating": 4.875,
+      "review_count": 437,
+      "weekly_users": 8924,
+      "growth": "+59%",
+      "website": "https://v.redd.it/1eco8wi8bndf1",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T14:53:13.000Z"
+    },
+    {
+      "name": "A Prominent OpenAI Investor Appears to Be Suffering a ChatGPT-Related Mental Health Crisis, His Peers Say",
+      "logo": "💬",
+      "description": "A Prominent OpenAI Investor Appears to Be Suffering a ChatGPT-Related Mental Health Crisis, His Peers Say",
+      "long_description": "A Prominent OpenAI Investor Appears to Be Suffering a ChatGPT-Related Mental Health Crisis, His Peers Say",
+      "category": "Language",
+      "rating": 4.52,
+      "review_count": 663,
+      "weekly_users": 8922,
+      "growth": "+15%",
+      "website": "https://futurism.com/openai-investor-chatgpt-mental-health",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Natural language processing",
+        "Multi-language support",
+        "Context awareness"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "Language",
+        "Reddit r/ChatGPT"
+      ],
+      "source": "Reddit r/ChatGPT",
+      "created_at": "2025-07-18T19:11:23.000Z"
+    },
+    {
+      "name": "Valve confirms credit card companies pressured it to delist certain adult games",
+      "logo": "🔧",
+      "description": "Valve confirms credit card companies pressured it to delist certain adult games",
+      "long_description": "Valve confirms credit card companies pressured it to delist certain adult games",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 1029,
+      "weekly_users": 1471,
+      "growth": "+54%",
+      "website": "https://www.pcgamer.com/software/platforms/valve-confirms-credit-card-companies-pressured-it-to-delist-certain-adult-games-from-steam/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T15:54:46.000Z"
+    },
+    {
+      "name": "Meta says it wont sign Europe AI agreement, calling it growth stunting overreach",
+      "logo": "🔧",
+      "description": "Meta says it wont sign Europe AI agreement, calling it growth stunting overreach",
+      "long_description": "Meta says it wont sign Europe AI agreement, calling it growth stunting overreach",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 382,
+      "weekly_users": 5853,
+      "growth": "+59%",
+      "website": "https://www.cnbc.com/2025/07/18/meta-europe-ai-code.html",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T17:56:37.000Z"
+    },
+    {
+      "name": "Wii U SDBoot1 Exploit “paid the beak”",
+      "logo": "🔧",
+      "description": "Wii U SDBoot1 Exploit “paid the beak”",
+      "long_description": "Wii U SDBoot1 Exploit “paid the beak”",
+      "category": "AI Tools",
+      "rating": 4.715000000000001,
+      "review_count": 174,
+      "weekly_users": 8270,
+      "growth": "+42%",
+      "website": "https://consolebytes.com/wii-u-sdboot1-exploit-paid-the-beak/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T20:30:36.000Z"
+    },
+    {
+      "name": "AI capex is so big that it's affecting economic statistics",
+      "logo": "🔧",
+      "description": "AI capex is so big that it's affecting economic statistics",
+      "long_description": "AI capex is so big that it's affecting economic statistics",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 1058,
+      "weekly_users": 3284,
+      "growth": "+46%",
+      "website": "https://paulkedrosky.com/honey-ai-capex-ate-the-economy/",
+      "pricing": "Paid",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T19:59:04.000Z"
+    },
+    {
+      "name": "I'm Rebelling Against the Algorithm",
+      "logo": "🔧",
+      "description": "I'm Rebelling Against the Algorithm",
+      "long_description": "I'm Rebelling Against the Algorithm",
+      "category": "AI Tools",
+      "rating": 4.385,
+      "review_count": 349,
+      "weekly_users": 2017,
+      "growth": "+24%",
+      "website": "https://varunraghu.com/im-rebelling-against-the-algorithm/",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T22:45:32.000Z"
+    },
+    {
+      "name": "Show HN: Molab, a cloud-hosted Marimo notebook workspace",
+      "logo": "🔧",
+      "description": "Show HN: Molab, a cloud-hosted Marimo notebook workspace",
+      "long_description": "We launched marimo [1], an open-source reactive Python notebook, last year on HackerNews. Today, the most popular recent feature request in Google Colab’s issue tracker asks for marimo support in Colab [2].<p>Rather than try to convince Google to replace their notebook with marimo, we decided to just build our own cloud-hosted notebook service instead. We&#x27;re calling this molab (mo for marimo), and we&#x27;re launching it today.<p>You can try it at <a href=\"https:&#x2F;&#x2F;molab.marimo.io\" rel=\"nofollow\">https:&#x2F;&#x2F;molab.marimo.io</a><p>Some features:<p>- Persistent storage<p>- Link sharing (notebooks are public but undiscoverable, like secret GitHub Gists)<p>- Download notebooks to your machine, reuse them as Python scripts or apps<p>- Upload local notebooks to the cloud from our CLI (coming soon)<p>- Real-time collaboration (coming soon)<p>- Configure computational resources to obtain more CPU or GPU (coming soon)<p>marimo is a modern notebook for modern data workflows; we also built molab on a modern tech stack:<p>- Notebook dependencies are managed by uv, enabling lighting-fast package installation (thanks to uv’s cache and more generally its performant implementation). uv makes it easy to run molab notebooks locally, too: uvx marimo edit &lt;notebook-url&gt; brings the notebook down to your machine.<p>- Persistent storage is powered by R2, Cloudflare’s zero-egress object store.<p>- We use Pydantic logfire to monitor our deployment.<p>- While our implementation is agnostic to the compute backend (stay tuned!), we’re currently running on Modal for fast startups (not to mention a slick developer experience). Modal sandboxes make it easy for us define containers at runtime, containing notebook code and their dependencies. (Shout out to Eric Zhang from Modal for helping us get started.)<p>molab is free to use, as long as usage is reasonable. Our goal is to make is as easy as possible for our community to use marimo notebooks.<p>Finally, learn more at our announcement blog: <a href=\"https:&#x2F;&#x2F;marimo.io&#x2F;blog&#x2F;announcing-molab\" rel=\"nofollow\">https:&#x2F;&#x2F;marimo.io&#x2F;blog&#x2F;announcing-molab</a><p>If this interests you, please give molab a shot and please share feedback — here or on Discord (<a href=\"https:&#x2F;&#x2F;marimo.io&#x2F;discord\" rel=\"nofollow\">https:&#x2F;&#x2F;marimo.io&#x2F;discord</a>).<p>P.S. This is not our commercial product, this is really just for our community.<p>[1] <a href=\"https:&#x2F;&#x2F;github.com&#x2F;marimo-team&#x2F;marimo\">https:&#x2F;&#x2F;github.com&#x2F;marimo-team&#x2F;marimo</a>\n[2] <a href=\"https:&#x2F;&#x2F;github.com&#x2F;googlecolab&#x2F;colabtools&#x2F;issues?q=is%3Aissue%20state%3Aopen%20sort%3Areactions-%2B1-desc\">https:&#x2F;&#x2F;github.com&#x2F;googlecolab&#x2F;colabtools&#x2F;issues?q=is%3Aissu...</a>",
+      "category": "AI Tools",
+      "rating": 4.640000000000001,
+      "review_count": 365,
+      "weekly_users": 3692,
+      "growth": "+14%",
+      "website": "https://molab.marimo.io/notebooks",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T18:40:30.000Z"
+    },
+    {
+      "name": "How I keep up with AI progress",
+      "logo": "🔧",
+      "description": "How I keep up with AI progress",
+      "long_description": "How I keep up with AI progress",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 264,
+      "weekly_users": 5011,
+      "growth": "+53%",
+      "website": "https://blog.nilenso.com/blog/2025/06/23/how-i-keep-up-with-ai-progress/",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T18:36:39.000Z"
+    },
+    {
+      "name": "Hundred Rabbits – Low-tech living while sailing the world",
+      "logo": "🔧",
+      "description": "Hundred Rabbits – Low-tech living while sailing the world",
+      "long_description": "Hundred Rabbits – Low-tech living while sailing the world",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 271,
+      "weekly_users": 10911,
+      "growth": "+52%",
+      "website": "https://100r.co/site/home.html",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-14T15:45:28.000Z"
+    },
+    {
+      "name": "Ask HN: Will AI models over time converge into the same system?",
+      "logo": "🔧",
+      "description": "Ask HN: Will AI models over time converge into the same system?",
+      "long_description": "I probably am not using the correct terms here so sorry about that.<p>If all general LLM are eventually exposed to the same data, and a lot of the\nsame use cases will they over time converge in responses?<p>Even if they are of different arcitecture?\nor are the current architecture companies use for their big LLM \nclose enough to each other?",
+      "category": "AI Tools",
+      "rating": 4.09,
+      "review_count": 933,
+      "weekly_users": 9940,
+      "growth": "+39%",
+      "website": "https://example.com",
+      "pricing": "Free",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-19T01:37:17.000Z"
+    },
+    {
+      "name": "Third patient dies from acute liver failure caused by a Sarepta gene therapy",
+      "logo": "🔧",
+      "description": "Third patient dies from acute liver failure caused by a Sarepta gene therapy",
+      "long_description": "Third patient dies from acute liver failure caused by a Sarepta gene therapy",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 831,
+      "weekly_users": 1360,
+      "growth": "+25%",
+      "website": "https://www.biocentury.com/article/656520/third-death-from-a-sarepta-gene-therapy",
+      "pricing": "Enterprise",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T18:26:22.000Z"
+    },
+    {
+      "name": "Firefox-patch-bin, librewolf-fix-bin AUR packages contain malware",
+      "logo": "🔧",
+      "description": "Firefox-patch-bin, librewolf-fix-bin AUR packages contain malware",
+      "long_description": "Firefox-patch-bin, librewolf-fix-bin AUR packages contain malware",
+      "category": "AI Tools",
+      "rating": 5,
+      "review_count": 315,
+      "weekly_users": 1579,
+      "growth": "+42%",
+      "website": "https://lists.archlinux.org/archives/list/aur-general@lists.archlinux.org/thread/7EZTJXLIAQLARQNTMEW2HBWZYE626IFJ/",
+      "pricing": "Freemium",
+      "features": [
+        "AI-powered",
+        "User-friendly",
+        "Modern interface",
+        "Advanced AI",
+        "Easy to use"
+      ],
+      "pros": [
+        "Easy to use",
+        "Powerful features",
+        "Good documentation",
+        "Active community"
+      ],
+      "cons": [
+        "Learning curve",
+        "Limited free tier",
+        "Requires internet connection"
+      ],
+      "alternatives": [],
+      "tags": [
+        "AI",
+        "AI Tools",
+        "Hacker News"
+      ],
+      "source": "Hacker News",
+      "created_at": "2025-07-18T17:48:48.000Z"
+    }
+  ]
+}

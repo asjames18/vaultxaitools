@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Claude",
+    "blurb": "Anthropic's AI assistant for conversation and analysis",
+    "category": "Language",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://claude.ai",
+    "logo": "🧠"
+  },
+  {
+    "name": "Perplexity",
+    "blurb": "AI-powered search engine with conversational interface",
+    "category": "Language",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://perplexity.ai",
+    "logo": "🔍"
+  },
+  {
+    "name": "Cursor",
+    "blurb": "AI-powered code editor with advanced completion",
+    "category": "Development",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://cursor.sh",
+    "logo": "⌨️"
+  },
+  {
+    "name": "Stable Diffusion",
+    "blurb": "Open-source AI image generation model",
+    "category": "Design",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://stability.ai",
+    "logo": "🎭"
+  },
+  {
+    "name": "Fireflies",
+    "blurb": "AI meeting assistant for transcription and insights",
+    "category": "Productivity",
+    "priceTier": "Freemium",
+    "affiliateUrl": "https://fireflies.ai",
+    "logo": "🔥"
+  }
+]
