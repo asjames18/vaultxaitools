@@ -69,7 +69,7 @@ export function TrustBadge({ type, toolName }: TrustBadgeProps) {
     'editors-pick': { label: "Editor's Pick", color: "bg-green-500/20 text-green-100 border-green-500/30" },
     'community-favorite': { label: "Community Favorite", color: "bg-purple-500/20 text-purple-100 border-purple-500/30" },
     'expert-tested': { label: "Expert Tested", color: "bg-blue-500/20 text-blue-100 border-blue-500/30" },
-    'top-rated': { label: "Top Rated", color: "bg-yellow-500/20 text-yellow-100 border-yellow-500/30" }
+    'top-rated': { label: "Top Rated", color: "bg-yellow-500/20 text-yellow-50 border-yellow-500/30" }
   };
   
   const config = badgeConfig[type];
