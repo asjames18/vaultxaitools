@@ -27,11 +27,40 @@ export default function UserManagement({ onClose }: UserManagementProps) {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<'all' | 'confirmed' | 'unconfirmed'>('all');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   
   const supabase = createClient();
 
+  // Check authentication first
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          setIsAuthenticated(true);
+          // Only fetch users after authentication is confirmed
+          fetchUsers();
+        } else {
+          setIsAuthenticated(false);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        setIsAuthenticated(false);
+        setLoading(false);
+      }
+    };
+    
+    checkAuth();
+  }, []);
+
   // Fetch users from Supabase
   const fetchUsers = async () => {
+    if (!isAuthenticated) {
+      console.log('Not authenticated, skipping user fetch');
+      return;
+    }
+    
     setLoading(true);
     try {
       console.log('Fetching users from API...');
@@ -127,9 +156,7 @@ export default function UserManagement({ onClose }: UserManagementProps) {
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+
 
   // Filter users based on search and status
   const filteredUsers = (users || []).filter(user => {
