@@ -45,6 +45,11 @@ export default function SignUpPage() {
       console.log('Email:', email);
       console.log('Redirect URL:', `${window.location.origin}/auth/callback`);
       
+      // Test Supabase connection first
+      console.log('Testing Supabase connection...');
+      const { data: testData, error: testError } = await supabase.auth.getSession();
+      console.log('Connection test:', { testData, testError });
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -54,6 +59,17 @@ export default function SignUpPage() {
       });
 
       console.log('Sign up response:', { data, error });
+      
+      // Log the full response for debugging
+      if (error) {
+        console.error('Full error object:', JSON.stringify(error, null, 2));
+        console.error('Error details:', {
+          name: error.name,
+          message: error.message,
+          status: error.status,
+          details: error.details
+        });
+      }
 
       if (error) {
         console.error('Sign up error:', error);
