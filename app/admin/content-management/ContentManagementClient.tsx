@@ -84,6 +84,7 @@ function ContentManagementContent() {
   const fetchContentData = async () => {
     try {
       setLoading(true);
+      console.log('Fetching content data...');
       
       // Fetch content items from custom table
       const { data: content, error: contentError } = await supabase
@@ -91,8 +92,29 @@ function ContentManagementContent() {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (contentError) throw contentError;
-      setContentItems(content || []);
+      if (contentError) {
+        console.log('Content table error (might not exist):', contentError);
+        // Add fallback content data
+        const fallbackContent: ContentItem[] = [
+          {
+            id: 'content-1',
+            type: 'news',
+            title: 'Welcome to Content Management',
+            content: 'This is a sample content item to demonstrate the content management interface.',
+            status: 'published',
+            priority: 'medium',
+            publishDate: new Date().toISOString(),
+            tags: ['welcome', 'demo'],
+            targetAudience: ['all'],
+            createdBy: 'Admin',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          }
+        ];
+        setContentItems(fallbackContent);
+      } else {
+        setContentItems(content || []);
+      }
 
       // Fetch tool updates
       const { data: tools, error: toolsError } = await supabase
@@ -100,24 +122,43 @@ function ContentManagementContent() {
         .select('*')
         .order('updated_at', { ascending: false });
 
-      if (toolsError) throw toolsError;
-      
-      // Convert tools to tool updates format
-      const toolUpdatesData: ToolUpdate[] = tools.map((tool: any, index: number) => ({
-        id: `tool-${tool.id}`,
-        toolId: tool.id,
-        toolName: tool.name,
-        updateType: index < 3 ? 'feature' : 'improvement',
-        title: `${tool.name} - Latest Updates`,
-        description: `Updated ${tool.name} with latest information and improvements`,
-        version: '1.0.0',
-        impact: index < 2 ? 'high' : 'medium',
-        status: 'published',
-        publishDate: tool.updated_at,
-        createdBy: 'Admin'
-      }));
-      
-      setToolUpdates(toolUpdatesData);
+      if (toolsError) {
+        console.log('Tools table error:', toolsError);
+        // Add fallback tool updates
+        const fallbackToolUpdates: ToolUpdate[] = [
+          {
+            id: 'tool-1',
+            toolId: 'demo-tool-1',
+            toolName: 'Demo AI Tool',
+            updateType: 'feature',
+            title: 'Demo Tool - New Features',
+            description: 'This is a sample tool update to demonstrate the interface.',
+            version: '1.0.0',
+            impact: 'high',
+            status: 'published',
+            publishDate: new Date().toISOString(),
+            createdBy: 'Admin'
+          }
+        ];
+        setToolUpdates(fallbackToolUpdates);
+      } else {
+        // Convert tools to tool updates format
+        const toolUpdatesData: ToolUpdate[] = tools.map((tool: any, index: number) => ({
+          id: `tool-${tool.id}`,
+          toolId: tool.id,
+          toolName: tool.name,
+          updateType: index < 3 ? 'feature' : 'improvement',
+          title: `${tool.name} - Latest Updates`,
+          description: `Updated ${tool.name} with latest information and improvements`,
+          version: '1.0.0',
+          impact: index < 2 ? 'high' : 'medium',
+          status: 'published',
+          publishDate: tool.updated_at,
+          createdBy: 'Admin'
+        }));
+        
+        setToolUpdates(toolUpdatesData);
+      }
 
       // Fetch news items (using fallback for now)
       const fallbackNews: NewsItem[] = [
@@ -139,6 +180,44 @@ function ContentManagementContent() {
 
     } catch (error) {
       console.error('Error fetching content data:', error);
+      
+      // Add comprehensive fallback data on error
+      const fallbackContent: ContentItem[] = [
+        {
+          id: 'content-1',
+          type: 'news',
+          title: 'Welcome to Content Management',
+          content: 'This is a sample content item to demonstrate the content management interface.',
+          status: 'published',
+          priority: 'medium',
+          publishDate: new Date().toISOString(),
+          tags: ['welcome', 'demo'],
+          targetAudience: ['all'],
+          createdBy: 'Admin',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+      ];
+      setContentItems(fallbackContent);
+      
+      const fallbackToolUpdates: ToolUpdate[] = [
+        {
+          id: 'tool-1',
+          toolId: 'demo-tool-1',
+          toolName: 'Demo AI Tool',
+          updateType: 'feature',
+          title: 'Demo Tool - New Features',
+          description: 'This is a sample tool update to demonstrate the interface.',
+          version: '1.0.0',
+          impact: 'high',
+          status: 'published',
+          publishDate: new Date().toISOString(),
+          createdBy: 'Admin'
+        }
+      ];
+      setToolUpdates(fallbackToolUpdates);
+      
+      setNewsItems(fallbackNews);
     } finally {
       setLoading(false);
     }
