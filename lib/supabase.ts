@@ -4,6 +4,12 @@ export function createClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
   
+  console.log('Creating Supabase client with:', { 
+    supabaseUrl, 
+    supabaseKey: supabaseKey ? `${supabaseKey.substring(0, 20)}...` : 'undefined',
+    isMock: supabaseUrl === 'https://placeholder.supabase.co' || supabaseKey === 'placeholder-key'
+  });
+  
   // Check if we're using placeholder values
   if (supabaseUrl === 'https://placeholder.supabase.co' || supabaseKey === 'placeholder-key') {
     // Return a mock client that won't make actual requests

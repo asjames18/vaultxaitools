@@ -37,11 +37,16 @@ export default function UserManagement({ onClose }: UserManagementProps) {
       console.log('Fetching users from API...');
       
       // Get the current session token
-      const { data: { session } } = await supabase.auth.getSession();
+      console.log('Getting session from supabase client...');
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      console.log('Session result:', { session, sessionError });
+      
       if (!session?.access_token) {
         console.error('No access token found in session');
         throw new Error('No authentication token available');
       }
+      
+      console.log('Got access token, length:', session.access_token.length);
       
       const response = await fetch('/api/admin/users', {
         headers: {
