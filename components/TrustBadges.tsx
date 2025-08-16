@@ -52,7 +52,7 @@ export default function TrustBadges() {
         <span className="px-3 py-1 bg-purple-500/20 text-purple-100 text-xs rounded-full border border-purple-500/30">
           Community Favorite
         </span>
-        <span className="px-3 py-1 bg-yellow-500/20 text-yellow-100 text-xs rounded-full border border-yellow-500/30">
+        <span className="px-3 py-1 bg-yellow-500/20 text-yellow-50 text-xs rounded-full border border-yellow-500/30">
           Top Rated
         </span>
       </div>
