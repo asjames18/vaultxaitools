@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
@@ -14,6 +14,13 @@ export default function SignUpPage() {
   const [success, setSuccess] = useState('');
   const router = useRouter();
   const supabase = createClient();
+
+  // Debug: Check if Supabase client is properly initialized
+  useEffect(() => {
+    console.log('Supabase client initialized:', !!supabase);
+    console.log('Supabase auth available:', !!supabase.auth);
+    console.log('Current origin:', window.location.origin);
+  }, [supabase]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +41,10 @@ export default function SignUpPage() {
     }
 
     try {
+      console.log('Starting sign up process...');
+      console.log('Email:', email);
+      console.log('Redirect URL:', `${window.location.origin}/auth/callback`);
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -42,15 +53,20 @@ export default function SignUpPage() {
         }
       });
 
+      console.log('Sign up response:', { data, error });
+
       if (error) {
+        console.error('Sign up error:', error);
         setError(error.message);
       } else {
+        console.log('Sign up successful:', data);
         setSuccess('Check your email to confirm your account!');
         setEmail('');
         setPassword('');
         setConfirmPassword('');
       }
     } catch (err) {
+      console.error('Sign up exception:', err);
       setError('An unexpected error occurred');
     } finally {
       setLoading(false);
@@ -61,14 +77,21 @@ export default function SignUpPage() {
     setLoading(true);
     setError('');
     try {
+      console.log(`Starting ${provider} sign up...`);
+      console.log('Redirect URL:', `${window.location.origin}/auth/callback`);
+      
       const { error } = await supabase.auth.signInWithOAuth({ 
         provider,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`
         }
       });
+      
+      console.log(`${provider} sign up response:`, { error });
+      
       if (error) throw error;
     } catch (err: any) {
+      console.error(`${provider} sign up error:`, err);
       setError(err.message || 'Social signup failed');
       setLoading(false);
     }
