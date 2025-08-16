@@ -41,9 +41,9 @@ export default function SignUpPage() {
     }
 
     try {
-      console.log('Starting sign up process...');
+      console.log('=== SIGN UP DEBUG START ===');
       console.log('Email:', email);
-      console.log('Redirect URL:', `${window.location.origin}/auth/callback`);
+      console.log('Testing without redirect option...');
       
       // Test Supabase connection first
       console.log('Testing Supabase connection...');
@@ -53,9 +53,10 @@ export default function SignUpPage() {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        }
+        // Temporarily remove redirect to test if that's causing the 500 error
+        // options: {
+        //   emailRedirectTo: `${window.location.origin}/auth/callback`,
+        // }
       });
 
       console.log('Sign up response:', { data, error });
