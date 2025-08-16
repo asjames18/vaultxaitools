@@ -49,52 +49,52 @@ export default function EnhancedNewsletter() {
         <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Content */}
-          <div className="text-white">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 xl:gap-16 items-start">
+          {/* Content - Now takes 2 columns on desktop for better spacing */}
+          <div className="text-white xl:col-span-2">
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
               <SparklesIcon className="w-5 h-5" />
               <span className="text-sm font-semibold">Expert-Curated AI Tools</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold mb-8 leading-tight">
               Only the Best AI Tools Make the Cut
             </h2>
             
-            <p className="text-xl text-indigo-100 mb-8 leading-relaxed">
+            <p className="text-xl md:text-2xl text-indigo-100 mb-10 leading-relaxed max-w-3xl">
               We test hundreds of AI tools so you don't have to. Get weekly recommendations of only the most effective, reliable, and innovative AI solutions that actually deliver results.
             </p>
 
-            {/* Curation Process */}
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <ShieldIcon className="w-5 h-5 text-green-400" />
+            {/* Curation Process - Better organized with more spacing */}
+            <div className="mb-10">
+              <h3 className="text-xl font-semibold mb-6 flex items-center gap-3">
+                <ShieldIcon className="w-6 h-6 text-green-400" />
                 Our Curation Process:
               </h3>
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <CheckIcon className="w-5 h-5 text-green-400 flex-shrink-0" />
-                    <span className="text-indigo-100">{benefit}</span>
+                  <div key={index} className="flex items-start gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                    <CheckIcon className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-indigo-100 font-medium">{benefit}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Curation Stats (real data driven) */}
-            <div className="flex gap-8">
+            {/* Curation Stats - Larger and more prominent */}
+            <div className="flex gap-12">
               {getCurationStats((typeof window !== 'undefined' && (window as any).__vaultxToolCount) || undefined).map((stat, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-2xl font-bold text-white mb-1">{stat.number}</div>
-                  <div className="text-sm text-indigo-100">{stat.label}</div>
+                  <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
+                  <div className="text-lg text-indigo-100 font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Signup Form */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+          {/* Signup Form - Now takes 1 column on desktop */}
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 xl:col-span-1">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-white mb-2">
                 Join the Curated AI Community
