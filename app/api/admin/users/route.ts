@@ -1,15 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase-server';
+import { createClient } from '@supabase/supabase-js';
 import { supabaseAdmin } from '@/lib/supabaseAdminClient';
 import { getUserRole } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    // Get the authorization header from the request
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return NextResponse.json({ error: 'No authorization token provided' }, { status: 401 });
+    }
+
+    const token = authHeader.substring(7);
+    
+    // Create a Supabase client with the user's token
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        global: {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      }
+    );
     
     // Get current user and check if they're admin
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user || await getUserRole(user) !== 'admin') {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user || await getUserRole(user) !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }

@@ -22,7 +22,12 @@ function ContactManagementContent() {
 
   const getAuthHeaders = async (): Promise<Record<string, string>> => {
     const { data: { session } } = await supabase.auth.getSession();
-    return session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {} as Record<string, string>;
+    if (!session?.access_token) {
+      console.error('No access token found in session');
+      return {};
+    }
+    console.log('Got access token for API call');
+    return { Authorization: `Bearer ${session.access_token}` };
   };
   const [loading, setLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
