@@ -25,6 +25,7 @@ const publicRoutes = [
   '/submit-tool/thank-you',
   '/admin/login',
   '/admin/unauthorized',
+  '/debug-supabase', // Debug page for Supabase testing
   // REMOVED: Test pages - completely public for debugging (SECURITY RISK)
   // '/test-admin',
   // '/test-automation', 
