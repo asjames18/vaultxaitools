@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { BlogPost } from '@/data/blog';
 import RichTextEditor from '@/components/RichTextEditor';
+import AdminAuthWrapper from '../AdminAuthWrapper';
 
-export default function BlogManagementClient() {
+function BlogManagementContent() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -491,5 +492,13 @@ export default function BlogManagementClient() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function BlogManagementClient() {
+  return (
+    <AdminAuthWrapper>
+      {(user) => <BlogManagementContent />}
+    </AdminAuthWrapper>
   );
 } 

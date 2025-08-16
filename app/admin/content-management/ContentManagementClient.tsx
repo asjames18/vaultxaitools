@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase';
+import AdminAuthWrapper from '../AdminAuthWrapper';
 import { 
   PlusIcon, 
   EditIcon, 
@@ -65,7 +66,7 @@ interface NewsItem {
   createdBy: string;
 }
 
-export default function ContentManagementClient() {
+function ContentManagementContent() {
   const [activeTab, setActiveTab] = useState<'overview' | 'news' | 'tools' | 'announcements' | 'analytics'>('overview');
   const [contentItems, setContentItems] = useState<ContentItem[]>([]);
   const [toolUpdates, setToolUpdates] = useState<ToolUpdate[]>([]);
@@ -637,5 +638,13 @@ export default function ContentManagementClient() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ContentManagementClient() {
+  return (
+    <AdminAuthWrapper>
+      {(user) => <ContentManagementContent />}
+    </AdminAuthWrapper>
   );
 } 

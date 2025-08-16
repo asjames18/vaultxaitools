@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { createClient } from '@/lib/supabase';
+import AdminAuthWrapper from '../AdminAuthWrapper';
 
 type ToolStatus = 'draft' | 'published' | 'archived';
 
@@ -24,7 +25,7 @@ interface ToolForm {
   curator_notes?: string;
 }
 
-export default function ToolsManagementClient() {
+function ToolsManagementContent() {
   const supabase = createClient();
 
   const [tools, setTools] = useState<ToolForm[]>([]);
@@ -256,6 +257,14 @@ export default function ToolsManagementClient() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ToolsManagementClient() {
+  return (
+    <AdminAuthWrapper>
+      {(user) => <ToolsManagementContent />}
+    </AdminAuthWrapper>
   );
 }
 

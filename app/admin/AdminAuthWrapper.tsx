@@ -4,14 +4,16 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import { canAccessAdmin } from '@/lib/auth';
-import AdminDashboard from './AdminDashboard';
+import { User } from '@supabase/supabase-js';
 
-export default function AdminPage() {
-  const [user, setUser] = useState(null);
+interface AdminAuthWrapperProps {
+  children: (user: User) => React.ReactNode;
+}
+
+export default function AdminAuthWrapper({ children }: AdminAuthWrapperProps) {
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [canAccess, setCanAccess] = useState(false);
-  const [tools, setTools] = useState([]);
-  const [categories, setCategories] = useState([]);
   const router = useRouter();
   const supabase = createClient();
 
@@ -38,31 +40,6 @@ export default function AdminPage() {
             router.push('/admin/unauthorized');
             return;
           }
-
-          // Fetch data for the dashboard
-          try {
-            // Try to fetch tools
-            const { data: toolsData, error: toolsError } = await supabase
-              .from('tools')
-              .select('*')
-              .order('created_at', { ascending: false });
-            
-            if (!toolsError && toolsData) {
-              setTools(toolsData);
-            }
-
-            // Try to fetch categories
-            const { data: categoriesData, error: categoriesError } = await supabase
-              .from('categories')
-              .select('*')
-              .order('name', { ascending: true });
-            
-            if (!categoriesError && categoriesData) {
-              setCategories(categoriesData);
-            }
-          } catch (error) {
-            console.error('Error fetching dashboard data:', error);
-          }
         } else {
           router.push('/admin/login');
           return;
@@ -86,7 +63,7 @@ export default function AdminPage() {
     );
   }
 
-  if (!canAccess) {
+  if (!canAccess || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -97,5 +74,5 @@ export default function AdminPage() {
     );
   }
 
-  return <AdminDashboard tools={tools} categories={categories} user={user as any} />;
+  return <>{children(user)}</>;
 }

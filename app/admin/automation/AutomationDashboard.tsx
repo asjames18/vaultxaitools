@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase';
-import { getUserRole } from '@/lib/auth';
-import { useRouter } from 'next/navigation';
+import AdminAuthWrapper from '../AdminAuthWrapper';
 import { 
   Play, 
   Clock, 
@@ -49,7 +48,7 @@ interface DataRefreshStatus {
   autoRefreshEnabled: boolean;
 }
 
-export default function AutomationDashboard() {
+function AutomationDashboardContent() {
   const [status, setStatus] = useState<AutomationStatus | null>(null);
   const [dataRefreshStatus, setDataRefreshStatus] = useState<DataRefreshStatus>({
     isRefreshing: false,
@@ -488,5 +487,13 @@ export default function AutomationDashboard() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AutomationDashboard() {
+  return (
+    <AdminAuthWrapper>
+      {(user) => <AutomationDashboardContent />}
+    </AdminAuthWrapper>
   );
 }

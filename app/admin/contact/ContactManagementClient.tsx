@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase';
 import { Mail, Clock, User, MessageSquare, Archive, Trash2, Reply, Copy } from 'lucide-react';
+import AdminAuthWrapper from '../AdminAuthWrapper';
 
 interface ContactMessage {
   id: string;
@@ -15,7 +16,7 @@ interface ContactMessage {
   updated_at: string;
 }
 
-export default function ContactManagementClient() {
+function ContactManagementContent() {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const supabase = createClient();
 
@@ -395,5 +396,13 @@ export default function ContactManagementClient() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ContactManagementClient() {
+  return (
+    <AdminAuthWrapper>
+      {(user) => <ContactManagementContent />}
+    </AdminAuthWrapper>
   );
 } 

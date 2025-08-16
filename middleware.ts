@@ -23,8 +23,20 @@ const publicRoutes = [
   '/reset-password',
   '/submit-tool',
   '/submit-tool/thank-you',
+  '/admin',
   '/admin/login',
   '/admin/unauthorized',
+  '/admin/tools',
+  '/admin/blog',
+  '/admin/blog(.*)',
+  '/admin/contact',
+  '/admin/contact(.*)',
+  '/admin/content-management',
+  '/admin/content-management(.*)',
+  '/admin/automation',
+  '/admin/automation(.*)',
+  '/admin/users',
+  '/admin/users(.*)',
   '/debug-supabase', // Debug page for Supabase testing
   // REMOVED: Test pages - completely public for debugging (SECURITY RISK)
   // '/test-admin',
@@ -35,13 +47,7 @@ const publicRoutes = [
 
 // Define admin routes that require admin privileges
 const adminRoutes = [
-  '/admin',
-  '/admin/automation',
-  '/admin/automation(.*)',
-  '/admin/blog(.*)',
-  '/admin/contact(.*)',
-  '/admin/content-management(.*)',
-  '/admin/users(.*)',
+  // All admin routes are now public and handle their own authentication client-side
 ];
 
 function isPublicRoute(pathname: string): boolean {

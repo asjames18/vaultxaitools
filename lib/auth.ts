@@ -31,11 +31,8 @@ export async function getUserRole(user: User | null): Promise<'admin' | 'user'> 
   if (!user) return 'user';
   
   try {
-    // First, try to get role from database
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+    // First, try to get role from database using admin client
+    const supabase = createAdminClient();
     
     const { data: userRole, error } = await supabase
       .from('user_roles')
@@ -114,7 +111,27 @@ export async function getUsersWithRoles(): Promise<UserRole[]> {
  * Check if user can access admin area
  */
 export async function canAccessAdmin(user: User | null): Promise<boolean> {
-  const role = await getUserRole(user);
-  const canAccess = role === 'admin';
-  return canAccess;
+  if (!user || !user.email) return false;
+  
+  // First, check if user is in the admin emails list (fastest)
+  if (isAdmin(user)) {
+    return true;
+  }
+  
+  // Check if we're in a browser environment
+  if (typeof window !== 'undefined') {
+    // Client-side: use email check only
+    return isAdmin(user);
+  }
+  
+  // Server-side: try to get role from database using admin client
+  try {
+    const role = await getUserRole(user);
+    const canAccess = role === 'admin';
+    return canAccess;
+  } catch (error) {
+    console.error('Error checking admin role:', error);
+    // Fallback to email check
+    return isAdmin(user);
+  }
 } 
