@@ -66,6 +66,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
   useEscapeToClose(onClose);
   useFocusTrap(open, containerRef);
   const [status, setStatus] = useState<string>('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   if (!open) return null;
   return (
@@ -99,6 +100,30 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
           {status}
         </p>
 
+        {isSubmitted ? (
+          <div className="mt-6 text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
+              <svg className="h-8 w-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              Thank You!
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Your message has been sent successfully.
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+              We'll respond within 24 hours during business days.
+            </p>
+            <button
+              onClick={onClose}
+              className="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
         <form
           className="mt-6 space-y-4"
           onSubmit={async (e) => {
@@ -122,8 +147,8 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
                 body: JSON.stringify({ name, email, phone, company, subject, message }),
               });
               if (res.ok) {
+                setIsSubmitted(true);
                 setStatus("Thanks! We'll get back to you within 24 hours.");
-                onClose();
               } else {
                 setStatus('There was an error sending your message.');
                 alert('Something went wrong. Please try again.');
@@ -207,6 +232,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );
@@ -216,6 +242,7 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
   const containerRef = useRef<HTMLDivElement>(null);
   useEscapeToClose(onClose);
   useFocusTrap(open, containerRef);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   if (!open) return null;
   return (
     <div
@@ -271,8 +298,7 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
                 }),
               });
               if (res.ok) {
-                onClose();
-                alert('Thanks! Check your inbox soon.');
+                setIsSubmitted(true);
               } else {
                 alert('Error submitting. Please try again.');
               }
@@ -342,6 +368,7 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
             </button>
           </div>
         </form>
+        )}
       </div>
     </div>
   );
