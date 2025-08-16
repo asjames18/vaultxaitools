@@ -63,37 +63,28 @@ export default function UserManagement({ onClose }: UserManagementProps) {
     
     setLoading(true);
     try {
-      console.log('Fetching users from API...');
-      
       // Get the current session token
-      console.log('Getting session from supabase client...');
       const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      console.log('Session result:', { session, sessionError });
       
       if (!session?.access_token) {
         console.error('No access token found in session');
         throw new Error('No authentication token available');
       }
       
-      console.log('Got access token, length:', session.access_token.length);
-      
       const response = await fetch('/api/admin/users', {
         headers: {
           'Authorization': `Bearer ${session.access_token}`
         }
       });
-      console.log('Users API response status:', response.status);
       
       // Check if response is a redirect (HTML instead of JSON)
       const contentType = response.headers.get('content-type');
-      console.log('Response content type:', contentType);
       
       if (!contentType || !contentType.includes('application/json')) {
         throw new Error('Authentication required. Please sign in as admin.');
       }
 
       const result = await response.json();
-      console.log('Users API result:', result);
 
       if (!response.ok) {
         throw new Error(result.error || 'Failed to fetch users');
