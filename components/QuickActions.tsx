@@ -48,7 +48,7 @@ const quickActions = [
     title: "Popular",
     description: "Most used AI tools",
     icon: FireIcon,
-    href: "/search?sort=popular",
+    href: "/AITools",
     color: "red",
     gradient: "from-red-500 to-pink-500"
   },
