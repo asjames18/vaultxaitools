@@ -18,6 +18,9 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
   const [profile, setProfile] = useState({ display_name: userName, organization: '', bio: '', newsletterOptIn: false });
   const [profileLoading, setProfileLoading] = useState(true);
   const [profileSaved, setProfileSaved] = useState(false);
+  const [newEmail, setNewEmail] = useState(userEmail);
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
+  const [emailMessage, setEmailMessage] = useState<string | null>(null);
 
   // Load existing profile data on component mount
   useEffect(() => {
@@ -138,6 +141,34 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
       alert('Failed to update profile');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleChangeEmail = async () => {
+    if (!newEmail || newEmail === userEmail) {
+      setEmailMessage('Enter a new email address.');
+      return;
+    }
+    setEmailSubmitting(true);
+    setEmailMessage(null);
+    try {
+      const { createClient } = await import('@/lib/supabase');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        setEmailMessage('Authentication required. Please sign in again.');
+        return;
+      }
+      const { data, error } = await supabase.auth.updateUser({ email: newEmail });
+      if (error) {
+        setEmailMessage(error.message || 'Failed to update email');
+        return;
+      }
+      setEmailMessage('Check your new inbox to confirm the change.');
+    } catch (err: any) {
+      setEmailMessage('Failed to update email');
+    } finally {
+      setEmailSubmitting(false);
     }
   };
 
@@ -289,6 +320,26 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
               </div>
               <div className="p-6 space-y-3">
                 <a href="/reset-password" className="block w-full rounded-lg border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-800 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">Change Password</a>
+                <div className="space-y-2">
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Change Email</div>
+                  <input
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                    placeholder="your@email.com"
+                  />
+                  {emailMessage && (
+                    <div className="text-xs text-gray-600 dark:text-gray-400">{emailMessage}</div>
+                  )}
+                  <button
+                    disabled={emailSubmitting}
+                    onClick={handleChangeEmail}
+                    className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                  >
+                    {emailSubmitting ? 'Updating…' : 'Update Email'}
+                  </button>
+                </div>
                 <button
                   onClick={async () => {
                     if (!confirm('Export your data (favorites & reviews) as JSON?')) return;
