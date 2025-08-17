@@ -13,6 +13,7 @@ import AffiliateLink from '@/components/AffiliateLink';
 import DemoMedia from '@/components/DemoMedia';
 import AlternativesSection from '@/components/AlternativesSection';
 import type { Database } from '@/lib/database.types';
+import { useFavorites } from '@/lib/useFavorites';
 
 type DatabaseReview = Database['public']['Tables']['reviews']['Row'];
 
@@ -55,7 +56,7 @@ interface ToolDetailsClientProps {
 
 export default function ToolDetailsClient({ toolId, fallbackAlternatives = [] }: ToolDetailsClientProps) {
   const router = useRouter();
-  const [isLiked, setIsLiked] = useState(false);
+  const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
   const [activeTab, setActiveTab] = useState('overview');
   const [reviews, setReviews] = useState<DatabaseReview[]>([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
@@ -467,15 +468,21 @@ export default function ToolDetailsClient({ toolId, fallbackAlternatives = [] }:
                 <ExternalLinkIcon className="w-6 h-6" />
               </AffiliateLink>
               <button
-                onClick={() => setIsLiked(!isLiked)}
+                onClick={() => {
+                  if (isFavorite(tool.id)) {
+                    removeFavorite(tool.id);
+                  } else {
+                    addFavorite(tool.id);
+                  }
+                }}
                 className={`flex items-center justify-center gap-2 px-6 py-4 rounded-2xl border transition-colors text-lg font-semibold shadow-sm ${
-                  isLiked
+                  isFavorite(tool.id)
                     ? 'bg-red-50 border-red-200 text-red-600 dark:bg-red-900/20 dark:border-red-800 dark:text-red-400'
                     : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700'
                 }`}
               >
                 <HeartIcon className="w-6 h-6" />
-                {isLiked ? 'Liked' : 'Like'}
+                {isFavorite(tool.id) ? 'Liked' : 'Like'}
               </button>
               <button
                 onClick={async () => {
