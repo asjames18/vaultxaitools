@@ -63,14 +63,26 @@ export async function PUT(request: NextRequest) {
     const body = await request.json();
     const { display_name, organization, bio, newsletterOptIn } = body || {};
 
-    const { error } = await supabase.from('profiles').upsert({
+    // Build a partial update object so we don't overwrite unspecified fields
+    const updates: Record<string, any> = {
       id: user.id,
-      display_name: display_name || null,
-      organization: organization || null,
-      bio: bio || null,
-      newsletter_opt_in: !!newsletterOptIn,
       updated_at: new Date().toISOString(),
-    });
+    };
+
+    if (typeof display_name !== 'undefined') {
+      updates.display_name = display_name;
+    }
+    if (typeof organization !== 'undefined') {
+      updates.organization = organization;
+    }
+    if (typeof bio !== 'undefined') {
+      updates.bio = bio;
+    }
+    if (typeof newsletterOptIn !== 'undefined') {
+      updates.newsletter_opt_in = !!newsletterOptIn;
+    }
+
+    const { error } = await supabase.from('profiles').upsert(updates);
 
     if (error) return NextResponse.json({ error: error.message }, { status: 400 });
     return NextResponse.json({ ok: true });
