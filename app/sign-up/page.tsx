@@ -53,10 +53,9 @@ export default function SignUpPage() {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        // Temporarily remove redirect to test if that's causing the 500 error
-        // options: {
-        //   emailRedirectTo: `${window.location.origin}/auth/callback`,
-        // }
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        }
       });
 
       console.log('Sign up response:', { data, error });
@@ -74,7 +73,13 @@ export default function SignUpPage() {
 
       if (error) {
         console.error('Sign up error:', error);
-        setError(error.message);
+        
+        // Provide more helpful error message for database errors
+        if (error.message === 'Database error saving new user') {
+          setError('There was a temporary issue creating your account. Please try again in a few minutes, or try with a different email address.');
+        } else {
+          setError(error.message);
+        }
       } else {
         console.log('Sign up successful:', data);
         setSuccess('Check your email to confirm your account!');

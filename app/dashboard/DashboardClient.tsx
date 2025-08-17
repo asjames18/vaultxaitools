@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type RecentItem = { id: string; type: 'favorite' | 'review'; label: string; tool?: string; when: string };
 
@@ -16,6 +16,130 @@ interface DashboardProps {
 export default function DashboardClient({ userName, userEmail, memberSince, stats, recent, favorites }: DashboardProps) {
   const [submitting, setSubmitting] = useState(false);
   const [profile, setProfile] = useState({ display_name: userName, organization: '', bio: '', newsletterOptIn: false });
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [profileSaved, setProfileSaved] = useState(false);
+
+  // Load existing profile data on component mount
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        setProfileLoading(true);
+        
+        // Get the session token for API calls
+        const { createClient } = await import('@/lib/supabase');
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session?.access_token) {
+          console.log('No session token available');
+          return;
+        }
+
+        // Sync Supabase session cookies for server-side APIs (fallback if header is stripped)
+        try {
+          await fetch('/api/auth/session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+              access_token: session.access_token,
+              refresh_token: session.refresh_token,
+            })
+          });
+        } catch {}
+        
+        const response = await fetch('/api/user/export', {
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`,
+            'X-Supabase-Authorization': `Bearer ${session.access_token}`,
+            'X-Refresh-Token': session.refresh_token ?? ''
+          },
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.profile) {
+            setProfile({
+              display_name: data.profile.display_name || userName,
+              organization: data.profile.organization || '',
+              bio: data.profile.bio || '',
+              newsletterOptIn: data.profile.newsletter_opt_in || false
+            });
+          }
+        } else {
+          console.log('Failed to load profile:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Error loading profile:', error);
+        // Keep default values
+      } finally {
+        setProfileLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [userName]);
+
+  const handleSaveProfile = async () => {
+    setSubmitting(true);
+    setProfileSaved(false);
+    try {
+      // Get the session token for API calls
+      const { createClient } = await import('@/lib/supabase');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session?.access_token) {
+        alert('Authentication required. Please sign in again.');
+        return;
+      }
+
+      // Ensure cookies are set for server-side validation as a fallback
+      try {
+        await fetch('/api/auth/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({
+            access_token: session.access_token,
+            refresh_token: session.refresh_token,
+          })
+        });
+      } catch {}
+      
+      const response = await fetch('/api/user/profile', {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+          'X-Supabase-Authorization': `Bearer ${session.access_token}`,
+          'X-Refresh-Token': session.refresh_token ?? ''
+        },
+        credentials: 'include',
+        body: JSON.stringify(profile),
+      });
+      
+      if (response.ok) {
+        setProfileSaved(true);
+        // Broadcast profile update to refresh UI (e.g., Navigation)
+        try {
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('profile-updated'));
+          }
+        } catch {}
+        setTimeout(() => setProfileSaved(false), 3000); // Clear success message after 3 seconds
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to update profile: ${errorData.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Profile update error:', error);
+      alert('Failed to update profile');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16">
@@ -88,43 +212,74 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Your Profile</h2>
               </div>
               <div className="p-6 space-y-3">
-                <div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Name</div>
-                  <input value={profile.display_name} onChange={(e) => setProfile((p) => ({ ...p, display_name: e.target.value }))} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Organization</div>
-                  <input value={profile.organization} onChange={(e) => setProfile((p) => ({ ...p, organization: e.target.value }))} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
-                </div>
-                <div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Bio</div>
-                  <textarea value={profile.bio} onChange={(e) => setProfile((p) => ({ ...p, bio: e.target.value }))} rows={3} className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
-                </div>
-                <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-                  <input type="checkbox" checked={profile.newsletterOptIn} onChange={(e) => setProfile((p) => ({ ...p, newsletterOptIn: e.target.checked }))} />
-                  Receive the monthly AI Starter tips
-                </label>
-                <button
-                  disabled={submitting}
-                  onClick={async () => {
-                    setSubmitting(true);
-                    try {
-                      await fetch('/api/user/profile', {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(profile),
-                      });
-                      alert('Profile updated');
-                    } catch {
-                      alert('Failed to update profile');
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                  className="mt-2 w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                >
-                  {submitting ? 'Saving…' : 'Save Profile'}
-                </button>
+                {profileLoading ? (
+                  <div className="space-y-3">
+                    <div className="animate-pulse">
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-2"></div>
+                      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    </div>
+                    <div className="animate-pulse">
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
+                      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    </div>
+                    <div className="animate-pulse">
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-2"></div>
+                      <div className="h-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Name</div>
+                      <input 
+                        value={profile.display_name} 
+                        onChange={(e) => setProfile((p) => ({ ...p, display_name: e.target.value }))} 
+                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
+                        placeholder="Your display name"
+                      />
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Organization</div>
+                      <input 
+                        value={profile.organization} 
+                        onChange={(e) => setProfile((p) => ({ ...p, organization: e.target.value }))} 
+                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
+                        placeholder="Your organization (optional)"
+                      />
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Bio</div>
+                      <textarea 
+                        value={profile.bio} 
+                        onChange={(e) => setProfile((p) => ({ ...p, bio: e.target.value }))} 
+                        rows={3} 
+                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
+                        placeholder="Tell us about yourself (optional)"
+                      />
+                    </div>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                      <input 
+                        type="checkbox" 
+                        checked={profile.newsletterOptIn} 
+                        onChange={(e) => setProfile((p) => ({ ...p, newsletterOptIn: e.target.checked }))} 
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      Receive the monthly AI Starter tips
+                    </label>
+                    {profileSaved && (
+                      <div className="text-green-600 dark:text-green-400 text-sm font-medium">
+                        ✅ Profile updated successfully!
+                      </div>
+                    )}
+                    <button
+                      disabled={submitting}
+                      onClick={handleSaveProfile}
+                      className="mt-2 w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {submitting ? 'Saving…' : 'Save Profile'}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 
@@ -137,15 +292,40 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                 <button
                   onClick={async () => {
                     if (!confirm('Export your data (favorites & reviews) as JSON?')) return;
-                    const res = await fetch('/api/user/export');
-                    const json = await res.json();
-                    const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'vaultx-export.json';
-                    a.click();
-                    URL.revokeObjectURL(url);
+                    try {
+                      // Get the session token for API calls
+                      const { createClient } = await import('@/lib/supabase');
+                      const supabase = createClient();
+                      const { data: { session } } = await supabase.auth.getSession();
+                      
+                      if (!session?.access_token) {
+                        alert('Authentication required. Please sign in again.');
+                        return;
+                      }
+                      
+                      const res = await fetch('/api/user/export', {
+                        headers: {
+                          'Authorization': `Bearer ${session.access_token}`
+                        }
+                      });
+                      
+                      if (!res.ok) {
+                        alert('Failed to export data. Please try again.');
+                        return;
+                      }
+                      
+                      const json = await res.json();
+                      const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'vaultx-export.json';
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    } catch (error) {
+                      console.error('Export error:', error);
+                      alert('Failed to export data. Please try again.');
+                    }
                   }}
                   className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 >

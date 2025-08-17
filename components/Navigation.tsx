@@ -13,6 +13,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [displayName, setDisplayName] = useState<string | null>(null);
   const supabase = createClient();
 
   useEffect(() => {
@@ -24,21 +25,33 @@ export default function Navigation() {
         setUser(user);
         
         if (user) {
+          // Load profile display name
+          try {
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('display_name')
+              .eq('id', user.id)
+              .maybeSingle();
+            setDisplayName(profile?.display_name || null);
+          } catch {}
+
           // Get user role
           const { data, error } = await supabase
             .from('user_roles')
             .select('role')
             .eq('user_id', user.id)
-            .single();
+            .maybeSingle();
             
           setUserRole(data?.role || null);
         } else {
           setUserRole(null);
+          setDisplayName(null);
         }
       } catch (err) {
         // Handle error silently
         setUser(null);
         setUserRole(null);
+        setDisplayName(null);
       }
     };
 
@@ -50,8 +63,17 @@ export default function Navigation() {
       getUserAndRole();
     });
 
+    // Listen for profile updates dispatched from anywhere in the app
+    const onProfileUpdated = () => getUserAndRole();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('profile-updated', onProfileUpdated as any);
+    }
+
     return () => {
       subscription.unsubscribe();
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('profile-updated', onProfileUpdated as any);
+      }
     };
   }, []);
 
@@ -150,12 +172,15 @@ export default function Navigation() {
             <Menu as="div" className="relative hidden sm:block">
               <Menu.Button className="flex items-center focus:outline-none">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                  {user?.email ? user.email.charAt(0).toUpperCase() : 'U'}
+                  {(displayName || user?.email || 'U').charAt(0).toUpperCase()}
                 </div>
               </Menu.Button>
               <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl focus:outline-none z-50">
                 <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-                  <div className="font-semibold text-gray-900 dark:text-white">{user?.email}</div>
+                  {displayName && (
+                    <div className="font-semibold text-gray-900 dark:text-white">{displayName}</div>
+                  )}
+                  <div className="text-sm text-gray-600 dark:text-gray-300">{user?.email}</div>
                 </div>
                 <div className="py-1">
                   {userRole === 'admin' && (

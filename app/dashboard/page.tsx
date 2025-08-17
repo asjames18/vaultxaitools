@@ -22,22 +22,84 @@ async function getData() {
     };
   }
 
-  const [{ data: favs }, { data: reviews }] = await Promise.all([
-    supabase.from('favorites').select('tool_id').eq('user_id', user.id),
-    supabase.from('reviews').select('id, tool_id, created_at').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5),
-  ]);
+  try {
+    // Try to get favorites - this should work with user_id
+    const { data: favs, error: favsError } = await supabase
+      .from('favorites')
+      .select('tool_id')
+      .eq('user_id', user.id);
 
-  const favorites = (favs || []).map((f) => ({ id: f.tool_id, name: f.tool_id }));
-  const recent = (reviews || []).map((r) => ({ id: r.id, type: 'review', label: 'Wrote a review', tool: r.tool_id, when: new Date(r.created_at).toLocaleDateString() }));
+    if (favsError) {
+      console.log('Error fetching favorites:', favsError.message);
+    }
 
-  return {
-    userName: user.email?.split('@')[0] || 'User',
-    userEmail: user.email || '',
-    memberSince: user.created_at || new Date().toISOString(),
-    stats: { toolsExplored: favorites.length, reviewsWritten: recent.length, favoritesCount: favorites.length },
-    recent,
-    favorites,
-  };
+    // Try to get reviews - the table uses user_name instead of user_id
+    // First try with user_id (in case it's been updated)
+    let reviews = null;
+    let reviewsError = null;
+    
+    const { data: reviewsById, error: reviewsByIdError } = await supabase
+      .from('reviews')
+      .select('id, tool_id, created_at')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    if (reviewsByIdError) {
+      // If that fails, try with user_name (current table structure)
+      const userName = user.email?.split('@')[0] || user.email;
+      const { data: reviewsByName, error: reviewsByNameError } = await supabase
+        .from('reviews')
+        .select('id, tool_id, created_at')
+        .eq('user_name', userName)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      reviews = reviewsByName;
+      reviewsError = reviewsByNameError;
+    } else {
+      reviews = reviewsById;
+      reviewsError = reviewsByIdError;
+    }
+
+    if (reviewsError) {
+      console.log('Error fetching reviews:', reviewsError.message);
+    }
+
+    const favorites = (favs || []).map((f) => ({ id: f.tool_id, name: f.tool_id }));
+    const recent = (reviews || []).map((r) => ({ 
+      id: r.id, 
+      type: 'review' as const, 
+      label: 'Wrote a review', 
+      tool: r.tool_id, 
+      when: new Date(r.created_at).toLocaleDateString() 
+    }));
+
+    return {
+      userName: user.email?.split('@')[0] || 'User',
+      userEmail: user.email || '',
+      memberSince: user.created_at || new Date().toISOString(),
+      stats: { 
+        toolsExplored: favorites.length, 
+        reviewsWritten: recent.length, 
+        favoritesCount: favorites.length 
+      },
+      recent,
+      favorites,
+    };
+  } catch (error) {
+    console.error('Error loading dashboard data:', error);
+    
+    // Return safe fallback data
+    return {
+      userName: user.email?.split('@')[0] || 'User',
+      userEmail: user.email || '',
+      memberSince: user.created_at || new Date().toISOString(),
+      stats: { toolsExplored: 0, reviewsWritten: 0, favoritesCount: 0 },
+      recent: [],
+      favorites: [],
+    };
+  }
 }
 
 export default async function DashboardPage() {

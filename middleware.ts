@@ -23,6 +23,7 @@ const publicRoutes = [
   '/reset-password',
   '/submit-tool',
   '/submit-tool/thank-you',
+  '/dashboard', // User dashboard/profile page
   '/admin',
   '/admin/login',
   '/admin/unauthorized',
