@@ -175,29 +175,36 @@ export default function HomeClient({
 
     // Load favorites from API
     const loadFavoritesFromAPI = async () => {
+      console.log('🔍 loadFavoritesFromAPI called');
       try {
         // Get the current session token
         const { data: { session } } = await supabase.auth.getSession();
+        console.log('🔍 Session for loading favorites:', session ? 'Session exists' : 'No session');
         if (!session?.access_token) {
-          console.log('No session token available for loading favorites');
+          console.log('❌ No session token available for loading favorites');
           return;
         }
         
+        console.log('🔍 Making GET request to /api/favorites');
         const response = await fetch('/api/favorites', {
           headers: {
             'Authorization': `Bearer ${session.access_token}`
           }
         });
+        console.log('🔍 GET favorites response status:', response.status);
         if (response.ok) {
           const data = await response.json();
+          console.log('🔍 Favorites data received:', data);
           setFavoriteTools(data.favorites || []);
           // Update localStorage to match API
           localStorage.setItem('vaultx-favorites', JSON.stringify(data.favorites || []));
+          console.log('✅ Favorites loaded from API successfully');
         } else {
-          console.error('Failed to load favorites from API:', response.status);
+          const errorData = await response.json();
+          console.error('❌ Failed to load favorites from API:', response.status, errorData);
         }
       } catch (error) {
-        console.error('Error loading favorites from API:', error);
+        console.error('❌ Error loading favorites from API:', error);
       }
     };
 
@@ -254,17 +261,21 @@ export default function HomeClient({
 
   // Toggle favorite
   const toggleFavorite = async (toolId: string) => {
+    console.log('🔍 toggleFavorite called with toolId:', toolId);
     const isCurrentlyFavorite = favoriteTools.includes(toolId);
     const action = isCurrentlyFavorite ? 'remove' : 'add';
+    console.log('🔍 Current favorite status:', isCurrentlyFavorite, 'Action:', action);
     
     try {
       // Get the current session token
       const { data: { session } } = await supabase.auth.getSession();
+      console.log('🔍 Session data:', session ? 'Session exists' : 'No session');
       if (!session?.access_token) {
-        console.error('No session token available');
+        console.error('❌ No session token available');
         return;
       }
       
+      console.log('🔍 Making API call to /api/favorites with action:', action);
       const response = await fetch('/api/favorites', {
         method: 'POST',
         headers: { 
@@ -274,7 +285,11 @@ export default function HomeClient({
         body: JSON.stringify({ toolId, action })
       });
       
+      console.log('🔍 API response status:', response.status);
       if (response.ok) {
+        const responseData = await response.json();
+        console.log('🔍 API response data:', responseData);
+        
         // Update local state only after successful API call
         setFavoriteTools(prev =>
           isCurrentlyFavorite
@@ -286,11 +301,13 @@ export default function HomeClient({
           ? favoriteTools.filter(id => id !== toolId)
           : [...favoriteTools, toolId];
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+        console.log('✅ Favorite updated successfully');
       } else {
-        console.error('Failed to update favorite');
+        const errorData = await response.json();
+        console.error('❌ Failed to update favorite:', response.status, errorData);
       }
     } catch (error) {
-      console.error('Error updating favorite:', error);
+      console.error('❌ Error updating favorite:', error);
     }
   };
 
