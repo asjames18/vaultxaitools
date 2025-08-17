@@ -1,8 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
-
-const SettingsClient = dynamic(() => import('./SettingsClient'), { ssr: false });
+import SettingsClient from './SettingsClient';
 
 export const metadata: Metadata = {
   title: 'Settings - VaultX AI Tools',
