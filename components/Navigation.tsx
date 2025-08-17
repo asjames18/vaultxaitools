@@ -322,6 +322,30 @@ export default function Navigation() {
                   Admin Portal
                 </Link>
               )}
+              {user && (
+                <>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-sm font-medium rounded-lg text-center"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href="/settings"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-sm font-medium rounded-lg text-center"
+                  >
+                    Settings
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="block w-full px-3 py-2 bg-red-600 text-white text-sm font-medium rounded-lg text-center"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              )}
               {!user && (
                 <Link 
                   href="/sign-in" 
