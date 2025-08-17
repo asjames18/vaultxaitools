@@ -101,7 +101,7 @@ export default function DailyTool({ tools }: DailyToolProps) {
                       <ArrowRightIcon className="w-4 h-4" />
                     </Link>
                     <Link
-                      href="/search"
+                      href="/AITools"
                       className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-gray-200"
                     >
                       Browse All Tools
