@@ -1,5 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const SettingsClient = dynamic(() => import('./SettingsClient'), { ssr: false });
 
 export const metadata: Metadata = {
   title: 'Settings - VaultX AI Tools',
@@ -28,26 +31,7 @@ export default function SettingsPage() {
             {/* Preferences Section */}
             <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
               <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Preferences</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">Email Notifications</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Receive updates about new tools and features</p>
-                  </div>
-                  <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-colors">
-                    <span className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1"></span>
-                  </button>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">Dark Mode</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Use dark theme for better viewing</p>
-                  </div>
-                  <button className="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600 transition-colors">
-                    <span className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-6"></span>
-                  </button>
-                </div>
-              </div>
+              <SettingsClient />
             </div>
 
             {/* Link to Profile for account management to avoid duplication */}
