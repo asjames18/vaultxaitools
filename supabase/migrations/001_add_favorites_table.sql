@@ -1,8 +1,11 @@
 -- Migration: Add favorites table
 -- Run this in your Supabase SQL Editor
 
+-- Drop existing table if it exists (to fix any structure issues)
+DROP TABLE IF EXISTS favorites CASCADE;
+
 -- Create favorites table for user tool favorites
-CREATE TABLE IF NOT EXISTS favorites (
+CREATE TABLE favorites (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     tool_id TEXT NOT NULL,
