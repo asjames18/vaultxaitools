@@ -24,6 +24,7 @@ const publicRoutes = [
   '/submit-tool',
   '/submit-tool/thank-you',
   '/dashboard', // User dashboard/profile page
+  '/settings', // Settings page should handle auth client-side like dashboard
   '/admin',
   '/admin/login',
   '/admin/unauthorized',
