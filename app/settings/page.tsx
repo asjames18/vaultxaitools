@@ -24,33 +24,6 @@ export default function SettingsPage() {
           </div>
           
           <div className="p-6 space-y-6">
-            {/* Profile Section */}
-            <div>
-              <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Profile Information</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Display Name
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                    placeholder="Enter your display name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Bio
-                  </label>
-                  <textarea
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                    placeholder="Tell us about yourself..."
-                  />
-                </div>
-              </div>
-            </div>
-
             {/* Preferences Section */}
             <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
               <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Preferences</h3>
