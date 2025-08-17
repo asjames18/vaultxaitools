@@ -667,7 +667,7 @@ export default function CommunityHighlights() {
                 Submit a Tool
               </Link>
               <Link
-                href="/search"
+                href="/AITools"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-xl transition-all duration-300"
               >
                 Browse Tools
