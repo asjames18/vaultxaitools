@@ -176,12 +176,25 @@ export default function HomeClient({
     // Load favorites from API
     const loadFavoritesFromAPI = async () => {
       try {
-        const response = await fetch('/api/favorites');
+        // Get the current session token
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session?.access_token) {
+          console.log('No session token available for loading favorites');
+          return;
+        }
+        
+        const response = await fetch('/api/favorites', {
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
+          }
+        });
         if (response.ok) {
           const data = await response.json();
           setFavoriteTools(data.favorites || []);
           // Update localStorage to match API
           localStorage.setItem('vaultx-favorites', JSON.stringify(data.favorites || []));
+        } else {
+          console.error('Failed to load favorites from API:', response.status);
         }
       } catch (error) {
         console.error('Error loading favorites from API:', error);
@@ -245,9 +258,19 @@ export default function HomeClient({
     const action = isCurrentlyFavorite ? 'remove' : 'add';
     
     try {
+      // Get the current session token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        console.error('No session token available');
+        return;
+      }
+      
       const response = await fetch('/api/favorites', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
         body: JSON.stringify({ toolId, action })
       });
       
