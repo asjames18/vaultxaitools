@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Settings - VaultX AI Tools',
@@ -49,27 +50,17 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            {/* Actions Section */}
+            {/* Link to Profile for account management to avoid duplication */}
             <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-              <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Account Actions</h3>
-              <div className="space-y-3">
-                <button className="w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                  🔐 Change Password
-                </button>
-                <button className="w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                  📧 Update Email
-                </button>
-                <button className="w-full text-left px-4 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                  🗑️ Delete Account
-                </button>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-md font-medium text-gray-900 dark:text-white">Manage Profile & Account</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Update name, profile details, export data, or delete account</p>
+                </div>
+                <Link href="/dashboard" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                  Go to Profile
+                </Link>
               </div>
-            </div>
-
-            {/* Save Button */}
-            <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-              <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
-                Save Changes
-              </button>
             </div>
           </div>
         </div>
