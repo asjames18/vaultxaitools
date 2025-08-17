@@ -173,6 +173,24 @@ export default function HomeClient({
       setRecentlyViewed(JSON.parse(savedRecent));
     }
 
+    // Load favorites from API
+    const loadFavoritesFromAPI = async () => {
+      try {
+        const response = await fetch('/api/favorites');
+        if (response.ok) {
+          const data = await response.json();
+          setFavoriteTools(data.favorites || []);
+          // Update localStorage to match API
+          localStorage.setItem('vaultx-favorites', JSON.stringify(data.favorites || []));
+        }
+      } catch (error) {
+        console.error('Error loading favorites from API:', error);
+      }
+    };
+
+    // Load favorites from API on mount
+    loadFavoritesFromAPI();
+
     // Subscribe to automation updates for real-time sync
     const automationChannel = supabase
       .channel('automation-updates')
@@ -222,12 +240,35 @@ export default function HomeClient({
   }, []);
 
   // Toggle favorite
-  const toggleFavorite = (toolId: string) => {
-    setFavoriteTools(prev =>
-      prev.includes(toolId)
-        ? prev.filter(id => id !== toolId)
-        : [...prev, toolId]
-    );
+  const toggleFavorite = async (toolId: string) => {
+    const isCurrentlyFavorite = favoriteTools.includes(toolId);
+    const action = isCurrentlyFavorite ? 'remove' : 'add';
+    
+    try {
+      const response = await fetch('/api/favorites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ toolId, action })
+      });
+      
+      if (response.ok) {
+        // Update local state only after successful API call
+        setFavoriteTools(prev =>
+          isCurrentlyFavorite
+            ? prev.filter(id => id !== toolId)
+            : [...prev, toolId]
+        );
+        // Update localStorage
+        const newFavorites = isCurrentlyFavorite
+          ? favoriteTools.filter(id => id !== toolId)
+          : [...favoriteTools, toolId];
+        localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+      } else {
+        console.error('Failed to update favorite');
+      }
+    } catch (error) {
+      console.error('Error updating favorite:', error);
+    }
   };
 
   const addToRecentlyViewed = (toolId: string) => {
