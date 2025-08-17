@@ -23,6 +23,8 @@ const publicRoutes = [
   '/reset-password',
   '/submit-tool',
   '/submit-tool/thank-you',
+  '/getting-started', // Get Started page for new users
+  '/search', // Search functionality
   '/dashboard', // User dashboard/profile page
   '/settings', // Settings page should handle auth client-side like dashboard
   '/admin',
