@@ -82,6 +82,15 @@ CREATE TABLE IF NOT EXISTS sponsored_slots (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Create favorites table for user tool favorites
+CREATE TABLE IF NOT EXISTS favorites (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    tool_id TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    UNIQUE(user_id, tool_id)
+);
+
 -- Create RLS policies
 ALTER TABLE user_roles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
@@ -89,6 +98,7 @@ ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE tools ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sponsored_slots ENABLE ROW LEVEL SECURITY;
+ALTER TABLE favorites ENABLE ROW LEVEL SECURITY;
 
 -- User roles policies
 CREATE POLICY "Users can view their own roles" ON user_roles
@@ -161,6 +171,16 @@ CREATE POLICY "Admins can manage sponsored slots" ON sponsored_slots
             WHERE user_id = auth.uid() AND role = 'admin'
         )
     );
+
+-- Favorites policies
+CREATE POLICY "Users can view their own favorites" ON favorites
+    FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can insert their own favorites" ON favorites
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete their own favorites" ON favorites
+    FOR DELETE USING (auth.uid() = user_id);
 
 -- Insert default categories
 INSERT INTO categories (name, description, icon) VALUES
