@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 export default function SettingsClient() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [emailNotifications, setEmailNotifications] = useState(false);
   const [savingEmailPref, setSavingEmailPref] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -11,10 +11,9 @@ export default function SettingsClient() {
   // Initialize theme and email notification preference
   useEffect(() => {
     try {
-      // Theme
+      // Theme - default to dark mode
       const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('theme') : null;
-      const prefersDark = typeof window !== 'undefined' ? window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches : false;
-      const isDark = storedTheme ? storedTheme === 'dark' : prefersDark;
+      const isDark = storedTheme ? storedTheme === 'dark' : true; // Default to dark
       setDarkMode(isDark);
       if (typeof document !== 'undefined') {
         document.documentElement.classList.toggle('dark', isDark);
@@ -96,7 +95,7 @@ export default function SettingsClient() {
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-900 dark:text-white">Dark Mode</p>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Use dark theme for better viewing</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Switch to light theme</p>
         </div>
         <button
           type="button"
