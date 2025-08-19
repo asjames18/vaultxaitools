@@ -140,10 +140,10 @@ export default function HomeClient({
   error,
   categories 
 }: HomeClientProps) {
-  const [filteredTools, setFilteredTools] = useState<Tool[]>(popularTools);
+  const [filteredTools, setFilteredTools] = useState<Tool[]>(popularTools || []);
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const { favorites: favoriteTools, toggleFavorite, loading: favoritesLoading } = useFavorites();
+  const { favorites: favoriteTools, toggleFavorite, loading: favoritesLoading, refresh: refreshFavorites } = useFavorites();
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [automationStatus, setAutomationStatus] = useState<any>(null);
   const [showUpdateBanner, setShowUpdateBanner] = useState(false);
@@ -151,13 +151,52 @@ export default function HomeClient({
   const [favoriteLoading, setFavoriteLoading] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [authStatus, setAuthStatus] = useState<string>('Checking...');
+  const [componentError, setComponentError] = useState<string | null>(null);
+  
+  // Safely handle potentially undefined data
+  const safeAllTools = allTools || [];
+  const safePopularTools = popularTools || [];
+  const safeTrendingTools = trendingTools || [];
+  const safeSponsoredTools = sponsoredTools || [];
+  const safeCategories = categories || [];
   
   const supabase = createClient();
 
+  // Error boundary for the component
+  useEffect(() => {
+    try {
+      // Validate that required data is available
+      if (!Array.isArray(safeAllTools)) {
+        console.error('Invalid allTools data:', safeAllTools);
+        setComponentError('Invalid tools data received');
+        return;
+      }
+      
+      if (!Array.isArray(safeCategories)) {
+        console.error('Invalid categories data:', safeCategories);
+        setComponentError('Invalid categories data received');
+        return;
+      }
+      
+      // Initialize filtered tools safely
+      if (safePopularTools.length > 0) {
+        setFilteredTools(safePopularTools);
+      }
+      
+    } catch (err) {
+      console.error('Error initializing HomeClient component:', err);
+      setComponentError('Failed to initialize component');
+    }
+  }, [safeAllTools, safePopularTools, safeCategories]);
+
   // Show toast message
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 3000);
+    try {
+      setToast({ message, type });
+      setTimeout(() => setToast(null), 3000);
+    } catch (err) {
+      console.error('Error showing toast:', err);
+    }
   };
 
   // Check authentication status
@@ -194,7 +233,7 @@ export default function HomeClient({
       
         if (!session?.access_token) {
           console.log('❌ No session token available for loading favorites');
-        setFavoriteTools([]);
+        // Clear favorites from localStorage since we can't load from API
         localStorage.removeItem('vaultx-favorites');
           return;
         }
@@ -214,24 +253,20 @@ export default function HomeClient({
         console.log('🔍 Setting favorites to:', data.favorites || []);
         
         const newFavorites = data.favorites || [];
-        setFavoriteTools(newFavorites);
         
           // Update localStorage to match API
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
           console.log('✅ Favorites loaded from API successfully');
         console.log('🔍 New localStorage favorites:', localStorage.getItem('vaultx-favorites'));
         
-        // Verify the state was updated
-        setTimeout(() => {
-          console.log('🔍 Final verification after loading - favoriteTools state:', favoriteTools);
-        }, 100);
+        // Refresh favorites from the hook
+        refreshFavorites();
         } else {
           const errorData = await response.json();
           console.error('❌ Failed to load favorites from API:', response.status, errorData);
         
         if (response.status === 401) {
           // User not authenticated, clear favorites
-          setFavoriteTools([]);
           localStorage.removeItem('vaultx-favorites');
           console.log('🔍 User not authenticated, cleared favorites');
         } else {
@@ -247,7 +282,7 @@ export default function HomeClient({
   };
 
   // Calculate real stats from tools data
-  const totalReviews = allTools.reduce((sum, tool) => sum + (tool.reviewCount || 0), 0);
+  const totalReviews = safeAllTools.reduce((sum, tool) => sum + (tool.reviewCount || 0), 0);
 
   // Animation and interaction effects
   useEffect(() => {
@@ -262,9 +297,6 @@ export default function HomeClient({
     const savedFavorites = localStorage.getItem('vaultx-favorites');
     const savedRecent = localStorage.getItem('vaultx-recent');
     
-    if (savedFavorites) {
-      setFavoriteTools(JSON.parse(savedFavorites));
-    }
     if (savedRecent) {
       setRecentlyViewed(JSON.parse(savedRecent));
     }
@@ -315,9 +347,9 @@ export default function HomeClient({
   // Expose curated tool count for downstream components (newsletter stats)
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as any).__vaultxToolCount = allTools.length;
+      (window as any).__vaultxToolCount = safeAllTools.length;
     }
-  }, [allTools.length]);
+  }, [safeAllTools.length]);
 
   const handleResultsChange = useCallback((tools: Tool[]) => {
     setFilteredTools(tools);
@@ -376,20 +408,6 @@ export default function HomeClient({
         const responseData = await response.json();
         console.log('🔍 API response data:', responseData);
         
-        // Update local state only after successful API call
-        setFavoriteTools(prev => {
-          const newFavorites = isCurrentlyFavorite
-            ? prev.filter(id => id !== toolId)
-            : [...prev, toolId];
-          console.log('🔍 Updated favorites state:', { 
-            previous: prev, 
-            new: newFavorites, 
-            action: action,
-            toolId: toolId
-          });
-          return newFavorites;
-        });
-        
         // Update localStorage
         const newFavorites = isCurrentlyFavorite
           ? favoriteTools.filter(id => id !== toolId)
@@ -397,6 +415,9 @@ export default function HomeClient({
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
         console.log('✅ Favorite updated successfully');
         console.log('🔍 New localStorage favorites:', localStorage.getItem('vaultx-favorites'));
+        
+        // Refresh favorites from the hook to update the UI
+        refreshFavorites();
         
         // Verify the state was updated
         setTimeout(() => {
@@ -436,11 +457,11 @@ export default function HomeClient({
 
 
   const getRecentlyViewedTools = () => {
-    return allTools.filter(tool => recentlyViewed.includes(tool.id)).slice(0, 3);
+    return safeAllTools.filter(tool => recentlyViewed.includes(tool.id)).slice(0, 3);
   };
 
   const getFavoriteTools = () => {
-    return allTools.filter(tool => favoriteTools.includes(tool.id)).slice(0, 3);
+    return safeAllTools.filter(tool => favoriteTools.includes(tool.id)).slice(0, 3);
   };
 
   return (
@@ -475,6 +496,33 @@ export default function HomeClient({
         </div>
       )}
       
+      {/* Component Error Display */}
+      {componentError && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">
+                Component Error
+              </h3>
+              <p className="text-sm text-red-700 mt-1">
+                {componentError}
+              </p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-2 text-sm text-red-600 hover:text-red-500 underline"
+              >
+                Reload Page
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Automation Update Banner */}
       {showUpdateBanner && (
         <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-3 text-center relative">
@@ -578,15 +626,15 @@ export default function HomeClient({
             </div>
 
             {/* Curated stats (remove potentially unreliable external metrics) */}
-            {allTools && allTools.length > 0 && (
+            {safeAllTools && safeAllTools.length > 0 && (
               <div className={`grid grid-cols-2 gap-6 sm:gap-8 max-w-2xl sm:max-w-3xl mx-auto transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                 <div className="text-center group">
-                  <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{allTools.length}</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{safeAllTools.length}</div>
                   <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Curated Tools</div>
                   <div className="text-xs text-green-600 mt-1">Expert Selected</div>
                 </div>
                 <div className="text-center group">
-                  <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{categories.length}</div>
+                  <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">{safeCategories.length}</div>
                   <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Categories</div>
                 </div>
               </div>
@@ -599,8 +647,8 @@ export default function HomeClient({
       <QuickActions />
 
       {/* Daily Tool Section - New! */}
-      {allTools && allTools.length > 0 ? (
-        <DailyTool tools={allTools} />
+      {safeAllTools && safeAllTools.length > 0 ? (
+        <DailyTool tools={safeAllTools} />
       ) : (
         <section className="py-16 bg-gray-50 dark:bg-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -615,7 +663,7 @@ export default function HomeClient({
       )}
 
       {/* Community Highlights Section - New! */}
-      {allTools && allTools.length > 0 ? (
+      {safeAllTools && safeAllTools.length > 0 ? (
         <CommunityHighlights />
       ) : (
         <section className="py-16 bg-gray-50 dark:bg-gray-800">
@@ -631,7 +679,7 @@ export default function HomeClient({
       )}
 
       {/* Personalization Section - New! */}
-      {(favoriteTools.length > 0 || recentlyViewed.length > 0) && allTools && allTools.length > 0 && (
+      {(favoriteTools.length > 0 || recentlyViewed.length > 0) && safeAllTools && safeAllTools.length > 0 && (
         <section className="py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">

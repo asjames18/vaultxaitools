@@ -67,156 +67,11 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
   // Remove test favorites functionality - no longer needed
   // const createTestFavorites = async () => { ... } - REMOVED
 
-  // Clean up test favorites (remove string-based favorites)
-  const cleanupTestFavorites = async () => {
-    setFavoritesLoading(true);
-    
-    try {
-      const { createClient } = await import('@/lib/supabase');
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session?.access_token) {
-        return;
-      }
 
-      // Get raw favorites from database to find string-based ones
-      const { data: rawFavorites, error: dbError } = await supabase
-        .from('user_favorites')
-        .select('tool_id')
-        .eq('user_id', session.user.id);
 
-      if (dbError) {
-        console.error('Database query error:', dbError);
-        return;
-      }
-      
-      // Find favorites that don't have UUID tool IDs
-      const testFavorites = rawFavorites?.filter(fav => {
-        const toolId = fav.tool_id;
-        // Check if toolId is NOT a UUID (doesn't contain hyphens or isn't 36 characters)
-        return toolId && (!toolId.includes('-') || toolId.length !== 36);
-      }) || [];
 
-      if (testFavorites.length === 0) {
-        return;
-      }
 
-      // Remove each test favorite
-      for (const fav of testFavorites) {
-        const toolId = fav.tool_id;
-        
-        const removeResponse = await fetch('/api/favorites', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`
-          },
-          body: JSON.stringify({ toolId, action: 'remove' })
-        });
-        
-        if (!removeResponse.ok) {
-          console.error('Failed to remove test favorite:', toolId);
-        }
-      }
-      
-      // Reload favorites after cleanup
-      await loadClientFavorites();
-    } catch (error) {
-      console.error('Error cleaning up test favorites:', error);
-    } finally {
-      setFavoritesLoading(false);
-    }
-  };
 
-  // Check database directly
-  const checkDatabaseDirectly = async () => {
-    console.log('🔍 Dashboard: Checking database directly...');
-    try {
-      const { createClient } = await import('@/lib/supabase');
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session?.access_token) {
-        console.log('❌ Dashboard: No session token available');
-        return;
-      }
-
-      // Try to query the database directly
-      console.log('🔍 Dashboard: Querying user_favorites table directly...');
-      const { data, error } = await supabase
-        .from('user_favorites')
-        .select('*')
-        .eq('user_id', session.user.id);
-
-      if (error) {
-        console.error('❌ Dashboard: Database query error:', error);
-      } else {
-        console.log('🔍 Dashboard: Database query result:', data);
-        console.log('🔍 Dashboard: Found favorites in database:', data?.length || 0);
-      }
-    } catch (error) {
-      console.error('❌ Dashboard: Error checking database:', error);
-    }
-  };
-
-  // Test database table structure
-  const testDatabaseStructure = async () => {
-    console.log('🔍 Dashboard: Testing database table structure...');
-    try {
-      const { createClient } = await import('@/lib/supabase');
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session?.access_token) {
-        console.log('❌ Dashboard: No session token available');
-        return;
-      }
-
-      // Test if table exists by trying to select all columns
-      console.log('🔍 Dashboard: Testing table structure...');
-      const { data, error } = await supabase
-        .from('user_favorites')
-        .select('*')
-        .limit(1);
-
-      if (error) {
-        console.error('❌ Dashboard: Table structure test failed:', error);
-        console.log('🔍 Dashboard: This might mean the table does not exist or has wrong permissions');
-      } else {
-        console.log('✅ Dashboard: Table structure test passed');
-        console.log('🔍 Dashboard: Sample row structure:', data?.[0] || 'No rows found');
-      }
-
-      // Test inserting a temporary row
-      console.log('🔍 Dashboard: Testing insert capability...');
-      const testRow = { user_id: session.user.id, tool_id: 'test-tool-' + Date.now() };
-      const { error: insertError } = await supabase
-        .from('user_favorites')
-        .insert(testRow);
-
-      if (insertError) {
-        console.error('❌ Dashboard: Insert test failed:', insertError);
-      } else {
-        console.log('✅ Dashboard: Insert test passed');
-        
-        // Clean up test row
-        const { error: deleteError } = await supabase
-          .from('user_favorites')
-          .delete()
-          .eq('user_id', session.user.id)
-          .eq('tool_id', testRow.tool_id);
-        
-        if (deleteError) {
-          console.warn('⚠️ Dashboard: Could not clean up test row:', deleteError);
-        } else {
-          console.log('✅ Dashboard: Test row cleaned up successfully');
-        }
-      }
-    } catch (error) {
-      console.error('❌ Dashboard: Error testing database structure:', error);
-    }
-  };
 
   // Load existing profile data on component mount
   useEffect(() => {
@@ -234,7 +89,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
           return;
         }
 
-        console.log('🔍 Dashboard: Starting profile load with session:', session.user.email);
+
 
         // Sync Supabase session cookies for server-side APIs (fallback if header is stripped)
         try {
@@ -250,10 +105,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
         } catch {}
         
         // Load client favorites
-        console.log('🔍 Dashboard: Calling loadClientFavorites from profile load');
         loadClientFavorites();
-        
-        console.log('🔍 Dashboard: Calling /api/user/export');
         const response = await fetch('/api/user/export', {
           headers: {
             'Authorization': `Bearer ${session.access_token}`,
@@ -263,11 +115,9 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
           credentials: 'include'
         });
         
-        console.log('🔍 Dashboard: Export API response status:', response.status);
         
         if (response.ok) {
           const data = await response.json();
-          console.log('🔍 Dashboard: Export API response data:', data);
           
           if (data.profile) {
             setProfile({
@@ -391,42 +241,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16">
-      {/* Debug Display */}
-      <div className="fixed top-20 right-4 z-50 bg-black/80 text-white p-4 rounded-lg text-sm font-mono">
-        <div>🔍 DASHBOARD DEBUG</div>
-        <div>Server Favorites: {favorites.length}</div>
-        <div>Client Favorites: {clientFavorites.length}</div>
-        <div>Loading: {favoritesLoading ? 'Yes' : 'No'}</div>
-        <button
-          onClick={loadClientFavorites}
-          className="mt-2 bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700 mr-2"
-        >
-          Load Favorites
-        </button>
-        <button
-          onClick={cleanupTestFavorites}
-          className="mt-2 bg-orange-600 text-white px-2 py-1 rounded text-xs hover:bg-orange-700"
-        >
-          🧹 Clean Test Data
-        </button>
-        <button
-          onClick={checkDatabaseDirectly}
-          className="mt-2 bg-yellow-600 text-white px-2 py-1 rounded text-xs hover:bg-yellow-700 block w-full"
-        >
-          Check Database
-        </button>
-        <button
-          onClick={() => {
-            console.log('🔍 Dashboard: Current state check:');
-            console.log('  - clientFavorites:', clientFavorites);
-            console.log('  - favoritesLoading:', favoritesLoading);
-            console.log('  - profileLoading:', profileLoading);
-          }}
-          className="mt-2 bg-purple-600 text-white px-2 py-1 rounded text-xs hover:bg-purple-700 block w-full"
-        >
-          Check State
-        </button>
-      </div>
+
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
