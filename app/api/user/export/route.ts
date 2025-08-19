@@ -60,10 +60,10 @@ export async function GET(request: NextRequest) {
       user = cookieUser;
     }
 
-    // Get favorites by user_id
+    // Get user favorites
     const { data: favorites, error: favoritesError } = await supabase
-      .from('favorites')
-      .select('tool_id, created_at')
+      .from('user_favorites')
+      .select('tool_id')
       .eq('user_id', user.id);
 
     if (favoritesError) {

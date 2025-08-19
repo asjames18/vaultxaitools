@@ -56,26 +56,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('theme');
-                  if (!theme || theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
+        {/* Remove the problematic script that causes hydration mismatch */}
       </head>
-      <body className={`${inter.className} pt-14`}>
+      <body className={`${inter.className} pt-14`} suppressHydrationWarning>
         <JsonLd data={{
           '@context': 'https://schema.org',
           '@type': 'Organization',

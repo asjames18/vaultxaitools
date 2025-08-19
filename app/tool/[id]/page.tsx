@@ -85,6 +85,15 @@ export async function generateMetadata({ params }: ToolDetailsProps): Promise<Me
 export default async function ToolDetails({ params }: ToolDetailsProps) {
   const resolvedParams = await params;
   
+  // TEMPORARY: Always render our test component to eliminate hydration issues
+  return (
+    <>
+      <ToolDetailsClient toolId={resolvedParams.id} />
+    </>
+  );
+  
+  // ORIGINAL LOGIC COMMENTED OUT FOR NOW
+  /*
   try {
     const supabase = createClientWithoutCookies();
     const { data: tool, error } = await supabase
@@ -206,4 +215,5 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
       </div>
     );
   }
+  */
 } 

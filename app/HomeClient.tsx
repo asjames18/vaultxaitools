@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase';
+import { useFavorites } from '@/lib/useFavorites';
 import SponsoredContent from '@/components/SponsoredContent';
 import EmailSignupForm from '@/components/EmailSignupForm';
 import DailyTool from '@/components/DailyTool';
@@ -142,13 +143,108 @@ export default function HomeClient({
   const [filteredTools, setFilteredTools] = useState<Tool[]>(popularTools);
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [favoriteTools, setFavoriteTools] = useState<string[]>([]);
+  const { favorites: favoriteTools, toggleFavorite, loading: favoritesLoading } = useFavorites();
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [automationStatus, setAutomationStatus] = useState<any>(null);
   const [showUpdateBanner, setShowUpdateBanner] = useState(false);
   const [lastDataUpdate, setLastDataUpdate] = useState<Date>(new Date());
+  const [favoriteLoading, setFavoriteLoading] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [authStatus, setAuthStatus] = useState<string>('Checking...');
   
   const supabase = createClient();
+
+  // Show toast message
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  // Check authentication status
+  const checkAuthStatus = async () => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (session?.access_token && user) {
+        setAuthStatus(`✅ ${user.email}`);
+        console.log('🔍 Main site: User authenticated:', user.email);
+      } else {
+        setAuthStatus('❌ Not authenticated');
+        console.log('🔍 Main site: User not authenticated');
+      }
+    } catch (error) {
+      setAuthStatus('❌ Auth error');
+      console.error('🔍 Main site: Auth check error:', error);
+    }
+  };
+
+    // Load favorites from API
+    const loadFavoritesFromAPI = async () => {
+      console.log('🔍 loadFavoritesFromAPI called');
+    console.log('🔍 Current favoriteTools state before API call:', favoriteTools);
+    
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+      console.log('🔍 Session for loading favorites:', { 
+        hasSession: !!session, 
+        hasToken: !!session?.access_token,
+        userEmail: session?.user?.email 
+      });
+      
+        if (!session?.access_token) {
+          console.log('❌ No session token available for loading favorites');
+        setFavoriteTools([]);
+        localStorage.removeItem('vaultx-favorites');
+          return;
+        }
+        
+        console.log('🔍 Making GET request to /api/favorites');
+        const response = await fetch('/api/favorites', {
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`
+          }
+        });
+        console.log('🔍 GET favorites response status:', response.status);
+      console.log('🔍 GET favorites response headers:', Object.fromEntries(response.headers.entries()));
+      
+        if (response.ok) {
+          const data = await response.json();
+          console.log('🔍 Favorites data received:', data);
+        console.log('🔍 Setting favorites to:', data.favorites || []);
+        
+        const newFavorites = data.favorites || [];
+        setFavoriteTools(newFavorites);
+        
+          // Update localStorage to match API
+        localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+          console.log('✅ Favorites loaded from API successfully');
+        console.log('🔍 New localStorage favorites:', localStorage.getItem('vaultx-favorites'));
+        
+        // Verify the state was updated
+        setTimeout(() => {
+          console.log('🔍 Final verification after loading - favoriteTools state:', favoriteTools);
+        }, 100);
+        } else {
+          const errorData = await response.json();
+          console.error('❌ Failed to load favorites from API:', response.status, errorData);
+        
+        if (response.status === 401) {
+          // User not authenticated, clear favorites
+          setFavoriteTools([]);
+          localStorage.removeItem('vaultx-favorites');
+          console.log('🔍 User not authenticated, cleared favorites');
+        } else {
+          // Other error, keep existing favorites from localStorage
+          console.log('🔍 Keeping existing favorites from localStorage due to API error');
+        }
+        }
+      } catch (error) {
+        console.error('❌ Error loading favorites from API:', error);
+      // Keep existing favorites from localStorage on error
+      console.log('🔍 Keeping existing favorites from localStorage due to error');
+    }
+  };
 
   // Calculate real stats from tools data
   const totalReviews = allTools.reduce((sum, tool) => sum + (tool.reviewCount || 0), 0);
@@ -173,43 +269,11 @@ export default function HomeClient({
       setRecentlyViewed(JSON.parse(savedRecent));
     }
 
-    // Load favorites from API
-    const loadFavoritesFromAPI = async () => {
-      console.log('🔍 loadFavoritesFromAPI called');
-      try {
-        // Get the current session token
-        const { data: { session } } = await supabase.auth.getSession();
-        console.log('🔍 Session for loading favorites:', session ? 'Session exists' : 'No session');
-        if (!session?.access_token) {
-          console.log('❌ No session token available for loading favorites');
-          return;
-        }
-        
-        console.log('🔍 Making GET request to /api/favorites');
-        const response = await fetch('/api/favorites', {
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`
-          }
-        });
-        console.log('🔍 GET favorites response status:', response.status);
-        if (response.ok) {
-          const data = await response.json();
-          console.log('🔍 Favorites data received:', data);
-          setFavoriteTools(data.favorites || []);
-          // Update localStorage to match API
-          localStorage.setItem('vaultx-favorites', JSON.stringify(data.favorites || []));
-          console.log('✅ Favorites loaded from API successfully');
-        } else {
-          const errorData = await response.json();
-          console.error('❌ Failed to load favorites from API:', response.status, errorData);
-        }
-      } catch (error) {
-        console.error('❌ Error loading favorites from API:', error);
-      }
-    };
-
     // Load favorites from API on mount
     loadFavoritesFromAPI();
+
+    // Check authentication status
+    checkAuthStatus();
 
     // Subscribe to automation updates for real-time sync
     const automationChannel = supabase
@@ -259,22 +323,42 @@ export default function HomeClient({
     setFilteredTools(tools);
   }, []);
 
-  // Toggle favorite
-  const toggleFavorite = async (toolId: string) => {
+  // Toggle favorite using the unified hook
+  const handleToggleFavorite = async (toolId: string) => {
     console.log('🔍 toggleFavorite called with toolId:', toolId);
-    const isCurrentlyFavorite = favoriteTools.includes(toolId);
-    const action = isCurrentlyFavorite ? 'remove' : 'add';
-    console.log('🔍 Current favorite status:', isCurrentlyFavorite, 'Action:', action);
+    console.log('🔍 Current favoriteTools state:', favoriteTools);
+    console.log('🔍 Current localStorage favorites:', localStorage.getItem('vaultx-favorites'));
     
-    try {
-      // Get the current session token
+    // Prevent multiple clicks
+    if (favoriteLoading === toolId) {
+      console.log('🔍 Already processing favorite for this tool');
+      return;
+    }
+    
+    setFavoriteLoading(toolId);
+    
+    // Check if user is authenticated first
       const { data: { session } } = await supabase.auth.getSession();
-      console.log('🔍 Session data:', session ? 'Session exists' : 'No session');
+    console.log('🔍 Session check result:', { 
+      hasSession: !!session, 
+      hasToken: !!session?.access_token,
+      userId: session?.user?.id 
+    });
+    
       if (!session?.access_token) {
-        console.error('❌ No session token available');
+      console.log('❌ User not authenticated, redirecting to sign in');
+      setFavoriteLoading(null);
+      // Redirect to sign in page
+      window.location.href = '/sign-in';
         return;
       }
       
+    const isCurrentlyFavorite = favoriteTools.includes(toolId);
+    const action = isCurrentlyFavorite ? 'remove' : 'add';
+    console.log('🔍 Current favorite status:', isCurrentlyFavorite, 'Action:', action);
+    console.log('🔍 Tool ID being processed:', toolId);
+    
+    try {
       console.log('🔍 Making API call to /api/favorites with action:', action);
       const response = await fetch('/api/favorites', {
         method: 'POST',
@@ -286,28 +370,60 @@ export default function HomeClient({
       });
       
       console.log('🔍 API response status:', response.status);
+      console.log('🔍 API response headers:', Object.fromEntries(response.headers.entries()));
+      
       if (response.ok) {
         const responseData = await response.json();
         console.log('🔍 API response data:', responseData);
         
         // Update local state only after successful API call
-        setFavoriteTools(prev =>
-          isCurrentlyFavorite
+        setFavoriteTools(prev => {
+          const newFavorites = isCurrentlyFavorite
             ? prev.filter(id => id !== toolId)
-            : [...prev, toolId]
-        );
+            : [...prev, toolId];
+          console.log('🔍 Updated favorites state:', { 
+            previous: prev, 
+            new: newFavorites, 
+            action: action,
+            toolId: toolId
+          });
+          return newFavorites;
+        });
+        
         // Update localStorage
         const newFavorites = isCurrentlyFavorite
           ? favoriteTools.filter(id => id !== toolId)
           : [...favoriteTools, toolId];
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
         console.log('✅ Favorite updated successfully');
+        console.log('🔍 New localStorage favorites:', localStorage.getItem('vaultx-favorites'));
+        
+        // Verify the state was updated
+        setTimeout(() => {
+          console.log('🔍 Final verification - favoriteTools state:', favoriteTools);
+          console.log('🔍 Final verification - localStorage:', localStorage.getItem('vaultx-favorites'));
+        }, 100);
+        
+        showToast(`Tool ${isCurrentlyFavorite ? 'removed from' : 'added to'} favorites!`);
       } else {
         const errorData = await response.json();
         console.error('❌ Failed to update favorite:', response.status, errorData);
+        
+        // Show user-friendly error message
+        if (response.status === 401) {
+          showToast('Please sign in to save favorites', 'error');
+          setTimeout(() => {
+            window.location.href = '/sign-in';
+          }, 2000);
+        } else {
+          showToast(`Failed to ${action} favorite: ${errorData.error || 'Unknown error'}`, 'error');
+        }
       }
     } catch (error) {
       console.error('❌ Error updating favorite:', error);
+      showToast(`Failed to ${action} favorite. Please try again.`, 'error');
+    } finally {
+      setFavoriteLoading(null);
     }
   };
 
@@ -338,6 +454,26 @@ export default function HomeClient({
           url: 'https://vaultxaitools.com'
         }} 
       />
+      
+      {/* Toast Notifications */}
+      {toast && (
+        <div className={`fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+          toast.type === 'success' 
+            ? 'bg-green-500 text-white' 
+            : 'bg-red-500 text-white'
+        }`}>
+          <div className="flex items-center gap-2">
+            {toast.type === 'success' ? (
+              <CheckIcon className="w-5 h-5" />
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            )}
+            <span className="font-medium">{toast.message}</span>
+          </div>
+        </div>
+      )}
       
       {/* Automation Update Banner */}
       {showUpdateBanner && (
@@ -529,9 +665,15 @@ export default function HomeClient({
                         </div>
                         <button
                           onClick={() => toggleFavorite(tool.id)}
-                          className="text-red-500 hover:text-red-600 transition-colors"
+                          disabled={favoriteLoading === tool.id}
+                          className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'} ${favoriteLoading === tool.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                          title={favoriteTools.includes(tool.id) ? 'Remove from favorites' : 'Add to favorites'}
                         >
-                          <HeartIcon className="w-5 h-5 fill-current" />
+                          {favoriteLoading === tool.id ? (
+                            <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <HeartIcon className={`w-5 h-5 ${favoriteTools.includes(tool.id) ? 'fill-current' : ''}`} />
+                          )}
                         </button>
                       </div>
                     ))}
@@ -573,6 +715,55 @@ export default function HomeClient({
           </div>
         </section>
       )}
+
+      {/* Sign In Prompt for Unauthenticated Users */}
+      {favoriteTools.length === 0 && recentlyViewed.length === 0 && (
+        <section className="py-16 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+              <HeartIcon className="w-16 h-16 text-red-500 mx-auto mb-6" />
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                Start Building Your AI Toolkit
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                Sign in to save your favorite AI tools, track what you've explored, and get personalized recommendations.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/sign-in"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                >
+                  <HeartIcon className="w-5 h-5" />
+                  Sign In to Save Favorites
+                </Link>
+                <Link
+                  href="/AITools"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-gray-200"
+                >
+                  Browse AI Tools
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Debug Authentication Status */}
+      <div className="fixed top-20 left-4 z-50 bg-black/80 text-white p-4 rounded-lg text-sm font-mono">
+        <div>🔍 AUTH DEBUG</div>
+        <div>User: {authStatus}</div>
+        <div>Favorites: {favoriteTools.length}</div>
+        <div>Session: {authStatus}</div>
+        <button
+          onClick={() => {
+            checkAuthStatus();
+            loadFavoritesFromAPI();
+          }}
+          className="mt-2 bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700"
+        >
+          Refresh
+        </button>
+      </div>
 
       {/* Our Curation Process Section - New! */}
       <section className="py-20 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">

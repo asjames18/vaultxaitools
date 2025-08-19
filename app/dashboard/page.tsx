@@ -1,111 +1,137 @@
-import { Metadata } from 'next';
-import { Suspense } from 'react';
+'use client'
+
+import { useEffect, useState } from 'react';
 import DashboardClient from './DashboardClient';
-import { createClient } from '@/lib/supabase-server';
 
-export const metadata: Metadata = {
-  title: 'Dashboard - VaultX AI Tools',
-  description: 'Your personalized AI tools dashboard with favorites, activity, and recommendations',
-};
+export default function DashboardPage() {
+  const [data, setData] = useState<{
+    userName: string;
+    userEmail: string;
+    memberSince: string;
+    stats: { toolsExplored: number; reviewsWritten: number; favoritesCount: number };
+    recent: Array<{ id: string; type: string; label: string; tool: string; when: string }>;
+    favorites: Array<string | { id: string; name: string; logo?: string; description?: string; category?: string }>;
+  }>({
+    userName: 'Loading...',
+    userEmail: '',
+    memberSince: new Date().toISOString(),
+    stats: { toolsExplored: 0, reviewsWritten: 0, favoritesCount: 0 },
+    recent: [],
+    favorites: [],
+  });
+  const [loading, setLoading] = useState(true);
 
-async function getData() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return {
-      userName: 'Guest',
-      userEmail: '',
-      memberSince: new Date().toISOString(),
-      stats: { toolsExplored: 0, reviewsWritten: 0, favoritesCount: 0 },
-      recent: [],
-      favorites: [],
+  useEffect(() => {
+    const loadDashboardData = async () => {
+      try {
+        // Dynamically import Supabase client to avoid webpack issues
+        const { createClient } = await import('@/lib/supabase');
+        const supabase = createClient();
+        
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session?.user) {
+          // User is authenticated, load their data
+          // Always use the new API endpoint that returns tool names
+          let favorites = [];
+          try {
+            const response = await fetch('/api/favorites', {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${session.access_token}`
+              }
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              favorites = data.favorites || [];
+              console.log('✅ Dashboard: Loaded favorites from API:', favorites);
+            } else {
+              console.log('❌ Dashboard: API error, status:', response.status);
+              // Don't fall back to old method - just show empty
+              favorites = [];
+            }
+          } catch (error) {
+            console.error('❌ Dashboard: Error fetching favorites from API:', error);
+            favorites = [];
+          }
+
+          // Get reviews
+          let reviews = null;
+          const { data: reviewsById, error: reviewsByIdError } = await supabase
+            .from('reviews')
+            .select('id, tool_id, created_at')
+            .eq('user_id', session.user.id)
+            .order('created_at', { ascending: false })
+            .limit(5);
+
+          if (reviewsByIdError) {
+            // Try with user_name as fallback
+            const userName = session.user.email?.split('@')[0] || session.user.email;
+            const { data: reviewsByName } = await supabase
+              .from('reviews')
+              .select('id, tool_id, created_at')
+              .eq('user_name', userName)
+              .order('created_at', { ascending: false })
+              .limit(5);
+            reviews = reviewsByName;
+          } else {
+            reviews = reviewsById;
+          }
+
+          const recent = (reviews || []).map((r) => ({ 
+            id: r.id, 
+            type: 'review', 
+            label: 'Wrote a review', 
+            tool: r.tool_id, 
+            when: new Date(r.created_at).toLocaleDateString() 
+          }));
+
+          const stats = { 
+            toolsExplored: Array.isArray(favorites) ? favorites.length : 0, 
+            reviewsWritten: recent.length, 
+            favoritesCount: Array.isArray(favorites) ? favorites.length : 0
+          };
+
+          setData({
+            userName: session.user.email?.split('@')[0] || 'User',
+            userEmail: session.user.email || '',
+            memberSince: session.user.created_at || new Date().toISOString(),
+            stats,
+            recent,
+            favorites,
+          });
+        } else {
+          // No session, show guest data
+          setData({
+            userName: 'Guest',
+            userEmail: '',
+            memberSince: new Date().toISOString(),
+            stats: { toolsExplored: 0, reviewsWritten: 0, favoritesCount: 0 },
+            recent: [],
+            favorites: [],
+          });
+        }
+      } catch (error) {
+        console.error('Error loading dashboard data:', error);
+        setData({
+          userName: 'User',
+          userEmail: '',
+          memberSince: new Date().toISOString(),
+          stats: { toolsExplored: 0, reviewsWritten: 0, favoritesCount: 0 },
+          recent: [],
+          favorites: [],
+        });
+      } finally {
+        setLoading(false);
+      }
     };
-  }
 
-  try {
-    // Try to get favorites - this should work with user_id
-    const { data: favs, error: favsError } = await supabase
-      .from('favorites')
-      .select('tool_id')
-      .eq('user_id', user.id);
+    loadDashboardData();
+  }, []);
 
-    if (favsError) {
-      console.log('Error fetching favorites:', favsError.message);
-    }
-
-    // Try to get reviews - the table uses user_name instead of user_id
-    // First try with user_id (in case it's been updated)
-    let reviews = null;
-    let reviewsError = null;
-    
-    const { data: reviewsById, error: reviewsByIdError } = await supabase
-      .from('reviews')
-      .select('id, tool_id, created_at')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(5);
-
-    if (reviewsByIdError) {
-      // If that fails, try with user_name (current table structure)
-      const userName = user.email?.split('@')[0] || user.email;
-      const { data: reviewsByName, error: reviewsByNameError } = await supabase
-        .from('reviews')
-        .select('id, tool_id, created_at')
-        .eq('user_name', userName)
-        .order('created_at', { ascending: false })
-        .limit(5);
-
-      reviews = reviewsByName;
-      reviewsError = reviewsByNameError;
-    } else {
-      reviews = reviewsById;
-      reviewsError = reviewsByIdError;
-    }
-
-    if (reviewsError) {
-      console.log('Error fetching reviews:', reviewsError.message);
-    }
-
-    const favorites = (favs || []).map((f) => ({ id: f.tool_id, name: f.tool_id }));
-    const recent = (reviews || []).map((r) => ({ 
-      id: r.id, 
-      type: 'review' as const, 
-      label: 'Wrote a review', 
-      tool: r.tool_id, 
-      when: new Date(r.created_at).toLocaleDateString() 
-    }));
-
-    return {
-      userName: user.email?.split('@')[0] || 'User',
-      userEmail: user.email || '',
-      memberSince: user.created_at || new Date().toISOString(),
-      stats: { 
-        toolsExplored: favorites.length, 
-        reviewsWritten: recent.length, 
-        favoritesCount: favorites.length 
-      },
-      recent,
-      favorites,
-    };
-  } catch (error) {
-    console.error('Error loading dashboard data:', error);
-    
-    // Return safe fallback data
-    return {
-      userName: user.email?.split('@')[0] || 'User',
-      userEmail: user.email || '',
-      memberSince: user.created_at || new Date().toISOString(),
-      stats: { toolsExplored: 0, reviewsWritten: 0, favoritesCount: 0 },
-      recent: [],
-      favorites: [],
-    };
-  }
-}
-
-export default async function DashboardPage() {
-  const data = await getData();
-  return (
-    <Suspense fallback={
+  if (loading) {
+    return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="animate-pulse">
@@ -155,15 +181,17 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
-    }>
-      <DashboardClient
-        userName={data.userName}
-        userEmail={data.userEmail}
-        memberSince={data.memberSince}
-        stats={data.stats}
-        recent={data.recent as any}
-        favorites={data.favorites as any}
-      />
-    </Suspense>
+    );
+  }
+
+  return (
+    <DashboardClient
+      userName={data.userName}
+      userEmail={data.userEmail}
+      memberSince={data.memberSince}
+      stats={data.stats}
+      recent={data.recent}
+      favorites={data.favorites}
+    />
   );
 } 

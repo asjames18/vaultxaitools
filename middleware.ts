@@ -42,6 +42,7 @@ const publicRoutes = [
   '/admin/users',
   '/admin/users(.*)',
   '/debug-supabase', // Debug page for Supabase testing
+  '/test-favorites', // Test page for debugging favorites functionality
   // REMOVED: Test pages - completely public for debugging (SECURITY RISK)
   // '/test-admin',
   // '/test-automation', 

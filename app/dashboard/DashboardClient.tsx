@@ -9,8 +9,8 @@ interface DashboardProps {
   userEmail: string;
   memberSince: string;
   stats: { toolsExplored: number; reviewsWritten: number; favoritesCount: number };
-  recent: RecentItem[];
-  favorites: Array<{ id: string; name: string }>; // minimal for now
+  recent: Array<{ id: string; type: string; label: string; tool?: string; when: string }>;
+  favorites: string[]; // Array of tool IDs as strings
 }
 
 export default function DashboardClient({ userName, userEmail, memberSince, stats, recent, favorites }: DashboardProps) {
@@ -21,6 +21,202 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
   const [newEmail, setNewEmail] = useState(userEmail);
   const [emailSubmitting, setEmailSubmitting] = useState(false);
   const [emailMessage, setEmailMessage] = useState<string | null>(null);
+  const [clientFavorites, setClientFavorites] = useState<Array<string | { id: string; name: string; logo?: string; description?: string; category?: string }>>(favorites);
+  const [favoritesLoading, setFavoritesLoading] = useState(false);
+
+  // Load client favorites
+  const loadClientFavorites = async () => {
+    setFavoritesLoading(true);
+    
+    try {
+      const { createClient } = await import('@/lib/supabase');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session?.access_token) {
+        setFavoritesLoading(false);
+        return;
+      }
+
+      const response = await fetch('/api/favorites', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        if (data.favorites && Array.isArray(data.favorites)) {
+          setClientFavorites(data.favorites);
+        } else {
+          setClientFavorites([]);
+        }
+      } else {
+        setClientFavorites([]);
+      }
+    } catch (error) {
+      console.error('Error loading favorites:', error);
+      setClientFavorites([]);
+    } finally {
+      setFavoritesLoading(false);
+    }
+  };
+
+  // Remove test favorites functionality - no longer needed
+  // const createTestFavorites = async () => { ... } - REMOVED
+
+  // Clean up test favorites (remove string-based favorites)
+  const cleanupTestFavorites = async () => {
+    setFavoritesLoading(true);
+    
+    try {
+      const { createClient } = await import('@/lib/supabase');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session?.access_token) {
+        return;
+      }
+
+      // Get raw favorites from database to find string-based ones
+      const { data: rawFavorites, error: dbError } = await supabase
+        .from('user_favorites')
+        .select('tool_id')
+        .eq('user_id', session.user.id);
+
+      if (dbError) {
+        console.error('Database query error:', dbError);
+        return;
+      }
+      
+      // Find favorites that don't have UUID tool IDs
+      const testFavorites = rawFavorites?.filter(fav => {
+        const toolId = fav.tool_id;
+        // Check if toolId is NOT a UUID (doesn't contain hyphens or isn't 36 characters)
+        return toolId && (!toolId.includes('-') || toolId.length !== 36);
+      }) || [];
+
+      if (testFavorites.length === 0) {
+        return;
+      }
+
+      // Remove each test favorite
+      for (const fav of testFavorites) {
+        const toolId = fav.tool_id;
+        
+        const removeResponse = await fetch('/api/favorites', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`
+          },
+          body: JSON.stringify({ toolId, action: 'remove' })
+        });
+        
+        if (!removeResponse.ok) {
+          console.error('Failed to remove test favorite:', toolId);
+        }
+      }
+      
+      // Reload favorites after cleanup
+      await loadClientFavorites();
+    } catch (error) {
+      console.error('Error cleaning up test favorites:', error);
+    } finally {
+      setFavoritesLoading(false);
+    }
+  };
+
+  // Check database directly
+  const checkDatabaseDirectly = async () => {
+    console.log('🔍 Dashboard: Checking database directly...');
+    try {
+      const { createClient } = await import('@/lib/supabase');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session?.access_token) {
+        console.log('❌ Dashboard: No session token available');
+        return;
+      }
+
+      // Try to query the database directly
+      console.log('🔍 Dashboard: Querying user_favorites table directly...');
+      const { data, error } = await supabase
+        .from('user_favorites')
+        .select('*')
+        .eq('user_id', session.user.id);
+
+      if (error) {
+        console.error('❌ Dashboard: Database query error:', error);
+      } else {
+        console.log('🔍 Dashboard: Database query result:', data);
+        console.log('🔍 Dashboard: Found favorites in database:', data?.length || 0);
+      }
+    } catch (error) {
+      console.error('❌ Dashboard: Error checking database:', error);
+    }
+  };
+
+  // Test database table structure
+  const testDatabaseStructure = async () => {
+    console.log('🔍 Dashboard: Testing database table structure...');
+    try {
+      const { createClient } = await import('@/lib/supabase');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session?.access_token) {
+        console.log('❌ Dashboard: No session token available');
+        return;
+      }
+
+      // Test if table exists by trying to select all columns
+      console.log('🔍 Dashboard: Testing table structure...');
+      const { data, error } = await supabase
+        .from('user_favorites')
+        .select('*')
+        .limit(1);
+
+      if (error) {
+        console.error('❌ Dashboard: Table structure test failed:', error);
+        console.log('🔍 Dashboard: This might mean the table does not exist or has wrong permissions');
+      } else {
+        console.log('✅ Dashboard: Table structure test passed');
+        console.log('🔍 Dashboard: Sample row structure:', data?.[0] || 'No rows found');
+      }
+
+      // Test inserting a temporary row
+      console.log('🔍 Dashboard: Testing insert capability...');
+      const testRow = { user_id: session.user.id, tool_id: 'test-tool-' + Date.now() };
+      const { error: insertError } = await supabase
+        .from('user_favorites')
+        .insert(testRow);
+
+      if (insertError) {
+        console.error('❌ Dashboard: Insert test failed:', insertError);
+      } else {
+        console.log('✅ Dashboard: Insert test passed');
+        
+        // Clean up test row
+        const { error: deleteError } = await supabase
+          .from('user_favorites')
+          .delete()
+          .eq('user_id', session.user.id)
+          .eq('tool_id', testRow.tool_id);
+        
+        if (deleteError) {
+          console.warn('⚠️ Dashboard: Could not clean up test row:', deleteError);
+        } else {
+          console.log('✅ Dashboard: Test row cleaned up successfully');
+        }
+      }
+    } catch (error) {
+      console.error('❌ Dashboard: Error testing database structure:', error);
+    }
+  };
 
   // Load existing profile data on component mount
   useEffect(() => {
@@ -38,6 +234,8 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
           return;
         }
 
+        console.log('🔍 Dashboard: Starting profile load with session:', session.user.email);
+
         // Sync Supabase session cookies for server-side APIs (fallback if header is stripped)
         try {
           await fetch('/api/auth/session', {
@@ -51,6 +249,11 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
           });
         } catch {}
         
+        // Load client favorites
+        console.log('🔍 Dashboard: Calling loadClientFavorites from profile load');
+        loadClientFavorites();
+        
+        console.log('🔍 Dashboard: Calling /api/user/export');
         const response = await fetch('/api/user/export', {
           headers: {
             'Authorization': `Bearer ${session.access_token}`,
@@ -60,8 +263,12 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
           credentials: 'include'
         });
         
+        console.log('🔍 Dashboard: Export API response status:', response.status);
+        
         if (response.ok) {
           const data = await response.json();
+          console.log('🔍 Dashboard: Export API response data:', data);
+          
           if (data.profile) {
             setProfile({
               display_name: data.profile.display_name || userName,
@@ -70,6 +277,16 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
               newsletterOptIn: data.profile.newsletter_opt_in || false
             });
           }
+          
+          // Don't override favorites from the export API - we're already loading them from /api/favorites
+          // if (data.favorites && Array.isArray(data.favorites)) {
+          //   console.log('🔍 Dashboard: Setting favorites from export API:', data.favorites);
+          //   const favoriteIds = data.favorites.map((fav: any) => fav.tool_id);
+          //   console.log('🔍 Dashboard: Mapped favorite IDs:', favoriteIds);
+          //   setClientFavorites(favoriteIds);
+          // } else {
+          //   console.log('🔍 Dashboard: No favorites in export API response or invalid format:', data.favorites);
+          // }
         } else {
           console.log('Failed to load profile:', response.status, response.statusText);
         }
@@ -174,6 +391,43 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pt-16">
+      {/* Debug Display */}
+      <div className="fixed top-20 right-4 z-50 bg-black/80 text-white p-4 rounded-lg text-sm font-mono">
+        <div>🔍 DASHBOARD DEBUG</div>
+        <div>Server Favorites: {favorites.length}</div>
+        <div>Client Favorites: {clientFavorites.length}</div>
+        <div>Loading: {favoritesLoading ? 'Yes' : 'No'}</div>
+        <button
+          onClick={loadClientFavorites}
+          className="mt-2 bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700 mr-2"
+        >
+          Load Favorites
+        </button>
+        <button
+          onClick={cleanupTestFavorites}
+          className="mt-2 bg-orange-600 text-white px-2 py-1 rounded text-xs hover:bg-orange-700"
+        >
+          🧹 Clean Test Data
+        </button>
+        <button
+          onClick={checkDatabaseDirectly}
+          className="mt-2 bg-yellow-600 text-white px-2 py-1 rounded text-xs hover:bg-yellow-700 block w-full"
+        >
+          Check Database
+        </button>
+        <button
+          onClick={() => {
+            console.log('🔍 Dashboard: Current state check:');
+            console.log('  - clientFavorites:', clientFavorites);
+            console.log('  - favoritesLoading:', favoritesLoading);
+            console.log('  - profileLoading:', profileLoading);
+          }}
+          className="mt-2 bg-purple-600 text-white px-2 py-1 rounded text-xs hover:bg-purple-700 block w-full"
+        >
+          Check State
+        </button>
+      </div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome back, {userName}! 👋</h1>
@@ -191,7 +445,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
             <p className="text-sm text-gray-600 dark:text-gray-400">Favorites</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.favoritesCount}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{clientFavorites.length}</p>
           </div>
         </div>
 
@@ -222,22 +476,111 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Your Favorites</h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  Click on any tool to view its details and manage your preferences
+                </p>
               </div>
-              <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-                {favorites.length === 0 ? (
-                  <div className="text-gray-500 dark:text-gray-400">No favorites yet.</div>
+              <div className="p-6">
+                {favoritesLoading ? (
+                  <div className="text-gray-500 dark:text-gray-400">Loading favorites...</div>
+                ) : clientFavorites.length === 0 ? (
+                  <div className="text-gray-500 dark:text-gray-400">No favorites yet. Start exploring AI tools and add them to your favorites!</div>
                 ) : (
-                  favorites.map((f) => (
-                    <div key={f.id} className="p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
-                      <div className="font-medium text-gray-900 dark:text-white">{f.name || f.id}</div>
-                    </div>
-                  ))
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {clientFavorites.map((favorite) => {
+                      // Handle both old format (string) and new format (object)
+                      const toolId = typeof favorite === 'string' ? favorite : favorite.id;
+                      const toolName = typeof favorite === 'string' 
+                        ? favorite.replace(/-/g, ' ').replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+                        : favorite.name || 'Unknown Tool';
+                      const toolLogo = typeof favorite === 'string' ? '🔧' : (favorite.logo || '🔧');
+                      const toolDescription = typeof favorite === 'string' ? '' : (favorite.description || '');
+                      const toolCategory = typeof favorite === 'string' ? '' : (favorite.category || '');
+                      
+                      return (
+                        <div key={toolId} className="group relative">
+                          {/* Clickable card area */}
+                          <a 
+                            href={`/tool/${toolId}`}
+                            className="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 cursor-pointer group-hover:shadow-md"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="text-2xl">{toolLogo}</div>
+                              <div className="flex-1">
+                                <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                  {toolName}
+                                </div>
+                                {toolCategory && (
+                                  <div className="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded-full inline-block mt-1">
+                                    {toolCategory}
+                                  </div>
+                                )}
+                                {toolDescription && (
+                                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
+                                    {toolDescription}
+                                  </div>
+                                )}
+                              </div>
+                              {/* Arrow indicator */}
+                              <div className="text-gray-400 group-hover:text-blue-500 transition-colors">
+                                →
+                              </div>
+                            </div>
+                          </a>
+                          
+                          {/* Remove button - positioned absolutely to avoid interfering with click */}
+                          <button
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (confirm('Remove this tool from favorites?')) {
+                                try {
+                                  const { createClient } = await import('@/lib/supabase');
+                                  const supabase = createClient();
+                                  const { data: { session } } = await supabase.auth.getSession();
+                                  
+                                  if (!session?.access_token) {
+                                    alert('Authentication required. Please sign in again.');
+                                    return;
+                                  }
+
+                                  const response = await fetch('/api/favorites', {
+                                    method: 'POST',
+                                    headers: {
+                                      'Content-Type': 'application/json',
+                                      'Authorization': `Bearer ${session.access_token}`
+                                    },
+                                    body: JSON.stringify({ toolId, action: 'remove' })
+                                  });
+
+                                  if (response.ok) {
+                                    // Remove from local state
+                                    setClientFavorites(prev => prev.filter(fav => {
+                                      const favId = typeof fav === 'string' ? fav : fav.id;
+                                      return favId !== toolId;
+                                    }));
+                                  } else {
+                                    alert('Failed to remove favorite. Please try again.');
+                                  }
+                                } catch (error) {
+                                  console.error('Error removing favorite:', error);
+                                  alert('Failed to remove favorite. Please try again.');
+                                }
+                              }
+                            }}
+                            className="absolute top-2 right-2 p-2 text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 bg-white dark:bg-gray-800 rounded-full shadow-sm hover:shadow-md transition-all duration-200 opacity-0 group-hover:opacity-100"
+                            title="Remove from favorites"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
                 )}
-              </div>
             </div>
           </div>
 
-          <div className="space-y-8">
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Your Profile</h2>

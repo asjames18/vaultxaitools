@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { Menu } from '@headlessui/react';
 import { createClient } from '@/lib/supabase';
 import { User } from '@supabase/auth-js';
-import { User as UserIcon, Settings as SettingsIcon, LogOut as LogOutIcon, Search as SearchIcon, Shield as ShieldIcon } from 'lucide-react';
+import { User as UserIcon, Settings as SettingsIcon, LogOut as LogOutIcon, Search as SearchIcon, Shield as ShieldIcon, Sun as SunIcon, Moon as MoonIcon } from 'lucide-react';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -14,6 +14,7 @@ export default function Navigation() {
   const [user, setUser] = useState<User | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const supabase = createClient();
 
   useEffect(() => {
@@ -76,6 +77,31 @@ export default function Navigation() {
       }
     };
   }, []);
+
+  // Theme management
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+      if (savedTheme) {
+        setTheme(savedTheme);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      localStorage.setItem('theme', theme);
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -160,6 +186,14 @@ export default function Navigation() {
         </div>
 
         <div className="flex items-center space-x-2">
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+          </button>
           {/* Search functionality integrated into AI Tools page */}
           <Link 
             href="/AITools" 
