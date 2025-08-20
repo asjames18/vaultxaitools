@@ -147,14 +147,17 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Search API error:', error);
-    console.error('Search API error details:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      query: request.url
-    });
+    // Log errors only in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Search API error:', error);
+      console.error('Search API error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        query: request.url
+      });
+    }
     return NextResponse.json(
-      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

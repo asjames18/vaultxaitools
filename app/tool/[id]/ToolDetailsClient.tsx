@@ -17,14 +17,11 @@ function AlternativeTool({ toolName, rating, logo }: { toolName: string; rating?
       
       setIsLoading(true);
       try {
-        console.log('🔍 Searching for tool:', toolName);
         // Use the search endpoint to find the tool by name
         const response = await fetch(`/api/search?q=${encodeURIComponent(toolName)}&limit=20`);
-        console.log('🔍 Search API response status:', response.status);
         
         if (response.ok) {
           const data = await response.json();
-          console.log('🔍 Search API response data length:', data.tools?.length || 0);
           
           if (data.tools && data.tools.length > 0) {
             // Find exact match by name
@@ -33,28 +30,21 @@ function AlternativeTool({ toolName, rating, logo }: { toolName: string; rating?
             );
             
             if (exactMatch) {
-              console.log('🔍 Found exact match:', exactMatch.name, 'ID:', exactMatch.id);
               setToolId(exactMatch.id);
             } else {
-              console.log('🔍 No exact match found for:', toolName);
               // Try partial match
               const partialMatch = data.tools.find((tool: any) => 
                 tool.name.toLowerCase().includes(toolName.toLowerCase()) ||
                 toolName.toLowerCase().includes(tool.name.toLowerCase())
               );
               if (partialMatch) {
-                console.log('🔍 Found partial match:', partialMatch.name, 'ID:', partialMatch.id);
                 setToolId(partialMatch.id);
               }
             }
-          } else {
-            console.log('🔍 No tools returned from search');
           }
-        } else {
-          console.error('🔍 Search API error:', response.status, response.statusText);
         }
       } catch (error) {
-        console.error('🔍 Error finding tool ID:', error);
+        // Silently handle errors in production
       } finally {
         setIsLoading(false);
       }

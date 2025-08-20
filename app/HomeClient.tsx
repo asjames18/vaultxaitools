@@ -167,13 +167,11 @@ export default function HomeClient({
     try {
       // Validate that required data is available
       if (!Array.isArray(safeAllTools)) {
-        console.error('Invalid allTools data:', safeAllTools);
         setComponentError('Invalid tools data received');
         return;
       }
       
       if (!Array.isArray(safeCategories)) {
-        console.error('Invalid categories data:', safeCategories);
         setComponentError('Invalid categories data received');
         return;
       }
@@ -184,7 +182,6 @@ export default function HomeClient({
       }
       
     } catch (err) {
-      console.error('Error initializing HomeClient component:', err);
       setComponentError('Failed to initialize component');
     }
   }, [safeAllTools, safePopularTools, safeCategories]);
@@ -195,7 +192,7 @@ export default function HomeClient({
       setToast({ message, type });
       setTimeout(() => setToast(null), 3000);
     } catch (err) {
-      console.error('Error showing toast:', err);
+      // Silently handle toast errors
     }
   };
 
@@ -207,14 +204,11 @@ export default function HomeClient({
       
       if (session?.access_token && user) {
         setAuthStatus(`✅ ${user.email}`);
-        console.log('🔍 Main site: User authenticated:', user.email);
       } else {
         setAuthStatus('❌ Not authenticated');
-        console.log('🔍 Main site: User not authenticated');
       }
     } catch (error) {
       setAuthStatus('❌ Auth error');
-      console.error('🔍 Main site: Auth check error:', error);
     }
   };
 
@@ -228,7 +222,6 @@ export default function HomeClient({
       
       
         if (!session?.access_token) {
-          console.log('❌ No session token available for loading favorites');
         // Clear favorites from localStorage since we can't load from API
         localStorage.removeItem('vaultx-favorites');
           return;
@@ -247,27 +240,18 @@ export default function HomeClient({
         
           // Update localStorage to match API
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
-          console.log('✅ Favorites loaded from API successfully');
         
         // Refresh favorites from the hook
         refreshFavorites();
         } else {
-          const errorData = await response.json();
-          console.error('❌ Failed to load favorites from API:', response.status, errorData);
         
         if (response.status === 401) {
           // User not authenticated, clear favorites
           localStorage.removeItem('vaultx-favorites');
-          console.log('🔍 User not authenticated, cleared favorites');
-        } else {
-          // Other error, keep existing favorites from localStorage
-          console.log('🔍 Keeping existing favorites from localStorage due to API error');
         }
         }
       } catch (error) {
-        console.error('❌ Error loading favorites from API:', error);
       // Keep existing favorites from localStorage on error
-      console.log('🔍 Keeping existing favorites from localStorage due to error');
     }
   };
 
@@ -301,7 +285,6 @@ export default function HomeClient({
     const automationChannel = supabase
       .channel('automation-updates')
       .on('broadcast', { event: 'automation-completed' }, (payload: any) => {
-        console.log('🔄 Automation completed - refreshing homepage data', payload);
         setLastDataUpdate(new Date());
         setShowUpdateBanner(true);
         
@@ -322,7 +305,7 @@ export default function HomeClient({
           setAutomationStatus(data);
         }
       } catch (error) {
-        console.error('Error fetching automation status:', error);
+        // Silently handle automation status errors
       }
     };
     
@@ -351,7 +334,6 @@ export default function HomeClient({
     
     // Prevent multiple clicks
     if (favoriteLoading === toolId) {
-      console.log('🔍 Already processing favorite for this tool');
       return;
     }
     
@@ -362,7 +344,6 @@ export default function HomeClient({
     
     
       if (!session?.access_token) {
-      console.log('❌ User not authenticated, redirecting to sign in');
       setFavoriteLoading(null);
       // Redirect to sign in page
       window.location.href = '/sign-in';
@@ -391,7 +372,6 @@ export default function HomeClient({
           ? favoriteTools.filter(id => id !== toolId)
           : [...favoriteTools, toolId];
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
-        console.log('✅ Favorite updated successfully');
         
         // Refresh favorites from the hook to update the UI
         refreshFavorites();
@@ -399,7 +379,6 @@ export default function HomeClient({
         showToast(`Tool ${isCurrentlyFavorite ? 'removed from' : 'added to'} favorites!`);
       } else {
         const errorData = await response.json();
-        console.error('❌ Failed to update favorite:', response.status, errorData);
         
         // Show user-friendly error message
         if (response.status === 401) {
@@ -412,7 +391,6 @@ export default function HomeClient({
         }
       }
     } catch (error) {
-      console.error('❌ Error updating favorite:', error);
       showToast(`Failed to ${action} favorite. Please try again.`, 'error');
     } finally {
       setFavoriteLoading(null);

@@ -87,10 +87,13 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
   
   try {
     const supabase = createClientWithoutCookies();
+    
+    // Main component database query - force fresh data
     const { data: tool, error } = await supabase
       .from('tools')
       .select('*')
       .eq('id', resolvedParams.id)
+      .order('updated_at', { ascending: false }) // Ensure we get the most recently updated version
       .single();
     
     if (error || !tool) {
@@ -147,6 +150,8 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
         return alt;
       });
     }
+
+    // Tool data mapping completed
 
     const toolStructuredData = generateToolStructuredData(mappedTool);
     const anyTool: any = mappedTool as any;

@@ -17,9 +17,7 @@ export default function SignUpPage() {
 
   // Debug: Check if Supabase client is properly initialized
   useEffect(() => {
-    console.log('Supabase client initialized:', !!supabase);
-    console.log('Supabase auth available:', !!supabase.auth);
-    console.log('Current origin:', window.location.origin);
+    // Supabase client initialization check
   }, [supabase]);
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -41,15 +39,6 @@ export default function SignUpPage() {
     }
 
     try {
-      console.log('=== SIGN UP DEBUG START ===');
-      console.log('Email:', email);
-      console.log('Testing without redirect option...');
-      
-      // Test Supabase connection first
-      console.log('Testing Supabase connection...');
-      const { data: testData, error: testError } = await supabase.auth.getSession();
-      console.log('Connection test:', { testData, testError });
-      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -58,22 +47,7 @@ export default function SignUpPage() {
         }
       });
 
-      console.log('Sign up response:', { data, error });
-      
-      // Log the full response for debugging
       if (error) {
-        console.error('Full error object:', JSON.stringify(error, null, 2));
-        console.error('Error details:', {
-          name: error.name,
-          message: error.message,
-          status: error.status,
-          details: error.details
-        });
-      }
-
-      if (error) {
-        console.error('Sign up error:', error);
-        
         // Provide more helpful error message for database errors
         if (error.message === 'Database error saving new user') {
           setError('There was a temporary issue creating your account. Please try again in a few minutes, or try with a different email address.');
@@ -81,14 +55,12 @@ export default function SignUpPage() {
           setError(error.message);
         }
       } else {
-        console.log('Sign up successful:', data);
         setSuccess('Check your email to confirm your account!');
         setEmail('');
         setPassword('');
         setConfirmPassword('');
       }
     } catch (err) {
-      console.error('Sign up exception:', err);
       setError('An unexpected error occurred');
     } finally {
       setLoading(false);
@@ -99,9 +71,6 @@ export default function SignUpPage() {
     setLoading(true);
     setError('');
     try {
-      console.log(`Starting ${provider} sign up...`);
-      console.log('Redirect URL:', `${window.location.origin}/auth/callback`);
-      
       const { error } = await supabase.auth.signInWithOAuth({ 
         provider,
         options: {
@@ -109,11 +78,8 @@ export default function SignUpPage() {
         }
       });
       
-      console.log(`${provider} sign up response:`, { error });
-      
       if (error) throw error;
     } catch (err: any) {
-      console.error(`${provider} sign up error:`, err);
       setError(err.message || 'Social signup failed');
       setLoading(false);
     }
