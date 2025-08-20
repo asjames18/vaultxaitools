@@ -26,13 +26,8 @@ export async function GET(request: NextRequest) {
 
     // Apply text search if query exists
     if (query.trim()) {
-      supabaseQuery = supabaseQuery.or(`
-        name.ilike.%${query}%,
-        description.ilike.%${query}%,
-        long_description.ilike.%${query}%,
-        tags.cs.{${query}},
-        features.cs.{${query}}
-      `);
+      // Use a much simpler search approach to avoid query construction issues
+      supabaseQuery = supabaseQuery.ilike('name', `%${query}%`);
     }
 
     // Apply filters
@@ -68,19 +63,22 @@ export async function GET(request: NextRequest) {
 
     if (integration) {
       // Check if integrations array contains the specified integration
-      supabaseQuery = supabaseQuery.or(`integrations.cs.{${integration}}`);
+      // Simplified to avoid complex array operations
+      supabaseQuery = supabaseQuery.or(`integrations::text.ilike.%${integration}%`);
     }
 
     if (language) {
       // Check if features array contains language-related terms
-      supabaseQuery = supabaseQuery.or(`features.cs.{${language}}`);
+      // Simplified to avoid complex array operations
+      supabaseQuery = supabaseQuery.or(`features::text.ilike.%${language}%`);
     }
 
     if (aiModel) {
       // Check if features or tags contain AI model information
+      // Simplified to avoid complex array operations
       supabaseQuery = supabaseQuery.or(`
-        features.cs.{${aiModel}},
-        tags.cs.{${aiModel}}
+        features::text.ilike.%${aiModel}%,
+        tags::text.ilike.%${aiModel}%
       `);
     }
 
@@ -150,8 +148,13 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('Search API error:', error);
+    console.error('Search API error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      query: request.url
+    });
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
