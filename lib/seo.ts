@@ -269,18 +269,24 @@ export function generateToolStructuredData(tool: Tool) {
     description: tool.description,
     url: tool.website,
     applicationCategory: tool.category,
-    operatingSystem: 'Web',
+    operatingSystem: 'Web, Mobile, Desktop',
     offers: {
       '@type': 'Offer',
-      price: tool.pricing,
+      price: tool.pricing === 'Free' ? '0' : tool.pricing,
       priceCurrency: 'USD',
       availability: 'https://schema.org/InStock',
     },
-    // ratings removed from public schema for now
+    aggregateRating: tool.rating ? {
+      '@type': 'AggregateRating',
+      ratingValue: tool.rating,
+      reviewCount: tool.reviewCount || 0,
+      bestRating: 5,
+      worstRating: 1
+    } : undefined,
     author: {
       '@type': 'Organization',
-      name: tool.name,
-      url: tool.website,
+      name: 'VaultX AI Tools',
+      url: 'https://vaultxaitools.com'
     },
     datePublished: tool.createdAt,
     dateModified: tool.updatedAt,
@@ -289,6 +295,12 @@ export function generateToolStructuredData(tool: Tool) {
     softwareVersion: '1.0',
     downloadUrl: tool.website,
     installUrl: tool.website,
+    keywords: tool.tags?.join(', ') || tool.category,
+    applicationSubCategory: tool.category,
+    screenshot: tool.logo,
+    softwareRequirements: 'Modern web browser',
+    permissions: 'None required',
+    releaseNotes: `Latest version of ${tool.name}`,
   };
 
   return structuredData;

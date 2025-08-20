@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { categories } from '@/data';
 import HomeClient from './HomeClient';
@@ -6,6 +7,56 @@ import { createClientWithoutCookies } from '@/lib/supabase-server';
 
 // Revalidate this page every 5 minutes to keep data fresh
 export const revalidate = 300;
+
+// Generate metadata for homepage
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+    description: 'Access only the best AI tools, hand-picked and tested by our experts. Quality over quantity - every tool is verified for effectiveness and reliability.',
+    keywords: [
+      'curated AI tools',
+      'expert-tested AI', 
+      'verified AI solutions',
+      'quality AI tools',
+      'hand-picked AI',
+      'artificial intelligence tools',
+      'AI software directory',
+      'best AI tools 2024',
+      'AI tool reviews',
+      'AI tool comparisons',
+      'AI productivity tools',
+      'AI development tools',
+      'AI design tools'
+    ],
+    openGraph: {
+      title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+      description: 'Access only the best AI tools, hand-picked and tested by our experts.',
+      url: 'https://vaultxaitools.com',
+      siteName: 'VaultX AI Tools',
+      locale: 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/og-image.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@vaultxaitools',
+      creator: '@vaultxaitools',
+      title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+      description: 'Access only the best AI tools, hand-picked and tested by our experts.',
+      images: ['/og-image.jpg'],
+    },
+    alternates: {
+      canonical: '/',
+    },
+  };
+}
 
 export default async function HomePage() {
   try {
