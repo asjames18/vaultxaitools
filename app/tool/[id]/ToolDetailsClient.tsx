@@ -17,22 +17,44 @@ function AlternativeTool({ toolName, rating, logo }: { toolName: string; rating?
       
       setIsLoading(true);
       try {
-        // Search for the tool by name to get its ID
-        const response = await fetch(`/api/search?q=${encodeURIComponent(toolName)}&limit=1`);
+        console.log('🔍 Searching for tool:', toolName);
+        // Use the search endpoint to find the tool by name
+        const response = await fetch(`/api/search?q=${encodeURIComponent(toolName)}&limit=20`);
+        console.log('🔍 Search API response status:', response.status);
+        
         if (response.ok) {
           const data = await response.json();
+          console.log('🔍 Search API response data length:', data.tools?.length || 0);
+          
           if (data.tools && data.tools.length > 0) {
-            // Find exact match or closest match
+            // Find exact match by name
             const exactMatch = data.tools.find((tool: any) => 
               tool.name.toLowerCase() === toolName.toLowerCase()
             );
+            
             if (exactMatch) {
+              console.log('🔍 Found exact match:', exactMatch.name, 'ID:', exactMatch.id);
               setToolId(exactMatch.id);
+            } else {
+              console.log('🔍 No exact match found for:', toolName);
+              // Try partial match
+              const partialMatch = data.tools.find((tool: any) => 
+                tool.name.toLowerCase().includes(toolName.toLowerCase()) ||
+                toolName.toLowerCase().includes(tool.name.toLowerCase())
+              );
+              if (partialMatch) {
+                console.log('🔍 Found partial match:', partialMatch.name, 'ID:', partialMatch.id);
+                setToolId(partialMatch.id);
+              }
             }
+          } else {
+            console.log('🔍 No tools returned from search');
           }
+        } else {
+          console.error('🔍 Search API error:', response.status, response.statusText);
         }
       } catch (error) {
-        console.error('Error finding tool ID:', error);
+        console.error('🔍 Error finding tool ID:', error);
       } finally {
         setIsLoading(false);
       }
@@ -313,12 +335,35 @@ export default function ToolDetailsClient({ tool }: ToolDetailsClientProps) {
                   {tool.alternatives.slice(0, 5).map((alternative, index) => {
                     // Handle both string names and object alternatives
                     const alternativeName = typeof alternative === 'string' ? alternative : alternative?.name;
-                    const alternativeRating = typeof alternative === 'string' ? null : alternative?.rating;
-                    const alternativeLogo = typeof alternative === 'string' ? null : alternative?.logo;
+                    const alternativeRating = typeof alternative === 'string' ? undefined : alternative?.rating;
+                    const alternativeLogo = typeof alternative === 'string' ? undefined : alternative?.logo;
+                    const alternativeId = typeof alternative === 'string' ? undefined : alternative?.id;
                     
                     if (alternativeName) {
-                      // Try to find the tool ID by searching the database
-                      // This will be handled by the AlternativeTool component
+                      // If we already have an ID, use it directly
+                      if (alternativeId) {
+                        return (
+                          <Link
+                            key={index}
+                            href={`/tool/${alternativeId}`}
+                            className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
+                                {alternativeLogo || (alternativeName ? alternativeName.charAt(0) : '?')}
+                              </div>
+                              <div>
+                                <p className="font-medium text-gray-900 dark:text-white">{alternativeName}</p>
+                                {alternativeRating && (
+                                  <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {alternativeRating}</p>
+                                )}
+                              </div>
+                            </div>
+                          </Link>
+                        );
+                      }
+                      
+                      // Otherwise, try to find the tool ID by searching the database
                       return (
                         <AlternativeTool
                           key={index}

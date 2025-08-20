@@ -137,6 +137,17 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
       updatedAt: tool.updated_at || ''
     };
 
+    // If there are alternatives, convert them to the expected format
+    if (tool.alternatives && Array.isArray(tool.alternatives) && tool.alternatives.length > 0) {
+      // Convert string alternatives to objects with proper structure
+      mappedTool.alternatives = tool.alternatives.map((alt: any) => {
+        if (typeof alt === 'string') {
+          return { name: alt, logo: alt.charAt(0), rating: 0 };
+        }
+        return alt;
+      });
+    }
+
     const toolStructuredData = generateToolStructuredData(mappedTool);
     const anyTool: any = mappedTool as any;
     const faqStructuredData = anyTool.faq && anyTool.faq.length

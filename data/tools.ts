@@ -14,7 +14,7 @@ export interface Tool {
   features?: string[];
   pros?: string[];
   cons?: string[];
-  alternatives?: { name: string; rating: number; logo: string }[];
+  alternatives?: { id?: string; name: string; rating: number; logo: string }[];
   tags?: string[];
   // Optional tailored fields
   useCases?: { title: string; prompt: string; description?: string; notes?: string }[];
