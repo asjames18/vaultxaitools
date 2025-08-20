@@ -220,16 +220,12 @@ export default function HomeClient({
 
     // Load favorites from API
     const loadFavoritesFromAPI = async () => {
-      console.log('🔍 loadFavoritesFromAPI called');
-    console.log('🔍 Current favoriteTools state before API call:', favoriteTools);
+  
+    
     
       try {
         const { data: { session } } = await supabase.auth.getSession();
-      console.log('🔍 Session for loading favorites:', { 
-        hasSession: !!session, 
-        hasToken: !!session?.access_token,
-        userEmail: session?.user?.email 
-      });
+      
       
         if (!session?.access_token) {
           console.log('❌ No session token available for loading favorites');
@@ -238,26 +234,20 @@ export default function HomeClient({
           return;
         }
         
-        console.log('🔍 Making GET request to /api/favorites');
         const response = await fetch('/api/favorites', {
           headers: {
             'Authorization': `Bearer ${session.access_token}`
           }
         });
-        console.log('🔍 GET favorites response status:', response.status);
-      console.log('🔍 GET favorites response headers:', Object.fromEntries(response.headers.entries()));
       
         if (response.ok) {
           const data = await response.json();
-          console.log('🔍 Favorites data received:', data);
-        console.log('🔍 Setting favorites to:', data.favorites || []);
-        
+          
         const newFavorites = data.favorites || [];
         
           // Update localStorage to match API
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
           console.log('✅ Favorites loaded from API successfully');
-        console.log('🔍 New localStorage favorites:', localStorage.getItem('vaultx-favorites'));
         
         // Refresh favorites from the hook
         refreshFavorites();
@@ -357,9 +347,7 @@ export default function HomeClient({
 
   // Toggle favorite using the unified hook
   const handleToggleFavorite = async (toolId: string) => {
-    console.log('🔍 toggleFavorite called with toolId:', toolId);
-    console.log('🔍 Current favoriteTools state:', favoriteTools);
-    console.log('🔍 Current localStorage favorites:', localStorage.getItem('vaultx-favorites'));
+
     
     // Prevent multiple clicks
     if (favoriteLoading === toolId) {
@@ -371,11 +359,7 @@ export default function HomeClient({
     
     // Check if user is authenticated first
       const { data: { session } } = await supabase.auth.getSession();
-    console.log('🔍 Session check result:', { 
-      hasSession: !!session, 
-      hasToken: !!session?.access_token,
-      userId: session?.user?.id 
-    });
+    
     
       if (!session?.access_token) {
       console.log('❌ User not authenticated, redirecting to sign in');
@@ -387,11 +371,8 @@ export default function HomeClient({
       
     const isCurrentlyFavorite = favoriteTools.includes(toolId);
     const action = isCurrentlyFavorite ? 'remove' : 'add';
-    console.log('🔍 Current favorite status:', isCurrentlyFavorite, 'Action:', action);
-    console.log('🔍 Tool ID being processed:', toolId);
     
     try {
-      console.log('🔍 Making API call to /api/favorites with action:', action);
       const response = await fetch('/api/favorites', {
         method: 'POST',
         headers: { 
@@ -401,12 +382,9 @@ export default function HomeClient({
         body: JSON.stringify({ toolId, action })
       });
       
-      console.log('🔍 API response status:', response.status);
-      console.log('🔍 API response headers:', Object.fromEntries(response.headers.entries()));
       
       if (response.ok) {
         const responseData = await response.json();
-        console.log('🔍 API response data:', responseData);
         
         // Update localStorage
         const newFavorites = isCurrentlyFavorite
@@ -414,16 +392,9 @@ export default function HomeClient({
           : [...favoriteTools, toolId];
         localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
         console.log('✅ Favorite updated successfully');
-        console.log('🔍 New localStorage favorites:', localStorage.getItem('vaultx-favorites'));
         
         // Refresh favorites from the hook to update the UI
         refreshFavorites();
-        
-        // Verify the state was updated
-        setTimeout(() => {
-          console.log('🔍 Final verification - favoriteTools state:', favoriteTools);
-          console.log('🔍 Final verification - localStorage:', localStorage.getItem('vaultx-favorites'));
-        }, 100);
         
         showToast(`Tool ${isCurrentlyFavorite ? 'removed from' : 'added to'} favorites!`);
       } else {
@@ -701,28 +672,45 @@ export default function HomeClient({
                   </div>
                   <div className="space-y-4">
                     {getFavoriteTools().map((tool) => (
-                      <div key={tool.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        <div className="flex items-center gap-3">
+                      <div key={tool.id} className="group flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                        <Link href={`/tool/${tool.id}`} className="flex items-center gap-3 flex-1 hover:opacity-80 transition-opacity">
                           <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
                             <span className="text-lg">{tool.logo || tool.name.charAt(0)}</span>
                           </div>
                           <div>
-                            <h4 className="font-medium text-gray-900 dark:text-white">{tool.name}</h4>
+                            <h4 className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{tool.name}</h4>
                             <p className="text-sm text-gray-500 dark:text-gray-200">{tool.category}</p>
+                            {tool.rating > 0 && (
+                              <div className="flex items-center gap-1 mt-1">
+                                <span className="text-yellow-500">★</span>
+                                <span className="text-xs text-gray-600 dark:text-gray-300">{tool.rating.toFixed(1)}</span>
+                                {tool.reviewCount > 0 && (
+                                  <span className="text-xs text-gray-500 dark:text-gray-400">({tool.reviewCount})</span>
+                                )}
+                              </div>
+                            )}
                           </div>
+                        </Link>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/tool/${tool.id}`}
+                            className="text-blue-600 hover:text-blue-700 font-medium text-sm px-3 py-1 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                          >
+                            View
+                          </Link>
+                          <button
+                            onClick={() => toggleFavorite(tool.id)}
+                            disabled={favoriteLoading === tool.id}
+                            className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'} ${favoriteLoading === tool.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            title={favoriteTools.includes(tool.id) ? 'Remove from favorites' : 'Add to favorites'}
+                          >
+                            {favoriteLoading === tool.id ? (
+                              <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <HeartIcon className={`w-5 h-5 ${favoriteTools.includes(tool.id) ? 'fill-current' : ''}`} />
+                            )}
+                          </button>
                         </div>
-                        <button
-                          onClick={() => toggleFavorite(tool.id)}
-                          disabled={favoriteLoading === tool.id}
-                          className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'} ${favoriteLoading === tool.id ? 'opacity-50 cursor-not-allowed' : ''}`}
-                          title={favoriteTools.includes(tool.id) ? 'Remove from favorites' : 'Add to favorites'}
-                        >
-                          {favoriteLoading === tool.id ? (
-                            <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
-                          ) : (
-                            <HeartIcon className={`w-5 h-5 ${favoriteTools.includes(tool.id) ? 'fill-current' : ''}`} />
-                          )}
-                        </button>
                       </div>
                     ))}
                   </div>
@@ -738,22 +726,45 @@ export default function HomeClient({
                   </div>
                   <div className="space-y-4">
                     {getRecentlyViewedTools().map((tool) => (
-                      <div key={tool.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                        <div className="flex items-center gap-3">
+                      <div key={tool.id} className="group flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                        <Link href={`/tool/${tool.id}`} className="flex items-center gap-3 flex-1 hover:opacity-80 transition-opacity">
                           <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
                             <span className="text-lg">{tool.logo || tool.name.charAt(0)}</span>
                           </div>
                           <div>
-                            <h4 className="font-medium text-gray-900 dark:text-white">{tool.name}</h4>
+                            <h4 className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{tool.name}</h4>
                             <p className="text-sm text-gray-500 dark:text-gray-200">{tool.category}</p>
+                            {tool.rating > 0 && (
+                              <div className="flex items-center gap-1 mt-1">
+                                <span className="text-yellow-500">★</span>
+                                <span className="text-xs text-gray-600 dark:text-gray-300">{tool.rating.toFixed(1)}</span>
+                                {tool.reviewCount > 0 && (
+                                  <span className="text-xs text-gray-500 dark:text-gray-400">({tool.reviewCount})</span>
+                                )}
+                              </div>
+                            )}
                           </div>
-                        </div>
-                        <Link
-                          href={`/tool/${tool.id}`}
-                          className="text-blue-600 hover:text-blue-700 font-medium text-sm"
-                        >
-                          View →
                         </Link>
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/tool/${tool.id}`}
+                            className="text-blue-600 hover:text-blue-700 font-medium text-sm px-3 py-1 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                          >
+                            View
+                          </Link>
+                          <button
+                            onClick={() => toggleFavorite(tool.id)}
+                            disabled={favoriteLoading === tool.id}
+                            className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'} ${favoriteLoading === tool.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            title={favoriteTools.includes(tool.id) ? 'Remove from favorites' : 'Add to favorites'}
+                          >
+                            {favoriteLoading === tool.id ? (
+                              <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <HeartIcon className={`w-5 h-5 ${favoriteTools.includes(tool.id) ? 'fill-current' : ''}`} />
+                            )}
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -796,22 +807,7 @@ export default function HomeClient({
         </section>
       )}
 
-      {/* Debug Authentication Status */}
-      <div className="fixed top-20 left-4 z-50 bg-black/80 text-white p-4 rounded-lg text-sm font-mono">
-        <div>🔍 AUTH DEBUG</div>
-        <div>User: {authStatus}</div>
-        <div>Favorites: {favoriteTools.length}</div>
-        <div>Session: {authStatus}</div>
-        <button
-          onClick={() => {
-            checkAuthStatus();
-            loadFavoritesFromAPI();
-          }}
-          className="mt-2 bg-blue-600 text-white px-2 py-1 rounded text-xs hover:bg-blue-700"
-        >
-          Refresh
-        </button>
-      </div>
+
 
       {/* Our Curation Process Section - New! */}
       <section className="py-20 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
@@ -962,7 +958,7 @@ export default function HomeClient({
       </section>
 
       {/* Enhanced Featured Tools Section */}
-      {/* <section className="py-20">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -994,9 +990,15 @@ export default function HomeClient({
                     </div>
                     <button
                       onClick={() => toggleFavorite(tool.id)}
-                      className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+                      disabled={favoriteLoading === tool.id}
+                      className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'} ${favoriteLoading === tool.id ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      title={favoriteTools.includes(tool.id) ? 'Remove from favorites' : 'Add to favorites'}
                     >
-                      <HeartIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${favoriteTools.includes(tool.id) ? 'fill-current' : ''}`} />
+                      {favoriteLoading === tool.id ? (
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <HeartIcon className={`w-4 h-4 sm:w-5 sm:h-5 ${favoriteTools.includes(tool.id) ? 'fill-current' : ''}`} />
+                      )}
                     </button>
                   </div>
                   
@@ -1012,6 +1014,12 @@ export default function HomeClient({
                     >
                       Learn More →
                     </Link>
+                    {tool.rating > 0 && (
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-500 text-sm">★</span>
+                        <span className="text-xs text-gray-600 dark:text-gray-300">{tool.rating.toFixed(1)}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1028,7 +1036,7 @@ export default function HomeClient({
             </Link>
           </div>
         </div>
-      </section> */}
+      </section>
 
       {/* Category Showcase Section removed per request */}
 
