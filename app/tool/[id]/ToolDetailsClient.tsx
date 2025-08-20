@@ -6,6 +6,100 @@ import { HeartIcon, StarIcon, GlobeAltIcon, TagIcon, ArrowLeftIcon } from '@hero
 import Link from 'next/link';
 import type { Tool } from '@/data';
 
+// Component to handle alternative tools with proper linking
+function AlternativeTool({ toolName, rating, logo }: { toolName: string; rating?: number; logo?: string }) {
+  const [toolId, setToolId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const findToolId = async () => {
+      if (!toolName) return;
+      
+      setIsLoading(true);
+      try {
+        // Search for the tool by name to get its ID
+        const response = await fetch(`/api/search?q=${encodeURIComponent(toolName)}&limit=1`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.tools && data.tools.length > 0) {
+            // Find exact match or closest match
+            const exactMatch = data.tools.find((tool: any) => 
+              tool.name.toLowerCase() === toolName.toLowerCase()
+            );
+            if (exactMatch) {
+              setToolId(exactMatch.id);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error finding tool ID:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    findToolId();
+  }, [toolName]);
+
+  if (isLoading) {
+    return (
+      <div className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
+            <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+          <div>
+            <p className="font-medium text-gray-900 dark:text-white">{toolName}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (toolId) {
+    // If we found the tool ID, link directly to the tool page
+    return (
+      <Link
+        href={`/tool/${toolId}`}
+        className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
+            {logo || (toolName ? toolName.charAt(0) : '?')}
+          </div>
+          <div>
+            <p className="font-medium text-gray-900 dark:text-white">{toolName}</p>
+            {rating && (
+              <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {rating}</p>
+            )}
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
+  // If no tool ID found, fall back to search
+  return (
+    <Link
+      href={`/AITools?search=${encodeURIComponent(toolName)}`}
+      className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+    >
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
+          {logo || (toolName ? toolName.charAt(0) : '?')}
+        </div>
+        <div>
+          <p className="font-medium text-gray-900 dark:text-white">{toolName}</p>
+          {rating && (
+            <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {rating}</p>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 interface ToolDetailsClientProps {
   tool: Tool;
 }
@@ -223,26 +317,15 @@ export default function ToolDetailsClient({ tool }: ToolDetailsClientProps) {
                     const alternativeLogo = typeof alternative === 'string' ? null : alternative?.logo;
                     
                     if (alternativeName) {
-                      // For now, we'll make them all clickable by searching by name
-                      // In the future, this could be enhanced to store actual tool IDs
+                      // Try to find the tool ID by searching the database
+                      // This will be handled by the AlternativeTool component
                       return (
-                        <Link
+                        <AlternativeTool
                           key={index}
-                          href={`/AITools?search=${encodeURIComponent(alternativeName)}`}
-                          className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
-                              {alternativeLogo || (alternativeName ? alternativeName.charAt(0) : '?')}
-                            </div>
-                            <div>
-                              <p className="font-medium text-gray-900 dark:text-white">{alternativeName}</p>
-                              {alternativeRating && (
-                                <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {alternativeRating}</p>
-                              )}
-                            </div>
-                          </div>
-                        </Link>
+                          toolName={alternativeName}
+                          rating={alternativeRating}
+                          logo={alternativeLogo}
+                        />
                       );
                     } else {
                       // Fallback for invalid alternatives
