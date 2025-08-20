@@ -216,22 +216,53 @@ export default function ToolDetailsClient({ tool }: ToolDetailsClientProps) {
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Alternatives</h3>
                 <div className="space-y-2">
-                  {tool.alternatives.slice(0, 5).map((alternative, index) => (
-                    <div
-                      key={index}
-                      className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
-                          {alternative?.logo || (alternative?.name ? alternative.name.charAt(0) : '?')}
+                  {tool.alternatives.slice(0, 5).map((alternative, index) => {
+                    // Handle both string names and object alternatives
+                    const alternativeName = typeof alternative === 'string' ? alternative : alternative?.name;
+                    const alternativeRating = typeof alternative === 'string' ? null : alternative?.rating;
+                    const alternativeLogo = typeof alternative === 'string' ? null : alternative?.logo;
+                    
+                    if (alternativeName) {
+                      // For now, we'll make them all clickable by searching by name
+                      // In the future, this could be enhanced to store actual tool IDs
+                      return (
+                        <Link
+                          key={index}
+                          href={`/AITools?search=${encodeURIComponent(alternativeName)}`}
+                          className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
+                              {alternativeLogo || (alternativeName ? alternativeName.charAt(0) : '?')}
+                            </div>
+                            <div>
+                              <p className="font-medium text-gray-900 dark:text-white">{alternativeName}</p>
+                              {alternativeRating && (
+                                <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {alternativeRating}</p>
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    } else {
+                      // Fallback for invalid alternatives
+                      return (
+                        <div
+                          key={index}
+                          className="block p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center text-sm font-semibold">
+                              ?
+                            </div>
+                            <div>
+                              <p className="font-medium text-gray-900 dark:text-white">Unknown Alternative</p>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900 dark:text-white">{alternative?.name || 'Unknown'}</p>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {alternative?.rating || 'N/A'}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                      );
+                    }
+                  })}
                 </div>
               </div>
             )}
