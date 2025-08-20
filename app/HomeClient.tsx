@@ -291,7 +291,8 @@ export default function HomeClient({
       setRecentlyViewed(JSON.parse(savedRecent));
     }
 
-
+    // Load favorites from API on mount
+    loadFavoritesFromAPI();
 
     // Check authentication status
     checkAuthStatus();
@@ -339,13 +340,6 @@ export default function HomeClient({
       (window as any).__vaultxToolCount = safeAllTools.length;
     }
   }, [safeAllTools.length]);
-
-  // Debug favorites loading
-  useEffect(() => {
-    console.log('🔍 HomeClient: favoriteTools state:', favoriteTools);
-    console.log('🔍 HomeClient: favoritesLoading:', favoritesLoading);
-    console.log('🔍 HomeClient: safeAllTools length:', safeAllTools.length);
-  }, [favoriteTools, favoritesLoading, safeAllTools.length]);
 
   const handleResultsChange = useCallback((tools: Tool[]) => {
     setFilteredTools(tools);
@@ -655,7 +649,8 @@ export default function HomeClient({
         </section>
       )}
 
-      {/* Personalization Section - New! */}
+      {/* Personalization Section - Hidden for now */}
+      {/* 
       {(favoriteTools.length > 0 || recentlyViewed.length > 0) && safeAllTools && safeAllTools.length > 0 && (
         <section className="py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -670,19 +665,14 @@ export default function HomeClient({
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Favorite Tools */}
-              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <HeartIcon className="w-6 h-6 text-red-500" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Your Favorites</h3>
-                </div>
-                <div className="space-y-4">
-                  {favoritesLoading ? (
-                    <div className="text-center py-8">
-                      <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                      <p className="text-gray-500 dark:text-gray-400">Loading favorites...</p>
-                    </div>
-                  ) : favoriteTools.length > 0 ? (
-                    getFavoriteTools().map((tool) => (
+              {favoriteTools.length > 0 && (
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <HeartIcon className="w-6 h-6 text-red-500" />
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Your Favorites</h3>
+                  </div>
+                  <div className="space-y-4">
+                    {getFavoriteTools().map((tool) => (
                       <div key={tool.id} className="group flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
                         <Link href={`/tool/${tool.id}`} className="flex items-center gap-3 flex-1 hover:opacity-80 transition-opacity">
                           <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
@@ -723,22 +713,10 @@ export default function HomeClient({
                           </button>
                         </div>
                       </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-8">
-                      <HeartIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-500 dark:text-gray-400 mb-2">No favorites yet</p>
-                      <p className="text-sm text-gray-400 dark:text-gray-500">Start exploring AI tools and add them to your favorites!</p>
-                      <Link
-                        href="/AITools"
-                        className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                      >
-                        Explore Tools
-                      </Link>
-                    </div>
-                  )}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Recently Viewed */}
               {recentlyViewed.length > 0 && (
@@ -796,7 +774,7 @@ export default function HomeClient({
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
       {/* Sign In Prompt for Unauthenticated Users */}
       {favoriteTools.length === 0 && recentlyViewed.length === 0 && (
@@ -1037,6 +1015,12 @@ export default function HomeClient({
                     >
                       Learn More →
                     </Link>
+                    {tool.rating > 0 && (
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-500 text-sm">★</span>
+                        <span className="text-xs text-gray-600 dark:text-gray-300">{tool.rating.toFixed(1)}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
