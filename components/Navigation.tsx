@@ -288,13 +288,7 @@ export default function Navigation() {
       </div>
 
       {/* DEBUG: Show user and userRole for troubleshooting (development only) */}
-      {process.env.NODE_ENV === 'development' && (
-        <div style={{ position: 'fixed', top: 60, right: 10, zIndex: 9999, background: '#222', color: '#fff', padding: 8, borderRadius: 8, fontSize: 11, maxWidth: 400, maxHeight: 300, overflow: 'auto' }}>
-          <div style={{ fontWeight: 'bold', marginBottom: 8, color: '#00ff00' }}>🔍 AUTH DEBUG</div>
-          <div>User: {user?.email || 'none'}</div>
-          <div>Role: {userRole || 'none'}</div>
-        </div>
-      )}
+      {/* Removed for production security */}
 
       {/* Mobile menu */}
       {isMenuOpen && (
