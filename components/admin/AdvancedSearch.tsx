@@ -6,8 +6,8 @@ import {
   FunnelIcon, 
   SparklesIcon,
   XMarkIcon,
-  AdjustmentsHorizontalIcon,
-  LightBulbIcon
+  LightBulbIcon,
+  ClockIcon
 } from '@heroicons/react/24/outline';
 import { LoadingSpinner } from '../AdminLoadingStates';
 
