@@ -15,6 +15,8 @@ import { AdminErrorBoundary } from '@/components/AdminErrorBoundary';
 import { sessionManager } from '@/lib/sessionManager';
 import { logLogout, logCRUD } from '@/lib/auditLogger';
 import { LoadingSpinner, LoadingButton, LoadingOverlay } from '@/components/AdminLoadingStates';
+import { AdvancedSearch, useAdvancedSearch } from '@/components/admin/AdvancedSearch';
+import { WorkflowAutomation, useWorkflows } from '@/components/admin/WorkflowAutomation';
 
 // Simplified types to prevent database type issues
 interface Tool {
@@ -45,7 +47,7 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ tools, categories, user }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact' | 'automation' | 'performance'>('tools');
+  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact' | 'automation' | 'performance' | 'search' | 'workflows'>('tools');
   const [showToolForm, setShowToolForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
@@ -333,6 +335,26 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                 📊 Performance
               </button>
               <button
+                onClick={() => setActiveTab('search')}
+                className={`py-2 px-2 sm:px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'search'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                🔍 Advanced Search
+              </button>
+              <button
+                onClick={() => setActiveTab('workflows')}
+                className={`py-2 px-2 sm:px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'workflows'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                ⚙️ Workflows
+              </button>
+              <button
                 onClick={navigateToContentManagement}
                 className="py-2 px-2 sm:px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap border-transparent text-blue-600 hover:text-blue-700 hover:border-blue-300 dark:text-blue-400 dark:hover:text-blue-300"
               >
@@ -365,6 +387,29 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               >
                 Open Tools Management
               </a>
+            </div>
+
+            {/* Quick Search Demo */}
+            <div className="mb-6">
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+                <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
+                  🔍 Quick Search Demo
+                </h3>
+                <p className="text-xs text-blue-600 dark:text-blue-400 mb-3">
+                  Try the new AI-powered search! Go to the "Advanced Search" tab for full features.
+                </p>
+                <AdvancedSearch
+                  onSearch={(query, filters) => {
+                    console.log('Quick search:', query, filters);
+                    // Filter tools based on search
+                  }}
+                  data={tools}
+                  showFilters={false}
+                  showSuggestions={true}
+                  placeholder="Search tools with AI intelligence..."
+                  className="max-w-md"
+                />
+              </div>
             </div>
 
                         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
@@ -758,6 +803,55 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
             <p className="text-gray-600 dark:text-gray-400">
               Admin signup features coming soon...
             </p>
+          </div>
+        )}
+
+        {activeTab === 'search' && (
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              🔍 Advanced Search & AI Intelligence
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              AI-powered search with semantic understanding, advanced filtering, and intelligent suggestions.
+            </p>
+            
+            <AdvancedSearch
+              onSearch={(query, filters) => {
+                console.log('Search query:', query);
+                console.log('Search filters:', filters);
+                // Here you would integrate with your actual search API
+              }}
+              data={tools} // Pass tools data for AI suggestions
+              showFilters={true}
+              showSuggestions={true}
+            />
+          </div>
+        )}
+
+        {activeTab === 'workflows' && (
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              ⚙️ Workflow Automation
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Automate approval processes, content pipelines, and task management with visual workflow builder.
+            </p>
+            
+            <WorkflowAutomation
+              workflows={[]} // Start with empty workflows
+              onWorkflowChange={(workflow) => {
+                console.log('Workflow created/updated:', workflow);
+                // Here you would save to your database
+              }}
+              onWorkflowToggle={(workflowId, status) => {
+                console.log('Workflow toggled:', workflowId, status);
+                // Here you would update workflow status
+              }}
+              onWorkflowDelete={(workflowId) => {
+                console.log('Workflow deleted:', workflowId);
+                // Here you would delete from your database
+              }}
+            />
           </div>
         )}
 
