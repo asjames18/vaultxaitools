@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,10 @@ import ContactManagementClient from './contact/ContactManagementClient';
 import SponsoredSlots from './SponsoredSlots';
 import AdminSignupForm from './AdminSignupForm';
 import PerformanceMonitor from '@/components/PerformanceMonitor';
+import { AdminErrorBoundary } from '@/components/AdminErrorBoundary';
+import { sessionManager } from '@/lib/sessionManager';
+import { logLogout, logCRUD } from '@/lib/auditLogger';
+import { LoadingSpinner, LoadingButton, LoadingOverlay } from '@/components/AdminLoadingStates';
 
 // Simplified types to prevent database type issues
 interface Tool {
@@ -49,16 +53,50 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [sessionInfo, setSessionInfo] = useState<any>(null);
   
   const supabase = createClient();
   const router = useRouter();
 
+  // Initialize session management
+  useEffect(() => {
+    // Only initialize on client side
+    if (typeof window === 'undefined') return;
+    
+    // Update activity on component mount
+    sessionManager.updateActivity();
+    
+    // Get session info
+    const info = sessionManager.getSessionInfo();
+    setSessionInfo(info);
+    
+    // Set up periodic session checks
+    const interval = setInterval(() => {
+      const currentInfo = sessionManager.getSessionInfo();
+      setSessionInfo(currentInfo);
+      
+      if (currentInfo && currentInfo.isExpired) {
+        handleLogout();
+      }
+    }, 30000); // Check every 30 seconds
+    
+    return () => clearInterval(interval);
+  }, []);
+
   const handleLogout = async () => {
     try {
+      // Log logout action (IP will be captured server-side)
+      await logLogout(user.id, user.email || '');
+      
+      // Clean up session manager
+      sessionManager.destroy();
+      
       await supabase.auth.signOut();
       window.location.href = '/admin/login';
     } catch (error) {
       console.error('Logout error:', error);
+      // Force redirect anyway
+      window.location.href = '/admin/login';
     }
   };
 
@@ -86,8 +124,21 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
     
     setLoading(true);
     try {
+      // Get tool info before deletion for audit log
+      const { data: toolToDelete } = await supabase
+        .from('tools')
+        .select('name, category')
+        .eq('id', id)
+        .single();
+      
       const { error } = await supabase.from('tools').delete().eq('id', id);
       if (error) throw error;
+      
+      // Log deletion
+      await logCRUD(user.id, user.email || '', 'DELETE', 'TOOL', id, {
+        tool_name: toolToDelete?.name || 'Unknown',
+        category: toolToDelete?.category || 'Unknown'
+      });
       
       setMessage({ type: 'success', text: 'Tool deleted successfully' });
       // Refresh the page to update the data
@@ -147,28 +198,41 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
-                Admin Dashboard
-              </h1>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Welcome back, {user.email}
-              </p>
+    <AdminErrorBoundary>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        {/* Header */}
+        <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                  Admin Dashboard
+                </h1>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Welcome back, {user.email}
+                </p>
+                {sessionInfo && (
+                  <div className="flex items-center space-x-2 mt-1">
+                    <div className={`w-2 h-2 rounded-full ${
+                      sessionInfo.isExpired ? 'bg-red-500' : 'bg-green-500'
+                    }`} />
+                    <span className="text-xs text-gray-500">
+                      Session expires in {Math.floor(sessionInfo.timeRemaining / 60000)} minutes
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm sm:text-base min-h-[44px]"
+                >
+                  Logout
+                </button>
+              </div>
             </div>
-            <button
-              onClick={handleLogout}
-              className="w-full sm:w-auto bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors text-sm sm:text-base min-h-[44px]"
-            >
-              Logout
-            </button>
           </div>
         </div>
-      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Message */}
@@ -734,5 +798,6 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
         )}
       </div>
     </div>
+      </AdminErrorBoundary>
   );
 } 
