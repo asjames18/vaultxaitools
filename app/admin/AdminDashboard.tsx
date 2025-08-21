@@ -39,6 +39,7 @@ interface Tool {
   review_count?: number;
   weekly_users?: number;
   created_at?: string;
+  status?: 'draft' | 'published' | 'archived';
 }
 
 interface Category {
@@ -414,143 +415,141 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
         </div>
 
         {/* Content */}
-        {activeTab === 'tools' && (
-          <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                AI Tools
-              </h2>
-              <a
-                href="/admin/tools"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Open Tools Management
-              </a>
-            </div>
-
-            {/* Quick Search Demo */}
-            <div className="mb-6">
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
-                  🔍 Quick Search Demo
-                </h3>
-                <p className="text-xs text-blue-600 dark:text-blue-400 mb-3">
-                  Try the new AI-powered search! Go to the "Advanced Search" tab for full features.
+                {activeTab === 'tools' && (
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">AI Tools Management</h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Manage {tools.length} AI tools with comprehensive information
                 </p>
-                <AdvancedSearch
-                  onSearch={(query, filters) => {
-                    console.log('Quick search:', query, filters);
-                    // Filter tools based on search
-                  }}
-                  data={tools}
-                  showFilters={false}
-                  showSuggestions={true}
-                  placeholder="Search tools with AI intelligence..."
-                  className="max-w-md"
-                />
-              </div>
-            </div>
-
-                        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-              {/* Mobile view - cards */}
-              <div className="block sm:hidden">
-                <div className="p-4 space-y-4">
-                  {tools.map((tool) => (
-                    <div key={tool.id} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <div className="flex items-center mb-3">
-                        <div className="text-2xl mr-3">{tool.logo || '🔧'}</div>
-                        <div className="flex-1">
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">
-                            {tool.name}
-                          </div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
-                            {tool.website || 'No website'}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                          {tool.category || 'Uncategorized'}
-                        </span>
-                        <div className="flex items-center space-x-3">
-                          <button
-                            onClick={() => handleEditTool(tool)}
-                            className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 text-sm min-h-[32px] px-2"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteTool(tool.id)}
-                            className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 text-sm min-h-[32px] px-2"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
               
-              {/* Desktop view - table */}
-              <div className="hidden sm:block overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                  <thead className="bg-gray-50 dark:bg-gray-700">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                        Tool
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                        Category
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                    {tools.map((tool) => (
-                      <tr key={tool.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <div className="text-2xl mr-3">{tool.logo || '🔧'}</div>
-                            <div>
-                              <div className="text-sm font-medium text-gray-900 dark:text-white">
-                                {tool.name}
-                              </div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400">
-                                {tool.website || 'No website'}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                            {tool.category || 'Uncategorized'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex items-center space-x-2">
-                            <button
-                              onClick={() => handleEditTool(tool)}
-                              className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => handleDeleteTool(tool.id)}
-                              className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <button
+                onClick={() => setShowToolForm(true)}
+                className="px-4 py-2.5 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
+              >
+                ➕ Create Tool
+              </button>
             </div>
+
+            {/* Search */}
+            <div className="flex gap-2 items-center">
+              <input
+                type="text"
+                placeholder="Search tools..."
+                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+              />
+            </div>
+
+            {/* Status Tabs */}
+            <div className="flex gap-2">
+              {(['all','draft','published','archived'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  className={`px-3.5 py-2 rounded-md text-sm font-semibold border transition-colors ${
+                    tab === 'all'
+                      ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
+                      : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  {tab} ({tools.filter(t => tab === 'all' ? true : t.status === tab).length})
+                </button>
+              ))}
+            </div>
+
+            {/* Tools Display */}
+            <div className="space-y-6">
+              {tools.map((tool) => (
+                <div key={tool.id} className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
+                  {/* Tool Header */}
+                  <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-4">
+                        <div className="text-4xl">{tool.logo || '🔧'}</div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{tool.name}</h3>
+                          <p className="text-gray-600 dark:text-gray-400 mt-1">{tool.description || 'No description available'}</p>
+                          <div className="flex gap-2 mt-2">
+                            {tool.category && <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 text-sm">{tool.category}</span>}
+                            <span className="px-3 py-1 rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 text-sm">Published</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <button 
+                          onClick={() => handleEditTool(tool)} 
+                          className="px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                        >
+                          ✏️ Edit
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Quick Stats Row */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div className="text-2xl font-bold text-yellow-600">⭐ {tool.rating || 'N/A'}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{tool.review_count || 0} reviews</div>
+                      </div>
+                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div className="text-2xl font-bold text-blue-600">{tool.weekly_users ? `${(tool.weekly_users / 1000).toFixed(1)}k` : 'N/A'}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">Weekly Users</div>
+                      </div>
+                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div className="text-2xl font-bold text-purple-600">{tool.website ? '🌐' : '❌'}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">Website</div>
+                      </div>
+                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <div className="text-2xl font-bold text-green-600">{tool.created_at ? '📅' : '❌'}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400">Created</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div className="p-6">
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">⚡ Quick Actions</h4>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      <button className="px-3 py-2 text-sm bg-amber-500 text-white rounded-md hover:bg-amber-600">
+                        ⏸️ Unpublish
+                      </button>
+                      <button className="px-3 py-2 text-sm bg-gray-700 text-white rounded-md hover:bg-gray-700">
+                        📦 Archive
+                      </button>
+                      {tool.website && (
+                        <a 
+                          href={tool.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 text-center block"
+                        >
+                          🌐 Website
+                        </a>
+                      )}
+                      <button 
+                        onClick={() => handleEditTool(tool)}
+                        className="px-3 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700"
+                      >
+                        ✏️ Edit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* No Results */}
+            {tools.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No tools found</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  No tools match the current criteria
+                </p>
+              </div>
+            )}
           </div>
         )}
 
@@ -1042,30 +1041,11 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
 
         {/* Forms */}
         {showToolForm && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Manage Tools
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Use the dedicated Tools Management page to create, edit, publish and archive tools.
-              </p>
-              <div className="flex justify-end space-x-3">
-                <button
-                  onClick={handleFormClose}
-                  className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                >
-                  Close
-                </button>
-                <a
-                  href="/admin/tools"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                >
-                  Open Tools Management
-                </a>
-              </div>
-            </div>
-          </div>
+          <ToolForm
+            tool={editingTool}
+            onClose={handleFormClose}
+            onSuccess={handleFormSuccess}
+          />
         )}
 
         {showCategoryForm && (
