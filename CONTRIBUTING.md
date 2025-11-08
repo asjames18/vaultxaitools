@@ -1,4 +1,4 @@
-# Contributing to VaultX AI Tools
+# Contributing to VaultX Tech
 
 Thank you for helping build VaultX! Please:
 

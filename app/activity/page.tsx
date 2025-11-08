@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Recent Activity - VaultX AI Tools',
+  title: 'Recent Activity - VaultX Tech',
   description: 'Your recent activity and interactions with AI tools',
 };
 

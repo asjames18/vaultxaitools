@@ -63,7 +63,7 @@ export default function SponsoredContent({
               Sponsored Content Disclosure
             </h4>
             <p className="text-xs text-purple-700 dark:text-purple-300 leading-relaxed">
-              This section contains sponsored content. Tools featured here have paid for placement to help support VaultX AI Tools. 
+              This section contains sponsored content. Tools featured here have paid for placement to help support VaultX Tech. 
               We maintain editorial independence and only feature tools we believe provide value to our users. 
               Sponsored placement does not guarantee positive reviews or recommendations.
             </p>
@@ -154,7 +154,7 @@ export default function SponsoredContent({
         {showDisclosure && (
           <div className="mt-6 pt-4 border-t border-purple-200 dark:border-purple-800">
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-              💎 Sponsored content helps support VaultX AI Tools. We maintain editorial independence.
+              💎 Sponsored content helps support VaultX Tech. We maintain editorial independence.
             </p>
           </div>
         )}

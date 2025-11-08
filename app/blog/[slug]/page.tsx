@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   
   if (!post) {
     return {
-      title: 'Post Not Found - VaultX AI Tools',
+      title: 'Post Not Found - VaultX Tech',
     };
   }
 

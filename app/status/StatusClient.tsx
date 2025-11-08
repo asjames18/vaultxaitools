@@ -213,7 +213,7 @@ export default function StatusClient() {
               System Status
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              Real-time status of VaultX AI Tools platform services and infrastructure.
+              Real-time status of VaultX Tech platform services and infrastructure.
             </p>
             <div className="mt-8 flex items-center justify-center space-x-4">
               <div className="flex items-center space-x-2">

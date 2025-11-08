@@ -9,79 +9,87 @@ type Category = Database['public']['Tables']['categories']['Row'];
 type CategoryInsert = Database['public']['Tables']['categories']['Insert'];
 type CategoryUpdate = Database['public']['Tables']['categories']['Update'];
 
-// Static categories data
+// Static categories data - Church/Media/Ministry focused
 const staticCategories = [
   {
-    name: "Language",
-    icon: "💬",
-    description: "AI tools for text generation, translation, and language processing",
-    count: 45,
-    color: "from-blue-500 to-cyan-500",
-    popular_tools: ["ChatGPT", "Claude", "Bard", "Perplexity"]
-  },
-  {
-    name: "Design",
-    icon: "🎨",
-    description: "AI-powered design tools for graphics, UI/UX, and creative work",
-    count: 38,
-    color: "from-purple-500 to-pink-500",
-    popular_tools: ["Midjourney", "DALL-E", "Stable Diffusion", "Canva AI"]
-  },
-  {
-    name: "Development",
-    icon: "💻",
-    description: "AI tools for coding, debugging, and software development",
-    count: 52,
-    color: "from-green-500 to-emerald-500",
-    popular_tools: ["GitHub Copilot", "Cursor", "Tabnine", "CodeWhisperer"]
-  },
-  {
-    name: "Productivity",
-    icon: "⚡",
-    description: "AI assistants and tools to boost your productivity",
-    count: 29,
-    color: "from-yellow-500 to-orange-500",
-    popular_tools: ["Notion AI", "Grammarly", "Otter.ai", "Fireflies"]
-  },
-  {
-    name: "Marketing",
-    icon: "📈",
-    description: "AI tools for marketing, advertising, and business growth",
-    count: 31,
-    color: "from-red-500 to-rose-500",
-    popular_tools: ["Jasper", "Copy.ai", "Surfer SEO", "Phrasee"]
-  },
-  {
-    name: "Writing",
-    icon: "✍️",
-    description: "AI writing assistants and content creation tools",
-    count: 27,
-    color: "from-indigo-500 to-blue-500",
-    popular_tools: ["Grammarly", "Hemingway", "ProWritingAid", "Wordtune"]
-  },
-  {
-    name: "Video",
+    name: "Video Editing",
     icon: "🎬",
-    description: "AI tools for video creation, editing, and generation",
-    count: 23,
-    color: "from-pink-500 to-purple-500",
-    popular_tools: ["Runway", "Synthesia", "Lumen5", "Pictory"]
+    description: "Video editing tools and software for creating professional church and ministry videos",
+    count: 0,
+    color: "from-blue-500 to-cyan-500",
+    popular_tools: ["Adobe Premiere Pro", "Final Cut Pro", "DaVinci Resolve", "Camtasia"]
   },
   {
-    name: "Audio",
-    icon: "🎵",
-    description: "AI tools for audio processing, music generation, and voice synthesis",
-    count: 19,
+    name: "Graphics Design",
+    icon: "🎨",
+    description: "Graphics design tools for creating church graphics, social media posts, and ministry materials",
+    count: 0,
+    color: "from-purple-500 to-pink-500",
+    popular_tools: ["Canva", "Adobe Photoshop", "Adobe Illustrator", "Figma"]
+  },
+  {
+    name: "Social Media",
+    icon: "📱",
+    description: "Social media management and scheduling tools for church and ministry outreach",
+    count: 0,
+    color: "from-green-500 to-emerald-500",
+    popular_tools: ["Buffer", "Hootsuite", "Later", "Sprout Social"]
+  },
+  {
+    name: "Live Streaming",
+    icon: "📺",
+    description: "Live streaming platforms and tools for church services and ministry events",
+    count: 0,
+    color: "from-yellow-500 to-orange-500",
+    popular_tools: ["OBS Studio", "Streamlabs", "Restream", "YouTube Live"]
+  },
+  {
+    name: "Audio/Podcasting",
+    icon: "🎙️",
+    description: "Audio production and podcasting tools for church sermons, podcasts, and ministry content",
+    count: 0,
+    color: "from-red-500 to-rose-500",
+    popular_tools: ["Audacity", "Adobe Audition", "GarageBand", "Reaper"]
+  },
+  {
+    name: "Content Creation",
+    icon: "✍️",
+    description: "AI-powered content creation tools for writing, blogging, and ministry communications",
+    count: 0,
+    color: "from-indigo-500 to-blue-500",
+    popular_tools: ["ChatGPT", "Grammarly", "Jasper", "Copy.ai"]
+  },
+  {
+    name: "Website Building",
+    icon: "🌐",
+    description: "Website builders and CMS platforms for church websites and ministry online presence",
+    count: 0,
     color: "from-teal-500 to-cyan-500",
-    popular_tools: ["Mubert", "Amper Music", "Descript", "Synthesia"]
+    popular_tools: ["WordPress", "Squarespace", "Wix", "Webflow"]
   },
   {
-    name: "Data",
-    icon: "📊",
-    description: "AI tools for data analysis, visualization, and insights",
-    count: 34,
+    name: "Email Marketing",
+    icon: "📧",
+    description: "Email marketing and newsletter tools for church communications and ministry outreach",
+    count: 0,
+    color: "from-pink-500 to-purple-500",
+    popular_tools: ["Mailchimp", "Constant Contact", "ConvertKit", "AWeber"]
+  },
+  {
+    name: "Project Management",
+    icon: "📋",
+    description: "Project management and planning tools for organizing church events and ministry activities",
+    count: 0,
     color: "from-gray-500 to-slate-500",
-    popular_tools: ["Tableau", "Power BI", "Looker", "Metabase"]
+    popular_tools: ["Asana", "Trello", "Monday.com", "Notion"]
+  },
+  {
+    name: "Communication",
+    icon: "💬",
+    description: "Communication and messaging tools for church teams and ministry coordination",
+    count: 0,
+    color: "from-blue-500 to-indigo-500",
+    popular_tools: ["Slack", "Microsoft Teams", "Discord", "Zoom"]
   }
 ];
 

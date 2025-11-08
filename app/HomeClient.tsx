@@ -365,8 +365,8 @@ export default function HomeClient({
       <StructuredData 
         type="website" 
         data={{
-          name: 'VaultX AI Tools',
-          description: 'Expert-curated AI tools directory',
+          name: 'VaultX Tech',
+          description: 'VaultX Tech - Ministry Media tech and consulting. Providing tools, resources, and expert guidance for effective ministry media production.',
           url: 'https://vaultxaitools.com'
         }} 
       />

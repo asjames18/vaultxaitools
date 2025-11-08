@@ -256,7 +256,7 @@ export default function PerformanceDashboardClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400">
-              © 2024 VaultX AI Tools. Performance monitoring and optimization tools for modern web applications.
+              © 2024 VaultX Tech. Performance monitoring and optimization tools for modern web applications.
             </p>
           </div>
         </div>

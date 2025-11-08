@@ -25,11 +25,11 @@ export default function SEOHead({
   ogType = 'website',
   publishedTime,
   modifiedTime,
-  author = 'VaultX Team',
+  author = 'VaultX Tech',
   section,
   tags = [],
 }: SEOHeadProps) {
-  const fullTitle = title.includes('VaultX') ? title : `${title} | VaultX AI Tools`;
+  const fullTitle = title.includes('VaultX') ? title : `${title} | VaultX Tech`;
   const fullDescription = description.length > 160 ? description.substring(0, 157) + '...' : description;
   
   return (
@@ -47,7 +47,7 @@ export default function SEOHead({
       <meta property="og:description" content={fullDescription} />
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonical ? `https://vaultxaitools.com${canonical}` : 'https://vaultxaitools.com'} />
-      <meta property="og:site_name" content="VaultX AI Tools" />
+      <meta property="og:site_name" content="VaultX Tech" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:image" content={`https://vaultxaitools.com${ogImage}`} />
       <meta property="og:image:width" content="1200" />
@@ -93,8 +93,8 @@ export default function SEOHead({
       <meta name="twitter:creator" content="@vaultxaitools" />
       
       {/* Structured data hints */}
-      <meta name="application-name" content="VaultX AI Tools" />
-      <meta name="apple-mobile-web-app-title" content="VaultX AI Tools" />
+      <meta name="application-name" content="VaultX Tech" />
+      <meta name="apple-mobile-web-app-title" content="VaultX Tech" />
     </Head>
   );
 }

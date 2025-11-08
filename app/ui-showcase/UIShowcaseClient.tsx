@@ -358,7 +358,7 @@ export default function UIShowcaseClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400">
-              © 2024 VaultX AI Tools. Built with modern web technologies and advanced UI/UX principles.
+              © 2024 VaultX Tech. Built with modern web technologies and advanced UI/UX principles.
             </p>
           </div>
         </div>

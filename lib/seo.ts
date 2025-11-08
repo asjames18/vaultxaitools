@@ -108,7 +108,7 @@ export function generateToolMetadata(tool: Tool): Metadata {
       ],
       publishedTime: tool.createdAt,
       modifiedTime: tool.updatedAt,
-      authors: ['VaultX Team'],
+      authors: ['VaultX Tech'],
       section: tool.category,
       tags: tool.tags || [],
     },

@@ -183,7 +183,7 @@ export default function Personalization({ className = '', onPreferencesChange }:
               Personalization
             </h2>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Customize your VaultX AI Tools experience
+              Customize your VaultX Tech experience
             </p>
           </div>
           

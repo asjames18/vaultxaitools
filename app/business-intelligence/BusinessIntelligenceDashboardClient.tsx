@@ -447,7 +447,7 @@ export default function BusinessIntelligenceDashboardClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <p className="text-gray-600 dark:text-gray-400">
-              © 2024 VaultX AI Tools. Advanced business intelligence and analytics platform.
+              © 2024 VaultX Tech. Advanced ministry media intelligence and analytics platform.
             </p>
           </div>
         </div>

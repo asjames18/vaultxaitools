@@ -116,7 +116,7 @@ export default function PWAInstall() {
         
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-            Install VaultX AI Tools
+            Install VaultX Tech
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
             Get the app-like experience with quick access and offline functionality

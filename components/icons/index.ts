@@ -1,4 +1,4 @@
-// Icon components for VaultX AI Tools
+// Icon components for VaultX Tech
 export { default as SparklesIcon } from './SparklesIcon';
 export { default as ArrowRightIcon } from './ArrowRightIcon';
 export { default as TrendingUpIcon } from './TrendingUpIcon';
