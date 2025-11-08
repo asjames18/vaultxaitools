@@ -1,3 +1,6 @@
+// Force dynamic rendering to avoid build-time auth errors
+export const dynamic = 'force-dynamic';
+
 import { createClient } from '@/lib/supabase-server';
 import { getUserRole } from '@/lib/auth';
 
@@ -25,7 +28,7 @@ export default async function InvestorPage() {
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Company Overview</h2>
           <p className="text-gray-600 mb-4">
-            VaultX AI Tools is a comprehensive platform that curates and reviews the best AI tools available in the market.
+            VaultX Tech - Ministry Media tech and consulting. A comprehensive platform providing tools, resources, and expert guidance for effective ministry media production.
           </p>
           
           <h3 className="text-lg font-semibold mb-2">Key Metrics</h3>

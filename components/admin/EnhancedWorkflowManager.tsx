@@ -14,6 +14,7 @@ import {
   ArrowPathIcon
 } from '@heroicons/react/24/outline';
 import { LoadingSpinner } from '@/components/AdminLoadingStates';
+import { devLog } from '@/lib/utils';
 
 interface Workflow {
   id: string;
@@ -148,7 +149,7 @@ export default function EnhancedWorkflowManager() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Workflow executed:', result);
+        devLog.log('Workflow executed:', result);
         // Reload workflows to get updated stats
         await loadWorkflows();
       } else {

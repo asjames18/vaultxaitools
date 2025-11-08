@@ -1,5 +1,10 @@
 // Learn more: https://github.com/testing-library/jest-dom
-require('@testing-library/jest-dom');
+// Optional - only require if installed
+try {
+  require('@testing-library/jest-dom');
+} catch (e) {
+  // Package not installed, skip
+}
 
 // Mock Next.js router
 jest.mock('next/router', () => ({

@@ -232,13 +232,13 @@ function UserFeedbackDemo() {
         <SuccessMessage
           title="Profile Updated"
           message="Your profile has been successfully updated."
-          onDismiss={() => console.log('Dismissed')}
+          onDismiss={() => {}}
         />
         
         <ErrorMessage
           title="Upload Failed"
           message="The file upload failed. Please check your connection and try again."
-          retryAction={() => console.log('Retrying...')}
+          retryAction={() => {}}
         />
         
         <InfoMessage

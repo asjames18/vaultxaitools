@@ -11,7 +11,6 @@ export default function SEOMonitor() {
         const entries = list.getEntries();
         const lastEntry = entries[entries.length - 1];
         if (lastEntry) {
-          console.log('LCP:', lastEntry.startTime);
           // Send to analytics if needed
         }
       });
@@ -22,7 +21,6 @@ export default function SEOMonitor() {
         const entries = list.getEntries();
         entries.forEach((entry) => {
           const eventEntry = entry as PerformanceEventTiming;
-          console.log('FID:', eventEntry.processingStart - eventEntry.startTime);
           // Send to analytics if needed
         });
       });
@@ -37,7 +35,6 @@ export default function SEOMonitor() {
             clsValue += entry.value;
           }
         });
-        console.log('CLS:', clsValue);
         // Send to analytics if needed
       });
       clsObserver.observe({ entryTypes: ['layout-shift'] });
@@ -46,7 +43,6 @@ export default function SEOMonitor() {
       const navigationEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
       if (navigationEntry) {
         const ttfb = navigationEntry.responseStart - navigationEntry.requestStart;
-        console.log('TTFB:', ttfb);
         // Send to analytics if needed
       }
 

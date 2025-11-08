@@ -68,9 +68,9 @@ export const trackEvent = (action: string, category: string, label?: string, val
   }
 };
 
-export const trackPageView = (url: string, title?: string) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('config', 'G-XXXXXXXXXX', {
+export const trackPageView = (url: string, title?: string, measurementId?: string) => {
+  if (typeof window !== 'undefined' && window.gtag && measurementId) {
+    window.gtag('config', measurementId, {
       page_path: url,
       page_title: title,
     });

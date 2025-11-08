@@ -83,7 +83,7 @@ export default function MobileNavigation({
   const handleItemClick = (item: any) => {
     if (item.action === 'logout') {
       // Handle logout logic
-      console.log('Logout clicked');
+      // TODO: Implement logout functionality
       return;
     }
     setIsOpen(false);

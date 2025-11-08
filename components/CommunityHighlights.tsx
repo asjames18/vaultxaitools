@@ -242,7 +242,7 @@ export default function CommunityHighlights({
             <button
               onClick={() => {
                 // This could open a review form modal
-                console.log('Add review clicked');
+                // TODO: Implement review form modal
               }}
               className="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >

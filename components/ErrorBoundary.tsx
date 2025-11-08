@@ -95,10 +95,21 @@ class ErrorBoundary extends Component<Props, State> {
       timestamp: new Date().toISOString()
     };
 
-    // TODO: Send error report to your backend or error tracking service
-    console.log('Error report:', errorReport);
+    // Send error report to backend/error tracking service
+    if (process.env.NODE_ENV === 'production') {
+      fetch('/api/analytics/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'error_report',
+          ...errorReport
+        }),
+      }).catch(() => {
+        // Silently fail if error reporting endpoint is unavailable
+      });
+    }
     
-    // For now, just show a message
+    // Show confirmation message
     alert('Thank you for reporting this error. Our team has been notified.');
   };
 

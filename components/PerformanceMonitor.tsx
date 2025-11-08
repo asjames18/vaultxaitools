@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { trackEvent } from './GoogleAnalytics';
+import { devLog } from '@/lib/utils';
 
 interface PerformanceMonitorProps {
   enabled?: boolean;
@@ -22,9 +23,6 @@ export default function PerformanceMonitor({ enabled = true }: PerformanceMonito
           if (lastEntry) {
             const lcp = lastEntry.startTime;
             trackEvent('core_web_vital', 'web_vitals', 'LCP', Math.round(lcp));
-            
-            // Log LCP for debugging
-            console.log('LCP:', lcp);
           }
         });
         
@@ -43,9 +41,6 @@ export default function PerformanceMonitor({ enabled = true }: PerformanceMonito
             const eventEntry = entry as PerformanceEventTiming;
             const fid = eventEntry.processingStart - eventEntry.startTime;
             trackEvent('core_web_vital', 'web_vitals', 'FID', Math.round(fid));
-            
-            // Log FID for debugging
-            console.log('FID:', fid);
           });
         });
         
@@ -81,7 +76,6 @@ export default function PerformanceMonitor({ enabled = true }: PerformanceMonito
         const reportCLS = () => {
           if (clsValue > 0) {
             trackEvent('core_web_vital', 'web_vitals', 'CLS', Math.round(clsValue * 1000));
-            console.log('CLS:', clsValue);
           }
         };
 
@@ -111,9 +105,6 @@ export default function PerformanceMonitor({ enabled = true }: PerformanceMonito
               trackEvent('performance', 'timing', key, Math.round(value));
             }
           });
-
-          // Log performance metrics for debugging
-          console.log('Performance Metrics:', metrics);
         }
       }
     };
@@ -149,7 +140,6 @@ export default function PerformanceMonitor({ enabled = true }: PerformanceMonito
         const totalMB = Math.round(memory.totalJSHeapSize / 1024 / 1024);
         
         trackEvent('performance', 'memory', 'heap_usage', usedMB);
-        console.log('Memory Usage:', `${usedMB}MB / ${totalMB}MB`);
       }
     };
 

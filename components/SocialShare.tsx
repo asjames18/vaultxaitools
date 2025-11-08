@@ -97,7 +97,7 @@ export default function SocialShare({
       try {
         await navigator.share(shareData);
       } catch (error) {
-        console.log('Share cancelled or failed:', error);
+        // User cancelled share or share failed - no action needed
       }
     } else {
       // Fallback to copy link if native sharing is not available
