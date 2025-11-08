@@ -60,7 +60,7 @@ export default function ContactClient() {
               Get in Touch
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              Have questions about AI tools? Want to collaborate? We'd love to hear from you.
+              Have questions about media production for your church or ministry? Want to collaborate? We'd love to hear from you.
             </p>
           </div>
         </div>

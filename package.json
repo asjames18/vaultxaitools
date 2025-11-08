@@ -9,7 +9,12 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "setup-audit-logs": "node scripts/setup-audit-logs.js"
+    "setup-audit-logs": "node scripts/setup-audit-logs.js",
+    "monitor-data-quality": "node scripts/data-quality-monitor.js",
+    "monitor-data-quality:auto-fix": "AUTO_FIX_DATA_QUALITY=true node scripts/data-quality-monitor.js",
+    "verify-env": "node scripts/verify-env.js",
+    "verify-env:prod": "NODE_ENV=production node scripts/verify-env.js production",
+    "ci": "npm run verify-env:prod && npm run lint && npm run build && npm test -- --ci"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",

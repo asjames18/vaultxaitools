@@ -4,372 +4,279 @@ import { useState, useMemo } from 'react';
 import AdvancedSearch from '../../components/AdvancedSearch';
 import IntelligentResults from '../../components/IntelligentResults';
 import SearchAnalytics from '../../components/SearchAnalytics';
+import { useAdvancedSearch, SearchResult, SearchFilter } from '@/lib/useAdvancedSearch';
 import { Search, Filter, BarChart3, Zap, TrendingUp, Activity, Target, Eye, MousePointer } from 'lucide-react';
 
-// Mock search results for demonstration
-const mockSearchResults = [
-  {
-    id: '1',
-    title: 'ChatGPT - AI Language Model',
-    description: 'Advanced AI language model for natural conversations, writing assistance, and creative content generation.',
-    category: 'AI Tools',
-    tags: ['AI', 'Language', 'Chatbot', 'Writing'],
-    rating: 4.8,
-    popularity: 95,
-    lastUpdated: '2024-01-15T10:30:00Z',
-    relevance: 0.95,
-    type: 'tool' as const,
-    views: 15420,
-    likes: 892,
-    price: 'freemium' as const,
-    features: ['Conversation', 'Writing', 'Translation'],
-    userRating: 4.8,
-    reviewCount: 156
-  },
-  {
-    id: '2',
-    title: 'Midjourney - AI Image Generation',
-    description: 'Create stunning artwork and images using AI-powered text-to-image generation with incredible detail.',
-    category: 'AI Tools',
-    tags: ['AI', 'Image', 'Art', 'Creative'],
-    rating: 4.7,
-    popularity: 92,
-    lastUpdated: '2024-01-14T15:45:00Z',
-    relevance: 0.88,
-    type: 'tool' as const,
-    views: 12850,
-    likes: 756,
-    price: 'paid' as const,
-    features: ['Image Generation', 'Art Creation', 'Style Transfer'],
-    userRating: 4.7,
-    reviewCount: 89
-  },
-  {
-    id: '3',
-    title: 'GitHub Copilot - AI Code Assistant',
-    description: 'AI-powered code completion tool that helps developers write better code faster with intelligent suggestions.',
-    category: 'Development',
-    tags: ['AI', 'Coding', 'Development', 'Productivity'],
-    rating: 4.6,
-    popularity: 88,
-    lastUpdated: '2024-01-13T09:20:00Z',
-    relevance: 0.85,
-    type: 'tool' as const,
-    views: 9650,
-    likes: 623,
-    price: 'paid' as const,
-    features: ['Code Completion', 'AI Suggestions', 'Multi-language'],
-    userRating: 4.6,
-    reviewCount: 134
-  },
-  {
-    id: '4',
-    title: 'Notion AI - Smart Workspace',
-    description: 'AI-powered workspace that helps organize thoughts, create content, and collaborate with intelligent assistance.',
-    category: 'Productivity',
-    tags: ['AI', 'Productivity', 'Organization', 'Collaboration'],
-    rating: 4.5,
-    popularity: 85,
-    lastUpdated: '2024-01-12T14:15:00Z',
-    relevance: 0.82,
-    type: 'tool' as const,
-    views: 8750,
-    likes: 534,
-    price: 'freemium' as const,
-    features: ['Note-taking', 'AI Writing', 'Project Management'],
-    userRating: 4.5,
-    reviewCount: 98
-  },
-  {
-    id: '5',
-    title: 'Jasper - AI Content Creator',
-    description: 'Create high-quality content for marketing, blogs, and social media with AI-powered writing assistance.',
-    category: 'Marketing',
-    tags: ['AI', 'Content', 'Marketing', 'Writing'],
-    rating: 4.4,
-    popularity: 82,
-    lastUpdated: '2024-01-11T11:30:00Z',
-    relevance: 0.78,
-    type: 'tool' as const,
-    views: 7450,
-    likes: 445,
-    price: 'paid' as const,
-    features: ['Content Creation', 'Marketing Copy', 'SEO Optimization'],
-    userRating: 4.4,
-    reviewCount: 76
-  },
-  {
-    id: '6',
-    title: 'Runway ML - AI Video Editor',
-    description: 'Professional video editing powered by AI with advanced features for creators and filmmakers.',
-    category: 'Creative',
-    tags: ['AI', 'Video', 'Editing', 'Creative'],
-    rating: 4.3,
-    popularity: 78,
-    lastUpdated: '2024-01-10T16:45:00Z',
-    relevance: 0.75,
-    type: 'tool' as const,
-    views: 6230,
-    likes: 389,
-    price: 'paid' as const,
-    features: ['Video Editing', 'AI Effects', 'Motion Graphics'],
-    userRating: 4.3,
-    reviewCount: 67
-  }
-];
-
 export default function AdvancedSearchDashboardClient() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchFilters, setSearchFilters] = useState({
-    category: [],
-    rating: 0,
-    popularity: 0,
-    dateRange: 'all' as const,
-    price: 'all' as const,
-    features: []
-  });
-  const [activeTab, setActiveTab] = useState<'search' | 'results' | 'analytics'>('search');
-  const [searchResults, setSearchResults] = useState(mockSearchResults);
+  const {
+    results,
+    loading,
+    error,
+    query,
+    filters,
+    pagination,
+    search,
+    updateFilters,
+    clearFilters,
+    loadMore,
+    resetSearch,
+    hasMore,
+    totalResults
+  } = useAdvancedSearch();
 
-  // Handle search
-  const handleSearch = (query: string, filters: any) => {
-    setSearchQuery(query);
-    setSearchFilters(filters);
-    setActiveTab('results');
-    
-    // Filter results based on query and filters
-    const filtered = mockSearchResults.filter(result => {
-      const matchesQuery = result.title.toLowerCase().includes(query.toLowerCase()) ||
-                          result.description.toLowerCase().includes(query.toLowerCase()) ||
-                          result.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()));
-      
-      const matchesCategory = filters.category.length === 0 || filters.category.includes(result.category);
-      const matchesRating = result.rating >= filters.rating;
-      const matchesPrice = filters.price === 'all' || result.price === filters.price;
-      
-      return matchesQuery && matchesCategory && matchesRating && matchesPrice;
-    });
-    
-    setSearchResults(filtered);
+  // Get available categories for filter options
+  const availableCategories = useMemo(() => {
+    const categories = [...new Set(results.map(result => result.category).filter(Boolean))];
+    return categories.map(category => ({
+      value: category,
+      label: category,
+      count: results.filter(result => result.category === category).length
+    }));
+  }, [results]);
+
+  // Get available features for filter options
+  const availableFeatures = useMemo(() => {
+    const allFeatures = results.flatMap(result => result.tags || []);
+    const uniqueFeatures = [...new Set(allFeatures)];
+    return uniqueFeatures.map(feature => ({
+      value: feature,
+      label: feature,
+      count: allFeatures.filter(f => f === feature).length
+    }));
+  }, [results]);
+
+  // Handle search submission
+  const handleSearch = (searchQuery: string, searchFilters: SearchFilter) => {
+    search(searchQuery, searchFilters);
   };
 
-  // Handle result click
-  const handleResultClick = (result: any) => {
-    console.log('Result clicked:', result);
-    // Navigate to result detail page or open modal
+  // Handle filter updates
+  const handleFilterUpdate = (newFilters: Partial<SearchFilter>) => {
+    updateFilters(newFilters);
   };
 
-  // User preferences for intelligent ranking
-  const userPreferences = {
-    favoriteCategories: ['AI Tools', 'Development'],
-    preferredPrice: 'freemium' as const,
-    minRating: 4.0,
-    sortPreference: 'relevance'
+  // Handle load more
+  const handleLoadMore = () => {
+    if (hasMore && !loading) {
+      loadMore();
+    }
   };
 
-  const tabs = [
-    { id: 'search', label: 'Advanced Search', icon: Search },
-    { id: 'results', label: 'Search Results', icon: Filter },
-    { id: 'analytics', label: 'Search Analytics', icon: BarChart3 }
-  ];
+  // Search statistics
+  const searchStats = useMemo(() => {
+    if (results.length === 0) return null;
+
+    const avgRating = results.reduce((sum, result) => sum + (result.userRating || 0), 0) / results.length;
+    const avgPopularity = results.reduce((sum, result) => sum + (result.popularity || 0), 0) / results.length;
+    const topCategory = availableCategories.sort((a, b) => b.count - a.count)[0];
+    const priceDistribution = results.reduce((acc, result) => {
+      const price = result.price || 'unknown';
+      acc[price] = (acc[price] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return {
+      totalResults,
+      avgRating: avgRating.toFixed(1),
+      avgPopularity: Math.round(avgPopularity),
+      topCategory: topCategory?.label || 'N/A',
+      priceDistribution
+    };
+  }, [results, totalResults, availableCategories]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Header */}
-      <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Search className="w-5 h-5 text-white" />
-              </div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Advanced Search Dashboard
-              </h1>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="text-sm text-gray-600 dark:text-gray-400">
-                {searchResults.length} tools available
-              </div>
-              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                Export Results
-              </button>
-            </div>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            🔍 Advanced AI Search
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            Discover the perfect AI tools with our intelligent search engine. 
+            Filter by category, rating, popularity, and more to find exactly what you need.
+          </p>
         </div>
-      </div>
 
-      {/* Navigation */}
-      <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
+        {/* Search Interface */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <AdvancedSearch
+            onSearch={handleSearch}
+            showFilters={true}
+            showSuggestions={true}
+            maxSuggestions={8}
+            placeholder="Search AI tools, features, or categories..."
+          />
+        </div>
+
+        {/* Search Results and Analytics */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Results */}
+          <div className="lg:col-span-2">
+            {error && (
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
+                <p className="text-red-800 dark:text-red-200">Search error: {error}</p>
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                    activeTab === tab.id
-                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
-                  }`}
+                  onClick={resetSearch}
+                  className="mt-2 text-sm text-red-600 dark:text-red-400 hover:underline"
                 >
-                  <Icon className="w-4 h-4" />
-                  {tab.label}
+                  Try again
                 </button>
-              );
-            })}
+              </div>
+            )}
+
+            {query && (
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    Search Results
+                  </h2>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    {totalResults > 0 ? `${totalResults} results found` : 'No results found'}
+                  </div>
+                </div>
+
+                {/* Active Filters Summary */}
+                {Object.values(filters).some(value => 
+                  Array.isArray(value) ? value.length > 0 : value !== 0 && value !== 'all'
+                ) && (
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 mb-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-blue-800 dark:text-blue-200">
+                        Active filters: {Object.entries(filters)
+                          .filter(([key, value]) => 
+                            Array.isArray(value) ? value.length > 0 : value !== 0 && value !== 'all'
+                          )
+                          .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
+                          .join(', ')}
+                      </span>
+                      <button
+                        onClick={clearFilters}
+                        className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        Clear all
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Results */}
+            {loading && results.length === 0 ? (
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 animate-pulse">
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                  </div>
+                ))}
+              </div>
+            ) : results.length > 0 ? (
+              <div className="space-y-6">
+                <IntelligentResults 
+                  results={results.map(result => ({
+                    id: result.id,
+                    title: result.name,
+                    description: result.description,
+                    category: result.category,
+                    tags: result.tags,
+                    rating: result.rating,
+                    popularity: result.popularity,
+                    lastUpdated: result.lastUpdated,
+                    relevance: result.relevance,
+                    type: result.type,
+                    views: result.views,
+                    likes: result.likes,
+                    price: (result.price === 'Free' || result.price === 'free' ? 'free' : 
+                            result.price === 'Paid' || result.price === 'paid' ? 'paid' : 
+                            result.price === 'Freemium' || result.price === 'freemium' ? 'freemium' : 'free') as 'free' | 'paid' | 'freemium',
+                    features: result.tags || [],
+                    userRating: result.userRating,
+                    reviewCount: result.reviewCount
+                  }))} 
+                  query={query}
+                />
+                
+                {/* Load More Button */}
+                {hasMore && (
+                  <div className="text-center pt-6">
+                    <button
+                      onClick={handleLoadMore}
+                      disabled={loading}
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
+                    >
+                      {loading ? 'Loading...' : 'Load More Results'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : query && !loading ? (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
+                  No results found
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  Try adjusting your search terms or filters
+                </p>
+                <button
+                  onClick={resetSearch}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                >
+                  Start New Search
+                </button>
+              </div>
+            ) : null}
           </div>
-        </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {activeTab === 'search' && (
-          <div className="space-y-8">
-            {/* Hero Section */}
-            <div className="text-center">
-              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-                Advanced Search & Discovery
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                Find the perfect AI tools with intelligent search, advanced filtering, and personalized recommendations.
-              </p>
-            </div>
-
-            {/* Search Component */}
-            <div className="max-w-4xl mx-auto">
-              <AdvancedSearch
-                placeholder="Search AI tools, features, categories, and more..."
-                onSearch={handleSearch}
-                showFilters={true}
-                showSuggestions={true}
-                maxSuggestions={8}
+          {/* Analytics Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-8">
+              <SearchAnalytics 
+                className=""
+                timeRange="week"
+                showCharts={true}
               />
             </div>
-
-            {/* Search Features */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                  AI-Powered Suggestions
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Get intelligent search suggestions based on your query and preferences
-                </p>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Filter className="w-8 h-8 text-green-600 dark:text-green-400" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                  Advanced Filtering
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Filter by category, rating, price, features, and more
-                </p>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                  Smart Ranking
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Results ranked by relevance, popularity, and your preferences
-                </p>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Search Statistics</h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {mockSearchResults.length}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Total Tools</div>
-                </div>
-                
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">
-                    {new Set(mockSearchResults.map(r => r.category)).size}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
-                </div>
-                
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">
-                    {mockSearchResults.filter(r => r.price === 'free').length}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Free Tools</div>
-                </div>
-                
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600">
-                    {Math.round(mockSearchResults.reduce((sum, r) => sum + r.rating, 0) / mockSearchResults.length * 10) / 10}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Avg Rating</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'results' && (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                Search Results
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
-                {searchQuery ? `Results for "${searchQuery}"` : 'Browse all available tools'}
-              </p>
-            </div>
-
-            <IntelligentResults
-              results={searchResults}
-              query={searchQuery || 'all tools'}
-              userPreferences={userPreferences}
-              onResultClick={handleResultClick}
-            />
-          </div>
-        )}
-
-        {activeTab === 'analytics' && (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                Search Analytics
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
-                Understand search patterns, user behavior, and optimization opportunities
-              </p>
-            </div>
-
-            <SearchAnalytics timeRange="week" showCharts={true} />
-          </div>
-        )}
-      </div>
-
-      {/* Footer */}
-      <div className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <p className="text-gray-600 dark:text-gray-400">
-              © 2024 VaultX AI Tools. Advanced search and discovery platform for AI tools and resources.
-            </p>
           </div>
         </div>
+
+        {/* Search Tips */}
+        {!query && (
+          <div className="max-w-4xl mx-auto mt-16">
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
+              💡 Search Tips
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div className="text-3xl mb-3">🎯</div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Be Specific</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Use specific terms like "AI image generation" instead of just "AI"
+                </p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div className="text-3xl mb-3">🔧</div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Use Filters</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Narrow results by category, rating, price, and features
+                </p>
+              </div>
+              
+              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                <div className="text-3xl mb-3">⭐</div>
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Check Ratings</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Look for tools with high ratings and many reviews
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

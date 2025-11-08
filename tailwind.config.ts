@@ -6,6 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -14,7 +15,7 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       fontSize: {
-        "2xs": ["0.625rem", { lineHeight: "0.75rem" }],
+        "2xs": ["0.625rem", { lineHeight: "0.75rem" }] as [string, { lineHeight: string }],
       },
       spacing: {
         "18": "4.5rem",
@@ -64,9 +65,92 @@ const config: Config = {
         "gradient-ocean": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
         "gradient-forest": "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
       },
+      // Accessibility enhancements
+      colors: {
+        // High contrast colors
+        'high-contrast': {
+          'bg': '#000000',
+          'text': '#ffffff',
+          'primary': '#ffff00',
+          'secondary': '#00ffff',
+        },
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    // Custom accessibility utilities
+    function({ addUtilities, addComponents, theme }: any) {
+      // Screen reader only utilities
+      addUtilities({
+        '.sr-only': {
+          'position': 'absolute',
+          'width': '1px',
+          'height': '1px',
+          'padding': '0',
+          'margin': '-1px',
+          'overflow': 'hidden',
+          'clip': 'rect(0, 0, 0, 0)',
+          'white-space': 'nowrap',
+          'border': '0',
+        },
+        '.focus\\:not-sr-only:focus': {
+          'position': 'static',
+          'width': 'auto',
+          'height': 'auto',
+          'padding': 'inherit',
+          'margin': 'inherit',
+          'overflow': 'visible',
+          'clip': 'auto',
+          'white-space': 'normal',
+        },
+        '.focus-visible': {
+          'outline': '2px solid transparent',
+          'outline-offset': '2px',
+        },
+        '.focus-visible:focus-visible': {
+          'outline': '2px solid #3b82f6',
+          'outline-offset': '2px',
+        },
+      });
+
+      // High contrast mode styles
+      addComponents({
+        '.high-contrast': {
+          '& *': {
+            'background-color': theme('colors.high-contrast.bg'),
+            'color': theme('colors.high-contrast.text'),
+            'border-color': theme('colors.high-contrast.text'),
+          },
+          '& button, & [role="button"]': {
+            'background-color': theme('colors.high-contrast.primary'),
+            'color': theme('colors.high-contrast.bg'),
+            'border': `2px solid ${theme('colors.high-contrast.text')}`,
+          },
+          '& a': {
+            'color': theme('colors.high-contrast.secondary'),
+            'text-decoration': 'underline',
+          },
+        },
+        '.reduced-motion': {
+          '& *, & *::before, & *::after': {
+            'animation-duration': '0.01ms !important',
+            'animation-iteration-count': '1 !important',
+            'transition-duration': '0.01ms !important',
+            'scroll-behavior': 'auto !important',
+          },
+        },
+        '.large-text': {
+          '& *': {
+            'font-size': '1.2em',
+            'line-height': '1.6',
+          },
+          '& h1, & h2, & h3, & h4, & h5, & h6': {
+            'font-size': '1.4em',
+          },
+        },
+      });
+    },
+  ],
 };
 
 export default config; 

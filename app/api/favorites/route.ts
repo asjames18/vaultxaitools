@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { createClient } from '@supabase/supabase-js'
 import { headers } from 'next/headers'
+import { sensitiveOperationRateLimiter } from '@/lib/rateLimit'
 
 export async function GET(request: Request) {
   // Get authorization header
@@ -83,6 +84,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  // Rate limit writes
+  const limit = sensitiveOperationRateLimiter(request as any);
+  if (limit) return limit;
   console.log('🔍 API: POST /api/favorites called');
   
   // Get authorization header
@@ -173,25 +177,35 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const cookieStore = cookies()
+  // Rate limit deletes
+  const limit = sensitiveOperationRateLimiter(req as any);
+  if (limit) return limit;
+  const cookieStore = await cookies()
   
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() {
-          return cookieStore.getAll()
+        get(name: string) {
+          return cookieStore.get(name)?.value;
         },
-        setAll(cookiesToSet) {
+        set(name: string, value: string, options?: any) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
+            if (options) {
+              cookieStore.set(name, value, options);
+            } else {
+              cookieStore.set(name, value);
+            }
           } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
+            // Ignore errors in route handlers
+          }
+        },
+        remove(name: string, options?: any) {
+          try {
+            cookieStore.set(name, '', { maxAge: 0, ...options });
+          } catch {
+            // Ignore errors in route handlers
           }
         },
       },

@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import { canAccessAdmin } from '@/lib/auth';
 import AdminDashboard from './AdminDashboard';
+import type { User } from '@supabase/supabase-js';
 
 export default function AdminPage() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [canAccess, setCanAccess] = useState(false);
-  const [tools, setTools] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [tools, setTools] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const router = useRouter();
   const supabase = createClient();
 

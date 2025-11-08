@@ -2,9 +2,9 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'VaultX AI Tools',
+    name: 'VaultX Tech',
     short_name: 'VaultX',
-    description: 'Your curated directory of the most powerful AI tools',
+    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
@@ -33,7 +33,7 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: 'maskable',
       },
     ],
-    categories: ['productivity', 'utilities', 'business'],
+    categories: ['ministry', 'media', 'church', 'productivity', 'utilities'],
     lang: 'en',
     dir: 'ltr',
     orientation: 'portrait',

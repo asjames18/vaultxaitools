@@ -4,12 +4,12 @@ import JsonLd from '@/components/JsonLd';
 import { getAllBlogPosts, getBlogCategories } from '@/lib/blog-service';
 
 export const metadata: Metadata = {
-  title: 'Blog - VaultX AI Tools',
-  description: 'Discover the latest insights, tutorials, and guides about AI tools and technology. Stay updated with the newest developments in artificial intelligence.',
-  keywords: ['AI blog', 'artificial intelligence', 'AI tools', 'technology blog', 'AI tutorials'],
+  title: 'Blog - VaultX Tech',
+  description: 'Discover the latest insights, tutorials, best practices, and case studies about church and ministry media production. Stay updated with media tools, techniques, and strategies.',
+  keywords: ['church media blog', 'ministry media resources', 'church video tutorials', 'ministry graphics guides', 'church social media tips', 'ministry live streaming', 'church audio production'],
   openGraph: {
-    title: 'Blog - VaultX AI Tools',
-    description: 'Discover the latest insights, tutorials, and guides about AI tools and technology.',
+    title: 'Blog - VaultX Tech',
+    description: 'Discover the latest insights, tutorials, best practices, and case studies about church and ministry media production.',
     type: 'website',
   },
 };
@@ -23,8 +23,8 @@ export default async function BlogPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'VaultX AI Tools Blog',
-    description: 'Insights, tutorials, and guides about AI tools and technology.',
+    name: 'VaultX Tech Blog',
+    description: 'Insights, tutorials, best practices, and case studies about church and ministry media production.',
     url: 'https://vaultxaitools.com/blog',
     blogPost: blogPosts.slice(0, 10).map((p) => ({
       '@type': 'BlogPosting',

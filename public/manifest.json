@@ -1,7 +1,7 @@
 {
-  "name": "VaultX AI Tools",
-  "short_name": "VaultX AI",
-  "description": "Expert-curated AI tools directory. Discover, compare, and choose the best AI applications for your needs.",
+  "name": "VaultX Tech",
+  "short_name": "VaultX Tech",
+  "description": "Church and ministry media consultant providing tools, resources, and guidance for effective media production.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
-  "categories": ["productivity", "utilities", "business"],
+  "categories": ["ministry", "media", "church", "productivity", "utilities"],
   "icons": [
     {
       "src": "/icon-192.png",
@@ -33,7 +33,7 @@
     {
       "name": "Search Tools",
       "short_name": "Search",
-      "description": "Search for AI tools",
+      "description": "Search for media tools",
       "url": "/search",
       "icons": [
         {

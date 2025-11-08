@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     // Log read operation
     await logCRUD(user.id, user.email || '', 'READ', 'TOOL', 'BULK', {
       count: data?.length || 0,
-      ip_address: request.ip || request.headers.get('x-forwarded-for')
+      ip_address: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
     });
     
     return NextResponse.json(data || []);
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     await logCRUD(user.id, user.email || '', 'CREATE', 'TOOL', data.id, {
       tool_name: body.name,
       category: body.category,
-      ip_address: request.ip || request.headers.get('x-forwarded-for')
+      ip_address: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
     });
     
     return NextResponse.json({ success: true, id: data.id });
@@ -83,7 +83,7 @@ export async function PUT(request: NextRequest) {
       tool_name: currentTool?.name || 'Unknown',
       category: currentTool?.category || 'Unknown',
       updated_fields: Object.keys(updates),
-      ip_address: request.ip || request.headers.get('x-forwarded-for')
+      ip_address: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
     });
     
     return NextResponse.json({ success: true });
@@ -117,7 +117,7 @@ export async function DELETE(request: NextRequest) {
     await logCRUD(user.id, user.email || '', 'DELETE', 'TOOL', id, {
       tool_name: toolToDelete?.name || 'Unknown',
       category: toolToDelete?.category || 'Unknown',
-      ip_address: request.ip || request.headers.get('x-forwarded-for')
+      ip_address: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
     });
     
     return NextResponse.json({ success: true });

@@ -1,17 +1,17 @@
-# VaultX AI Tools
+# VaultX Tech
 
-**Expert-Curated AI Tool Directory** - A quality-focused platform that hand-picks and tests only the most effective AI tools, built with Next.js, Express.js, and Supabase.
+**Church & Ministry Media Consultant** - A quality-focused platform providing media production tools, resources, and expert guidance for churches and ministries, built with Next.js, Express.js, and Supabase.
 
-> **Quality over Quantity**: We test hundreds of AI tools so you don't have to. Every tool in our directory is expert-verified for effectiveness and reliability.
+> **Ministry-Focused Excellence**: We provide curated media production tools and expert guidance so your church or ministry can produce professional-quality media content effectively.
 
 ## Features
 
 ### 🎯 **Expert Curation Process**
-- **Rigorous Testing**: Every tool undergoes thorough evaluation by AI specialists
-- **Quality Standards**: Only tools meeting strict criteria are added to the directory
+- **Rigorous Testing**: Every tool undergoes thorough evaluation by media production specialists
+- **Quality Standards**: Only tools meeting strict criteria for ministry use are added to the directory
 - **Continuous Review**: Regular assessment of existing tools to maintain quality
-- **User Feedback Integration**: Community insights help refine our selection process
-- **Transparent Process**: Clear explanation of how tools are selected and rated
+- **User Feedback Integration**: Community insights from churches and ministries help refine our selection process
+- **Transparent Process**: Clear explanation of how tools are selected and rated for ministry effectiveness
 
 ### 🔥 Dynamic Trending System
 - **Real-time Trending Algorithm**: Sophisticated scoring system based on multiple factors:

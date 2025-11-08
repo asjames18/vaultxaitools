@@ -14,7 +14,7 @@ export function createRateLimiter(config: RateLimitConfig) {
   const { windowMs, max, message = 'Too many requests', statusCode = 429 } = config;
   
   return function rateLimit(request: NextRequest) {
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const now = Date.now();
     
     // Clean up expired entries
@@ -67,4 +67,11 @@ export const sensitiveOperationRateLimiter = createRateLimiter({
   windowMs: 60 * 60 * 1000, // 1 hour
   max: 10, // 10 sensitive operations per hour
   message: 'Too many sensitive operations. Please try again later.'
+});
+
+// Public event rate limiter (analytics, error reports, etc.)
+export const publicEventRateLimiter = createRateLimiter({
+  windowMs: 60 * 1000, // 1 minute
+  max: 60, // 60 events per minute per IP
+  message: 'Too many events. Please slow down.'
 });

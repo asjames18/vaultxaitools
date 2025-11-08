@@ -2,12 +2,12 @@ import { Metadata } from 'next';
 import DocumentationClient from './DocumentationClient';
 
 export const metadata: Metadata = {
-  title: 'Documentation - VaultX AI Tools',
-  description: 'Learn how to use VaultX AI Tools platform, submit tools, write reviews, and navigate the features.',
-  keywords: 'documentation, help, guide, how to use, VaultX AI Tools, tutorial',
+  title: 'Documentation - VaultX Tech',
+  description: 'Learn how to use VaultX Tech platform, submit media resources, write reviews, and navigate the features for church and ministry media production.',
+  keywords: 'documentation, help, guide, how to use, VaultX Tech, tutorial, church media, ministry media',
   openGraph: {
-    title: 'Documentation - VaultX AI Tools',
-    description: 'Learn how to use VaultX AI Tools platform, submit tools, write reviews, and navigate the features.',
+    title: 'Documentation - VaultX Tech',
+    description: 'Learn how to use VaultX Tech platform, submit media resources, write reviews, and navigate the features for church and ministry media production.',
     type: 'website',
   },
 };

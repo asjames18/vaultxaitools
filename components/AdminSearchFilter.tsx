@@ -96,7 +96,7 @@ export function AdminSearchFilter({
                   onChange={(e) => {
                     const newValues = e.target.checked
                       ? [...selectedValues, option.value]
-                      : selectedValues.filter(v => v !== option.value);
+                      : selectedValues.filter((v: string) => v !== option.value);
                     handleFilterChange(config.key, newValues.length > 0 ? newValues : undefined);
                   }}
                   className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"

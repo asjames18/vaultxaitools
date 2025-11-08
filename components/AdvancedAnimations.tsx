@@ -46,7 +46,7 @@ export default function AdvancedAnimations({
   staggerDelay = 0.1
 }: AdvancedAnimationsProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { threshold });
+  const isInView = useInView(ref, { amount: threshold });
   const controls = useAnimation();
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -168,7 +168,7 @@ export function StaggerContainer({ children, staggerDelay = 0.1, className = '' 
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
+        ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
       }
     }
   };
@@ -178,7 +178,7 @@ export function StaggerContainer({ children, staggerDelay = 0.1, className = '' 
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ threshold: 0.1 }}
+      viewport={{ amount: 0.1 }}
       className={className}
     >
       {Array.isArray(children) ? (

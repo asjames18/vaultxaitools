@@ -64,10 +64,10 @@ export default function GettingStartedClient() {
   const steps = [
     {
       id: 1,
-      title: "Browse AI Tools",
-      description: "Explore our curated collection of AI tools",
+      title: "Browse Media Tools",
+      description: "Explore our curated collection of media production tools",
       icon: SearchIcon,
-      content: "Start by browsing our comprehensive collection of hand-picked AI tools. Each tool has been carefully selected and tested to ensure quality and effectiveness.",
+      content: "Start by browsing our comprehensive collection of hand-picked media production tools. Each tool has been carefully selected and tested to ensure quality and effectiveness for church and ministry use.",
       action: "Browse Tools",
       actionLink: "/AITools"
     },
@@ -92,9 +92,9 @@ export default function GettingStartedClient() {
     {
       id: 4,
       title: "Get Started",
-      description: "Start using AI tools",
+      description: "Start using media tools",
       icon: RocketIcon,
-      content: "Visit tool websites, sign up for free trials, and begin integrating AI tools into your workflow. Start with free tools to experiment before investing.",
+      content: "Visit tool websites, sign up for free trials, and begin integrating media production tools into your church or ministry workflow. Start with free tools to experiment before investing.",
       action: "View Featured Tools",
       actionLink: "/"
     }
@@ -104,25 +104,25 @@ export default function GettingStartedClient() {
     {
       icon: LightBulbIcon,
       title: "Start with Free Tools",
-      description: "Many AI tools offer free tiers or trials. Start with these to experiment without commitment."
+      description: "Many media tools offer free tiers or trials. Start with these to experiment without commitment."
     },
     {
       icon: UsersIcon,
       title: "Read User Reviews",
-      description: "Check real user experiences and reviews to understand how tools perform in practice."
+      description: "Check real user experiences and reviews to understand how tools perform in practice for churches and ministries."
     },
     {
       icon: BookOpenIcon,
       title: "Learn the Basics",
-      description: "Familiarize yourself with AI terminology and concepts to make better tool choices."
+      description: "Familiarize yourself with media production terminology and concepts to make better tool choices for your ministry."
     }
   ];
 
   const popularCategories = [
-            { name: "Writing", description: "AI writing assistants, content generators", icon: "✍️", link: "/AITools?category=writing" },
-        { name: "Design", description: "AI design tools, image generators", icon: "🎨", link: "/AITools?category=design" },
-        { name: "Development", description: "AI coding assistants, code generators", icon: "💻", link: "/AITools?category=development" },
-        { name: "Productivity", description: "AI productivity tools, automation", icon: "⚡", link: "/AITools?category=productivity" }
+            { name: "Video Editing", description: "Video editing tools for church media", icon: "🎬", link: "/AITools?category=Video Editing" },
+        { name: "Graphics Design", description: "Graphics design tools for ministry materials", icon: "🎨", link: "/AITools?category=Graphics Design" },
+        { name: "Social Media", description: "Social media management for churches", icon: "📱", link: "/AITools?category=Social Media" },
+        { name: "Live Streaming", description: "Live streaming platforms for services", icon: "📺", link: "/AITools?category=Live Streaming" }
   ];
 
   return (
@@ -143,11 +143,11 @@ export default function GettingStartedClient() {
             </div>
             
                                  <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 sm:mb-6">
-                       Getting Started with AI Tools
+                       Getting Started with Media Tools
                      </h1>
                      
                      <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-                       New to AI tools? This comprehensive guide will help you find, understand, and use the best AI solutions for your needs.
+                       New to media production tools? This comprehensive guide will help you find, understand, and use the best media solutions for your church or ministry.
                      </p>
          
                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -155,10 +155,10 @@ export default function GettingStartedClient() {
                          href="/AITools"
                          className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base"
                        >
-                         Browse AI Tools
+                         Browse Media Tools
                          <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                        </Link>
-                       {/* Search functionality integrated into AI Tools page */}
+                       {/* Search functionality integrated into Media Tools page */}
                      </div>
           </div>
         </div>
@@ -169,10 +169,10 @@ export default function GettingStartedClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Your Journey to AI Success
+              Your Journey to Media Production Success
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Follow these four simple steps to find and use the perfect AI tools for your needs
+              Follow these four simple steps to find and use the perfect media production tools for your church or ministry
             </p>
           </div>
 
@@ -260,7 +260,7 @@ export default function GettingStartedClient() {
               Quick Tips for Success
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Follow these best practices to get the most out of AI tools
+              Follow these best practices to get the most out of media production tools
             </p>
           </div>
 
@@ -290,10 +290,10 @@ export default function GettingStartedClient() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Popular AI Tool Categories
+              Popular Media Tool Categories
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Start exploring these popular categories to find tools that match your interests
+              Start exploring these popular categories to find tools that match your church or ministry needs
             </p>
           </div>
 
@@ -328,7 +328,7 @@ export default function GettingStartedClient() {
             Ready to Get Started?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of users who are already using AI tools to boost their productivity and creativity.
+            Join hundreds of churches and ministries who are already using media production tools to create engaging content and reach their communities.
           </p>
           
                              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">

@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: ToolDetailsProps): Promise<Me
     if (error || !tool) {
       return {
         title: 'Tool Not Found',
-        description: 'The requested AI tool could not be found.',
+        description: 'The requested media tool could not be found.',
       };
     }
     

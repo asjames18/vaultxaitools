@@ -2,12 +2,12 @@ import { Metadata } from 'next';
 import PrivacyClient from './PrivacyClient';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - VaultX AI Tools',
-  description: 'Learn how VaultX AI Tools collects, uses, and protects your personal information.',
-  keywords: 'privacy policy, data protection, GDPR, user privacy, VaultX AI Tools',
+  title: 'Privacy Policy - VaultX Tech',
+  description: 'Learn how VaultX Tech collects, uses, and protects your personal information.',
+  keywords: 'privacy policy, data protection, GDPR, user privacy, VaultX Tech',
   openGraph: {
-    title: 'Privacy Policy - VaultX AI Tools',
-    description: 'Learn how VaultX AI Tools collects, uses, and protects your personal information.',
+    title: 'Privacy Policy - VaultX Tech',
+    description: 'Learn how VaultX Tech collects, uses, and protects your personal information.',
     type: 'website',
   },
 };

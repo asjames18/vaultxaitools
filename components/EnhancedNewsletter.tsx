@@ -1,44 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { SparklesIcon, ShieldIcon, CheckIcon } from 'lucide-react';
 import EmailSignupForm from './EmailSignupForm';
 
-const SparklesIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-  </svg>
-);
-
-const CheckIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-  </svg>
-);
-
-const ShieldIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-  </svg>
-);
+interface EnhancedNewsletterProps {
+  toolsCount?: number;
+  categoriesCount?: number;
+  subscriberCount?: number;
+}
 
 const benefits = [
-  "Hand-picked AI tools tested by our experts",
-  "Weekly deep-dive reviews of the best tools",
-  "Exclusive access to beta tools and early releases",
-  "Detailed comparison guides and use cases",
-  "Community insights from power users"
+  "Rigorous testing and evaluation",
+  "Real user feedback and reviews",
+  "Performance benchmarking",
+  "Security and privacy assessment",
+  "Cost-benefit analysis",
+  "Integration compatibility check"
 ];
 
 interface CurationStat { number: string; label: string }
 
-function getCurationStats(curatedCount?: number): CurationStat[] {
+function getCurationStats(toolsCount?: number, categoriesCount?: number): CurationStat[] {
   return [
-    { number: '100+', label: 'Tools Tested' },
-    { number: curatedCount != null ? String(curatedCount) : '—', label: 'Curated Tools' }
+    { number: toolsCount && toolsCount > 0 ? `${toolsCount}+` : '100+', label: 'Tools Tested' },
+    { number: toolsCount && toolsCount > 0 ? String(toolsCount) : '—', label: 'Curated Tools' },
+    { number: categoriesCount && categoriesCount > 0 ? String(categoriesCount) : '—', label: 'Categories' }
   ];
 }
 
-export default function EnhancedNewsletter() {
+export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscriberCount = 10000 }: EnhancedNewsletterProps) {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   return (
@@ -55,15 +46,15 @@ export default function EnhancedNewsletter() {
           <div className="text-white xl:col-span-2">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
               <SparklesIcon className="w-5 h-5" />
-              <span className="text-sm font-semibold">Expert-Curated AI Tools</span>
+              <span className="text-sm font-semibold">Expert-Curated Media Tools</span>
             </div>
             
             <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold mb-8 leading-tight">
-              Only the Best AI Tools Make the Cut
+              Only the Best Media Tools Make the Cut
             </h2>
             
             <p className="text-xl md:text-2xl text-indigo-100 mb-10 leading-relaxed max-w-3xl">
-              We test hundreds of AI tools so you don't have to. Get weekly recommendations of only the most effective, reliable, and innovative AI solutions that actually deliver results.
+              We test hundreds of media production tools so you don't have to. Get weekly recommendations of only the most effective, reliable, and innovative media solutions for your church or ministry.
             </p>
 
             {/* Curation Process - Better organized with more spacing */}
@@ -84,7 +75,7 @@ export default function EnhancedNewsletter() {
 
             {/* Curation Stats - Larger and more prominent */}
             <div className="flex gap-12">
-              {getCurationStats((typeof window !== 'undefined' && (window as any).__vaultxToolCount) || undefined).map((stat, index) => (
+              {getCurationStats(toolsCount, categoriesCount).map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
                   <div className="text-lg text-indigo-100 font-medium">{stat.label}</div>
@@ -97,10 +88,10 @@ export default function EnhancedNewsletter() {
           <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 xl:col-span-1">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-white mb-2">
-                Join the Curated AI Community
+                Join the Curated Media Community
               </h3>
               <p className="text-indigo-100">
-                Get the best AI tools delivered to your inbox every week.
+                Get the best media tools and resources delivered to your inbox every week.
               </p>
             </div>
 
@@ -120,17 +111,17 @@ export default function EnhancedNewsletter() {
                   Welcome to the Curated Community!
                 </h3>
                 <p className="text-indigo-100">
-                  Check your email for your first curated AI tool recommendation.
+                  Check your email for your first curated media tool recommendation.
                 </p>
               </div>
             )}
 
             {/* Trust indicators */}
             <div className="mt-6 pt-6 border-t border-white/20">
-              <div className="flex items-center justify-center gap-6 text-xs text-indigo-100">
-                <span>✓ Expert Tested</span>
-                <span>✓ Quality Guaranteed</span>
-                <span>✓ No Spam</span>
+              <div className="flex items-center justify-center gap-4 text-xs text-indigo-100">
+                <span>✓ {subscriberCount.toLocaleString()}+ subscribers</span>
+                <span>✓ Weekly curated picks</span>
+                <span>✓ No spam, ever</span>
               </div>
             </div>
           </div>

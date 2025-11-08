@@ -116,9 +116,9 @@ export default function CachingStrategy({
     if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico'].includes(extension || '')) {
       return 'image';
     } else if (['js'].includes(extension || '')) {
-      return 'script';
+      return 'static';
     } else if (['css'].includes(extension || '')) {
-      return 'stylesheet';
+      return 'static';
     } else if (['woff', 'woff2', 'ttf', 'otf', 'eot'].includes(extension || '')) {
       return 'font';
     } else if (url.includes('/api/') || url.includes('?') || url.includes('#')) {
@@ -256,7 +256,7 @@ export default function CachingStrategy({
         if (status === 'no-cache') {
           recs.push('Implement short-term API caching with Cache-Control: private, max-age=300');
           recs.push('Use ETags for cache validation');
-        } else if (status === 'cached') {
+        } else if (status === 'stale' || status === 'expired') {
           recs.push('Consider reducing cache duration for frequently changing API responses');
         }
         break;

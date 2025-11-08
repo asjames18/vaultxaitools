@@ -103,7 +103,7 @@ export function AdminLineChart({ data, title, height = 300, className = '' }: Li
         color: '#374151',
         font: {
           size: 16,
-          weight: 'bold'
+          weight: 'bold' as const
         }
       } : undefined
     }
@@ -145,7 +145,7 @@ export function AdminBarChart({ data, title, height = 300, className = '' }: Bar
         color: '#374151',
         font: {
           size: 16,
-          weight: 'bold'
+          weight: 'bold' as const
         }
       } : undefined
     }
@@ -186,7 +186,7 @@ export function AdminDoughnutChart({ data, title, height = 300, className = '' }
         color: '#374151',
         font: {
           size: 16,
-          weight: 'bold'
+          weight: 'bold' as const
         }
       } : undefined
     }
@@ -229,7 +229,7 @@ export function AdminRadarChart({ data, title, height = 300, className = '' }: R
         color: '#374151',
         font: {
           size: 16,
-          weight: 'bold'
+          weight: 'bold' as const
         }
       } : undefined
     }

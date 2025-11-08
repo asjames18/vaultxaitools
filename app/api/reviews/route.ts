@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
+import { publicEventRateLimiter } from '@/lib/rateLimit';
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit public review submissions
+    const limit = publicEventRateLimiter(request);
+    if (limit) return limit;
+
     const supabase = await createClient();
     const body = await request.json();
 

@@ -39,7 +39,7 @@ export default function EmailSignupForm() {
       if (error) throw error;
 
       setStatus("success");
-      setMessage("�� Welcome to VaultX! You'll receive weekly curated AI tool picks, expert reviews, and exclusive beta invites.");
+      setMessage("🎉 Welcome to VaultX Tech! You'll receive weekly curated media tool picks, expert guidance, and ministry media resources.");
       setEmail("");
     } catch (error: any) {
       console.error('Email signup error:', error);
@@ -51,9 +51,9 @@ export default function EmailSignupForm() {
   return (
     <div className="text-center">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-white mb-2">Stay Ahead with AI Tools</h3>
+        <h3 className="text-lg font-semibold text-white mb-2">Stay Ahead with Media Tools</h3>
         <p className="text-white/80 text-sm mb-4">
-          Get weekly curated AI tool picks, expert reviews, and exclusive beta invites
+          Get weekly curated media tool picks, expert guidance, and ministry media resources
         </p>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 items-center max-w-md mx-auto">

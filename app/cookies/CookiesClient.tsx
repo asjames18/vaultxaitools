@@ -135,7 +135,7 @@ export default function CookiesClient() {
                   </h2>
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      This Cookie Policy explains how VaultX AI Tools ("we," "us," or "our") uses cookies and similar technologies when you visit our website. This policy should be read alongside our Privacy Policy, which explains how we use your personal information.
+                      This Cookie Policy explains how VaultX Tech ("we," "us," or "our") uses cookies and similar technologies when you visit our website. This policy should be read alongside our Privacy Policy, which explains how we use your personal information.
                     </p>
                     
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">

@@ -10,8 +10,8 @@ export default function Footer() {
 
   const footerLinks = {
     product: [
-              { name: 'AI Tools', href: '/AITools' },
-      { name: 'Submit Tool', href: '/submit-tool' },
+              { name: 'Media Tools', href: '/AITools' },
+      { name: 'Submit Resource', href: '/submit-tool' },
       // { name: 'API', href: '/api' },
     ],
     company: [
@@ -46,10 +46,10 @@ export default function Footer() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
                 V
               </div>
-              <span className="text-xl font-bold">VaultX</span>
+              <span className="text-xl font-bold">VaultX Tech</span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
-              Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.
+              Church and ministry media consultant providing tools, resources, and guidance for effective media production.
             </p>
             {/* <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
@@ -145,7 +145,7 @@ export default function Footer() {
             
             <div className="flex items-center space-x-4">
               <p className="text-gray-400 text-sm">
-                © 2024 VaultX. All rights reserved.
+                © 2024 VaultX Tech. All rights reserved.
               </p>
               <button
                 onClick={scrollToTop}

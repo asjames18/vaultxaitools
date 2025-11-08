@@ -8,13 +8,16 @@ import { createClientWithoutCookies } from '@/lib/supabase-server';
 // Revalidate this page every 5 minutes to keep data fresh
 export const revalidate = 300;
 
+// Add cache tags for on-demand revalidation
+export const tags = ['tools', 'aitools'];
+
 export const metadata: Metadata = {
-  title: 'AI Tools Directory — Discover & Compare AI Applications | VaultX',
-  description: 'Explore our curated directory of AI tools. Discover, compare, and find the perfect AI solution for your needs across various categories.',
-  keywords: 'AI tools directory, artificial intelligence tools, AI applications, AI software, AI platforms, machine learning tools',
+  title: 'Media Tools Directory — Discover & Compare Media Production Tools | VaultX Tech',
+  description: 'Explore our curated directory of media production tools for churches and ministries. Discover, compare, and find the perfect media solution for video editing, graphics design, social media, live streaming, and audio production.',
+  keywords: 'media tools directory, church media tools, ministry media resources, video editing tools, graphics design software, social media management, live streaming platforms, audio production tools',
   openGraph: {
-    title: 'AI Tools Directory — Discover & Compare AI Applications | VaultX',
-    description: 'Explore our curated directory of AI tools. Discover, compare, and find the perfect AI solution for your needs.',
+    title: 'Media Tools Directory — Discover & Compare Media Production Tools | VaultX Tech',
+    description: 'Explore our curated directory of media production tools for churches and ministries. Discover, compare, and find the perfect media solution.',
     type: 'website',
   },
 };

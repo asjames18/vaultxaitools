@@ -33,8 +33,9 @@ export default function MobileNavigation({
 
   // Close menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (event: Event) => {
+      const target = event.target as Node;
+      if (menuRef.current && !menuRef.current.contains(target)) {
         setIsOpen(false);
       }
     };
@@ -70,7 +71,7 @@ export default function MobileNavigation({
 
   const navigationItems = [
           { name: 'Home', href: '/', icon: Home },
-      { name: 'AI Tools', href: '/AITools', icon: Grid },
+      { name: 'Media Tools', href: '/AITools', icon: Grid },
       { name: 'Favorites', href: '/favorites', icon: Heart },
   ];
 
@@ -123,8 +124,8 @@ export default function MobileNavigation({
                   <span className="text-white font-bold text-lg">V</span>
                 </div>
                 <div>
-                  <h1 className="font-bold text-gray-900 dark:text-white">VaultX AI</h1>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">AI Tools Directory</p>
+                  <h1 className="font-bold text-gray-900 dark:text-white">VaultX Tech</h1>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Media Tools Directory</p>
                 </div>
               </div>
             </div>
@@ -139,7 +140,7 @@ export default function MobileNavigation({
                 className="w-full flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg text-left text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
                 <Search className="w-5 h-5" />
-                <span>Search AI tools...</span>
+                <span>Search media tools...</span>
               </button>
             </div>
 
@@ -197,7 +198,7 @@ export default function MobileNavigation({
                   <div className="w-5 h-5 bg-green-100 dark:bg-green-900/20 rounded flex items-center justify-center">
                     <span className="text-green-600 dark:text-green-400 text-xs font-bold">📝</span>
                   </div>
-                  <span className="font-medium">AI Blog</span>
+                  <span className="font-medium">Blog</span>
                 </Link>
               </div>
 

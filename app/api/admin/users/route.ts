@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { createClient as createServerSupabase } from '@/lib/supabase-server';
 import { supabaseAdmin } from '@/lib/supabaseAdminClient';
 import { getUserRole } from '@/lib/auth';
 
@@ -94,7 +95,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const supabase = await createClient();
+    const supabase = await createServerSupabase();
     
     // Get current user and check if they're admin
     const { data: { user } } = await supabase.auth.getUser();
@@ -164,7 +165,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = await createClient();
+    const supabase = await createServerSupabase();
     
     // Get current user and check if they're admin
     const { data: { user } } = await supabase.auth.getUser();

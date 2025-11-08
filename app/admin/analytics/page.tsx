@@ -94,42 +94,48 @@ export default function AnalyticsDashboard() {
       value: 2156,
       unit: '',
       status: 'normal',
-      trend: 'up'
+      trend: 'up',
+      lastUpdate: new Date()
     },
     {
       name: 'Server Load',
       value: 45,
       unit: '%',
       status: 'normal',
-      trend: 'stable'
+      trend: 'stable',
+      lastUpdate: new Date()
     },
     {
       name: 'Response Time',
       value: 180,
       unit: 'ms',
       status: 'normal',
-      trend: 'down'
+      trend: 'down',
+      lastUpdate: new Date()
     },
     {
       name: 'Error Rate',
       value: 0.15,
       unit: '%',
       status: 'normal',
-      trend: 'stable'
+      trend: 'stable',
+      lastUpdate: new Date()
     },
     {
       name: 'Database Connections',
       value: 23,
       unit: '',
       status: 'normal',
-      trend: 'up'
+      trend: 'up',
+      lastUpdate: new Date()
     },
     {
       name: 'Cache Hit Rate',
       value: 94.2,
       unit: '%',
       status: 'normal',
-      trend: 'up'
+      trend: 'up',
+      lastUpdate: new Date()
     }
   ]);
 
@@ -322,7 +328,24 @@ export default function AnalyticsDashboard() {
           {/* Data Export */}
           <div className="mb-8">
             <DataExport
-              data={analyticsData.tools}
+              data={[
+                {
+                  metric: 'Total Tools',
+                  value: analyticsData.tools.total
+                },
+                {
+                  metric: 'Active Tools',
+                  value: analyticsData.tools.active
+                },
+                {
+                  metric: 'Pending Tools',
+                  value: analyticsData.tools.pending
+                },
+                {
+                  metric: 'Inactive Tools',
+                  value: analyticsData.tools.inactive
+                }
+              ]}
               filename="analytics_tools"
               onExport={(format, data) => {
                 console.log(`Exporting ${format} data:`, data);

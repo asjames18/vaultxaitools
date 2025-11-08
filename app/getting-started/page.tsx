@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Getting Started with AI - VaultX AI Tools',
-  description: 'New to AI? Start here with our beginner-friendly guide to AI tools and resources',
+  title: 'Getting Started with Media Tools - VaultX Tech',
+  description: 'New to media production? Start here with our beginner-friendly guide to media tools and resources for churches and ministries',
 };
 
 export default function GettingStartedPage() {
@@ -11,10 +11,10 @@ export default function GettingStartedPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Getting Started with AI 🚀
+            Getting Started with Media Tools 🚀
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            New to AI? Start here with our beginner-friendly guide
+            New to media production? Start here with our beginner-friendly guide for churches and ministries
           </p>
         </div>
 
@@ -25,13 +25,13 @@ export default function GettingStartedPage() {
           
           <div className="p-6 space-y-6">
             <div>
-              <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">What is AI?</h3>
+              <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">What is Media Production?</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                Artificial Intelligence (AI) refers to computer systems that can perform tasks that typically require human intelligence. 
-                These include learning, reasoning, problem-solving, perception, and language understanding.
+                Media production for churches and ministries involves creating professional-quality video, graphics, audio, and social media content. 
+                This includes everything from editing sermon videos to designing graphics for social media posts.
               </p>
               <p className="text-gray-600 dark:text-gray-300">
-                AI tools can help you write content, create images, analyze data, automate tasks, and much more.
+                Media production tools can help you create engaging content, manage your social media presence, stream services live, and produce professional audio for podcasts and sermons.
               </p>
             </div>
 
@@ -45,7 +45,7 @@ export default function GettingStartedPage() {
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-white">Explore Our Directory</h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Browse our curated collection of AI tools to see what's available
+                      Browse our curated collection of media production tools to see what's available for your church or ministry
                     </p>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ export default function GettingStartedPage() {
                   href="/AITools" 
                   className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
                 >
-                  Browse AI Tools
+                  Browse Media Tools
                 </a>
               </div>
             </div>

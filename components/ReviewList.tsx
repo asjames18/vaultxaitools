@@ -117,7 +117,9 @@ export default function ReviewList({ reviews, onVoteHelpful, onReport }: ReviewL
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-white">{review.user_name}</span>
                     {review.verified_user && (
-                      <Award className="w-4 h-4 text-blue-400" title="Verified User" />
+                      <span title="Verified User">
+                        <Award className="w-4 h-4 text-blue-400" />
+                      </span>
                     )}
                   </div>
                   <div className="flex items-center gap-2 text-sm text-white/60">

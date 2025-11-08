@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { BlogPost } from '@/data/blog';
+import { canAccessAdmin } from '@/lib/auth';
+import { createClient as createServerSupabase } from '@/lib/supabase-server';
+import { adminRateLimiter, sensitiveOperationRateLimiter } from '@/lib/rateLimit';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -55,6 +58,16 @@ function convertFromDB(dbPost: any): BlogPost {
 }
 
 export async function GET(request: NextRequest) {
+  // Rate limiting
+  const rateLimitResult = adminRateLimiter(request);
+  if (rateLimitResult) return rateLimitResult;
+
+  // Require admin
+  const supabaseUserClient = await createServerSupabase();
+  const { data: { user } } = await supabaseUserClient.auth.getUser();
+  if (!user || !(await canAccessAdmin(user))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const { data, error } = await supabase
       .from('blog_posts')
@@ -75,6 +88,16 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limiting
+  const rateLimitResult = sensitiveOperationRateLimiter(request);
+  if (rateLimitResult) return rateLimitResult;
+
+  // Require admin
+  const supabaseUserClient = await createServerSupabase();
+  const { data: { user } } = await supabaseUserClient.auth.getUser();
+  if (!user || !(await canAccessAdmin(user))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const body = await request.json();
     const postData = convertToDB(body);
@@ -104,6 +127,16 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  // Rate limiting
+  const rateLimitResult = sensitiveOperationRateLimiter(request);
+  if (rateLimitResult) return rateLimitResult;
+
+  // Require admin
+  const supabaseUserClient = await createServerSupabase();
+  const { data: { user } } = await supabaseUserClient.auth.getUser();
+  if (!user || !(await canAccessAdmin(user))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const body = await request.json();
     const { id, ...postData } = body;
@@ -135,6 +168,16 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  // Rate limiting
+  const rateLimitResult = sensitiveOperationRateLimiter(request);
+  if (rateLimitResult) return rateLimitResult;
+
+  // Require admin
+  const supabaseUserClient = await createServerSupabase();
+  const { data: { user } } = await supabaseUserClient.auth.getUser();
+  if (!user || !(await canAccessAdmin(user))) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

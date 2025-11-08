@@ -32,7 +32,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           } : undefined,
           author: {
             '@type': 'Organization',
-            name: 'VaultX AI Tools',
+            name: 'VaultX Tech',
             url: 'https://vaultxaitools.com'
           },
           datePublished: data.created_at,
@@ -43,8 +43,8 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         return {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: `${data.name} AI Tools`,
-          description: `Best ${data.name} AI tools and applications`,
+          name: `${data.name} Media Tools`,
+          description: `Best ${data.name} media production tools and resources for churches and ministries`,
           url: `https://vaultxaitools.com/AITools?category=${data.slug}`,
           numberOfItems: data.toolCount || 0,
           itemListElement: data.tools?.map((tool: Tool, index: number) => ({
@@ -63,8 +63,8 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         return {
           '@context': 'https://schema.org',
           '@type': 'WebSite',
-          name: 'VaultX AI Tools',
-          description: 'Expert-curated AI tools directory. Discover, compare, and choose the best AI applications for your needs.',
+          name: 'VaultX Tech',
+          description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
           url: 'https://vaultxaitools.com',
           potentialAction: {
             '@type': 'SearchAction',
@@ -76,7 +76,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           },
           publisher: {
             '@type': 'Organization',
-            name: 'VaultX AI Tools',
+            name: 'VaultX Tech',
             url: 'https://vaultxaitools.com'
           }
         };
@@ -85,8 +85,8 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         return {
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: 'VaultX AI Tools',
-          description: 'Expert-curated AI tools directory and discovery platform',
+          name: 'VaultX Tech',
+          description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
           url: 'https://vaultxaitools.com',
           logo: 'https://vaultxaitools.com/logo.png',
           sameAs: [

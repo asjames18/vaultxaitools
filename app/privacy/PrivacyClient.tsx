@@ -135,14 +135,14 @@ export default function PrivacyClient() {
                   </h2>
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      At VaultX AI Tools, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
+                      At VaultX Tech, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
                     </p>
                     
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                       Scope
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      This Privacy Policy applies to all users of VaultX AI Tools, including visitors to our website, registered users, and administrators. By using our services, you agree to the collection and use of information in accordance with this policy.
+                      This Privacy Policy applies to all users of VaultX Tech, including visitors to our website, registered users, and administrators. By using our services, you agree to the collection and use of information in accordance with this policy.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -218,7 +218,7 @@ export default function PrivacyClient() {
                       Primary Uses
                     </h3>
                     <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li><strong>Service Provision:</strong> To provide, maintain, and improve our AI tools discovery platform.</li>
+                      <li><strong>Service Provision:</strong> To provide, maintain, and improve our media production tools and resources platform.</li>
                       <li><strong>User Experience:</strong> To personalize your experience and provide relevant content and recommendations.</li>
                       <li><strong>Communication:</strong> To send you important updates, notifications, and respond to your inquiries.</li>
                       <li><strong>Security:</strong> To protect against fraud, abuse, and security threats.</li>
@@ -256,7 +256,7 @@ export default function PrivacyClient() {
                       We Do Not Sell Your Data
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      VaultX AI Tools does not sell, rent, or trade your personal information to third parties for their marketing purposes.
+                      VaultX Tech does not sell, rent, or trade your personal information to third parties for their marketing purposes.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">

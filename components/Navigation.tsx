@@ -117,7 +117,7 @@ export default function Navigation() {
           <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
             V
           </div>
-          <span className="text-xl font-bold text-gray-900 dark:text-white tracking-wide">VaultX</span>
+          <span className="text-xl font-bold text-gray-900 dark:text-white tracking-wide">VaultX Tech</span>
         </Link>
         
         {/* Desktop Navigation */}
@@ -132,7 +132,7 @@ export default function Navigation() {
             href="/AITools" 
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/AITools' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
           >
-            AI Tools
+            Media Tools
           </Link>
           <Link 
             href="/consulting" 
@@ -159,30 +159,7 @@ export default function Navigation() {
           >
             Contact
           </Link>
-          <Link 
-            href="/ui-showcase" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/ui-showcase' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
-          >
-            UI Showcase
-          </Link>
-          <Link 
-            href="/performance" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/performance' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
-          >
-            Performance
-          </Link>
-          <Link 
-            href="/advanced-search" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/advanced-search' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
-          >
-            Advanced Search
-          </Link>
-          <Link 
-            href="/business-intelligence" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/business-intelligence' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
-          >
-            Business Intelligence
-          </Link>
+          
         </div>
 
         <div className="flex items-center space-x-2">
@@ -198,7 +175,7 @@ export default function Navigation() {
           <Link 
             href="/AITools" 
             className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            title="AI Tools Directory"
+            title="Media Tools Directory"
           >
             <SearchIcon className="w-5 h-5" />
           </Link>
@@ -271,12 +248,12 @@ export default function Navigation() {
               Sign In
             </Link>
           )}
-          <Link 
-            href="/submit-tool" 
-            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-purple-700 hover:to-blue-700 transition-colors hidden sm:block"
-          >
-            Submit Tool
-          </Link>
+              <Link 
+                href="/submit-tool" 
+                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-purple-700 hover:to-blue-700 transition-colors hidden sm:block"
+              >
+                Submit Resource
+              </Link>
           {/* Mobile menu button */}
             <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -301,13 +278,13 @@ export default function Navigation() {
             >
               Home
             </Link>
-            <Link 
-              href="/AITools" 
-              onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/AITools' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
-            >
-              AI Tools
-            </Link>
+                <Link 
+                  href="/AITools" 
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/AITools' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+                >
+                  Media Tools
+                </Link>
             <Link 
               href="/consulting" 
               onClick={() => setIsMenuOpen(false)}
@@ -383,13 +360,13 @@ export default function Navigation() {
                   Sign In
                 </Link>
               )}
-              <Link 
-                href="/submit-tool" 
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-lg text-center"
-              >
-                Submit Tool
-              </Link>
+                  <Link 
+                    href="/submit-tool" 
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block px-3 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-lg text-center"
+                  >
+                    Submit Resource
+                  </Link>
             </div>
           </div>
         </div>

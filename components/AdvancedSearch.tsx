@@ -3,27 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, Filter, X, Sparkles, TrendingUp, Clock, Star, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 
-interface SearchResult {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  tags: string[];
-  rating: number;
-  popularity: number;
-  lastUpdated: string;
-  relevance: number;
-  type: 'tool' | 'article' | 'category' | 'user';
-}
-
-interface SearchFilter {
-  category: string[];
-  rating: number;
-  popularity: number;
-  dateRange: 'all' | 'week' | 'month' | 'year';
-  price: 'free' | 'paid' | 'freemium' | 'all';
-  features: string[];
-}
+import { SearchResult, SearchFilter } from '@/lib/useAdvancedSearch';
 
 interface AdvancedSearchProps {
   className?: string;

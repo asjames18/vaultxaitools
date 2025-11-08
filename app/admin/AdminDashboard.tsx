@@ -17,6 +17,7 @@ import { logLogout, logCRUD } from '@/lib/auditLogger';
 import { LoadingSpinner, LoadingButton, LoadingOverlay } from '@/components/AdminLoadingStates';
 import { AdvancedSearch, useAdvancedSearch } from '@/components/admin/AdvancedSearch';
 import { WorkflowAutomation, useWorkflows } from '@/components/admin/WorkflowAutomation';
+import EnhancedWorkflowManager from '@/components/admin/EnhancedWorkflowManager';
 import { AdminAccessibilityProvider, AdminSkipLink, useKeyboardNavigation } from '@/components/AdminAccessibility';
 import { AdminErrorDisplay, useErrorManager } from '@/components/AdminErrorDisplay';
 import { AdminProgressTracker, useProgressTracker } from '@/components/AdminProgressTracker';
@@ -26,6 +27,8 @@ import { DataExport, ScheduledExport } from '@/components/admin/DataExport';
 import { AdminPagination, usePagination } from '@/components/AdminPagination';
 import { AdminSearchFilter, useSearchFilter } from '@/components/AdminSearchFilter';
 import { ToolsTable } from '@/components/admin/ToolsTable';
+import DataQualityMonitor from '@/components/admin/DataQualityMonitor';
+import { revalidateToolsPages, triggerGlobalUpdate } from '@/lib/revalidate';
 
 // Simplified types to prevent database type issues
 interface Tool {
@@ -51,13 +54,20 @@ interface Category {
 }
 
 interface AdminDashboardProps {
-  tools: Tool[];
-  categories: Category[];
+  tools: any[];
+  categories: any[];
   user: User;
+  systemMetrics?: {
+    totalUsers: number;
+    systemHealth: number;
+    activeUsers: number;
+    systemLoad: number;
+    apiResponseTime: number;
+  };
 }
 
-export default function AdminDashboard({ tools, categories, user }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact' | 'automation' | 'performance' | 'search' | 'workflows' | 'accessibility' | 'analytics' | 'data'>('tools');
+export default function AdminDashboard({ tools, categories, user, systemMetrics }: AdminDashboardProps) {
+  const [activeTab, setActiveTab] = useState<'tools' | 'categories' | 'sponsored' | 'signup' | 'users' | 'contact' | 'automation' | 'performance' | 'search' | 'workflows' | 'accessibility' | 'data' | 'quality'>('tools');
   const [showToolForm, setShowToolForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
@@ -66,6 +76,8 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [sessionInfo, setSessionInfo] = useState<any>(null);
+  const [localTools, setLocalTools] = useState<any[]>(tools);
+  const [localCategories, setLocalCategories] = useState<any[]>(categories);
   
   const supabase = createClient();
   const router = useRouter();
@@ -131,36 +143,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
     }
   };
 
-  const handleDeleteTool = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this tool?')) return;
-    
-    setLoading(true);
-    try {
-      // Get tool info before deletion for audit log
-      const { data: toolToDelete } = await supabase
-        .from('tools')
-        .select('name, category')
-        .eq('id', id)
-        .single();
-      
-      const { error } = await supabase.from('tools').delete().eq('id', id);
-      if (error) throw error;
-      
-      // Log deletion
-      await logCRUD(user.id, user.email || '', 'DELETE', 'TOOL', id, {
-        tool_name: toolToDelete?.name || 'Unknown',
-        category: toolToDelete?.category || 'Unknown'
-      });
-      
-      setMessage({ type: 'success', text: 'Tool deleted successfully' });
-      // Refresh the page to update the data
-      window.location.reload();
-    } catch (error) {
-      setMessage({ type: 'error', text: 'Failed to delete tool' });
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const handleDeleteCategory = async (id: string) => {
     if (!confirm('Are you sure you want to delete this category?')) return;
@@ -181,6 +164,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
   };
 
   const handleEditTool = (tool: Tool) => {
+    console.log('Editing tool:', tool); // Debug log
     setEditingTool(tool);
     setShowToolForm(true);
   };
@@ -198,15 +182,169 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
     setEditingCategory(null);
   };
 
-  const handleFormSuccess = () => {
+  const handleFormSuccess = async () => {
     setMessage({ type: 'success', text: 'Operation completed successfully' });
     handleFormClose();
-    // Refresh the page to update the data
-    window.location.reload();
+    
+    // Refresh the data from database
+    await refreshToolsData();
+    
+    // Trigger comprehensive revalidation and global updates
+    try {
+      console.log('🔄 Triggering comprehensive update after form submission...');
+      
+      // 1. Server-side revalidation
+      await revalidateToolsPages();
+      
+      // 2. Global update notification for all components
+      triggerGlobalUpdate('all');
+      
+      console.log('✅ Comprehensive update completed after form submission');
+    } catch (error) {
+      console.error('❌ Failed to update frontend after form submission:', error);
+      setMessage({ type: 'error', text: 'Tool updated but frontend refresh failed. Please refresh the page manually.' });
+    }
   };
 
   const navigateToContentManagement = () => {
     router.push('/admin/content-management');
+  };
+
+  // Function to refresh tools data from database
+  const refreshToolsData = async () => {
+    try {
+      const { data: freshTools, error: toolsError } = await supabase
+        .from('tools')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (toolsError) throw toolsError;
+
+      const { data: freshCategories, error: categoriesError } = await supabase
+        .from('categories')
+        .select('*')
+        .order('name', { ascending: true });
+
+      if (categoriesError) throw categoriesError;
+
+      setLocalTools(freshTools || []);
+      setLocalCategories(freshCategories || []);
+      
+      console.log('Data refreshed:', { tools: freshTools?.length, categories: freshCategories?.length });
+    } catch (error: any) {
+      console.error('Failed to refresh data:', error);
+      setMessage({ type: 'error', text: 'Failed to refresh data from database' });
+    }
+  };
+
+  const handleToggleToolStatus = async (id: string, status: 'draft' | 'published' | 'archived') => {
+    setLoading(true);
+    try {
+      // First get the tool data for logging
+      const { data: toolToUpdate } = await supabase
+        .from('tools')
+        .select('name, status')
+        .eq('id', id)
+        .single();
+
+      if (!toolToUpdate) {
+        throw new Error('Tool not found');
+      }
+
+      // Update the tool status
+      const { error } = await supabase
+        .from('tools')
+        .update({ status, updated_at: new Date().toISOString() })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      // Log status change
+      await logCRUD(user.id, user.email || '', 'UPDATE', 'TOOL', id, {
+        tool_name: toolToUpdate.name || 'Unknown',
+        old_status: toolToUpdate.status,
+        new_status: status
+      });
+
+      setMessage({ type: 'success', text: `Tool status updated to ${status}` });
+      
+      // Refresh the tools data from database instead of page reload
+      await refreshToolsData();
+      
+      // Trigger comprehensive revalidation and global updates
+      try {
+        console.log('🔄 Triggering comprehensive update after status change...');
+        
+        // 1. Server-side revalidation
+        await revalidateToolsPages();
+        
+        // 2. Global update notification for all components
+        triggerGlobalUpdate('tools');
+        
+        console.log('✅ Comprehensive update completed after status change');
+      } catch (error) {
+        console.error('❌ Failed to update frontend after status change:', error);
+        setMessage({ type: 'error', text: 'Status updated but frontend refresh failed. Please refresh the page manually.' });
+      }
+      
+    } catch (error: any) {
+      setMessage({ type: 'error', text: `Failed to update tool status: ${error.message}` });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteTool = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this tool? This action cannot be undone.')) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Get tool info for logging
+      const { data: toolToDelete } = await supabase
+        .from('tools')
+        .select('name')
+        .eq('id', id)
+        .single();
+
+      const { error } = await supabase
+        .from('tools')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      // Log deletion
+      await logCRUD(user.id, user.email || '', 'DELETE', 'TOOL', id, {
+        tool_name: toolToDelete?.name || 'Unknown'
+      });
+
+      setMessage({ type: 'success', text: 'Tool deleted successfully' });
+      
+      // Refresh the tools data from database
+      await refreshToolsData();
+      
+      // Trigger comprehensive revalidation and global updates
+      try {
+        console.log('🔄 Triggering comprehensive update after deletion...');
+        
+        // 1. Server-side revalidation
+        await revalidateToolsPages();
+        
+        // 2. Global update notification for all components
+        triggerGlobalUpdate('tools');
+        
+        console.log('✅ Comprehensive update completed after deletion');
+      } catch (error) {
+        console.error('❌ Failed to update frontend after deletion:', error);
+        setMessage({ type: 'error', text: 'Tool deleted but frontend refresh failed. Please refresh the page manually.' });
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: `Failed to delete tool: ${error instanceof Error ? error.message : 'Unknown error'}` });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -270,7 +408,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
                 }`}
               >
-                Tools ({tools.length})
+                Tools ({localTools.length})
               </button>
               <button
                 onClick={() => setActiveTab('categories')}
@@ -280,7 +418,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
                 }`}
               >
-                Categories ({categories.length})
+                Categories ({localCategories.length})
               </button>
               <button
                 onClick={() => setActiveTab('sponsored')}
@@ -374,16 +512,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               >
                 ♿ Accessibility
               </button>
-              <button
-                onClick={() => setActiveTab('analytics')}
-                className={`py-2 px-2 sm:px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
-                  activeTab === 'analytics'
-                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
-                }`}
-              >
-                📊 Analytics
-              </button>
+
               <button
                 onClick={() => setActiveTab('data')}
                 className={`py-2 px-2 sm:px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
@@ -393,6 +522,16 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                 }`}
               >
                 💾 Data Management
+              </button>
+              <button
+                onClick={() => setActiveTab('quality')}
+                className={`py-2 px-2 sm:px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                  activeTab === 'quality'
+                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+                }`}
+              >
+                🔍 Data Quality
               </button>
               <button
                 onClick={navigateToContentManagement}
@@ -415,141 +554,213 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
         </div>
 
         {/* Content */}
-                {activeTab === 'tools' && (
+        {activeTab === 'tools' && (
           <div className="space-y-6">
             {/* Header */}
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">AI Tools Management</h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Manage {tools.length} AI tools with comprehensive information
+                  Manage {localTools.length} AI tools with comprehensive information
                 </p>
               </div>
               
-              <button
-                onClick={() => setShowToolForm(true)}
-                className="px-4 py-2.5 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700"
-              >
-                ➕ Create Tool
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowToolForm(true)}
+                  className="px-4 py-2.5 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                >
+                  ➕ Create Tool
+                </button>
+                <button
+                  onClick={async () => {
+                    setLoading(true);
+                    try {
+                      await refreshToolsData();
+                      triggerGlobalUpdate('all');
+                      setMessage({ type: 'success', text: 'Manual refresh completed!' });
+                    } catch (error) {
+                      setMessage({ type: 'error', text: 'Manual refresh failed' });
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  disabled={loading}
+                  className="px-4 py-2.5 rounded-md text-sm font-medium bg-green-600 text-white hover:bg-green-700 transition-colors disabled:opacity-50"
+                >
+                  🔄 Refresh Data
+                </button>
+              </div>
             </div>
 
-            {/* Search */}
-            <div className="flex gap-2 items-center">
-              <input
-                type="text"
-                placeholder="Search tools..."
-                className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
+            {/* Enhanced Tools Management */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                🛠️ Advanced Tools Management
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Use the enhanced table below for advanced search, filtering, and bulk operations.
+              </p>
+              
+              {/* Quick Actions Toolbar */}
+              <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">⚡ Quick Actions</h4>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setShowToolForm(true)}
+                    className="px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  >
+                    ➕ Add New Tool
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Quick publish all draft tools
+                      const draftTools = localTools.filter(t => t.status === 'draft');
+                      if (draftTools.length > 0) {
+                        if (confirm(`Publish all ${draftTools.length} draft tools?`)) {
+                          draftTools.forEach(tool => {
+                            handleToggleToolStatus(tool.id, 'published');
+                          });
+                        }
+                      } else {
+                        setMessage({ type: 'success', text: 'No draft tools to publish' });
+                      }
+                    }}
+                    className="px-3 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                  >
+                    🚀 Publish All Drafts
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Quick archive old tools
+                      const oldTools = localTools.filter(t => {
+                        if (!t.updated_at) return false;
+                        const daysSinceUpdate = (Date.now() - new Date(t.updated_at).getTime()) / (1000 * 60 * 60 * 24);
+                        return daysSinceUpdate > 30; // Archive tools not updated in 30+ days
+                      });
+                      if (oldTools.length > 0) {
+                        if (confirm(`Archive ${oldTools.length} tools not updated in 30+ days?`)) {
+                          oldTools.forEach(tool => {
+                            handleToggleToolStatus(tool.id, 'archived');
+                          });
+                        }
+                      } else {
+                        setMessage({ type: 'success', text: 'No old tools to archive' });
+                      }
+                    }}
+                    className="px-3 py-2 text-sm bg-yellow-600 text-white rounded-md hover:bg-yellow-700 transition-colors"
+                  >
+                    📦 Archive Old Tools
+                  </button>
+                  <button
+                    onClick={() => {
+                      // Export tools data
+                      const csvContent = localTools.map(tool => 
+                        `${tool.name},${tool.category},${tool.status},${tool.rating || 0},${tool.review_count || 0}`
+                      ).join('\n');
+                      const blob = new Blob([`Name,Category,Status,Rating,Reviews\n${csvContent}`], { type: 'text/csv' });
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'ai-tools-export.csv';
+                      a.click();
+                      window.URL.revokeObjectURL(url);
+                    }}
+                    className="px-3 py-2 text-sm bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+                  >
+                    📊 Export CSV
+                  </button>
+                </div>
+              </div>
+              
+              <ToolsTable 
+                tools={localTools} 
+                onEdit={(tool) => handleEditTool(tool)}
+                onDelete={(id) => handleDeleteTool(id)}
+                onToggleStatus={(id, status) => handleToggleToolStatus(id, status as 'draft' | 'published' | 'archived')}
               />
             </div>
 
-            {/* Status Tabs */}
-            <div className="flex gap-2">
-              {(['all','draft','published','archived'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  className={`px-3.5 py-2 rounded-md text-sm font-semibold border transition-colors ${
-                    tab === 'all'
-                      ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700'
-                      : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  {tab} ({tools.filter(t => tab === 'all' ? true : t.status === tab).length})
-                </button>
-              ))}
-            </div>
-
-            {/* Tools Display */}
-            <div className="space-y-6">
-              {tools.map((tool) => (
-                <div key={tool.id} className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow">
-                  {/* Tool Header */}
-                  <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-4">
-                        <div className="text-4xl">{tool.logo || '🔧'}</div>
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{tool.name}</h3>
-                          <p className="text-gray-600 dark:text-gray-400 mt-1">{tool.description || 'No description available'}</p>
-                          <div className="flex gap-2 mt-2">
-                            {tool.category && <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 text-sm">{tool.category}</span>}
-                            <span className="px-3 py-1 rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 text-sm">Published</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <button 
-                          onClick={() => handleEditTool(tool)} 
-                          className="px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                        >
-                          ✏️ Edit
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Quick Stats Row */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <div className="text-2xl font-bold text-yellow-600">⭐ {tool.rating || 'N/A'}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">{tool.review_count || 0} reviews</div>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <div className="text-2xl font-bold text-blue-600">{tool.weekly_users ? `${(tool.weekly_users / 1000).toFixed(1)}k` : 'N/A'}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">Weekly Users</div>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-600">{tool.website ? '🌐' : '❌'}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">Website</div>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <div className="text-2xl font-bold text-green-600">{tool.created_at ? '📅' : '❌'}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">Created</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Quick Actions */}
-                  <div className="p-6">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">⚡ Quick Actions</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                      <button className="px-3 py-2 text-sm bg-amber-500 text-white rounded-md hover:bg-amber-600">
-                        ⏸️ Unpublish
-                      </button>
-                      <button className="px-3 py-2 text-sm bg-gray-700 text-white rounded-md hover:bg-gray-700">
-                        📦 Archive
-                      </button>
-                      {tool.website && (
-                        <a 
-                          href={tool.website} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="px-3 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 text-center block"
-                        >
-                          🌐 Website
-                        </a>
-                      )}
-                      <button 
-                        onClick={() => handleEditTool(tool)}
-                        className="px-3 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700"
-                      >
-                        ✏️ Edit
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* No Results */}
-            {tools.length === 0 && (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No tools found</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  No tools match the current criteria
-                </p>
+            {/* Quick Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                <div className="text-2xl mb-2">📁</div>
+                <div className="text-lg font-semibold text-blue-800 dark:text-blue-200">{localCategories.length}</div>
+                <div className="text-sm text-blue-600 dark:text-blue-400">Total Categories</div>
               </div>
-            )}
+              <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+                <div className="text-2xl mb-2">🔧</div>
+                <div className="text-lg font-semibold text-green-800 dark:text-green-200">
+                  {localCategories.reduce((total, cat) => total + localTools.filter(t => t.category === cat.name).length, 0)}
+                </div>
+                <div className="text-sm text-green-600 dark:text-green-400">Total Tools</div>
+              </div>
+              <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
+                <div className="text-2xl mb-2">📊</div>
+                <div className="text-lg font-semibold text-purple-800 dark:text-purple-200">
+                  {localCategories.length > 0 ? Math.round(localTools.length / localCategories.length) : 0}
+                </div>
+                <div className="text-sm text-purple-600 dark:text-purple-400">Avg Tools/Category</div>
+              </div>
+            </div>
+
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Category
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Tools Count
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {localCategories.map((category) => (
+                      <tr key={category.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="text-2xl mr-3">{category.icon || '📁'}</div>
+                            <div>
+                              <div className="text-sm font-medium text-gray-900 dark:text-white">
+                                {category.name}
+                              </div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">
+                                {category.description || 'No description'}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                          {localTools.filter(tool => tool.category === category.name).length} tools
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => handleEditCategory(category)}
+                              className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteCategory(category.id)}
+                              className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 
@@ -593,7 +804,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                     </tr>
                   </thead>
                   <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                    {categories.map((category) => (
+                    {localCategories.map((category) => (
                       <tr key={category.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
@@ -609,7 +820,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
-                          {tools.filter(tool => tool.category === category.name).length} tools
+                          {localTools.filter(tool => tool.category === category.name).length} tools
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex items-center space-x-2">
@@ -636,15 +847,107 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
           </div>
         )}
 
-        {/* Other tabs content */}
         {activeTab === 'sponsored' && (
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              💎 Sponsored Content Management
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Sponsored content management features coming soon...
-            </p>
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">💎 Sponsored Content Management</h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Manage sponsored tools, featured content, and promotional placements
+                </p>
+              </div>
+              
+              <button
+                onClick={() => setMessage({ type: 'success', text: 'Sponsored content management coming soon!' })}
+                className="px-4 py-2.5 rounded-md text-sm font-medium bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+              >
+                ➕ Add Sponsored Content
+              </button>
+            </div>
+
+            {/* Sponsored Content Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-700">
+                <div className="text-3xl mb-3">⭐</div>
+                <div className="text-2xl font-bold text-purple-800 dark:text-purple-200">0</div>
+                <div className="text-sm text-purple-600 dark:text-purple-400">Featured Tools</div>
+                <div className="text-xs text-purple-500 dark:text-purple-300 mt-1">Premium placement</div>
+              </div>
+              
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700">
+                <div className="text-3xl mb-3">🎯</div>
+                <div className="text-2xl font-bold text-blue-800 dark:text-blue-200">0</div>
+                <div className="text-sm text-blue-600 dark:text-blue-400">Sponsored Slots</div>
+                <div className="text-xs text-blue-500 dark:text-blue-300 mt-1">Paid promotions</div>
+              </div>
+              
+              <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-700">
+                <div className="text-3xl mb-3">📊</div>
+                <div className="text-2xl font-bold text-green-800 dark:text-green-200">$0</div>
+                <div className="text-sm text-green-600 dark:text-green-400">Revenue This Month</div>
+                <div className="text-xs text-green-500 dark:text-green-300 mt-1">Sponsored content</div>
+              </div>
+            </div>
+
+            {/* Sponsored Tools Table */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                📋 Current Sponsored Content
+              </h3>
+              
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">💎</div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  No Sponsored Content Yet
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 mb-4">
+                  Start monetizing your platform by adding sponsored tools and featured content
+                </p>
+                <button
+                  onClick={() => setMessage({ type: 'success', text: 'Sponsored content management features will be implemented soon!' })}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            {/* Features Coming Soon */}
+            <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl border border-purple-200 dark:border-purple-700 p-6">
+              <h3 className="text-lg font-medium text-purple-900 dark:text-purple-100 mb-4">
+                🚀 Upcoming Features
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-start space-x-3">
+                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div>
+                    <div className="font-medium text-purple-900 dark:text-purple-100">Featured Tool Placement</div>
+                    <div className="text-sm text-purple-700 dark:text-purple-300">Premium positioning for sponsored tools</div>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div>
+                    <div className="font-medium text-purple-900 dark:text-purple-100">Analytics Dashboard</div>
+                    <div className="text-sm text-purple-700 dark:text-purple-300">Track sponsored content performance</div>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div>
+                    <div className="font-medium text-purple-900 dark:text-purple-100">Revenue Tracking</div>
+                    <div className="text-sm text-purple-700 dark:text-purple-300">Monitor sponsored content earnings</div>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div>
+                    <div className="font-medium text-purple-900 dark:text-purple-100">Automated Scheduling</div>
+                    <div className="text-sm text-purple-700 dark:text-purple-300">Set content rotation schedules</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
@@ -859,7 +1162,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
                 console.log('Search filters:', filters);
                 // Here you would integrate with your actual search API
               }}
-              data={tools} // Pass tools data for AI suggestions
+              data={localTools} // Pass tools data for AI suggestions
               showFilters={true}
               showSuggestions={true}
             />
@@ -867,30 +1170,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
         )}
 
         {activeTab === 'workflows' && (
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              ⚙️ Workflow Automation
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Automate approval processes, content pipelines, and task management with visual workflow builder.
-            </p>
-            
-            <WorkflowAutomation
-              workflows={[]} // Start with empty workflows
-              onWorkflowChange={(workflow) => {
-                console.log('Workflow created/updated:', workflow);
-                // Here you would save to your database
-              }}
-              onWorkflowToggle={(workflowId, status) => {
-                console.log('Workflow toggled:', workflowId, status);
-                // Here you would update workflow status
-              }}
-              onWorkflowDelete={(workflowId) => {
-                console.log('Workflow deleted:', workflowId);
-                // Here you would delete from your database
-              }}
-            />
-          </div>
+          <EnhancedWorkflowManager />
         )}
 
         {activeTab === 'accessibility' && (
@@ -926,78 +1206,7 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
           </div>
         )}
 
-        {activeTab === 'analytics' && (
-          <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              📊 Analytics & Data Visualization
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Comprehensive analytics dashboard with charts, real-time monitoring, and data insights.
-            </p>
-            
-            <div className="space-y-6">
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                  <div className="text-2xl mb-2">🔧</div>
-                  <div className="text-lg font-semibold text-blue-800 dark:text-blue-200">{tools.length}</div>
-                  <div className="text-sm text-blue-600 dark:text-blue-400">Total Tools</div>
-                </div>
-                <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                  <div className="text-2xl mb-2">📁</div>
-                  <div className="text-lg font-semibold text-green-800 dark:text-green-200">{categories.length}</div>
-                  <div className="text-sm text-green-600 dark:text-green-400">Categories</div>
-                </div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">
-                  <div className="text-2xl mb-2">👥</div>
-                  <div className="text-lg font-semibold text-purple-800 dark:text-purple-200">1,234</div>
-                  <div className="text-sm text-purple-600 dark:text-purple-400">Total Users</div>
-                </div>
-                <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
-                  <div className="text-2xl mb-2">✅</div>
-                  <div className="text-lg font-semibold text-orange-800 dark:text-orange-200">98%</div>
-                  <div className="text-sm text-orange-600 dark:text-orange-400">System Health</div>
-                </div>
-              </div>
 
-              {/* Chart Placeholders */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">📈 Platform Activity</h3>
-                  <div className="h-64 bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center">
-                    <span className="text-gray-500 dark:text-gray-400">Chart Component Ready</span>
-                  </div>
-                </div>
-                
-                <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">🥧 Category Distribution</h3>
-                  <div className="h-64 bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center">
-                    <span className="text-gray-500 dark:text-gray-400">Chart Component Ready</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Real-time Monitor Placeholder */}
-              <div className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">⏱️ Real-time Monitoring</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600">156</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Active Users</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">23%</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">System Load</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-600">145ms</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">API Response</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {activeTab === 'data' && (
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
@@ -1005,44 +1214,49 @@ export default function AdminDashboard({ tools, categories, user }: AdminDashboa
               💾 Data Management & Export
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Advanced data management, export capabilities, and scheduled operations.
+              Advanced data management and export capabilities.
             </p>
             
             <div className="space-y-6">
               {/* Enhanced Tools Table */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">Enhanced Tools Management</h3>
-                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                  <p className="text-gray-600 dark:text-gray-400">Tools Table Component Ready</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">Advanced table with pagination, search, and filtering</p>
-                </div>
+                <ToolsTable 
+                  tools={localTools} 
+                  onEdit={(tool) => handleEditTool(tool)}
+                  onDelete={(id) => handleDeleteTool(id)}
+                  onToggleStatus={(id, status) => handleToggleToolStatus(id, status as 'draft' | 'published' | 'archived')}
+                />
               </div>
 
               {/* Data Export */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">Data Export</h3>
-                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                  <p className="text-gray-600 dark:text-gray-400">Export Component Ready</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">Export data in CSV, JSON, and Excel formats</p>
-                </div>
+                <DataExport data={localTools} filename="ai-tools-export" />
               </div>
 
               {/* Scheduled Exports */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">Scheduled Exports</h3>
-                <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                  <p className="text-gray-600 dark:text-gray-400">Scheduled Export Component Ready</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">Automated data exports on schedule</p>
-                </div>
+                <ScheduledExport 
+                  schedules={[]}
+                  onScheduleChange={(schedule) => console.log('Schedule changed:', schedule)}
+                  onScheduleToggle={(id, enabled) => console.log('Schedule toggled:', id, enabled)}
+                />
               </div>
             </div>
           </div>
+        )}
+
+        {activeTab === 'quality' && (
+          <DataQualityMonitor />
         )}
 
         {/* Forms */}
         {showToolForm && (
           <ToolForm
             tool={editingTool}
+            categories={localCategories}
             onClose={handleFormClose}
             onSuccess={handleFormSuccess}
           />

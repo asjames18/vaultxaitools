@@ -38,13 +38,14 @@ const nextConfig: NextConfig = {
 
   // ESLint configuration
   eslint: {
-    // Fully disable ESLint during next build to avoid runner option mismatch in CI
-    ignoreDuringBuilds: true,
+    // Fail builds on lint errors in production
+    ignoreDuringBuilds: process.env.NODE_ENV !== 'production',
   },
 
   // TypeScript configuration
   typescript: {
-    ignoreBuildErrors: true,
+    // Fail builds on TS errors in production
+    ignoreBuildErrors: process.env.NODE_ENV !== 'production',
   },
 
   // Headers for performance
@@ -53,6 +54,22 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
          headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: blob: https://www.google-analytics.com https://avatars.githubusercontent.com",
+              "font-src 'self' https://fonts.gstatic.com",
+              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com",
+              "frame-ancestors 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-src 'self'",
+              "object-src 'none'"
+            ].join('; '),
+          },
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',

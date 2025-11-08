@@ -8,31 +8,33 @@ import { createClientWithoutCookies } from '@/lib/supabase-server';
 // Revalidate this page every 5 minutes to keep data fresh
 export const revalidate = 300;
 
+// Add cache tags for on-demand revalidation
+export const tags = ['tools', 'homepage'];
+
 // Generate metadata for homepage
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
-    description: 'Access only the best AI tools, hand-picked and tested by our experts. Quality over quantity - every tool is verified for effectiveness and reliability.',
+    title: 'VaultX Tech - Church & Ministry Media Consultant',
+    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production. Expert advice for video editing, graphics design, social media, live streaming, and audio production.',
     keywords: [
-      'curated AI tools',
-      'expert-tested AI', 
-      'verified AI solutions',
-      'quality AI tools',
-      'hand-picked AI',
-      'artificial intelligence tools',
-      'AI software directory',
-      'best AI tools 2024',
-      'AI tool reviews',
-      'AI tool comparisons',
-      'AI productivity tools',
-      'AI development tools',
-      'AI design tools'
+      'church media consultant',
+      'ministry media tools',
+      'church video production',
+      'ministry graphics design',
+      'church social media',
+      'ministry live streaming',
+      'church audio production',
+      'ministry media resources',
+      'church media guidance',
+      'ministry media consulting',
+      'church media tutorials',
+      'ministry media best practices'
     ],
     openGraph: {
-      title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
-      description: 'Access only the best AI tools, hand-picked and tested by our experts.',
+      title: 'VaultX Tech - Church & Ministry Media Consultant',
+      description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
       url: 'https://vaultxaitools.com',
-      siteName: 'VaultX AI Tools',
+      siteName: 'VaultX Tech',
       locale: 'en_US',
       type: 'website',
       images: [
@@ -40,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: '/og-image.jpg',
           width: 1200,
           height: 630,
-          alt: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
+          alt: 'VaultX Tech - Church & Ministry Media Consultant',
         },
       ],
     },
@@ -48,8 +50,8 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       site: '@vaultxaitools',
       creator: '@vaultxaitools',
-      title: 'VaultX AI Tools - Expert-Curated AI Tool Directory',
-      description: 'Access only the best AI tools, hand-picked and tested by our experts.',
+      title: 'VaultX Tech - Church & Ministry Media Consultant',
+      description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
       images: ['/og-image.jpg'],
     },
     alternates: {

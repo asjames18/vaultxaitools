@@ -155,7 +155,7 @@ export default function GdprClient() {
                       Our Commitment
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      At VaultX AI Tools, we are committed to protecting your privacy and ensuring compliance with GDPR. We have implemented appropriate technical and organizational measures to ensure a level of security appropriate to the risk.
+                      At VaultX Tech, we are committed to protecting your privacy and ensuring compliance with GDPR. We have implemented appropriate technical and organizational measures to ensure a level of security appropriate to the risk.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -378,7 +378,7 @@ export default function GdprClient() {
                       Service Provision
                     </h4>
                     <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li>Providing and maintaining our AI tools directory</li>
+                      <li>Providing and maintaining our media production tools and resources directory</li>
                       <li>Processing tool submissions and reviews</li>
                       <li>Managing user accounts and profiles</li>
                       <li>Facilitating user interactions and communications</li>

@@ -217,6 +217,20 @@ function ContentManagementContent() {
       ];
       setToolUpdates(fallbackToolUpdates);
       
+      const fallbackNews: NewsItem[] = [
+        {
+          id: 'news-1',
+          title: 'Sample News Item',
+          content: 'This is a sample news item to demonstrate the interface.',
+          source: 'Internal',
+          category: 'ai-news',
+          status: 'published',
+          publishDate: new Date().toISOString(),
+          tags: ['sample'],
+          featured: false,
+          createdBy: 'Admin'
+        }
+      ];
       setNewsItems(fallbackNews);
     } finally {
       setLoading(false);

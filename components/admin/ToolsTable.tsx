@@ -38,6 +38,9 @@ export function ToolsTable({
   loading = false,
   className = ''
 }: ToolsTableProps) {
+  const [selectedTools, setSelectedTools] = useState<Set<string>>(new Set());
+  const [selectAll, setSelectAll] = useState(false);
+  
   const {
     currentPage,
     itemsPerPage,
@@ -54,17 +57,63 @@ export function ToolsTable({
     clearAll
   } = useSearchFilter();
 
+  // Handle bulk selection
+  const handleSelectTool = (toolId: string) => {
+    const newSelected = new Set(selectedTools);
+    if (newSelected.has(toolId)) {
+      newSelected.delete(toolId);
+    } else {
+      newSelected.add(toolId);
+    }
+    setSelectedTools(newSelected);
+  };
+
+  const handleSelectAll = () => {
+    if (selectAll) {
+      setSelectedTools(new Set());
+      setSelectAll(false);
+    } else {
+      setSelectedTools(new Set(paginatedTools.map(tool => tool.id)));
+      setSelectAll(true);
+    }
+  };
+
+  // Bulk operations
+  const handleBulkStatusChange = (status: string) => {
+    if (selectedTools.size === 0) return;
+    
+    if (confirm(`Are you sure you want to change ${selectedTools.size} tool(s) to ${status}?`)) {
+      selectedTools.forEach(toolId => {
+        onToggleStatus?.(toolId, status as 'draft' | 'published' | 'archived');
+      });
+      setSelectedTools(new Set());
+      setSelectAll(false);
+    }
+  };
+
+  const handleBulkDelete = () => {
+    if (selectedTools.size === 0) return;
+    
+    if (confirm(`Are you sure you want to delete ${selectedTools.size} tool(s)? This action cannot be undone.`)) {
+      selectedTools.forEach(toolId => {
+        onDelete(toolId);
+      });
+      setSelectedTools(new Set());
+      setSelectAll(false);
+    }
+  };
+
   // Filter and search tools
   const filteredTools = useMemo(() => {
     let filtered = tools;
 
     // Apply search
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
+      const searchTerm = searchQuery.toLowerCase();
       filtered = filtered.filter(tool =>
-        tool.name.toLowerCase().includes(query) ||
-        tool.description?.toLowerCase().includes(query) ||
-        tool.category?.toLowerCase().includes(query)
+        tool.name.toLowerCase().includes(searchTerm) ||
+        tool.description?.toLowerCase().includes(searchTerm) ||
+        tool.category?.toLowerCase().includes(searchTerm)
       );
     }
 
@@ -136,6 +185,12 @@ export function ToolsTable({
     resetPagination();
   }, [filters, searchQuery, resetPagination]);
 
+  // Reset selection when page changes
+  React.useEffect(() => {
+    setSelectedTools(new Set());
+    setSelectAll(false);
+  }, [currentPage]);
+
   const handleStatusToggle = useCallback((tool: Tool) => {
     if (!onToggleStatus) return;
     
@@ -181,6 +236,46 @@ export function ToolsTable({
         searchPlaceholder="Search tools by name, description, or category..."
       />
 
+      {/* Bulk Operations */}
+      {selectedTools.size > 0 && (
+        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                {selectedTools.size} tool{selectedTools.size !== 1 ? 's' : ''} selected
+              </span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <select
+                onChange={(e) => handleBulkStatusChange(e.target.value)}
+                className="px-3 py-2 text-sm border border-blue-300 dark:border-blue-700 rounded-md bg-white dark:bg-gray-800 text-blue-800 dark:text-blue-200"
+                defaultValue=""
+              >
+                <option value="" disabled>Change Status</option>
+                <option value="published">Publish</option>
+                <option value="draft">Draft</option>
+                <option value="archived">Archive</option>
+              </select>
+              <button
+                onClick={handleBulkDelete}
+                className="px-3 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+              >
+                🗑️ Delete Selected
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedTools(new Set());
+                  setSelectAll(false);
+                }}
+                className="px-3 py-2 text-sm bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+              >
+                ✕ Clear Selection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Results Summary */}
       <div className="text-sm text-gray-600 dark:text-gray-400">
         Found {filteredTools.length} tool{filteredTools.length !== 1 ? 's' : ''}
@@ -194,6 +289,14 @@ export function ToolsTable({
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Tool
                 </th>
@@ -220,6 +323,14 @@ export function ToolsTable({
             <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
               {paginatedTools.map((tool) => (
                 <tr key={tool.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <input
+                      type="checkbox"
+                      checked={selectedTools.has(tool.id)}
+                      onChange={() => handleSelectTool(tool.id)}
+                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    />
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10">

@@ -19,7 +19,7 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: Array<{ name: string; value: string; options?: any }>) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
@@ -30,7 +30,7 @@ export async function createClient() {
             // user sessions.
           }
         },
-      },
+      } as any,
       auth: {
         persistSession: true,
         autoRefreshToken: true,
@@ -59,7 +59,7 @@ export function createClientWithoutCookies() {
         setAll() {
           // No-op for static generation
         },
-      },
+      } as any,
     }
   );
 }
@@ -79,7 +79,7 @@ export async function createClientWithCookies() {
         getAll() {
           return allCookies;
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: Array<{ name: string; value: string; options?: any }>) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
@@ -88,7 +88,7 @@ export async function createClientWithCookies() {
             // Ignore errors in server components
           }
         },
-      },
+      } as any,
     }
   );
 }
@@ -115,7 +115,7 @@ export async function createEnhancedClient() {
         getAll() {
           return allCookies;
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: Array<{ name: string; value: string; options?: any }>) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
@@ -124,7 +124,7 @@ export async function createEnhancedClient() {
             // Ignore errors in server components
           }
         },
-      },
+      } as any,
     }
   );
 } 

@@ -5,25 +5,25 @@ import { Tool, Category } from '@/data';
 export const baseMetadata: Metadata = {
   metadataBase: new URL('https://vaultxaitools.com'),
   title: {
-    default: 'VaultX AI Tools - Discover the Best AI Tools',
-    template: '%s | VaultX AI Tools'
+    default: 'VaultX Tech - Church & Ministry Media Consultant',
+    template: '%s | VaultX Tech'
   },
-  description: 'Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.',
+  description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production. Expert advice for video editing, graphics design, social media, live streaming, and audio production.',
   keywords: [
-    'AI tools',
-    'artificial intelligence',
-    'machine learning',
-    'productivity',
-    'development',
-    'design',
-    'automation',
-    'chatgpt',
-    'openai',
-    'ai software'
+    'church media consultant',
+    'ministry media tools',
+    'church video production',
+    'ministry graphics design',
+    'church social media',
+    'ministry live streaming',
+    'church audio production',
+    'ministry media resources',
+    'church media guidance',
+    'ministry media consulting'
   ],
-  authors: [{ name: 'VaultX Team' }],
-  creator: 'VaultX Team',
-  publisher: 'VaultX AI Tools',
+  authors: [{ name: 'VaultX Tech' }],
+  creator: 'VaultX Tech',
+  publisher: 'VaultX Tech',
   formatDetection: {
     email: false,
     address: false,
@@ -52,9 +52,9 @@ export const baseMetadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://vaultxaitools.com',
-    siteName: 'VaultX AI Tools',
-    title: 'VaultX AI Tools - Discover the Best AI Tools',
-    description: 'Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.',
+    siteName: 'VaultX Tech',
+    title: 'VaultX Tech - Church & Ministry Media Consultant',
+    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
     images: [
       {
         url: '/og-image.jpg',
@@ -68,8 +68,8 @@ export const baseMetadata: Metadata = {
     card: 'summary_large_image',
     site: '@vaultxaitools',
     creator: '@vaultxaitools',
-    title: 'VaultX AI Tools - Discover the Best AI Tools',
-    description: 'Your curated directory of the most powerful AI tools. Discover, compare, and master the future of technology.',
+    title: 'VaultX Tech - Church & Ministry Media Consultant',
+    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
     images: ['/og-image.jpg'],
   },
 };
@@ -198,13 +198,13 @@ export function generateSearchMetadata(query: string): Metadata {
 
 // Generate metadata for about page
 export function generateAboutMetadata(): Metadata {
-  const title = 'About VaultX AI Tools - Your AI Tool Directory';
-  const description = 'Learn about VaultX AI Tools, your trusted directory for discovering and comparing the best artificial intelligence software and tools.';
+  const title = 'About VaultX Tech - Church & Ministry Media Consultant';
+  const description = 'Learn about VaultX Tech, your trusted church and ministry media consultant providing tools, resources, and guidance for effective media production.';
   
   return {
     title,
     description,
-    keywords: ['about', 'VaultX AI Tools', 'AI directory', 'artificial intelligence tools'],
+    keywords: ['about', 'VaultX Tech', 'church media consultant', 'ministry media tools'],
     openGraph: {
       title,
       description,
@@ -225,21 +225,21 @@ export function generateAboutMetadata(): Metadata {
 // Generate metadata for blog page
 export function generateBlogMetadata(): Metadata {
   return {
-    title: 'Blog - AI Tools Insights & Reviews',
-    description: 'Stay updated with the latest AI tools, industry insights, and expert reviews. Discover how AI is transforming various industries.',
+    title: 'Blog - Church & Ministry Media Resources',
+    description: 'Stay updated with the latest church and ministry media tools, tutorials, best practices, and case studies. Learn how to effectively produce media for your ministry.',
     keywords: [
-      'AI tools blog',
-      'artificial intelligence',
-      'AI reviews',
-      'tech insights',
-      'AI industry news',
-      'AI writing tools',
-      'AI design tools',
-      'AI development tools'
+      'church media blog',
+      'ministry media resources',
+      'church video tutorials',
+      'ministry graphics guides',
+      'church social media tips',
+      'ministry live streaming',
+      'church audio production',
+      'ministry media case studies'
     ],
     openGraph: {
-      title: 'Blog - AI Tools Insights & Reviews',
-      description: 'Stay updated with the latest AI tools, industry insights, and expert reviews.',
+      title: 'Blog - Church & Ministry Media Resources',
+      description: 'Stay updated with the latest church and ministry media tools, tutorials, best practices, and case studies.',
       type: 'website',
       url: 'https://vaultxaitools.com/blog',
       images: [
@@ -253,8 +253,8 @@ export function generateBlogMetadata(): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Blog - AI Tools Insights & Reviews',
-      description: 'Stay updated with the latest AI tools, industry insights, and expert reviews.',
+      title: 'Blog - Church & Ministry Media Resources',
+      description: 'Stay updated with the latest church and ministry media tools, tutorials, best practices, and case studies.',
       images: ['/og-blog.jpg'],
     },
   };
@@ -285,7 +285,7 @@ export function generateToolStructuredData(tool: Tool) {
     } : undefined,
     author: {
       '@type': 'Organization',
-      name: 'VaultX AI Tools',
+      name: 'VaultX Tech',
       url: 'https://vaultxaitools.com'
     },
     datePublished: tool.createdAt,
@@ -311,8 +311,8 @@ export function generateWebsiteStructuredData() {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'VaultX AI Tools',
-    description: 'Your curated directory of the most powerful AI tools',
+    name: 'VaultX Tech',
+    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
     url: 'https://vaultxaitools.com',
     potentialAction: {
       '@type': 'SearchAction',
@@ -324,7 +324,7 @@ export function generateWebsiteStructuredData() {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'VaultX AI Tools',
+      name: 'VaultX Tech',
       logo: {
         '@type': 'ImageObject',
         url: 'https://vaultxaitools.com/logo.png',
@@ -356,10 +356,10 @@ export function generateOrganizationStructuredData() {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'VaultX AI Tools',
+    name: 'VaultX Tech',
     url: 'https://vaultxaitools.com',
     logo: 'https://vaultxaitools.com/logo.png',
-    description: 'Your curated directory of the most powerful AI tools',
+    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
     sameAs: [
       'https://twitter.com/vaultxaitools',
       'https://linkedin.com/company/vaultxaitools',
@@ -379,14 +379,14 @@ export function generateOrganizationStructuredData() {
 export function generateAdminMetadata(pageTitle: string): Metadata {
   return {
     title: `${pageTitle} - Admin Dashboard`,
-    description: 'Admin dashboard for managing VaultX AI Tools content and settings.',
+    description: 'Admin dashboard for managing VaultX Tech content and settings.',
     robots: {
       index: false,
       follow: false,
     },
     openGraph: {
       title: `${pageTitle} - Admin Dashboard`,
-      description: 'Admin dashboard for managing VaultX AI Tools content and settings.',
+      description: 'Admin dashboard for managing VaultX Tech content and settings.',
       type: 'website',
     },
   };

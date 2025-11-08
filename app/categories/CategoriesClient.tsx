@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { categories } from '@/data';
 import type { Tool } from '@/data';
+import { useRealTimeTools } from '@/lib/useRealTimeTools';
+import { useToolsUpdates } from '@/lib/useDataUpdates';
 
 
 // Type for search suggestions
@@ -58,6 +60,19 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
   const router = useRouter();
   const pathname = usePathname() ?? '/categories';
   const searchParams = useSearchParams();
+  
+  // Use real-time tools data instead of static props
+  const { tools: realTimeTools, loading: toolsLoading, error: toolsError } = useRealTimeTools();
+  
+  // Listen for admin updates and refresh data
+  useToolsUpdates(() => {
+    console.log('🔄 CategoriesClient received tools update, refreshing data...');
+    // The useRealTimeTools hook will automatically refresh when Supabase data changes
+  }, []);
+  
+  // Use real-time data when available, fallback to props
+  const activeTools = realTimeTools.length > 0 ? realTimeTools : tools;
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortBy, setSortBy] = useState('quality');
@@ -70,15 +85,21 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
   const [subscribeEmail, setSubscribeEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
-  // Simulate loading state for demo (replace with real loading logic if needed)
+  // Use real-time loading state
   const [isLoading, setIsLoading] = useState(true);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [visibleCount, setVisibleCount] = useState<number>(12);
 
+  // Update loading state based on real-time data
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 900); // Simulate 900ms load
-    return () => clearTimeout(timer);
-  }, []);
+    if (realTimeTools.length > 0) {
+      setIsLoading(false);
+    } else if (!toolsLoading) {
+      // Fallback to static data loading
+      const timer = setTimeout(() => setIsLoading(false), 900);
+      return () => clearTimeout(timer);
+    }
+  }, [realTimeTools, toolsLoading]);
 
   // Load favorites from localStorage on mount
   useEffect(() => {
@@ -107,7 +128,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
   };
 
   // Calculate real stats from tools data
-  const totalReviews = tools.reduce((sum, tool) => sum + (tool.reviewCount || 0), 0);
+  const totalReviews = activeTools.reduce((sum, tool) => sum + (tool.reviewCount || 0), 0);
   
 
 
@@ -140,7 +161,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
     const normalizedSelectedTags = selectedTags.map(t => t.toLowerCase());
 
     return hasAnyFilter
-    ? tools.filter(tool => {
+    ? activeTools.filter(tool => {
         const matchesSearch = !searchQuery || 
           tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           tool.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -150,8 +171,8 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
           const matchesTags = normalizedSelectedTags.length === 0 || (tool.tags?.some(t => normalizedSelectedTags.includes(t.toLowerCase())) ?? false);
           return matchesSearch && matchesCategory && matchesUseCase && matchesPricing && matchesTags;
       })
-    : tools;
-  }, [tools, searchQuery, selectedCategory, bestUseCase, selectedPricing, selectedTags]);
+    : activeTools;
+  }, [activeTools, searchQuery, selectedCategory, bestUseCase, selectedPricing, selectedTags]);
 
   const sortedTools = [...filteredTools].sort((a, b) => {
     switch (sortBy) {
@@ -238,7 +259,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
       color: cat.color, 
       icon: cat.icon 
     })),
-    ...tools.filter(tool => tool.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 3).map(tool => ({ 
+    ...activeTools.filter(tool => tool.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 3).map(tool => ({ 
       type: 'tool' as const, 
       id: tool.id, 
       name: tool.name, 
@@ -249,7 +270,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
 
   // ratings removed
 
-  if (tools.length === 0) {
+  if (activeTools.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
         <div className="text-center">
@@ -388,17 +409,17 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             {/* Enhanced badge - Same style as home page */}
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-sm border border-blue-200 dark:border-blue-700 rounded-full px-6 py-3 mb-8 shadow-lg animate-fade-in">
               <SparklesIcon className="w-5 h-5 text-blue-600 animate-pulse" />
-              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">Find AI Tools</span>
+              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">Find Media Tools</span>
               <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
             </div>
             
             {/* Main headline - Similar to home page */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 animate-slide-up">
-              AI Tools
+              Media Tools
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up">
-              Discover the right AI tools for your use case. Filter by quality, reviews, and tags to find what actually works.
+              Discover the right media production tools for your church or ministry. Filter by quality, reviews, and tags to find what actually works.
             </p>
 
             {/* Search moved below into the main content area */}
@@ -424,10 +445,10 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
-              AI Tool Finder
+              Media Tool Finder
             </h2>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-xl sm:max-w-2xl mx-auto px-4 sm:px-0">
-              Filter by best use case and quality to find tools that work in the real world
+              Filter by best use case and quality to find media production tools that work for your church or ministry
             </p>
           </div>
           <div className="grid grid-cols-1 xl:grid-cols-4 2xl:grid-cols-5 gap-8 sm:gap-10 lg:gap-12">
@@ -461,7 +482,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                 <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 dark:text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search AI tools or categories..."
+                  placeholder="Search media tools or categories..."
                   value={searchQuery}
                   onChange={(e) => {
                     setSearchQuery(e.target.value);
@@ -584,9 +605,9 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
       {/* Enhanced FAQ/Guide Section */}
       <section className="py-12 sm:py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-t border-gray-200 dark:border-gray-700 mt-8 sm:mt-12">
         <div className="max-w-2xl sm:max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white text-center">AI Tool Categories: Guide & FAQ</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white text-center">Media Tool Categories: Guide & FAQ</h2>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 text-center px-4 sm:px-0">
-            Not sure where to start? Here's a quick guide to help you find the perfect AI tool category for your needs, plus answers to common questions.
+            Not sure where to start? Here's a quick guide to help you find the perfect media production tool category for your church or ministry needs, plus answers to common questions.
           </p>
           <div className="mb-8 sm:mb-10">
             <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gray-900 dark:text-white">How to choose the right category?</h3>
@@ -598,7 +619,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             <div>
               <dt className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base">How are categories selected?</dt>
               <dd className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mt-1 sm:mt-2">
-                Categories are curated based on industry trends, user demand, and the unique features of each tool. We regularly review and update categories to reflect the evolving AI landscape.
+                Categories are curated based on industry trends, user demand, and the unique features of each tool. We regularly review and update categories to reflect the evolving media production landscape for churches and ministries.
               </dd>
             </div>
             <div>

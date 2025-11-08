@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
-import { getUserRole } from '@/lib/auth';
+import { canAccessAdmin } from '@/lib/auth';
 
 interface AutomationStatus {
   status: string;
@@ -19,10 +19,12 @@ interface AutomationStatus {
 
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication
+    // Require admin
     const supabase = await createClient();
-    // Auth checks disabled during debug
-    const user = { id: 'debug-user' } as any;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || !(await canAccessAdmin(user))) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     // Get request body
     const body = await request.json();
@@ -79,8 +81,12 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    // Check authentication
+    // Require admin
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || !(await canAccessAdmin(user))) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     // Get current database statistics
     const { data: tools, error: toolsError } = await supabase

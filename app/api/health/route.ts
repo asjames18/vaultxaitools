@@ -14,7 +14,7 @@ export async function GET() {
     };
     
     // Test database connection
-    let dbStatus = { connected: false, error: null, toolsCount: 0 };
+    let dbStatus: { connected: boolean; error: string | null; toolsCount: number } = { connected: false, error: null, toolsCount: 0 };
     
     try {
       if (envCheck.supabaseUrl && envCheck.supabaseKey) {
@@ -41,7 +41,17 @@ export async function GET() {
     
     const responseTime = Date.now() - startTime;
     
-    const healthData = {
+    const healthData: {
+      status: string;
+      timestamp: string;
+      responseTime: string;
+      environment: typeof envCheck;
+      database: typeof dbStatus;
+      uptime: number;
+      memory: NodeJS.MemoryUsage;
+      version: string;
+      statusCode: number;
+    } = {
       status: 'healthy',
       timestamp: new Date().toISOString(),
       responseTime: `${responseTime}ms`,
@@ -49,7 +59,8 @@ export async function GET() {
       database: dbStatus,
       uptime: process.uptime(),
       memory: process.memoryUsage(),
-      version: process.version
+      version: process.version,
+      statusCode: 200
     };
     
     // Determine overall health status
@@ -59,8 +70,6 @@ export async function GET() {
     } else if (!dbStatus.connected) {
       healthData.status = 'degraded';
       healthData.statusCode = 503;
-    } else {
-      healthData.statusCode = 200;
     }
     
     return NextResponse.json(healthData, { 

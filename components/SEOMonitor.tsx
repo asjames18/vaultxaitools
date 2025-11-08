@@ -21,7 +21,8 @@ export default function SEOMonitor() {
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          console.log('FID:', entry.processingStart - entry.startTime);
+          const eventEntry = entry as PerformanceEventTiming;
+          console.log('FID:', eventEntry.processingStart - eventEntry.startTime);
           // Send to analytics if needed
         });
       });

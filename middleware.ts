@@ -25,24 +25,9 @@ const publicRoutes = [
   '/submit-tool/thank-you',
   '/getting-started', // Get Started page for new users
   '/search', // Search functionality
-  '/dashboard', // User dashboard/profile page
-  '/settings', // Settings page should handle auth client-side like dashboard
-  '/admin',
-  '/admin/login',
-  '/admin/unauthorized',
-  '/admin/tools',
-  '/admin/blog',
-  '/admin/blog(.*)',
-  '/admin/contact',
-  '/admin/contact(.*)',
-  '/admin/content-management',
-  '/admin/content-management(.*)',
-  '/admin/automation',
-  '/admin/automation(.*)',
-  '/admin/users',
-  '/admin/users(.*)',
   '/debug-supabase', // Debug page for Supabase testing
   '/test-favorites', // Test page for debugging favorites functionality
+  '/ui-showcase', // UI Showcase page for demonstrating components
   // REMOVED: Test pages - completely public for debugging (SECURITY RISK)
   // '/test-admin',
   // '/test-automation', 
@@ -51,8 +36,8 @@ const publicRoutes = [
 ];
 
 // Define admin routes that require admin privileges
-const adminRoutes = [
-  // All admin routes are now public and handle their own authentication client-side
+const adminRoutes: string[] = [
+  '/admin(.*)'
 ];
 
 function isPublicRoute(pathname: string): boolean {
@@ -96,34 +81,27 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() {
-          return request.cookies.getAll();
+        get(name: string) {
+          return request.cookies.get(name)?.value;
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value)
-          );
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options)
-          );
+        set(name: string, value: string, options?: Parameters<typeof response.cookies.set>[2]) {
+          response.cookies.set(name, value, options);
+        },
+        remove(name: string, options?: Parameters<typeof response.cookies.set>[2]) {
+          response.cookies.set({ name, value: '', ...options, maxAge: 0 });
         },
       },
     }
   );
 
   // Refresh session if expired - required for Server Components
-  let user = null;
+  let user: any = null;
   try {
     const { data, error } = await supabase.auth.getUser();
     if (error && error.message?.includes('AuthSessionMissingError')) {
       // Clear invalid session cookies
-      response.cookies.delete('sb-access-token');
-      response.cookies.delete('sb-refresh-token');
+      response.cookies.set('sb-access-token', '', { maxAge: 0 });
+      response.cookies.set('sb-refresh-token', '', { maxAge: 0 });
       // try reading tokens from Authorization header to set session on the fly
       const authHeader = request.headers.get('authorization');
       if (authHeader?.startsWith('Bearer ')) {
@@ -145,49 +123,62 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Allow completely public routes without auth
+  // PUBLIC ROUTES: allow without auth
   if (isPublicRoute(pathname)) {
     return response;
   }
 
-  // If no session, redirect to sign-in or admin login
+  // ADMIN ROUTES: require admin
+  if (isAdminRoute(pathname)) {
   if (!user) {
-    if (isAdminRoute(pathname)) {
-      return NextResponse.redirect(new URL('/admin/login', request.url));
+      const loginUrl = new URL('/admin/login', request.url);
+      loginUrl.searchParams.set('redirectTo', pathname);
+      return NextResponse.redirect(loginUrl);
     }
+
+    let isAdmin = false;
+    try {
+      // Prefer DB role check; fallback to email allowlist
+      const { data: roleRow } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+      isAdmin = !!roleRow || (user.email ? isAdminEmail(user.email) : false);
+    } catch {
+      isAdmin = user?.email ? isAdminEmail(user.email) : false;
+    }
+
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL('/admin/unauthorized', request.url));
+    }
+    return response;
+  }
+
+  // AUTH-ONLY ROUTES: require signed-in user
+  const authOnlyRoutes = [
+    '/dashboard',
+    '/settings',
+    '/favorites',
+    '/user',
+  ];
+  const isAuthOnly = authOnlyRoutes.some(route => {
+    if (route.endsWith('(.*)')) {
+      const regex = new RegExp(`^${route.replace('(.*)', '.*')}$`);
+      return regex.test(pathname);
+    }
+    return pathname === route || pathname.startsWith(`${route}/`);
+  });
+
+  if (isAuthOnly && !user) {
     const signInUrl = new URL('/sign-in', request.url);
     signInUrl.searchParams.set('redirectTo', pathname);
     return NextResponse.redirect(signInUrl);
   }
 
-  // Do not enforce admin allowlist at the edge. Server pages & APIs perform role checks with RLS.
-
-  // Protected routes that require authentication
-  const protectedRoutes = [
-    '/admin',
-    '/admin/login',
-    '/admin/unauthorized',
-    '/admin/users',
-    '/admin/tools',
-    '/admin/categories',
-    '/admin/automation',
-    '/admin/refresh-content',
-    // '/news', // Temporarily hidden
-  ];
-
-  // Ensure cookies are properly set in the response
-  const responseWithCookies = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
-
-  // Copy all cookies from the request to the response
-  request.cookies.getAll().forEach(cookie => {
-    responseWithCookies.cookies.set(cookie.name, cookie.value, cookie);
-  });
-
-  return responseWithCookies;
+  // Default allow
+  return response;
 }
 
 export const config = {

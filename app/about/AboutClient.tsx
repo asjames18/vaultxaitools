@@ -9,10 +9,10 @@ export default function AboutClient() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            About VaultX AI Tools
+            About VaultX Tech
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            We&apos;re on a mission to democratize access to AI tools and help creators, developers, and businesses discover the perfect AI solutions for their needs.
+            We&apos;re on a mission to empower churches and ministries with professional media tools, resources, and expert guidance for effective media production.
           </p>
         </div>
 
@@ -24,10 +24,10 @@ export default function AboutClient() {
                 Our Mission
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                The AI landscape is evolving rapidly, with new tools emerging every day. Our mission is to curate, categorize, and showcase quality AI tools, making it easier for everyone to find the right solution for their specific needs.
+                The media production landscape for churches and ministries is constantly evolving, with new tools and techniques emerging regularly. Our mission is to curate, categorize, and showcase quality media production tools and resources, making it easier for churches and ministries to find the right solutions for their specific needs.
               </p>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                We believe that AI should be accessible to everyone, regardless of their technical background. That&apos;s why we provide detailed information, comparisons, and insights to help you make informed decisions about which AI tools to use.
+                We believe that professional-quality media production should be accessible to every church and ministry, regardless of their technical background or budget. That&apos;s why we provide detailed information, comparisons, expert guidance, and consulting services to help you make informed decisions about which media tools and strategies to use.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="text-center">
@@ -35,7 +35,7 @@ export default function AboutClient() {
                     40+
                   </div>
                   <div className="text-gray-600 dark:text-gray-300">
-                    AI Tools Curated
+                    Media Tools & Resources
                   </div>
                 </div>
                 <div className="text-center">

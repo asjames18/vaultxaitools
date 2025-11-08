@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Heart, Star, TrendingUp, Users, ExternalLink, Share2, Bookmark } from 'lucide-react';
 import { Tool } from '@/data/tools';
-import { OptimizedImage } from './LazyLoad';
+import OptimizedImage from './OptimizedImage';
 
 interface MobileToolCardProps {
   tool: Tool;
@@ -23,7 +23,6 @@ export default function MobileToolCard({
   onBookmark,
   showActions = true
 }: MobileToolCardProps) {
-  const [isImageLoading, setIsImageLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
@@ -68,7 +67,7 @@ export default function MobileToolCard({
               src={tool.logo}
               alt={`${tool.name} logo`}
               className="w-full h-full object-cover"
-              onLoad={() => setIsImageLoading(false)}
+              fill
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -76,11 +75,6 @@ export default function MobileToolCard({
                 {tool.name.charAt(0)}
               </div>
             </div>
-          )}
-          
-          {/* Loading Overlay */}
-          {isImageLoading && (
-            <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse" />
           )}
         </div>
 

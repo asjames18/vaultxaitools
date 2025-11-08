@@ -345,7 +345,7 @@ export function WorkflowAutomation({
                     {step.status === 'completed' ? (
                       <CheckCircleIcon className="h-3 w-3" />
                     ) : step.status === 'running' ? (
-                      <LoadingSpinner size="xs" />
+                      <LoadingSpinner size="sm" />
                     ) : step.status === 'failed' ? (
                       <XCircleIcon className="h-3 w-3" />
                     ) : (

@@ -87,7 +87,7 @@ export default function DashboardPage() {
           reviews = [];
         }
 
-        const recent = (reviews || []).map((r) => ({ 
+        const recent = (reviews || []).map((r: { id: string; tool_id: string; created_at: string }) => ({ 
           id: r.id, 
           type: 'review', 
           label: 'Wrote a review', 

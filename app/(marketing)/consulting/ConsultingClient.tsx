@@ -124,7 +124,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
             </button>
           </div>
         ) : (
-        <form
+          <form
           className="mt-6 space-y-4"
           onSubmit={async (e) => {
             e.preventDefault();
@@ -368,7 +368,6 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
             </button>
           </div>
         </form>
-        )}
       </div>
     </div>
   );
@@ -778,5 +777,3 @@ export default function ConsultingClient({ constants }: Props) {
     </>
   );
 }
-
-

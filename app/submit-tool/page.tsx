@@ -16,8 +16,8 @@ export default function SubmitToolPage() {
   const supabase = createClient();
 
   const categories = [
-    'Audio', 'Data', 'Design', 'Development', 'Language', 
-    'Marketing', 'Productivity', 'Video', 'Writing'
+    'Video Editing', 'Graphics Design', 'Social Media', 
+    'Live Streaming', 'Audio/Podcasting'
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -50,7 +50,7 @@ export default function SubmitToolPage() {
       if (error) throw error;
 
       setStatus('success');
-      setMessage('Thank you! Your tool submission has been received. We\'ll review it and get back to you soon.');
+      setMessage('Thank you! Your resource submission has been received. We\'ll review it and get back to you soon.');
       
       // Reset form
       setFormData({
@@ -63,7 +63,7 @@ export default function SubmitToolPage() {
       });
     } catch (error: any) {
       setStatus('error');
-      setMessage(error.message || 'Failed to submit tool. Please try again.');
+      setMessage(error.message || 'Failed to submit resource. Please try again.');
     }
   };
 
@@ -80,10 +80,10 @@ export default function SubmitToolPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Submit an AI Tool
+            Submit a Media Resource
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Found an amazing AI tool that should be on VaultX? Submit it here and we'll review it for inclusion in our curated collection.
+            Found an amazing media tool or resource that should be on VaultX Tech? Submit it here and we'll review it for inclusion in our curated collection.
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export default function SubmitToolPage() {
             {/* Tool Name */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Tool Name *
+                Resource Name *
               </label>
               <input
                 type="text"
@@ -114,7 +114,7 @@ export default function SubmitToolPage() {
                 onChange={handleInputChange}
                 required
                 className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                placeholder="e.g., ChatGPT, Midjourney, Notion AI"
+                placeholder="e.g., Adobe Premiere Pro, Canva, OBS Studio"
               />
             </div>
 
@@ -201,7 +201,7 @@ export default function SubmitToolPage() {
                 onChange={handleInputChange}
                 rows={4}
                 className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                placeholder="Any additional details, pricing info, features, or why you think this tool should be included..."
+                placeholder="Any additional details, pricing info, features, or why you think this resource should be included..."
               />
             </div>
 
@@ -212,7 +212,7 @@ export default function SubmitToolPage() {
                 disabled={status === 'loading'}
                 className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
-                {status === 'loading' ? 'Submitting...' : 'Submit Tool'}
+                {status === 'loading' ? 'Submitting...' : 'Submit Resource'}
               </button>
             </div>
           </form>

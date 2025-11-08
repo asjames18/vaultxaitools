@@ -309,5 +309,4 @@ const defaultConfig: SessionConfig = {
 export const sessionManager = new SessionManager(defaultConfig);
 
 // Export types and functions
-export type { SessionConfig, SessionInfo };
 export { SessionManager };

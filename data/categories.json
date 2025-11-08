@@ -1,92 +1,67 @@
 [
   {
-    "name": "Language",
-    "icon": "💬",
-    "description": "AI tools for text generation, translation, and language processing",
-    "count": 1,
+    "name": "Video Editing",
+    "icon": "🎬",
+    "description": "Video editing tools and software for creating professional church and ministry videos",
+    "count": 0,
     "color": "from-blue-500 to-cyan-500",
     "popular_tools": [
-      "ChatGPT",
-      "Claude",
-      "Bard",
-      "Perplexity"
+      "Adobe Premiere Pro",
+      "Final Cut Pro",
+      "DaVinci Resolve",
+      "Camtasia"
     ]
   },
   {
-    "name": "Design",
+    "name": "Graphics Design",
     "icon": "🎨",
-    "description": "AI-powered design tools for graphics, UI/UX, and creative work",
-    "count": 2,
+    "description": "Graphics design tools for creating church graphics, social media posts, and ministry materials",
+    "count": 0,
     "color": "from-purple-500 to-pink-500",
     "popular_tools": [
-      "Midjourney",
-      "DALL-E",
-      "Stable Diffusion",
-      "Canva AI"
+      "Canva",
+      "Adobe Photoshop",
+      "Adobe Illustrator",
+      "Figma"
     ]
   },
   {
-    "name": "Development",
-    "icon": "💻",
-    "description": "AI tools for coding, debugging, and software development",
-    "count": 1,
+    "name": "Social Media",
+    "icon": "📱",
+    "description": "Social media management and scheduling tools for church and ministry outreach",
+    "count": 0,
     "color": "from-green-500 to-emerald-500",
     "popular_tools": [
-      "GitHub Copilot",
-      "Cursor",
-      "Tabnine",
-      "CodeWhisperer"
+      "Buffer",
+      "Hootsuite",
+      "Later",
+      "Sprout Social"
     ]
   },
   {
-    "name": "Productivity",
-    "icon": "⚡",
-    "description": "AI assistants and tools to boost your productivity",
-    "count": 2,
+    "name": "Live Streaming",
+    "icon": "📺",
+    "description": "Live streaming platforms and tools for church services and ministry events",
+    "count": 0,
     "color": "from-yellow-500 to-orange-500",
     "popular_tools": [
-      "Notion AI",
-      "Grammarly",
-      "Otter.ai",
-      "Fireflies"
+      "OBS Studio",
+      "Streamlabs",
+      "Restream",
+      "YouTube Live"
     ]
   },
   {
-    "name": "Marketing",
-    "icon": "📈",
-    "description": "AI tools for marketing, advertising, and business growth",
-    "count": 2,
+    "name": "Audio/Podcasting",
+    "icon": "🎙️",
+    "description": "Audio production and podcasting tools for church sermons, podcasts, and ministry content",
+    "count": 0,
     "color": "from-red-500 to-rose-500",
     "popular_tools": [
-      "Jasper",
-      "Copy.ai",
-      "Surfer SEO",
-      "Phrasee"
-    ]
-  },
-  {
-    "name": "Writing",
-    "icon": "✍️",
-    "description": "AI writing assistants and grammar tools",
-    "count": 1,
-    "color": "from-indigo-500 to-purple-500",
-    "popular_tools": [
-      "Grammarly",
-      "ProWritingAid",
-      "Hemingway Editor"
-    ]
-  },
-  {
-    "name": "Video",
-    "icon": "🎬",
-    "description": "AI video creation and editing tools",
-    "count": 1,
-    "color": "from-pink-500 to-rose-500",
-    "popular_tools": [
-      "Synthesia",
-      "Lumen5",
-      "InVideo",
-      "Pictory"
+      "Audacity",
+      "Adobe Audition",
+      "GarageBand",
+      "Reaper"
     ]
   }
 ]

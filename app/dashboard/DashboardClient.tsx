@@ -10,7 +10,7 @@ interface DashboardProps {
   memberSince: string;
   stats: { toolsExplored: number; reviewsWritten: number; favoritesCount: number };
   recent: Array<{ id: string; type: string; label: string; tool?: string; when: string }>;
-  favorites: string[]; // Array of tool IDs as strings
+  favorites: Array<string | { id: string; name: string; logo?: string; description?: string; category?: string }>;
 }
 
 export default function DashboardClient({ userName, userEmail, memberSince, stats, recent, favorites }: DashboardProps) {

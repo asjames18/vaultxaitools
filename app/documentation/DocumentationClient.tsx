@@ -22,21 +22,21 @@ export default function DocumentationClient() {
       content: (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Welcome to VaultX AI Tools</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Welcome to VaultX Tech</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              VaultX AI Tools is your comprehensive directory for discovering, reviewing, and sharing the best AI tools and applications. 
-              Whether you're a developer, business professional, or AI enthusiast, our platform helps you find the perfect AI solutions.
+              VaultX Tech is your comprehensive resource for discovering, reviewing, and sharing the best media production tools and resources for churches and ministries. 
+              Whether you're a media director, pastor, or ministry leader, our platform helps you find the perfect media solutions for your church or ministry.
             </p>
           </div>
 
           <div>
             <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Key Features</h4>
             <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-              <li><strong>Tool Discovery:</strong> Browse thousands of AI tools across various categories</li>
-              <li><strong>User Reviews:</strong> Read authentic reviews from real users</li>
-              <li><strong>Trending Tools:</strong> Discover what's popular in the AI community</li>
-              <li><strong>Tool Submissions:</strong> Submit your own AI tools to the directory</li>
-              <li><strong>Advanced Search:</strong> Find tools based on specific criteria</li>
+              <li><strong>Tool Discovery:</strong> Browse hundreds of media production tools across various categories</li>
+              <li><strong>User Reviews:</strong> Read authentic reviews from churches and ministries</li>
+              <li><strong>Trending Tools:</strong> Discover what's popular in the ministry media community</li>
+              <li><strong>Resource Submissions:</strong> Submit your own media tools and resources to the directory</li>
+              <li><strong>Advanced Search:</strong> Find tools based on specific criteria for your ministry needs</li>
             </ul>
           </div>
 
@@ -45,16 +45,16 @@ export default function DocumentationClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Link href="/" className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 <div className="font-medium text-gray-900 dark:text-white">Browse Tools</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Explore our AI tools directory</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">Explore our media tools directory</div>
               </Link>
                       <Link href="/AITools" className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-          <div className="font-medium text-gray-900 dark:text-white">AI Tools Directory</div>
+          <div className="font-medium text-gray-900 dark:text-white">Media Tools Directory</div>
                 <div className="text-sm text-gray-600 dark:text-gray-300">Browse tools by category</div>
               </Link>
 
               <Link href="/submit-tool" className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                <div className="font-medium text-gray-900 dark:text-white">Submit Tool</div>
-                <div className="text-sm text-gray-600 dark:text-gray-300">Add your AI tool</div>
+                <div className="font-medium text-gray-900 dark:text-white">Submit Resource</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">Add your media resource</div>
               </Link>
             </div>
           </div>
@@ -68,9 +68,9 @@ export default function DocumentationClient() {
       content: (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How to Find AI Tools</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How to Find Media Tools</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Discover AI tools that match your needs using our powerful search and filtering system.
+              Discover media production tools that match your church or ministry needs using our powerful search and filtering system.
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function DocumentationClient() {
             <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Search Features</h4>
             <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
               <li><strong>Keyword Search:</strong> Search by tool name, description, or features</li>
-              <li><strong>Category Filter:</strong> Filter tools by specific categories (e.g., Text Generation, Image Creation)</li>
+              <li><strong>Category Filter:</strong> Filter tools by specific categories (e.g., Video Editing, Graphics Design, Live Streaming)</li>
               <li><strong>Price Filter:</strong> Find free, freemium, or paid tools</li>
               <li><strong>Rating Filter:</strong> Browse tools by user ratings</li>
               <li><strong>Sort Options:</strong> Sort by newest, most popular, highest rated, or alphabetical</li>
@@ -89,7 +89,7 @@ export default function DocumentationClient() {
             <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Tool Cards Information</h4>
             <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
               <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                <div><strong>Tool Name:</strong> The name of the AI tool</div>
+                <div><strong>Tool Name:</strong> The name of the media tool</div>
                 <div><strong>Description:</strong> Brief overview of what the tool does</div>
                 <div><strong>Category:</strong> The primary category the tool belongs to</div>
                 <div><strong>Rating:</strong> Average user rating (1-5 stars)</div>
@@ -123,16 +123,16 @@ export default function DocumentationClient() {
       content: (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How to Submit Your AI Tool</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How to Submit Your Media Resource</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Share your AI tool with our community by submitting it to our directory. Follow these steps to ensure your submission is approved quickly.
+              Share your media production tool or resource with our community by submitting it to our directory. Follow these steps to ensure your submission is approved quickly.
             </p>
           </div>
 
           <div>
             <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Submission Requirements</h4>
             <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-              <li><strong>Tool Name:</strong> Clear, descriptive name for your AI tool</li>
+              <li><strong>Resource Name:</strong> Clear, descriptive name for your media tool or resource</li>
               <li><strong>Description:</strong> Detailed explanation of what your tool does and its key features</li>
               <li><strong>Category:</strong> Select the most appropriate category for your tool</li>
               <li><strong>Website URL:</strong> Direct link to your tool's official website</li>
@@ -188,7 +188,7 @@ export default function DocumentationClient() {
                 <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">Ready to Submit?</h4>
                 <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
                   <Link href="/submit-tool" className="underline hover:no-underline">
-                    Click here to submit your AI tool
+                    Click here to submit your media resource
                   </Link>
                 </p>
               </div>
@@ -206,7 +206,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How to Write Helpful Reviews</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Share your experience with AI tools to help other users make informed decisions. Your reviews are valuable to our community.
+              Share your experience with media production tools to help other churches and ministries make informed decisions. Your reviews are valuable to our community.
             </p>
           </div>
 
@@ -297,7 +297,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Managing Your Account</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Create and manage your VaultX AI Tools account to unlock additional features and personalize your experience.
+              Create and manage your VaultX Tech account to unlock additional features and personalize your experience.
             </p>
           </div>
 
@@ -305,8 +305,8 @@ export default function DocumentationClient() {
             <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Account Benefits</h4>
             <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
               <li><strong>Save Favorites:</strong> Bookmark tools you're interested in</li>
-              <li><strong>Write Reviews:</strong> Share your experiences with AI tools</li>
-              <li><strong>Submit Tools:</strong> Add your own AI tools to the directory</li>
+              <li><strong>Write Reviews:</strong> Share your experiences with media production tools</li>
+              <li><strong>Submit Resources:</strong> Add your own media tools and resources to the directory</li>
               <li><strong>Personalized Recommendations:</strong> Get tool suggestions based on your interests</li>
               <li><strong>Review History:</strong> Track your past reviews and ratings</li>
             </ul>
@@ -374,7 +374,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Administrator Guide</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Learn about the administrative features available to help manage the VaultX AI Tools platform.
+              Learn about the administrative features available to help manage the VaultX Tech platform.
             </p>
           </div>
 
@@ -435,7 +435,7 @@ export default function DocumentationClient() {
             <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
               <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
                 <div><strong>Platform Usage:</strong> Track user engagement and tool views</div>
-                <div><strong>Popular Tools:</strong> Identify trending and popular AI tools</div>
+                <div><strong>Popular Tools:</strong> Identify trending and popular media production tools</div>
                 <div><strong>User Behavior:</strong> Analyze search patterns and user preferences</div>
                 <div><strong>Submission Trends:</strong> Monitor tool submission rates and quality</div>
                 <div><strong>Review Analytics:</strong> Track review activity and sentiment</div>
@@ -468,7 +468,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Getting Help and Support</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Need help with VaultX AI Tools? We're here to assist you with any questions or issues you may have.
+              Need help with VaultX Tech? We're here to assist you with any questions or issues you may have.
             </p>
           </div>
 
@@ -508,7 +508,7 @@ export default function DocumentationClient() {
                   <li>All required fields are completed</li>
                   <li>The tool website is functional and accessible</li>
                   <li>The description is clear and accurate</li>
-                  <li>The tool fits within our AI tools category</li>
+                  <li>The resource fits within our media production categories</li>
                 </ul>
               </div>
               <div className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
@@ -575,7 +575,7 @@ export default function DocumentationClient() {
               Documentation
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              Learn how to use VaultX AI Tools platform effectively. From browsing tools to submitting your own, we've got you covered.
+              Learn how to use VaultX Tech platform effectively. From browsing media tools to submitting your own resources, we've got you covered.
             </p>
           </div>
         </div>

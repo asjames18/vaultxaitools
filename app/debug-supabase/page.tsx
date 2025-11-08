@@ -23,15 +23,18 @@ export default function DebugSupabasePage() {
       setSupabaseStatus('Real Supabase client loaded');
       
       // Test a simple query
-      supabase.from('tools').select('count').limit(1).then((result) => {
-        if (result.error) {
-          setTestResult(`Error: ${result.error.message}`);
-        } else {
-          setTestResult(`Success: ${JSON.stringify(result.data)}`);
+      (async () => {
+        try {
+          const result = await supabase.from('tools').select('count').limit(1);
+          if (result.error) {
+            setTestResult(`Error: ${result.error.message}`);
+          } else {
+            setTestResult(`Success: ${JSON.stringify(result.data)}`);
+          }
+        } catch (error) {
+          setTestResult(`Exception: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
-      }).catch((error) => {
-        setTestResult(`Exception: ${error.message}`);
-      });
+      })();
     } else {
       setSupabaseStatus('Mock client loaded - environment variables not working');
       setTestResult('Cannot test with mock client');

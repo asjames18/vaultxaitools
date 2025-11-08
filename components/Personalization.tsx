@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Settings, Palette, Eye, Font, Layout, Zap, Save, Reset, Download, Upload } from 'lucide-react';
+import { Settings, Palette, Eye, Layout, Zap, Save, Download, Upload } from 'lucide-react';
 
 interface UserPreferences {
   theme: 'light' | 'dark' | 'system';
