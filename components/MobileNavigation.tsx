@@ -23,6 +23,8 @@ export default function MobileNavigation({
 
   // Handle scroll for background effect
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };

@@ -38,7 +38,11 @@ export default function Error({
             Try again
           </button>
           <button
-            onClick={() => window.location.href = '/'}
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.location.href = '/';
+              }
+            }}
             className="w-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-medium py-2 px-4 rounded-lg transition-colors"
           >
             Go home

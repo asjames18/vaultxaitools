@@ -93,7 +93,6 @@ export default function HomeClient({
   
   // Listen for admin updates and refresh data
   useToolsUpdates(() => {
-    console.log('🔄 HomeClient received tools update, refreshing data...');
     // The useRealTimeTools hook will automatically refresh when Supabase data changes
   }, []);
   
@@ -158,9 +157,7 @@ export default function HomeClient({
 
   // Update when real-time data changes (optimized)
   useEffect(() => {
-    if (realTimeTools.length > 0) {
-      console.log('🔄 Real-time tools data updated, count:', realTimeTools.length);
-    }
+    // Real-time tools data updated
   }, [realTimeTools]);
 
   // Show toast message with useCallback for performance

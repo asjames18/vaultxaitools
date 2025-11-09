@@ -91,9 +91,13 @@ export default function Navigation() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
+        if (typeof document !== 'undefined') {
+          document.documentElement.classList.add('dark');
+        }
       } else {
-        document.documentElement.classList.remove('dark');
+        if (typeof document !== 'undefined') {
+          document.documentElement.classList.remove('dark');
+        }
       }
       localStorage.setItem('theme', theme);
     }
