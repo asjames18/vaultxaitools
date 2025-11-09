@@ -89,7 +89,8 @@ export default function HomeClient({
   categories 
 }: HomeClientProps) {
   // Use real-time tools data instead of static props
-  const { tools: realTimeTools, loading: toolsLoading, error: toolsError } = useRealTimeTools();
+  // Hooks are wrapped internally with error handling
+  const { tools: realTimeTools = [], loading: toolsLoading = false, error: toolsError = null } = useRealTimeTools();
   
   // Listen for admin updates and refresh data
   useToolsUpdates(() => {
@@ -99,9 +100,14 @@ export default function HomeClient({
   const [filteredTools, setFilteredTools] = useState<Tool[]>([]);
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const { favorites: favoriteTools, toggleFavorite, loading: favoritesLoading, refresh: refreshFavorites } = useFavorites();
+  
+  // Get favorites - hook handles errors internally
+  const { favorites: favoriteTools = [], toggleFavorite, loading: favoritesLoading = false, refresh: refreshFavorites } = useFavorites();
+  
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
-  const { showUpdateBanner, lastDataUpdate, automationStatus, hideUpdateBanner } = useOptimizedSubscriptions();
+  
+  // Get subscription data - hook handles errors internally
+  const { showUpdateBanner = false, lastDataUpdate = null, automationStatus = 'idle', hideUpdateBanner = () => {} } = useOptimizedSubscriptions();
   const [favoriteLoading, setFavoriteLoading] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [authStatus, setAuthStatus] = useState<string>('Checking...');
@@ -129,6 +135,7 @@ export default function HomeClient({
   const safeSponsoredTools = useMemo(() => sponsoredTools || [], [sponsoredTools]);
   const safeCategories = useMemo(() => categories || [], [categories]);
   
+  // Create Supabase client - createClient now handles errors gracefully
   const supabase = createClient();
 
   // Error boundary for the component
@@ -197,7 +204,13 @@ export default function HomeClient({
       
         if (!session?.access_token) {
         // Clear favorites from localStorage since we can't load from API
-        localStorage.removeItem('vaultx-favorites');
+        try {
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('vaultx-favorites');
+          }
+        } catch (err) {
+          // Silently fail if localStorage is unavailable
+        }
           return;
         }
         
@@ -213,7 +226,13 @@ export default function HomeClient({
         const newFavorites = data.favorites || [];
         
           // Update localStorage to match API
-        localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+        try {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+          }
+        } catch (err) {
+          // Silently fail if localStorage is unavailable
+        }
         
         // Refresh favorites from the hook
         refreshFavorites();
@@ -221,7 +240,13 @@ export default function HomeClient({
         
         if (response.status === 401) {
           // User not authenticated, clear favorites
-          localStorage.removeItem('vaultx-favorites');
+          try {
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('vaultx-favorites');
+            }
+          } catch (err) {
+            // Silently fail if localStorage is unavailable
+          }
         }
         }
       } catch (error) {
@@ -241,12 +266,16 @@ export default function HomeClient({
       setCurrentHeadlineIndex((prev) => (prev + 1) % dynamicHeadlines.length);
     }, 4000);
 
-    // Load user preferences from localStorage
-    const savedFavorites = localStorage.getItem('vaultx-favorites');
-    const savedRecent = localStorage.getItem('vaultx-recent');
-    
-    if (savedRecent) {
-      setRecentlyViewed(JSON.parse(savedRecent));
+    // Load user preferences from localStorage with error handling
+    try {
+      if (typeof window !== 'undefined') {
+        const savedRecent = localStorage.getItem('vaultx-recent');
+        if (savedRecent) {
+          setRecentlyViewed(JSON.parse(savedRecent));
+        }
+      }
+    } catch (err) {
+      // Silently fail if localStorage is unavailable
     }
 
     // Load favorites from API on mount
@@ -289,7 +318,9 @@ export default function HomeClient({
       if (!session?.access_token) {
       setFavoriteLoading(null);
       // Redirect to sign in page
-      window.location.href = '/sign-in';
+      if (typeof window !== 'undefined') {
+        window.location.href = '/sign-in';
+      }
         return;
       }
       
@@ -310,11 +341,17 @@ export default function HomeClient({
       if (response.ok) {
         const responseData = await response.json();
         
-        // Update localStorage
-        const newFavorites = isCurrentlyFavorite
-          ? favoriteTools.filter(id => id !== toolId)
-          : [...favoriteTools, toolId];
-        localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+        // Update localStorage with error handling
+        try {
+          if (typeof window !== 'undefined') {
+            const newFavorites = isCurrentlyFavorite
+              ? favoriteTools.filter(id => id !== toolId)
+              : [...favoriteTools, toolId];
+            localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+          }
+        } catch (err) {
+          // Silently fail if localStorage is unavailable
+        }
         
         // Refresh favorites from the hook to update the UI
         refreshFavorites();
@@ -343,7 +380,13 @@ export default function HomeClient({
   const addToRecentlyViewed = (toolId: string) => {
     const newRecent = [toolId, ...recentlyViewed.filter(id => id !== toolId)].slice(0, 5);
     setRecentlyViewed(newRecent);
-    localStorage.setItem('vaultx-recent', JSON.stringify(newRecent));
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('vaultx-recent', JSON.stringify(newRecent));
+      }
+    } catch (err) {
+      // Silently fail if localStorage is unavailable
+    }
   };
 
 

@@ -55,15 +55,13 @@ export function useRealTimeTools(): UseRealTimeToolsReturn {
           table: 'tools'
         },
         async (payload) => {
-          console.log('🔄 Real-time tools update received:', payload);
-          
           // Refresh the data when any change occurs
-          await fetchTools();
+          if (mounted) {
+            await fetchTools();
+          }
         }
       )
-      .subscribe((status) => {
-        console.log('📡 Real-time subscription status:', status);
-      });
+      .subscribe();
 
     // Initial fetch
     fetchTools();
