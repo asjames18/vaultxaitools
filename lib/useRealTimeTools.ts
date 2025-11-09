@@ -12,10 +12,30 @@ export function useRealTimeTools(): UseRealTimeToolsReturn {
   const [tools, setTools] = useState<Tool[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  const supabase = createClient();
 
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      return;
+    }
+    
+    // Safely create Supabase client
+    let supabase: any = null;
+    try {
+      supabase = createClient();
+    } catch (err) {
+      setError('Supabase client unavailable');
+      setLoading(false);
+      return;
+    }
+    
+    if (!supabase) {
+      setError('Supabase client unavailable');
+      setLoading(false);
+      return;
+    }
+    
     let mounted = true;
 
     // Initial fetch

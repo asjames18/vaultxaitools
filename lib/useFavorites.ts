@@ -11,7 +11,16 @@ export function useFavorites() {
     let mounted = true;
     const getUser = async () => {
       try {
+        // Safely create Supabase client
         const supabase = createClient();
+        if (!supabase) {
+          if (mounted) {
+            setUserId(null);
+            setLoading(false);
+          }
+          return;
+        }
+        
         const { data: { session } } = await supabase.auth.getSession();
         
         if (mounted) {
@@ -21,10 +30,18 @@ export function useFavorites() {
         console.error('Error getting user:', error);
         if (mounted) {
           setUserId(null);
+          setLoading(false);
         }
       }
     };
-    getUser();
+    
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      getUser();
+    } else {
+      setLoading(false);
+    }
+    
     return () => { mounted = false; };
   }, []);
 

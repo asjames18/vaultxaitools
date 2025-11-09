@@ -13,7 +13,6 @@ export function useOptimizedSubscriptions(): OptimizedSubscriptionsReturn {
   const [lastDataUpdate, setLastDataUpdate] = useState<Date>(new Date());
   const [automationStatus, setAutomationStatus] = useState<any>(null);
   
-  const supabase = createClient();
   const subscribedRef = useRef(false);
   const bannerTimeoutRef = useRef<NodeJS.Timeout>();
   const refreshTimeoutRef = useRef<NodeJS.Timeout>();
@@ -48,11 +47,29 @@ export function useOptimizedSubscriptions(): OptimizedSubscriptionsReturn {
   }, []);
 
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') {
+      return;
+    }
+    
     // Prevent duplicate subscriptions
     if (subscribedRef.current) {
       return;
     }
     subscribedRef.current = true;
+
+    // Safely create Supabase client
+    let supabase: any = null;
+    try {
+      supabase = createClient();
+    } catch (err) {
+      // Silently fail if client creation fails
+      return;
+    }
+    
+    if (!supabase) {
+      return;
+    }
 
     // Fetch automation status once on mount
     fetchAutomationStatus();
@@ -74,17 +91,21 @@ export function useOptimizedSubscriptions(): OptimizedSubscriptionsReturn {
           clearTimeout(refreshTimeoutRef.current);
         }
         refreshTimeoutRef.current = setTimeout(() => {
-          window.location.reload();
+          if (typeof window !== 'undefined') {
+            window.location.reload();
+          }
         }, 2000);
       })
       .subscribe();
 
     return () => {
       subscribedRef.current = false;
-      automationChannel.unsubscribe();
+      if (automationChannel) {
+        automationChannel.unsubscribe();
+      }
       cleanup();
     };
-  }, [supabase, fetchAutomationStatus, cleanup]);
+  }, [fetchAutomationStatus, cleanup]);
 
   return {
     showUpdateBanner,

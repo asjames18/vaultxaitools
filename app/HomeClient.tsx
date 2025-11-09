@@ -89,7 +89,7 @@ export default function HomeClient({
   categories 
 }: HomeClientProps) {
   // Use real-time tools data instead of static props
-  // Hooks are wrapped internally with error handling
+  // Hooks must be called unconditionally - they handle errors internally
   const { tools: realTimeTools = [], loading: toolsLoading = false, error: toolsError = null } = useRealTimeTools();
   
   // Listen for admin updates and refresh data
