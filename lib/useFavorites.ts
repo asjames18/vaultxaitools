@@ -2,28 +2,23 @@ import { useEffect, useState, useCallback } from 'react';
 import { createClient } from '@/lib/supabase';
 
 export function useFavorites() {
-  console.log('🔍 useFavorites hook initializing...');
-  
   const [favorites, setFavorites] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
 
   // Get current user
   useEffect(() => {
-    console.log('🔍 useFavorites: Getting user...');
     let mounted = true;
     const getUser = async () => {
       try {
         const supabase = createClient();
         const { data: { session } } = await supabase.auth.getSession();
-        console.log('🔍 useFavorites: Session data:', { hasSession: !!session, userEmail: session?.user?.email });
         
         if (mounted) {
           setUserId(session?.user?.id || null);
-          console.log('🔍 useFavorites: Set userId to:', session?.user?.id || null);
         }
       } catch (error) {
-        console.error('❌ useFavorites: Error getting user:', error);
+        console.error('Error getting user:', error);
         if (mounted) {
           setUserId(null);
         }
@@ -35,10 +30,7 @@ export function useFavorites() {
 
   // Fetch favorites for the user using the API
   const fetchFavorites = useCallback(async () => {
-    console.log('🔍 useFavorites: fetchFavorites called with userId:', userId);
-    
     if (!userId) {
-      console.log('🔍 useFavorites: No userId, setting empty favorites');
       setFavorites([]);
       setLoading(false);
       return;
@@ -51,32 +43,26 @@ export function useFavorites() {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session?.access_token) {
-        console.log('🔍 useFavorites: No session token available');
         setFavorites([]);
         setLoading(false);
         return;
       }
       
-      console.log('🔍 useFavorites: Making API call to /api/favorites...');
       const response = await fetch('/api/favorites', {
         headers: {
           'Authorization': `Bearer ${session.access_token}`
         }
       });
       
-      console.log('🔍 useFavorites: API response status:', response.status);
-      
       if (response.ok) {
         const data = await response.json();
-        console.log('🔍 useFavorites: API response data:', data);
         setFavorites(data.favorites || []);
-        console.log('✅ Favorites loaded from API:', data.favorites);
       } else {
-        console.error('❌ useFavorites: Failed to fetch favorites:', response.status);
+        console.error('Failed to fetch favorites:', response.status);
         setFavorites([]);
       }
     } catch (error) {
-      console.error('❌ useFavorites: Error fetching favorites:', error);
+      console.error('Error fetching favorites:', error);
       setFavorites([]);
     } finally {
       setLoading(false);
@@ -114,7 +100,6 @@ export function useFavorites() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('✅ Tool added to favorites via API:', data);
         // Revalidate to ensure consistency
         await fetchFavorites();
       } else {
@@ -159,7 +144,6 @@ export function useFavorites() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('✅ Tool removed from favorites via API:', data);
         // Revalidate to ensure consistency
         await fetchFavorites();
       } else {
