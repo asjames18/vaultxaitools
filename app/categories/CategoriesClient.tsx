@@ -61,12 +61,11 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
   const pathname = usePathname() ?? '/categories';
   const searchParams = useSearchParams();
   
-  // Use real-time tools data instead of static props
-  const { tools: realTimeTools, loading: toolsLoading, error: toolsError } = useRealTimeTools();
+  // Use real-time tools data instead of static props with defaults
+  const { tools: realTimeTools = [], loading: toolsLoading = false, error: toolsError = null } = useRealTimeTools();
   
   // Listen for admin updates and refresh data
   useToolsUpdates(() => {
-    console.log('🔄 CategoriesClient received tools update, refreshing data...');
     // The useRealTimeTools hook will automatically refresh when Supabase data changes
   }, []);
   
@@ -103,26 +102,50 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
 
   // Load favorites from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('favoriteCategories');
-    if (stored) setFavoriteCategories(JSON.parse(stored));
+    try {
+      if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('favoriteCategories');
+        if (stored) setFavoriteCategories(JSON.parse(stored));
+      }
+    } catch (err) {
+      // Silently fail if localStorage is unavailable
+    }
   }, []);
 
   // Save favorites to localStorage when changed
   useEffect(() => {
-    localStorage.setItem('favoriteCategories', JSON.stringify(favoriteCategories));
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('favoriteCategories', JSON.stringify(favoriteCategories));
+      }
+    } catch (err) {
+      // Silently fail if localStorage is unavailable
+    }
   }, [favoriteCategories]);
 
   // Load recently viewed from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('recentlyViewedCategories');
-    if (stored) setRecentlyViewed(JSON.parse(stored));
+    try {
+      if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('recentlyViewedCategories');
+        if (stored) setRecentlyViewed(JSON.parse(stored));
+      }
+    } catch (err) {
+      // Silently fail if localStorage is unavailable
+    }
   }, []);
 
   // Add to recently viewed when a category is clicked
   const handleCategoryClick = (categoryName: string) => {
     setRecentlyViewed(prev => {
       const updated = [categoryName, ...prev.filter(name => name !== categoryName)].slice(0, 8);
-      localStorage.setItem('recentlyViewedCategories', JSON.stringify(updated));
+      try {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('recentlyViewedCategories', JSON.stringify(updated));
+        }
+      } catch (err) {
+        // Silently fail if localStorage is unavailable
+      }
       return updated;
     });
   };
@@ -207,11 +230,17 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
   }, [selectedCategory, bestUseCase, selectedPricing, selectedTags, searchQuery]);
 
   const addToCompare = (id: string) => {
-    const raw = localStorage.getItem('compare-tools');
-    const list: string[] = raw ? JSON.parse(raw) : [];
-    const next = Array.from(new Set([...list, id])).slice(0, 4);
-    localStorage.setItem('compare-tools', JSON.stringify(next));
-    window.dispatchEvent(new CustomEvent('vaultx-compare-add', { detail: id }));
+    try {
+      if (typeof window !== 'undefined') {
+        const raw = localStorage.getItem('compare-tools');
+        const list: string[] = raw ? JSON.parse(raw) : [];
+        const next = Array.from(new Set([...list, id])).slice(0, 4);
+        localStorage.setItem('compare-tools', JSON.stringify(next));
+        window.dispatchEvent(new CustomEvent('vaultx-compare-add', { detail: id }));
+      }
+    } catch (err) {
+      // Silently fail if localStorage or window is unavailable
+    }
   };
 
   // URL sync: load from query on mount
