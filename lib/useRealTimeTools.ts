@@ -89,9 +89,15 @@ export function useRealTimeTools(): UseRealTimeToolsReturn {
     // Cleanup
     return () => {
       mounted = false;
-      supabase.removeChannel(channel);
+      if (supabase && channel) {
+        try {
+          supabase.removeChannel(channel);
+        } catch (err) {
+          // Silently fail cleanup
+        }
+      }
     };
-  }, [supabase]);
+  }, []); // Empty deps - only run once on mount
 
   return { tools, loading, error };
 }
