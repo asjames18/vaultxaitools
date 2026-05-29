@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { categories } from '@/data';
-import type { Tool } from '@/data';
+import type { Tool } from '@/lib/types/tool';
 import { useRealTimeTools } from '@/lib/useRealTimeTools';
 import { useToolsUpdates } from '@/lib/useDataUpdates';
 

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import ToolDetailsClient from './ToolDetailsClient';
 import { generateToolMetadata, generateToolStructuredData } from '@/lib/seo';
-import type { Tool } from '@/data';
+import type { Tool } from '@/lib/types/tool';
 import { createClientWithoutCookies } from '@/lib/supabase-server';
 
 interface ToolDetailsProps {

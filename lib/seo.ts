@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { Tool, Category } from '@/data';
+import type { Tool, Category } from '@/lib/types/tool';
 
 // Base metadata for the site
 export const baseMetadata: Metadata = {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Heart, Star, TrendingUp, Users, ExternalLink, Share2, Bookmark } from 'lucide-react';
-import { Tool } from '@/data/tools';
+import { Tool } from '@/lib/types/tool';
 import OptimizedImage from './OptimizedImage';
 
 interface MobileToolCardProps {

@@ -1,4 +1,4 @@
-import type { Tool } from '@/data/tools';
+import type { Tool } from '@/lib/types/tool';
 
 export interface TrendingScore {
   tool: Tool;

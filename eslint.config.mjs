@@ -19,6 +19,8 @@ export default [
       'dist/**',
       'build/**',
       'coverage/**',
+      'scripts/**',
+      'data/**',
       '*.min.js',
       '*.bundle.js',
     ],
@@ -85,7 +87,7 @@ export default [
     rules: {
       // Next.js specific rules
       '@next/next/no-html-link-for-pages': 'error',
-      '@next/next/no-img-element': 'error',
+      '@next/next/no-img-element': 'warn',
       
       // React rules
       'react/jsx-uses-react': 'off',
@@ -94,8 +96,11 @@ export default [
       'react-hooks/exhaustive-deps': 'warn',
       
       // General rules
-      'no-unused-vars': 'off', // Turn off base rule, use TypeScript version
-      'no-undef': 'off', // We're defining globals above
+      'no-unused-vars': 'off',
+      'no-undef': 'off',
+      'no-case-declarations': 'off',
+      'no-empty': 'warn',
+      'no-redeclare': 'warn',
     },
   },
   

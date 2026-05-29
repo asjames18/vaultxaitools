@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useFavorites } from '@/lib/useFavorites';
 import { HeartIcon, StarIcon, GlobeAltIcon, TagIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import type { Tool } from '@/data';
+import type { Tool } from '@/lib/types/tool';
 
 // Component to handle alternative tools with proper linking
 function AlternativeTool({ toolName, rating, logo }: { toolName: string; rating?: number; logo?: string }) {

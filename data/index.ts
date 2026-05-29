@@ -1,6 +1,5 @@
-// Export types and interfaces
-export type { Tool, Category } from './tools';
-
+// Export types from canonical module
+export type { Tool, Category } from '@/lib/types/tool';
 // Export static data for categories (these don't change often)
 export { categories } from './tools';
 
@@ -16,6 +15,7 @@ import {
   updateToolRatingClient
 } from '@/lib/database-client';
 import type { Tool as StaticTool } from './tools';
+import { mapDbToolToTool } from '@/lib/types/tool';
 import type { Database } from '@/lib/database.types';
 
 type DatabaseTool = Database['public']['Tables']['tools']['Row'];
@@ -24,27 +24,7 @@ type DatabaseReviewInsert = Database['public']['Tables']['reviews']['Insert'];
 
 // Map database tool to frontend tool type
 function mapDatabaseToolToTool(dbTool: DatabaseTool): StaticTool {
-  return {
-    id: dbTool.id || '',
-    name: dbTool.name || '',
-    logo: dbTool.logo || '🔧',
-    description: dbTool.description || '',
-    longDescription: dbTool.long_description || undefined,
-    category: dbTool.category || '',
-    rating: dbTool.rating || 0,
-    reviewCount: dbTool.review_count || 0,
-    weeklyUsers: dbTool.weekly_users || 0,
-    growth: dbTool.growth || '0%',
-    website: dbTool.website || '',
-    pricing: dbTool.pricing || 'Unknown',
-    features: dbTool.features || undefined,
-    pros: dbTool.pros || undefined,
-    cons: dbTool.cons || undefined,
-    alternatives: dbTool.alternatives || undefined,
-    tags: dbTool.tags || undefined,
-    createdAt: dbTool.created_at || '',
-    updatedAt: dbTool.updated_at || ''
-  };
+  return mapDbToolToTool(dbTool);
 }
 
 // Database-based functions

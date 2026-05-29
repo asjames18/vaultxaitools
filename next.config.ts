@@ -24,6 +24,14 @@ const nextConfig: NextConfig = {
 
   // Compression
   compress: true,
+
+  webpack: (config, { dev }) => {
+    config.resolve.symlinks = false;
+    if (!dev) {
+      config.cache = false;
+    }
+    return config;
+  },
   
   // Bundle analyzer (optional - for debugging)
   // webpack: (config, { isServer }) => {
@@ -38,7 +46,6 @@ const nextConfig: NextConfig = {
 
   // ESLint configuration
   eslint: {
-    // Temporarily ignore during builds due to ESLint config compatibility
     ignoreDuringBuilds: true,
   },
 
@@ -131,6 +138,11 @@ const nextConfig: NextConfig = {
         source: '/categories',
         destination: '/AITools',
         permanent: true,
+      },
+      {
+        source: '/api/admin/automation',
+        destination: '/api/admin/automation-status',
+        permanent: false,
       },
     ];
   },

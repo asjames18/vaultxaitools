@@ -38,19 +38,19 @@ export default function ToolForm({ tool, categories, onClose, onSuccess }: ToolF
   useEffect(() => {
     if (tool) {
       setFormData({
-        name: tool.name,
-        logo: tool.logo,
-        description: tool.description,
-        long_description: tool.long_description || '',
-        category: tool.category,
-        review_count: tool.review_count,
-        website: tool.website,
-        pricing: tool.pricing,
-        features: tool.features || [],
-        pros: tool.pros || [],
-        cons: tool.cons || [],
-        alternatives: tool.alternatives || [],
-        tags: tool.tags || [],
+        name: tool.name ?? '',
+        logo: tool.logo ?? '',
+        description: tool.description ?? '',
+        long_description: tool.long_description ?? '',
+        category: tool.category ?? '',
+        review_count: tool.review_count ?? 0,
+        website: tool.website ?? '',
+        pricing: tool.pricing ?? '',
+        features: tool.features ?? [],
+        pros: tool.pros ?? [],
+        cons: tool.cons ?? [],
+        alternatives: Array.isArray(tool.alternatives) ? tool.alternatives as { name: string; rating: number; logo: string }[] : [],
+        tags: tool.tags ?? [],
       });
     }
   }, [tool]);

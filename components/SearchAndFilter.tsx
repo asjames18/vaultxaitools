@@ -2,7 +2,7 @@
 
 import Fuse from 'fuse.js';
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { Tool, Category } from '@/data/tools';
+import { Tool, Category } from '@/lib/types/tool';
 import { Search, Filter, X, ChevronDown, Star, Users, TrendingUp, Zap } from 'lucide-react';
 
 interface SearchAndFilterProps {

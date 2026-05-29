@@ -1,3 +1,4 @@
+/** SEED ONLY — not for runtime. Use Supabase `tools` table in production. */
 export interface Tool {
   id: string;
   name: string;

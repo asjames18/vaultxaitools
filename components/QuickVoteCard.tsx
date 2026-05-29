@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { updateToolRatingInDB } from '@/data';
+import { updateToolRating } from '@/lib/services/tools';
 
 interface QuickVoteCardProps {
   toolId: string;
@@ -47,7 +47,7 @@ export default function QuickVoteCard({
       const newRating = Math.max(0, Math.min(5, currentRating + voteValue));
       const newReviewCount = currentReviewCount + 1;
       
-      await updateToolRatingInDB(toolId, Math.round(newRating * 10) / 10, newReviewCount);
+      await updateToolRating(toolId, Math.round(newRating * 10) / 10, newReviewCount);
       
       setVoted(vote);
       onVoteSubmitted?.();

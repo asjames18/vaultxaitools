@@ -1,42 +1,40 @@
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { createClient } from '@supabase/supabase-js'
-import { headers } from 'next/headers'
 import { sensitiveOperationRateLimiter } from '@/lib/rateLimit'
+import { getAuthenticatedUser } from '@/lib/api-auth'
 
-export async function GET(request: Request) {
-  // Get authorization header
-  const authHeader = request.headers.get('authorization');
-  
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return NextResponse.json({ error: 'Authorization header required' }, { status: 401 });
-  }
-  
-  const token = authHeader.replace('Bearer ', '');
-  
-  // Create Supabase client with the token
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      global: {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    }
-  );
-  
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
-  
-  if (authError) {
-    return NextResponse.json({ error: 'Auth error: ' + authError.message }, { status: 401 })
-  }
-  
+export async function GET(request: NextRequest) {
+  const user = await getAuthenticatedUser(request);
   if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const authHeader = request.headers.get('authorization');
+  const token = authHeader?.startsWith('Bearer ') ? authHeader.replace('Bearer ', '') : '';
+  const supabase = token
+    ? createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        { global: { headers: { Authorization: `Bearer ${token}` } } }
+      )
+    : await (async () => {
+        const cookieStore = await cookies();
+        return createServerClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+          {
+            cookies: {
+              get(name: string) {
+                return cookieStore.get(name)?.value;
+              },
+              set() {},
+              remove() {},
+            },
+          }
+        );
+      })();
 
   // First, get all favorites
   const { data: favoritesData, error: favoritesError } = await supabase
@@ -176,10 +174,15 @@ export async function POST(request: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
-  // Rate limit deletes
-  const limit = sensitiveOperationRateLimiter(req as any);
+export async function DELETE(req: NextRequest) {
+  const limit = sensitiveOperationRateLimiter(req as never);
   if (limit) return limit;
+
+  const user = await getAuthenticatedUser(req);
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const cookieStore = await cookies()
   
   const supabase = createServerClient(
@@ -212,9 +215,9 @@ export async function DELETE(req: Request) {
     }
   )
   
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user: sessionUser } } = await supabase.auth.getUser()
   
-  if (!user) {
+  if (!sessionUser) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -228,7 +231,7 @@ export async function DELETE(req: Request) {
     const { error } = await supabase
       .from('user_favorites')
       .delete()
-      .eq('user_id', user.id)
+      .eq('user_id', sessionUser.id)
       .eq('tool_id', toolId)
     
     if (error) {

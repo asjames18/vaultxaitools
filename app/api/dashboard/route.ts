@@ -1,133 +1,157 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
+import { getAuthenticatedUser } from '@/lib/api-auth';
+
+function formatRelativeTime(dateString: string): string {
+  const date = new Date(dateString);
+  const diffMs = Date.now() - date.getTime();
+  const minutes = Math.floor(diffMs / 60000);
+  if (minutes < 60) return `${Math.max(minutes, 1)}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
-    
-    // Get the current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    
-    if (userError || !user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+    const user = await getAuthenticatedUser(request);
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // For now, return mock data since we haven't set up the database tables yet
-    // In production, you would fetch from the user_profiles, user_activity, etc. tables
-    
+    const supabase = await createClient();
+
+    const [
+      profileResult,
+      favoritesResult,
+      reviewsResult,
+      activityResult,
+    ] = await Promise.all([
+      supabase.from('profiles').select('*').eq('user_id', user.id).maybeSingle(),
+      supabase.from('favorites').select('tool_id, created_at').eq('user_id', user.id),
+      supabase.from('reviews').select('id', { count: 'exact', head: true }).eq('user_id', user.id),
+      supabase
+        .from('user_activity')
+        .select('id, action, tool_name, created_at')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5),
+    ]);
+
+    const profile = profileResult.data;
+    const favoriteRows = favoritesResult.data ?? [];
+    const favoritesCount = favoriteRows.length;
+    const reviewsWritten = reviewsResult.count ?? 0;
+
+    let favoriteTools: Array<{
+      id: string;
+      name: string;
+      logo: string;
+      category: string;
+      rating: number;
+      lastUsed: string;
+    }> = [];
+
+    if (favoriteRows.length > 0) {
+      const toolIds = favoriteRows.map((row) => row.tool_id);
+      const { data: toolsData } = await supabase
+        .from('tools')
+        .select('id, name, logo, category, rating')
+        .in('id', toolIds);
+
+      const favoriteDates = new Map(favoriteRows.map((row) => [row.tool_id, row.created_at]));
+      favoriteTools =
+        toolsData?.map((tool) => ({
+          id: tool.id,
+          name: tool.name,
+          logo: tool.logo || '🔧',
+          category: tool.category || 'General',
+          rating: tool.rating ?? 0,
+          lastUsed: favoriteDates.get(tool.id)
+            ? formatRelativeTime(favoriteDates.get(tool.id)!)
+            : 'Recently',
+        })) ?? [];
+    }
+
+    const recentActivity =
+      activityResult.data?.map((item) => ({
+        id: item.id,
+        action: item.action,
+        tool: item.tool_name,
+        time: item.created_at ? formatRelativeTime(item.created_at) : 'Recently',
+        type: item.action,
+      })) ?? [];
+
+    const toolsExplored = recentActivity.filter((item) => item.type === 'view').length;
+
     const dashboardData = {
       user: {
-        name: user.email?.split('@')[0] || 'User',
+        name: profile?.display_name || user.email?.split('@')[0] || 'User',
         email: user.email,
         memberSince: user.created_at,
-        level: 'Explorer',
-        points: 1250,
-        toolsExplored: 47,
-        reviewsWritten: 12,
-        favoritesCount: 23
+        level: profile?.level || 'Explorer',
+        points: profile?.points ?? 0,
+        toolsExplored,
+        reviewsWritten,
+        favoritesCount,
       },
-      recentActivity: [
-        { id: 1, action: 'Favorited ChatGPT', tool: 'ChatGPT', time: '2m ago', type: 'favorite' },
-        { id: 2, action: 'Reviewed Midjourney', tool: 'Midjourney', time: '1h ago', type: 'review' },
-        { id: 3, action: 'Viewed Claude', tool: 'Claude', time: '3h ago', type: 'view' },
-        { id: 4, action: 'Searched for "AI writing"', tool: null, time: '5h ago', type: 'search' },
-        { id: 5, action: 'Favorited GitHub Copilot', tool: 'GitHub Copilot', time: '1d ago', type: 'favorite' }
-      ],
-      favoriteTools: [
-        { id: 1, name: 'ChatGPT', logo: '🤖', category: 'Language', rating: 4.8, lastUsed: '2m ago' },
-        { id: 2, name: 'Midjourney', logo: '🎨', category: 'Design', rating: 4.6, lastUsed: '1h ago' },
-        { id: 3, name: 'GitHub Copilot', logo: '💻', category: 'Development', rating: 4.7, lastUsed: '1d ago' },
-        { id: 4, name: 'Claude', logo: '🧠', category: 'Language', rating: 4.5, lastUsed: '3h ago' }
-      ],
-      recommendations: [
-        { id: 1, name: 'Notion AI', logo: '📝', category: 'Productivity', reason: 'Based on your interest in writing tools', rating: 4.4 },
-        { id: 2, name: 'DALL-E 3', logo: '🎭', category: 'Design', reason: 'Similar to Midjourney', rating: 4.3 },
-        { id: 3, name: 'Cursor', logo: '⌨️', category: 'Development', reason: 'Like GitHub Copilot', rating: 4.2 }
-      ],
+      recentActivity,
+      favoriteTools,
+      recommendations: [],
       stats: [
-        { label: 'Tools Explored', value: 47, icon: '🔍', color: 'blue' },
-        { label: 'Reviews Written', value: 12, icon: '✍️', color: 'green' },
-        { label: 'Favorites', value: 23, icon: '❤️', color: 'red' },
-        { label: 'Points Earned', value: 1250, icon: '⭐', color: 'yellow' }
-      ]
+        { label: 'Tools Explored', value: toolsExplored, icon: '🔍', color: 'blue' },
+        { label: 'Reviews Written', value: reviewsWritten, icon: '✍️', color: 'green' },
+        { label: 'Favorites', value: favoritesCount, icon: '❤️', color: 'red' },
+        { label: 'Points Earned', value: profile?.points ?? 0, icon: '⭐', color: 'yellow' },
+      ],
     };
 
-    return NextResponse.json({
-      success: true,
-      data: dashboardData
-    });
-
+    return NextResponse.json({ success: true, data: dashboardData });
   } catch (error) {
     console.error('Dashboard API error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
-    
-    // Get the current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
-    
-    if (userError || !user) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+    const user = await getAuthenticatedUser(request);
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const supabase = await createClient();
     const body = await request.json();
     const { action, data } = body;
 
     switch (action) {
       case 'track_activity':
-        // Track user activity (view, favorite, review, etc.)
-        // In production, this would insert into user_activity table
-        console.log('Tracking activity:', { user: user.id, action: data });
+        await supabase.from('user_activity').insert({
+          user_id: user.id,
+          action: data?.type || 'view',
+          tool_id: data?.toolId ?? null,
+          tool_name: data?.toolName ?? null,
+          metadata: data ?? {},
+        });
         break;
-        
-      case 'add_favorite':
-        // Add tool to favorites
-        // In production, this would insert into user_favorites table
-        console.log('Adding favorite:', { user: user.id, tool: data.toolId });
-        break;
-        
-      case 'remove_favorite':
-        // Remove tool from favorites
-        // In production, this would delete from user_favorites table
-        console.log('Removing favorite:', { user: user.id, tool: data.toolId });
-        break;
-        
+
       case 'update_profile':
-        // Update user profile
-        // In production, this would update user_profiles table
-        console.log('Updating profile:', { user: user.id, data });
+        await supabase.from('profiles').upsert({
+          user_id: user.id,
+          display_name: data?.displayName,
+          bio: data?.bio,
+          updated_at: new Date().toISOString(),
+        });
         break;
-        
+
       default:
-        return NextResponse.json(
-          { error: 'Invalid action' },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
 
-    return NextResponse.json({
-      success: true,
-      message: 'Action completed successfully'
-    });
-
+    return NextResponse.json({ success: true, message: 'Action completed successfully' });
   } catch (error) {
     console.error('Dashboard API error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-} 
+}

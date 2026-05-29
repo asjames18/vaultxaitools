@@ -36,7 +36,7 @@ export function useOptimizedSubscriptions(): OptimizedSubscriptionsReturn {
   // Fetch automation status only once
   const fetchAutomationStatus = useCallback(async () => {
     try {
-      const response = await fetch('/api/admin/automation');
+      const response = await fetch('/api/admin/automation-status');
       if (response.ok) {
         const data = await response.json();
         setAutomationStatus(data);

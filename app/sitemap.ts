@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { categories } from '@/data';
 import { blogPosts } from '@/data/blog';
-import { Tool } from '@/lib/database';
+import { Tool, mapDbToolToTool } from '@/lib/types/tool';
 import { createClientWithoutCookies } from '@/lib/supabase-server';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -72,28 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       throw error;
     }
     
-    // Map database tools to frontend tool type
-    tools = (toolsData || []).map(dbTool => ({
-      id: dbTool.id || '',
-      name: dbTool.name || '',
-      logo: dbTool.logo || '🔧',
-      description: dbTool.description || '',
-      longDescription: dbTool.long_description || undefined,
-      category: dbTool.category || '',
-      rating: dbTool.rating || 0,
-      reviewCount: dbTool.review_count || 0,
-      weeklyUsers: dbTool.weekly_users || 0,
-      growth: dbTool.growth || '0%',
-      website: dbTool.website || '',
-      pricing: dbTool.pricing || 'Unknown',
-      features: dbTool.features || undefined,
-      pros: dbTool.pros || undefined,
-      cons: dbTool.cons || undefined,
-      alternatives: dbTool.alternatives || undefined,
-      tags: dbTool.tags || undefined,
-      createdAt: dbTool.created_at || '',
-      updatedAt: dbTool.updated_at || ''
-    }));
+    tools = (toolsData || []).map(mapDbToolToTool);
   } catch (error) {
     console.error('Failed to fetch tools for sitemap:', error);
     // Fallback to empty array if database fails

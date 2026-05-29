@@ -18,7 +18,7 @@ import SearchAndFilter from '@/components/SearchAndFilter';
 import EnhancedSearch from '@/components/EnhancedSearch';
 import FeaturedToolsSection from '@/components/FeaturedToolsSection';
 import HomeHeroSection from '@/components/HomeHeroSection';
-import type { Tool, Category } from '@/data/tools';
+import type { Tool, Category } from '@/lib/types/tool';
 import StructuredData from '@/components/StructuredData';
 import HeroSection from '@/components/HeroSection';
 import NotificationBanners from '@/components/NotificationBanners';

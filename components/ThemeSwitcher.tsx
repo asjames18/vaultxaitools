@@ -112,6 +112,42 @@ export default function ThemeSwitcher({
     }
   };
 
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .theme-transitioning * {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      }
+      
+      :root {
+        --color-bg-primary: #ffffff;
+        --color-bg-secondary: #f9fafb;
+        --color-text-primary: #111827;
+        --color-text-secondary: #6b7280;
+        --color-border: #e5e7eb;
+        --color-accent: #3b82f6;
+      }
+      
+      .dark {
+        --color-bg-primary: #111827;
+        --color-bg-secondary: #1f2937;
+        --color-text-primary: #f9fafb;
+        --color-text-secondary: #d1d5db;
+        --color-border: #374151;
+        --color-accent: #3b82f6;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      if (style.parentNode) {
+        style.parentNode.removeChild(style);
+      }
+    };
+  }, []);
+
   if (!mounted) {
     return (
       <div className={`animate-pulse ${className}`}>
@@ -198,39 +234,3 @@ export default function ThemeSwitcher({
   );
 }
 
-// Add CSS for smooth theme transitions
-useEffect(() => {
-  if (typeof document !== 'undefined') {
-    const style = document.createElement('style');
-    style.textContent = `
-      .theme-transitioning * {
-        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-      }
-      
-      :root {
-        --color-bg-primary: #ffffff;
-        --color-bg-secondary: #f9fafb;
-        --color-text-primary: #111827;
-        --color-text-secondary: #6b7280;
-        --color-border: #e5e7eb;
-        --color-accent: #3b82f6;
-      }
-      
-      .dark {
-        --color-bg-primary: #111827;
-        --color-bg-secondary: #1f2937;
-        --color-text-primary: #f9fafb;
-        --color-text-secondary: #d1d5db;
-        --color-border: #374151;
-        --color-accent: #3b82f6;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    return () => {
-      if (style.parentNode) {
-        style.parentNode.removeChild(style);
-      }
-    };
-  }
-}, []);

@@ -1,4 +1,4 @@
-import { Tool, Category } from '@/data/tools';
+import { Tool, Category } from '@/lib/types/tool';
 
 interface StructuredDataProps {
   type: 'tool' | 'category' | 'website' | 'organization';

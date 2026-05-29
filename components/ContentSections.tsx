@@ -3,7 +3,7 @@
 import { memo } from 'react';
 import DailyTool from './DailyTool';
 import CommunityHighlights from './CommunityHighlights';
-import type { Tool, Category } from '@/data/tools';
+import type { Tool, Category } from '@/lib/types/tool';
 
 interface ContentSectionsProps {
   safeAllTools: Tool[];

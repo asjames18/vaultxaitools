@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AffiliateLink from './AffiliateLink';
 import QuickVoteCard from './QuickVoteCard';
-import type { Tool } from '@/data/tools';
+import type { Tool } from '@/lib/types/tool';
 import { getSponsoredBadgeStyle } from '@/lib/affiliate';
 
 interface SponsoredContentProps {

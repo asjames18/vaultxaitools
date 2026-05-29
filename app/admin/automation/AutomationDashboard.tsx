@@ -68,7 +68,7 @@ function AutomationDashboardContent() {
 
   const fetchStatus = async () => {
     try {
-      const response = await fetch('/api/admin/automation');
+      const response = await fetch('/api/admin/automation-status');
       if (response.ok) {
         const data = await response.json();
         console.log('Automation status data:', data);
@@ -134,7 +134,7 @@ function AutomationDashboardContent() {
   const runAutomation = async (type: string) => {
     setRunningOperation(type);
     try {
-      const response = await fetch('/api/admin/automation', {
+      const response = await fetch('/api/admin/automation-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: type })
@@ -185,7 +185,7 @@ function AutomationDashboardContent() {
     const newStatus = !dataRefreshStatus.autoRefreshEnabled;
     
     try {
-      const response = await fetch('/api/admin/automation', {
+      const response = await fetch('/api/admin/automation-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 

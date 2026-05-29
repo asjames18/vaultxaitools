@@ -74,10 +74,9 @@
 - **Supabase Client**: Real-time database integration
 
 ### Backend
-- **Express.js**: Node.js web framework
-- **Supabase**: PostgreSQL database with real-time features
-- **JWT Authentication**: Secure user authentication
-- **RESTful API**: Clean API design
+- **Next.js API Routes**: Server-side API handlers in `app/api/`
+- **Supabase**: PostgreSQL database with Auth and real-time features
+- **Supabase Auth**: Session-based authentication with RLS
 
 ### Database
 - **PostgreSQL**: Robust relational database

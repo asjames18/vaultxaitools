@@ -1,5 +1,5 @@
 import CategoriesClient from '../categories/CategoriesClient';
-import type { Tool } from '@/data';
+import type { Tool } from '@/lib/types/tool';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 import { Suspense } from 'react';

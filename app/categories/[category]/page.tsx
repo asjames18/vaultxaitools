@@ -4,7 +4,7 @@ import { categories } from '@/data';
 import CategoryPageClient from './CategoryPageClient';
 import JsonLd from '@/components/JsonLd';
 import { generateCategoryMetadata } from '@/lib/seo';
-import type { Tool, Category } from '@/data';
+import type { Tool, Category } from '@/lib/types/tool';
 import { createClientWithoutCookies } from '@/lib/supabase-server';
 
 interface CategoryPageProps {

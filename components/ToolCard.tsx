@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { Tool } from '../data/tools';
+import { Tool } from '@/lib/types/tool';
 import { useFavorites } from '@/lib/useFavorites';
 import { Heart } from 'lucide-react';
 import { useState, useEffect } from 'react';

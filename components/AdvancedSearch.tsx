@@ -4,6 +4,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, Filter, X, Sparkles, TrendingUp, Clock, Star, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 
 import { SearchResult, SearchFilter } from '@/lib/useAdvancedSearch';
+import { buildQuerySuggestions } from '@/lib/search/search-utils';
+import { useRecentSearches } from '@/lib/hooks/useRecentSearches';
 
 interface AdvancedSearchProps {
   className?: string;
@@ -26,7 +28,7 @@ export default function AdvancedSearch({
   const [isExpanded, setIsExpanded] = useState(false);
   const [showFiltersPanel, setShowFiltersPanel] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const { recentSearches, rememberSearch } = useRecentSearches();
   const [trendingSearches, setTrendingSearches] = useState<string[]>([]);
   const [filters, setFilters] = useState<SearchFilter>({
     category: [],
@@ -40,43 +42,9 @@ export default function AdvancedSearch({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
-  // Load recent searches from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('vaultx-recent-searches');
-    if (saved) {
-      try {
-        setRecentSearches(JSON.parse(saved));
-      } catch (error) {
-        console.error('Error loading recent searches:', error);
-      }
-    }
-  }, []);
-
-  // Generate AI-powered suggestions based on query
+  // Generate suggestions based on query
   const generateSuggestions = useCallback(async (searchQuery: string) => {
-    if (!searchQuery.trim() || searchQuery.length < 2) {
-      setSuggestions([]);
-      return;
-    }
-
-    // Simulate AI-powered suggestions
-    const mockSuggestions = [
-      `${searchQuery} for beginners`,
-      `${searchQuery} tutorial`,
-      `${searchQuery} alternatives`,
-      `${searchQuery} best practices`,
-      `${searchQuery} examples`,
-      `${searchQuery} comparison`,
-      `${searchQuery} review`,
-      `${searchQuery} pricing`
-    ];
-
-    // Filter and limit suggestions
-    const filteredSuggestions = mockSuggestions
-      .filter(suggestion => suggestion.toLowerCase().includes(searchQuery.toLowerCase()))
-      .slice(0, maxSuggestions);
-
-    setSuggestions(filteredSuggestions);
+    setSuggestions(buildQuerySuggestions(searchQuery, maxSuggestions));
   }, [maxSuggestions]);
 
   // Generate trending searches
@@ -105,15 +73,8 @@ export default function AdvancedSearch({
   const handleSearch = (searchQuery: string = query, searchFilters: SearchFilter = filters) => {
     if (!searchQuery.trim()) return;
 
-    // Save to recent searches
-    const updatedRecent = [searchQuery, ...recentSearches.filter(s => s !== searchQuery)].slice(0, 10);
-    setRecentSearches(updatedRecent);
-    localStorage.setItem('vaultx-recent-searches', JSON.stringify(updatedRecent));
-
-    // Call onSearch callback
+    rememberSearch(searchQuery);
     onSearch?.(searchQuery, searchFilters);
-
-    // Close suggestions
     setIsExpanded(false);
     setSuggestions([]);
   };

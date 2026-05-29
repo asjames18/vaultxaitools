@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import type { Tool, Category } from '@/data/tools';
+import type { Tool, Category } from '@/lib/types/tool';
 
 interface StatsSectionProps {
   isVisible: boolean;

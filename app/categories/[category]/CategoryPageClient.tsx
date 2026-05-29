@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { categories } from '@/data';
-import type { Tool, Category } from '@/data';
+import type { Tool, Category } from '@/lib/types/tool';
 
 // Simple SVG icons as fallback
 const MagnifyingGlassIcon = ({ className }: { className?: string }) => (

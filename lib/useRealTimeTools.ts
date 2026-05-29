@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase';
-import type { Tool } from '@/data/tools';
+import type { Tool } from '@/lib/types/tool';
 
 interface UseRealTimeToolsReturn {
   tools: Tool[];
@@ -74,7 +74,7 @@ export function useRealTimeTools(): UseRealTimeToolsReturn {
           schema: 'public',
           table: 'tools'
         },
-        async (payload) => {
+        async (_payload: unknown) => {
           // Refresh the data when any change occurs
           if (mounted) {
             await fetchTools();

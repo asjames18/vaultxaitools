@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import type { Tool } from '@/data/tools';
+import type { Tool } from '@/lib/types/tool';
 
 const FireIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">

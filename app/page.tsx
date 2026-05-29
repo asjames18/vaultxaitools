@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { categories } from '@/data';
 import HomeClient from './HomeClient';
 import HomeErrorFallback from './HomeErrorFallback';
-import type { Tool } from '@/data/tools';
+import type { Tool } from '@/lib/types/tool';
 import { createClientWithoutCookies } from '@/lib/supabase-server';
 
 // Revalidate this page every 5 minutes to keep data fresh

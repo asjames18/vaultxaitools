@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { getToolById } from '@/data';
+import { getToolById } from '@/lib/services/tools';
+import type { Tool } from '@/lib/types/tool';
 
 export default function ComparePage() {
   const [ids, setIds] = useState<string[]>([]);

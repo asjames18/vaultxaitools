@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Users, TrendingUp, Heart, Share2, Flag, Edit3, Trash2, Reply, MoreHorizontal } from 'lucide-react';
+import { MessageSquare, Users, TrendingUp, Heart, Share2, Flag, Edit3, Trash2, Reply as ReplyIcon, MoreHorizontal } from 'lucide-react';
 
 interface Discussion {
   id: string;
@@ -24,7 +24,7 @@ interface Discussion {
   isLocked?: boolean;
 }
 
-interface Reply {
+interface DiscussionReply {
   id: string;
   content: string;
   author: {
@@ -43,7 +43,7 @@ interface CommunityFeaturesProps {
   discussions: Discussion[];
   onDiscussionCreate?: (discussion: Omit<Discussion, 'id' | 'created_at' | 'author'>) => void;
   onDiscussionLike?: (discussionId: string) => void;
-  onDiscussionReply?: (discussionId: string, reply: Omit<Reply, 'id' | 'created_at'>) => void;
+  onDiscussionReply?: (discussionId: string, reply: Omit<DiscussionReply, 'id' | 'created_at'>) => void;
   onDiscussionReport?: (discussionId: string, reason: string) => void;
 }
 
@@ -392,7 +392,7 @@ export default function CommunityFeatures({
                   }}
                   className="flex items-center gap-1 hover:text-white transition-colors"
                 >
-                  <Reply className="w-4 h-4" />
+                  <ReplyIcon className="w-4 h-4" />
                   {discussion.replies}
                 </button>
                 <div className="flex items-center gap-1">

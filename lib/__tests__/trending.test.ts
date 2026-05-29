@@ -1,5 +1,5 @@
 import { calculateTrendingScore } from '../trending';
-import type { Tool } from '@/data/tools';
+import type { Tool } from '@/lib/types/tool';
 
 const oldTool: Tool = { 
   id: '1',

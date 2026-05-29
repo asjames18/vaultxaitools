@@ -29,12 +29,12 @@ export default function CategoryForm({ category, onClose, onSuccess }: CategoryF
   useEffect(() => {
     if (category) {
       setFormData({
-        name: category.name,
-        icon: category.icon,
-        description: category.description,
-        count: category.count,
-        color: category.color,
-        popular_tools: category.popular_tools || [],
+        name: category.name ?? '',
+        icon: category.icon ?? '',
+        description: category.description ?? '',
+        count: category.count ?? 0,
+        color: category.color ?? '',
+        popular_tools: category.popular_tools ?? [],
       });
     }
   }, [category]);

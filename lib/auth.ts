@@ -1,12 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
 import { User } from '@supabase/supabase-js';
-
-// Admin emails that have admin privileges (fallback)
-const ADMIN_EMAILS = [
-  'asjames18@gmail.com',
-  'asjames18@proton.me',
-  // Add more admin emails as needed
-];
+import { isAdminEmail } from './admin-emails';
+import { createServiceRoleClient } from './supabase-admin';
 
 export interface UserRole {
   id: string;
@@ -20,8 +14,7 @@ export interface UserRole {
  */
 export function isAdmin(user: User | null): boolean {
   if (!user || !user.email) return false;
-  const isAdminUser = ADMIN_EMAILS.includes(user.email.toLowerCase());
-  return isAdminUser;
+  return isAdminEmail(user.email);
 }
 
 /**
@@ -32,7 +25,7 @@ export async function getUserRole(user: User | null): Promise<'admin' | 'user'> 
   
   try {
     // First, try to get role from database using admin client
-    const supabase = createAdminClient();
+    const supabase = createServiceRoleClient();
     
     const { data: userRole, error } = await supabase
       .from('user_roles')
@@ -62,13 +55,13 @@ export async function getUserRole(user: User | null): Promise<'admin' | 'user'> 
 
 /**
  * Create admin client for server-side operations
+ * @deprecated Use createServiceRoleClient from lib/supabase-admin
  */
 export function createAdminClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key'
-  
-  return createClient(supabaseUrl, supabaseServiceKey)
+  return createServiceRoleClient();
 }
+
+export { createServiceRoleClient } from './supabase-admin';
 
 /**
  * Update user role in Supabase

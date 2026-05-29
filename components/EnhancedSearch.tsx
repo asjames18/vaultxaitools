@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { Search, TrendingUp, Clock, X } from 'lucide-react';
 import { trackSearch, trackEvent } from './GoogleAnalytics';
-import type { Tool, Category } from '@/data/tools';
+import type { Tool, Category } from '@/lib/types/tool';
 
 interface EnhancedSearchProps {
   tools: Tool[];

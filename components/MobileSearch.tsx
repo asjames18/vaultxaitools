@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Search, Filter, X, Mic, MicOff, Camera, TrendingUp, History, Sparkles } from 'lucide-react';
-import { Tool } from '@/data/tools';
+import { Tool } from '@/lib/types/tool';
 
 interface MobileSearchProps {
   onSearch: (query: string) => void;

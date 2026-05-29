@@ -10,6 +10,9 @@ import {
   ClockIcon
 } from '@heroicons/react/24/outline';
 import { LoadingSpinner } from '../AdminLoadingStates';
+import { loadRecentSearches, saveRecentSearch } from '@/lib/search/search-utils';
+
+const ADMIN_RECENT_SEARCHES_KEY = 'recentSearches';
 
 interface SearchFilter {
   id: string;
@@ -99,26 +102,10 @@ export function AdvancedSearch({
     return suggestions.sort((a, b) => b.relevance - a.relevance).slice(0, 5);
   }, [data]);
 
-  // Load recent searches from localStorage
-  const loadRecentSearches = useCallback(() => {
-    try {
-      const recent = localStorage.getItem('recentSearches');
-      return recent ? JSON.parse(recent) : [];
-    } catch {
-      return [];
-    }
-  }, []);
-
   // Save search to recent searches
   const saveSearch = useCallback((query: string) => {
-    try {
-      const recent = loadRecentSearches();
-      const updated = [query, ...recent.filter((item: string) => item !== query)].slice(0, 10);
-      localStorage.setItem('recentSearches', JSON.stringify(updated));
-    } catch {
-      // Ignore localStorage errors
-    }
-  }, [loadRecentSearches]);
+    saveRecentSearch(query, ADMIN_RECENT_SEARCHES_KEY);
+  }, []);
 
   // Handle search submission
   const handleSearch = useCallback(async () => {
@@ -187,7 +174,7 @@ export function AdvancedSearch({
   useEffect(() => {
     if (searchQuery.trim() && showSuggestions) {
       const aiSuggestions = generateAISuggestions(searchQuery);
-      const recentSearches = loadRecentSearches()
+      const recentSearches = loadRecentSearches(ADMIN_RECENT_SEARCHES_KEY)
         .filter((item: string) => item.toLowerCase().includes(searchQuery.toLowerCase()))
         .map((item: string) => ({
           id: `recent_${item}`,
@@ -201,7 +188,7 @@ export function AdvancedSearch({
     } else {
       setShowSuggestionsPanel(false);
     }
-  }, [searchQuery, showSuggestions, generateAISuggestions, loadRecentSearches]);
+  }, [searchQuery, showSuggestions, generateAISuggestions]);
 
   // Filter panel component
   const FilterPanel = () => (

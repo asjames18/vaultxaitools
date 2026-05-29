@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --turbo",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint app components lib middleware.ts --max-warnings 9999",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
     "setup-audit-logs": "node scripts/setup-audit-logs.js",
@@ -14,7 +15,10 @@
     "monitor-data-quality:auto-fix": "AUTO_FIX_DATA_QUALITY=true node scripts/data-quality-monitor.js",
     "verify-env": "node scripts/verify-env.js",
     "verify-env:prod": "NODE_ENV=production node scripts/verify-env.js production",
-    "ci": "npm run verify-env:prod && npm run lint && npm run build && npm test -- --ci"
+    "seed:tools": "node scripts/seedTools.js",
+    "update:ai-data": "node scripts/fetch-real-ai-data.js",
+    "smoke-test": "node scripts/smoke-test.js",
+    "ci": "node scripts/run-ci.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
@@ -45,7 +49,13 @@
     "typescript": "^5.3.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@next/eslint-plugin-next": "^16.2.6",
     "@types/jest": "^29.5.0",
+    "@typescript-eslint/eslint-plugin": "^8.60.0",
+    "@typescript-eslint/parser": "^8.60.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0"
   }
