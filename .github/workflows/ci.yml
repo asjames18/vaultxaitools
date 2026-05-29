@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Optional GitHub secrets override placeholders in scripts/run-ci.js.
-      # Production env vars live in Vercel; CI uses placeholders when secrets are absent.
       - name: Run CI (lint, typecheck, build, tests)
         run: npm run ci
         env:
@@ -32,3 +30,36 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           ADMIN_EMAILS: ${{ secrets.ADMIN_EMAILS }}
+
+  deploy-vercel:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Vercel production deploy (deploy hook)
+        if: ${{ secrets.VERCEL_DEPLOY_HOOK != '' }}
+        run: curl -fsS -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+
+      - name: Deploy via Vercel CLI
+        if: ${{ secrets.VERCEL_DEPLOY_HOOK == '' && secrets.VERCEL_TOKEN != '' }}
+        uses: actions/checkout@v4
+
+      - name: Vercel action
+        if: ${{ secrets.VERCEL_DEPLOY_HOOK == '' && secrets.VERCEL_TOKEN != '' }}
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: --prod
+
+      - name: No deploy credentials configured
+        if: ${{ secrets.VERCEL_DEPLOY_HOOK == '' && secrets.VERCEL_TOKEN == '' }}
+        run: |
+          echo "::error::Vercel deploy not configured."
+          echo "Option A (recommended): Add VERCEL_DEPLOY_HOOK to GitHub repo secrets."
+          echo "  Create hook: Vercel dashboard → Project → Settings → Git → Deploy Hooks → main branch"
+          echo "Option B: Connect https://github.com/asjames18/vaultxaitools in Vercel for automatic deploys on push."
+          echo "Option C: Add VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID to GitHub secrets."
+          exit 1
