@@ -24,6 +24,16 @@ for (const [key, value] of Object.entries(placeholders)) {
   }
 }
 
+const usingPlaceholders = Object.keys(placeholders).some(
+  (key) => process.env[key] === placeholders[key]
+);
+if (usingPlaceholders) {
+  console.warn(
+    '\n⚠️  Using placeholder env vars for CI. Production values are loaded from Vercel at deploy time.\n' +
+      '   To use real Supabase credentials in GitHub Actions, add repo secrets (optional).\n'
+  );
+}
+
 process.env.NODE_ENV = 'production';
 
 const steps = [
