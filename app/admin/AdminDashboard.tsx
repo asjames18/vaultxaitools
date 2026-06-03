@@ -387,7 +387,7 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
               
               <button
                 onClick={() => setMessage({ type: 'success', text: 'Sponsored content management coming soon!' })}
-                className="px-4 py-2.5 rounded-md text-sm font-medium bg-purple-600 text-white hover:bg-purple-700 transition-colors"
+                className="px-4 py-2.5 rounded-md text-sm font-medium bg-green-500 text-black hover:bg-green-400 transition-colors"
               >
                 ➕ Add Sponsored Content
               </button>
@@ -395,18 +395,18 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
 
             {/* Sponsored Content Overview */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-700">
+              <div className="bg-gray-800/50 p-6 rounded-xl border border-green-900">
                 <div className="text-3xl mb-3">⭐</div>
-                <div className="text-2xl font-bold text-purple-800 dark:text-purple-200">0</div>
-                <div className="text-sm text-purple-600 dark:text-purple-400">Featured Tools</div>
-                <div className="text-xs text-purple-500 dark:text-purple-300 mt-1">Premium placement</div>
+                <div className="text-2xl font-bold text-white">0</div>
+                <div className="text-sm text-green-400">Featured Tools</div>
+                <div className="text-xs text-green-400/70 mt-1">Premium placement</div>
               </div>
-              
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700">
+
+              <div className="bg-gray-800/50 p-6 rounded-xl border border-green-900">
                 <div className="text-3xl mb-3">🎯</div>
-                <div className="text-2xl font-bold text-blue-800 dark:text-blue-200">0</div>
-                <div className="text-sm text-blue-600 dark:text-blue-400">Sponsored Slots</div>
-                <div className="text-xs text-blue-500 dark:text-blue-300 mt-1">Paid promotions</div>
+                <div className="text-2xl font-bold text-white">0</div>
+                <div className="text-sm text-green-400">Sponsored Slots</div>
+                <div className="text-xs text-green-400/70 mt-1">Paid promotions</div>
               </div>
               
               <div className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-200 dark:border-green-700">
@@ -433,7 +433,7 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
                 </p>
                 <button
                   onClick={() => setMessage({ type: 'success', text: 'Sponsored content management features will be implemented soon!' })}
-                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                  className="px-4 py-2 bg-green-500 text-black rounded-lg hover:bg-green-400 transition-colors"
                 >
                   Learn More
                 </button>
@@ -441,37 +441,37 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
             </div>
 
             {/* Features Coming Soon */}
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl border border-purple-200 dark:border-purple-700 p-6">
-              <h3 className="text-lg font-medium text-purple-900 dark:text-purple-100 mb-4">
+            <div className="bg-gray-800/50 rounded-xl border border-green-900 p-6">
+              <h3 className="text-lg font-medium text-white mb-4">
                 🚀 Upcoming Features
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-start space-x-3">
-                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div className="text-green-400">✅</div>
                   <div>
-                    <div className="font-medium text-purple-900 dark:text-purple-100">Featured Tool Placement</div>
-                    <div className="text-sm text-purple-700 dark:text-purple-300">Premium positioning for sponsored tools</div>
+                    <div className="font-medium text-white">Featured Tool Placement</div>
+                    <div className="text-sm text-gray-400">Premium positioning for sponsored tools</div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div className="text-green-400">✅</div>
                   <div>
-                    <div className="font-medium text-purple-900 dark:text-purple-100">Analytics Dashboard</div>
-                    <div className="text-sm text-purple-700 dark:text-purple-300">Track sponsored content performance</div>
+                    <div className="font-medium text-white">Analytics Dashboard</div>
+                    <div className="text-sm text-gray-400">Track sponsored content performance</div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div className="text-green-400">✅</div>
                   <div>
-                    <div className="font-medium text-purple-900 dark:text-purple-100">Revenue Tracking</div>
-                    <div className="text-sm text-purple-700 dark:text-purple-300">Monitor sponsored content earnings</div>
+                    <div className="font-medium text-white">Revenue Tracking</div>
+                    <div className="text-sm text-gray-400">Monitor sponsored content earnings</div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <div className="text-purple-600 dark:text-purple-400">✅</div>
+                  <div className="text-green-400">✅</div>
                   <div>
-                    <div className="font-medium text-purple-900 dark:text-purple-100">Automated Scheduling</div>
-                    <div className="text-sm text-purple-700 dark:text-purple-300">Set content rotation schedules</div>
+                    <div className="font-medium text-white">Automated Scheduling</div>
+                    <div className="text-sm text-gray-400">Set content rotation schedules</div>
                   </div>
                 </div>
               </div>
@@ -496,25 +496,25 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
               </div>
               <button
                 onClick={() => window.open('/admin/contact', '_blank')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-green-500 text-black rounded-lg hover:bg-green-400 transition-colors"
               >
                 Open Contact Management
               </button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-                <h3 className="text-lg font-medium text-blue-900 dark:text-blue-100 mb-3">
+              <div className="bg-gray-800/50 rounded-lg p-4">
+                <h3 className="text-lg font-medium text-white mb-3">
                   🚀 Quick Access
                 </h3>
                 <div className="space-y-2">
                   <button
                     onClick={() => window.open('/admin/contact', '_blank')}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="w-full bg-green-500 text-black px-4 py-2 rounded-lg hover:bg-green-400 transition-colors"
                   >
                     Manage Messages
                   </button>
-                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                  <p className="text-sm text-gray-400">
                     View, respond to, and manage all contact form submissions
                   </p>
                 </div>
@@ -554,14 +554,14 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               {/* Quick Actions */}
-              <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
-                <h3 className="text-lg font-medium text-blue-900 dark:text-blue-100 mb-3">
+              <div className="bg-gray-800/50 rounded-lg p-4">
+                <h3 className="text-lg font-medium text-white mb-3">
                   🚀 Quick Actions
                 </h3>
                 <div className="space-y-2">
                   <button
                     onClick={() => window.open('/admin/automation', '_blank')}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="w-full bg-green-500 text-black px-4 py-2 rounded-lg hover:bg-green-400 transition-colors"
                   >
                     Open Automation Dashboard
                   </button>
@@ -573,7 +573,7 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
                   </button>
                   {/* <button
                     onClick={() => window.open('/news', '_blank')}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="w-full bg-green-500 text-black px-4 py-2 rounded-lg hover:bg-green-400 transition-colors"
                   >
                     View News
                   </button> */}
@@ -711,9 +711,9 @@ export default function AdminDashboard({ tools, categories, user, systemMetrics 
             </p>
             
             <div className="space-y-6">
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                <h3 className="text-lg font-medium text-blue-800 dark:text-blue-200 mb-2">♿ Accessibility Features</h3>
-                <ul className="text-blue-700 dark:text-blue-300 space-y-2">
+              <div className="bg-gray-800/50 p-4 rounded-lg">
+                <h3 className="text-lg font-medium text-green-400 mb-2">♿ Accessibility Features</h3>
+                <ul className="text-gray-300 space-y-2">
                   <li>• Keyboard navigation support</li>
                   <li>• Screen reader compatibility</li>
                   <li>• Focus management</li>

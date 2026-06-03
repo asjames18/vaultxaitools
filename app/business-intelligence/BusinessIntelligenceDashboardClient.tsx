@@ -69,16 +69,16 @@ export default function BusinessIntelligenceDashboardClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gray-900">
       {/* Header */}
       <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-green-400 rounded-lg flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-green-500 to-green-400 bg-clip-text text-transparent">
                 Business Intelligence Dashboard
               </h1>
             </div>
@@ -146,8 +146,8 @@ export default function BusinessIntelligenceDashboardClient() {
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                <div className="w-16 h-16 bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-green-400" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">15K+</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Total Users</p>
@@ -162,8 +162,8 @@ export default function BusinessIntelligenceDashboardClient() {
               </div>
 
               <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 text-center">
-                <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Activity className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                <div className="w-16 h-16 bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Activity className="w-8 h-8 text-green-400" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">45K+</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Page Views</p>
@@ -392,19 +392,19 @@ export default function BusinessIntelligenceDashboardClient() {
                   <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Recommendations</h4>
                   <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                     <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                       <span>Optimize images to improve LCP score</span>
                     </div>
                     <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                       <span>Implement lazy loading for below-fold content</span>
                     </div>
                     <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                       <span>Reduce JavaScript bundle size</span>
                     </div>
                     <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
                       <span>Optimize critical rendering path</span>
                     </div>
                   </div>
@@ -413,26 +413,26 @@ export default function BusinessIntelligenceDashboardClient() {
             </div>
 
             {/* Action Items */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-4">Immediate Action Items</h3>
+            <div className="bg-gray-800/50 border border-green-900 rounded-lg p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">Immediate Action Items</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-200">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>Optimize mobile user experience</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-200">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>Improve search result relevance</span>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-200">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>Enhance content engagement</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-200">
-                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span>Optimize conversion funnel</span>
                   </div>
                 </div>

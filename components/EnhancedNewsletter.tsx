@@ -33,7 +33,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   return (
-    <section className="py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative overflow-hidden">
+    <section className="py-20 bg-gray-900 border border-green-500 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-black/10"></div>
       <div className="absolute top-0 left-0 w-full h-full">
@@ -53,7 +53,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
               Only the Best Media Tools Make the Cut
             </h2>
             
-            <p className="text-xl md:text-2xl text-indigo-100 mb-10 leading-relaxed max-w-3xl">
+            <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed max-w-3xl">
               We curate hundreds of AI and tech tools so you don't have to. Get weekly recommendations of the most effective, beginner-friendly resources for learning AI, automation, and software development.
             </p>
 
@@ -67,7 +67,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-start gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
                     <CheckIcon className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-indigo-100 font-medium">{benefit}</span>
+                    <span className="text-gray-300 font-medium">{benefit}</span>
                   </div>
                 ))}
               </div>
@@ -78,7 +78,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
               {getCurationStats(toolsCount, categoriesCount).map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
-                  <div className="text-lg text-indigo-100 font-medium">{stat.label}</div>
+                  <div className="text-lg text-gray-300 font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -90,7 +90,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
               <h3 className="text-2xl font-bold text-white mb-2">
                 Join the Curated Media Community
               </h3>
-              <p className="text-indigo-100">
+              <p className="text-gray-300">
                 Get the best media tools and resources delivered to your inbox every week.
               </p>
             </div>
@@ -98,7 +98,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
             {!isSubscribed ? (
               <div className="space-y-4">
                 <EmailSignupForm />
-                <p className="text-xs text-indigo-100 text-center">
+                <p className="text-xs text-gray-300 text-center">
                   🔒 We respect your privacy. Unsubscribe at any time.
                 </p>
               </div>
@@ -110,7 +110,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
                 <h3 className="text-xl font-bold text-white mb-2">
                   Welcome to the Curated Community!
                 </h3>
-                <p className="text-indigo-100">
+                <p className="text-gray-300">
                   Check your email for your first curated media tool recommendation.
                 </p>
               </div>
@@ -118,7 +118,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
 
             {/* Trust indicators */}
             <div className="mt-6 pt-6 border-t border-white/20">
-              <div className="flex items-center justify-center gap-4 text-xs text-indigo-100">
+              <div className="flex items-center justify-center gap-4 text-xs text-gray-300">
                 <span>✓ {subscriberCount.toLocaleString()}+ subscribers</span>
                 <span>✓ Weekly curated picks</span>
                 <span>✓ No spam, ever</span>
