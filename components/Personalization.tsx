@@ -38,7 +38,7 @@ export default function Personalization({ className = '', onPreferencesChange }:
 
   useEffect(() => {
     // Load saved preferences
-    const savedPrefs = localStorage.getItem('vaultx-preferences');
+    const savedPrefs = localStorage.getItem('mit-preferences');
     if (savedPrefs) {
       try {
         const parsedPrefs = JSON.parse(savedPrefs);
@@ -51,7 +51,7 @@ export default function Personalization({ className = '', onPreferencesChange }:
 
   useEffect(() => {
     // Save preferences to localStorage
-    localStorage.setItem('vaultx-preferences', JSON.stringify(preferences));
+    localStorage.setItem('mit-preferences', JSON.stringify(preferences));
     
     // Apply preferences
     applyPreferences(preferences);
@@ -152,7 +152,7 @@ export default function Personalization({ className = '', onPreferencesChange }:
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'vaultx-preferences.json';
+    link.download = 'mit-preferences.json';
     link.click();
     URL.revokeObjectURL(url);
   };

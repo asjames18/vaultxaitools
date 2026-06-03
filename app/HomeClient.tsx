@@ -206,7 +206,7 @@ export default function HomeClient({
         // Clear favorites from localStorage since we can't load from API
         try {
           if (typeof window !== 'undefined') {
-            localStorage.removeItem('vaultx-favorites');
+            localStorage.removeItem('mit-favorites');
           }
         } catch (err) {
           // Silently fail if localStorage is unavailable
@@ -228,7 +228,7 @@ export default function HomeClient({
           // Update localStorage to match API
         try {
           if (typeof window !== 'undefined') {
-            localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+            localStorage.setItem('mit-favorites', JSON.stringify(newFavorites));
           }
         } catch (err) {
           // Silently fail if localStorage is unavailable
@@ -242,7 +242,7 @@ export default function HomeClient({
           // User not authenticated, clear favorites
           try {
             if (typeof window !== 'undefined') {
-              localStorage.removeItem('vaultx-favorites');
+              localStorage.removeItem('mit-favorites');
             }
           } catch (err) {
             // Silently fail if localStorage is unavailable
@@ -269,7 +269,7 @@ export default function HomeClient({
     // Load user preferences from localStorage with error handling
     try {
       if (typeof window !== 'undefined') {
-        const savedRecent = localStorage.getItem('vaultx-recent');
+        const savedRecent = localStorage.getItem('mit-recent');
         if (savedRecent) {
           setRecentlyViewed(JSON.parse(savedRecent));
         }
@@ -292,7 +292,7 @@ export default function HomeClient({
   // Expose curated tool count for downstream components (newsletter stats)
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      (window as any).__vaultxToolCount = safeAllTools.length;
+      (window as any).__mitToolCount = safeAllTools.length;
     }
   }, [safeAllTools.length]);
 
@@ -347,7 +347,7 @@ export default function HomeClient({
             const newFavorites = isCurrentlyFavorite
               ? favoriteTools.filter(id => id !== toolId)
               : [...favoriteTools, toolId];
-            localStorage.setItem('vaultx-favorites', JSON.stringify(newFavorites));
+            localStorage.setItem('mit-favorites', JSON.stringify(newFavorites));
           }
         } catch (err) {
           // Silently fail if localStorage is unavailable
@@ -382,7 +382,7 @@ export default function HomeClient({
     setRecentlyViewed(newRecent);
     try {
       if (typeof window !== 'undefined') {
-        localStorage.setItem('vaultx-recent', JSON.stringify(newRecent));
+        localStorage.setItem('mit-recent', JSON.stringify(newRecent));
       }
     } catch (err) {
       // Silently fail if localStorage is unavailable

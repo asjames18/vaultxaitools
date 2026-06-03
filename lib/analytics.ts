@@ -63,15 +63,15 @@ class AnalyticsTracker {
     if (typeof window === 'undefined') return;
 
     // Generate or retrieve session ID
-    const existingSessionId = localStorage.getItem('vaultx_session_id');
+    const existingSessionId = localStorage.getItem('mit_session_id');
     if (existingSessionId) {
       this.sessionId = existingSessionId;
     } else {
-      localStorage.setItem('vaultx_session_id', this.sessionId);
+      localStorage.setItem('mit_session_id', this.sessionId);
     }
 
     // Retrieve user ID if available
-    this.userId = localStorage.getItem('vaultx_user_id') || undefined;
+    this.userId = localStorage.getItem('mit_user_id') || undefined;
 
     // Start session tracking
     this.startSession();
@@ -126,15 +126,15 @@ class AnalyticsTracker {
   private saveSessionData(session: SearchSession) {
     try {
       // Save to localStorage for persistence
-      const existingSessions = JSON.parse(localStorage.getItem('vaultx_search_sessions') || '[]');
+      const existingSessions = JSON.parse(localStorage.getItem('mit_search_sessions') || '[]');
       existingSessions.push(session);
-      
+
       // Keep only last 50 sessions
       if (existingSessions.length > 50) {
         existingSessions.splice(0, existingSessions.length - 50);
       }
-      
-      localStorage.setItem('vaultx_search_sessions', JSON.stringify(existingSessions));
+
+      localStorage.setItem('mit_search_sessions', JSON.stringify(existingSessions));
     } catch (error) {
       console.error('Error saving session data:', error);
     }
@@ -315,14 +315,14 @@ class AnalyticsTracker {
   // Set user ID for tracking
   setUserId(userId: string) {
     this.userId = userId;
-    localStorage.setItem('vaultx_user_id', userId);
+    localStorage.setItem('mit_user_id', userId);
   }
 
   // Clear user data
   clearUserData() {
     this.userId = undefined;
-    localStorage.removeItem('vaultx_user_id');
-    localStorage.removeItem('vaultx_search_sessions');
+    localStorage.removeItem('mit_user_id');
+    localStorage.removeItem('mit_search_sessions');
   }
 }
 

@@ -48,7 +48,7 @@ export default function UIShowcaseClient() {
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                VaultX UI Showcase
+                Melanated In Tech UI Showcase
               </h1>
             </div>
             

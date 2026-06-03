@@ -195,7 +195,7 @@ export default function ContactClient() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Email</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-2">contact@vaultxaitools.com</p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">contact@melanatedintech.com</p>
                   <p className="text-sm text-gray-500 dark:text-gray-500">We typically respond within 24 hours</p>
                 </div>
               </div>

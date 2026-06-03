@@ -528,7 +528,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                       const url = URL.createObjectURL(blob);
                       const a = document.createElement('a');
                       a.href = url;
-                      a.download = 'vaultx-export.json';
+                      a.download = 'mit-export.json';
                       a.click();
                       URL.revokeObjectURL(url);
                     } catch (error) {

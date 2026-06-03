@@ -90,13 +90,13 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           url: 'https://vaultxaitools.com',
           logo: 'https://vaultxaitools.com/logo.png',
           sameAs: [
-            'https://twitter.com/vaultxaitools',
-            'https://linkedin.com/company/vaultxaitools'
+            'https://twitter.com/melanatedintech',
+            'https://linkedin.com/company/melanatedintech'
           ],
           contactPoint: {
             '@type': 'ContactPoint',
             contactType: 'customer service',
-            email: 'contact@vaultxaitools.com'
+            email: 'contact@melanatedintech.com'
           }
         };
 

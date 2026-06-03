@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Top 10 Free AI Video Editors – VaultX AI Tools',
+  title: 'Top 10 Free AI Video Editors – Melanated In Tech',
   description:
     'Discover the best free AI-powered video editors of 2025. Hands-on reviews, features comparison, pricing, and tips to level up your videos without breaking the bank.',
   openGraph: {
-    title: 'Top 10 Free AI Video Editors – VaultX AI Tools',
+    title: 'Top 10 Free AI Video Editors – Melanated In Tech',
     description:
       'Discover the best free AI-powered video editors of 2025. Hands-on reviews, features comparison, pricing, and tips to level up your videos without breaking the bank.',
     url: 'https://vaultxaitools.vercel.app/blog/top-10-free-ai-video-editors',

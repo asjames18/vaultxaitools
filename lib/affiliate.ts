@@ -37,7 +37,7 @@ export const defaultAffiliateConfig: AffiliateConfig = {
   enabled: true,
   baseUrl: 'https://vaultxaitools.com',
   trackingParams: {
-    source: 'vaultx',
+    source: 'melanatedintech',
     medium: 'affiliate',
     campaign: 'ai-tools'
   },
@@ -62,7 +62,7 @@ export function generateAffiliateUrl(
     url.searchParams.set('utm_medium', config.trackingParams.medium);
     url.searchParams.set('utm_campaign', config.trackingParams.campaign);
     url.searchParams.set('utm_content', toolId);
-    url.searchParams.set('ref', 'vaultx');
+    url.searchParams.set('ref', 'melanatedintech');
     
     return url.toString();
   } catch (error) {

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { loadRecentSearches, saveRecentSearch } from '@/lib/search/search-utils';
 
-export function useRecentSearches(storageKey = 'vaultx-recent-searches') {
+export function useRecentSearches(storageKey = 'mit-recent-searches') {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   useEffect(() => {

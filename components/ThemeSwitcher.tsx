@@ -22,7 +22,7 @@ export default function ThemeSwitcher({
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('vaultx-theme') as Theme;
+    const savedTheme = localStorage.getItem('mit-theme') as Theme;
     if (savedTheme) {
       setTheme(savedTheme);
     }
@@ -59,7 +59,7 @@ export default function ThemeSwitcher({
     }
 
     // Save theme preference
-    localStorage.setItem('vaultx-theme', theme);
+    localStorage.setItem('mit-theme', theme);
   }, [theme, mounted]);
 
   // Listen for system theme changes

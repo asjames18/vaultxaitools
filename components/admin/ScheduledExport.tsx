@@ -68,7 +68,7 @@ export default function ScheduledExport() {
         enabled: true,
         lastRun: '2024-01-15T02:00:00Z',
         nextRun: '2024-01-16T02:00:00Z',
-        recipients: ['admin@vaultxai.com'],
+        recipients: ['admin@melanatedintech.com'],
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-15T00:00:00Z'
       },
@@ -84,7 +84,7 @@ export default function ScheduledExport() {
         enabled: true,
         lastRun: '2024-01-15T09:00:00Z',
         nextRun: '2024-01-22T09:00:00Z',
-        recipients: ['team@vaultxai.com', 'analytics@vaultxai.com'],
+        recipients: ['team@melanatedintech.com', 'analytics@melanatedintech.com'],
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-15T00:00:00Z'
       },
@@ -100,7 +100,7 @@ export default function ScheduledExport() {
         enabled: false,
         lastRun: '2024-01-01T06:00:00Z',
         nextRun: '2024-02-01T06:00:00Z',
-        recipients: ['admin@vaultxai.com'],
+        recipients: ['admin@melanatedintech.com'],
         created_at: '2024-01-01T00:00:00Z',
         updated_at: '2024-01-15T00:00:00Z'
       }

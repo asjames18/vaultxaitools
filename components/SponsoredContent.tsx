@@ -19,7 +19,7 @@ interface SponsoredContentProps {
 export default function SponsoredContent({
   tools,
   title = "Sponsored Tools",
-  subtitle = "Tools that help support VaultX",
+  subtitle = "Tools that help support Melanated In Tech",
   maxItems = 3,
   className = "",
   showDisclosure = true

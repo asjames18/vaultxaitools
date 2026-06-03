@@ -58,7 +58,7 @@ export default function AboutClient() {
             </div>
             <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg p-8 text-white">
               <h3 className="text-2xl font-bold mb-4">
-                Why Choose VaultX?
+                Why Choose Melanated In Tech?
               </h3>
               <ul className="space-y-3">
                 <li className="flex items-center">
@@ -130,14 +130,14 @@ export default function AboutClient() {
           </div>
         </div>
 
-        {/* About VaultX Section */}
+        {/* About Melanated In Tech Section */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-12">
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
-            About VaultX
+            About Melanated In Tech
           </h2>
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
-              VaultX is a curated platform dedicated to helping users discover and understand AI tools. We focus on providing accurate, up-to-date information about AI applications across various domains including language processing, image generation, development tools, and productivity solutions.
+              Melanated In Tech is a curated platform dedicated to helping users discover and understand AI tools. We focus on providing accurate, up-to-date information about AI applications across various domains including language processing, image generation, development tools, and productivity solutions.
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
               Our platform is designed to be a reliable resource for developers, designers, marketers, and anyone interested in leveraging AI technology. We continuously update our database with new tools and maintain quality standards to ensure you find the right AI solution for your needs.

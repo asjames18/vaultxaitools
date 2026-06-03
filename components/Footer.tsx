@@ -152,7 +152,7 @@ export default function Footer() {
             
             <div className="flex items-center space-x-4">
               <p className="text-gray-400 text-sm">
-                © 2025 Melanated In Tech. All rights reserved.
+                © 2026 Melanated In Tech. All rights reserved.
               </p>
               <button
                 onClick={scrollToTop}

@@ -93,7 +93,7 @@ export default function EnhancedSearch({
   // Load recent searches from localStorage
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('vaultx-recent-searches');
+      const saved = localStorage.getItem('mit-recent-searches');
       if (saved) {
         setRecentSearches(JSON.parse(saved));
       }
@@ -128,7 +128,7 @@ export default function EnhancedSearch({
     // Add to recent searches
     const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 5);
     setRecentSearches(updated);
-    localStorage.setItem('vaultx-recent-searches', JSON.stringify(updated));
+    localStorage.setItem('mit-recent-searches', JSON.stringify(updated));
     
     // Track search
     trackSearch(query, tools.length);

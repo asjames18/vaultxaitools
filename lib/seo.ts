@@ -366,7 +366,7 @@ export function generateOrganizationStructuredData() {
     sameAs: [
       'https://twitter.com/melanatedintech',
       'https://linkedin.com/company/melanatedintech',
-      'https://github.com/vaultxaitools',
+      'https://github.com/melanatedintech',
     ],
     contactPoint: {
       '@type': 'ContactPoint',

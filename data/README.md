@@ -1,6 +1,6 @@
 # Data Management Guide
 
-This folder contains centralized data structures for the VaultX AI Tools website. All tool and category information is stored here and can be easily updated.
+This folder contains centralized data structures for the Melanated In Tech platform. All tool and category information is stored here and can be easily updated.
 
 ## File Structure
 

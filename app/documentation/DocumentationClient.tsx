@@ -489,7 +489,7 @@ export default function DocumentationClient() {
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
                   Send us an email for technical support or urgent issues.
                 </p>
-                <a href="mailto:support@vaultxaitools.com" className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                <a href="mailto:support@melanatedintech.com" className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                   Email Support
                 </a>
               </div>

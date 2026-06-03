@@ -1,4 +1,4 @@
-const DEFAULT_STORAGE_KEY = 'vaultx-recent-searches';
+const DEFAULT_STORAGE_KEY = 'mit-recent-searches';
 const MAX_RECENT = 10;
 
 export function loadRecentSearches(storageKey = DEFAULT_STORAGE_KEY): string[] {

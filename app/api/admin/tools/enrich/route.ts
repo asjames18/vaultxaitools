@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const { url } = await request.json();
     if (!url) return NextResponse.json({ error: 'Missing url' }, { status: 400 });
 
-    const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 VaultXBot' } });
+    const res = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 MelanatedInTechBot' } });
     const html = await res.text();
 
     // Very simple OG/meta extraction
