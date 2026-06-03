@@ -112,9 +112,22 @@ export async function canAccessAdmin(user: User | null): Promise<boolean> {
   }
   
   // Check if we're in a browser environment
+  // NOTE: process.env.ADMIN_EMAILS is server-only (no NEXT_PUBLIC_ prefix)
+  // so isAdmin() always returns false in the browser. Skip this short-circuit
+  // and fall through to the DB check via getUserRole() which uses the
+  // service role client and works server-side.
   if (typeof window !== 'undefined') {
-    // Client-side: use email check only
-    return isAdmin(user);
+    // Client-side: can't read server env vars — call server API to check
+    try {
+      const res = await fetch('/api/debug-admin');
+      if (res.ok) {
+        const data = await res.json();
+        return data.isAdmin === true;
+      }
+    } catch {
+      // fall through
+    }
+    return false;
   }
   
   // Server-side: try to get role from database using admin client

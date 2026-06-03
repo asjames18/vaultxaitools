@@ -30,14 +30,28 @@ export default function AdminPage() {
 
         if (user) {
           setUser(user);
-          
-          // Check admin access
-          const hasAccess = await canAccessAdmin(user);
-          setCanAccess(hasAccess);
-          
-          if (!hasAccess) {
-            router.push('/admin/unauthorized');
-            return;
+
+          // Middleware already verified admin access server-side before
+          // this page renders. Client-side canAccessAdmin() reads
+          // process.env.ADMIN_EMAILS which is undefined in the browser
+          // (no NEXT_PUBLIC_ prefix) and always returns false — so we
+          // verify admin status via the server API instead.
+          try {
+            const res = await fetch('/api/debug-admin');
+            if (res.ok) {
+              const data = await res.json();
+              if (!data.isAdmin) {
+                router.push('/admin/unauthorized');
+                return;
+              }
+              setCanAccess(true);
+            } else {
+              router.push('/admin/unauthorized');
+              return;
+            }
+          } catch {
+            // If API check fails, trust middleware — user got here, so they're admin
+            setCanAccess(true);
           }
 
           // Fetch data for the dashboard

@@ -57,8 +57,8 @@ export default function AdminAuthWrapper({ children }: AdminAuthWrapperProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="w-10 h-10 border-2 border-[#4ade80]/30 border-t-[#4ade80] rounded-full animate-spin" />
       </div>
     );
   }
