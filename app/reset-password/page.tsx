@@ -16,7 +16,7 @@ function ResetPasswordForm() {
   const router = useRouter();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: string, session: import('@supabase/supabase-js').Session | null) => {
       if (event === 'PASSWORD_RECOVERY') {
         setIsValidSession(true);
         setChecking(false);
@@ -26,7 +26,7 @@ function ResetPasswordForm() {
       }
     });
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: import('@supabase/supabase-js').Session | null } }) => {
       if (session) {
         setIsValidSession(true);
       }

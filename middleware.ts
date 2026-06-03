@@ -145,18 +145,35 @@ export async function middleware(request: NextRequest) {
     }
 
     let isAdmin = false;
-    try {
-      const { data: roleRow } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id)
-        .eq('role', 'admin')
-        .maybeSingle();
-      isAdmin =
-        !!roleRow ||
-        (user.email ? adminEmails.includes(user.email.toLowerCase()) : false);
-    } catch {
-      isAdmin = user.email ? isAdminEmail(user.email) : false;
+
+    // Fast-path: email allowlist check (no DB needed)
+    if (user.email && adminEmails.includes(user.email.toLowerCase())) {
+      isAdmin = true;
+    } else {
+      // DB check using service role key to bypass RLS in edge middleware
+      try {
+        const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        if (serviceKey && supabaseUrl) {
+          const res = await fetch(
+            `${supabaseUrl}/rest/v1/user_roles?user_id=eq.${user.id}&role=eq.admin&select=role&limit=1`,
+            {
+              headers: {
+                apikey: serviceKey,
+                Authorization: `Bearer ${serviceKey}`,
+                Accept: 'application/json',
+              },
+            }
+          );
+          if (res.ok) {
+            const rows = await res.json();
+            isAdmin = Array.isArray(rows) && rows.length > 0;
+          }
+        }
+      } catch {
+        // fallback to email check only
+        isAdmin = user.email ? isAdminEmail(user.email) : false;
+      }
     }
 
     if (!isAdmin) {
