@@ -108,12 +108,12 @@ const HomeHeroSection = memo(function HomeHeroSection({
               <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
             </div>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">50K+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Happy Users</div>
+              <div className="text-2xl font-bold text-green-400">10K+</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Users</div>
             </div>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">99%</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
+              <div className="text-2xl font-bold text-green-400">100%</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Free Tools</div>
             </div>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
               <div className="text-2xl font-bold text-gray-900 dark:text-white">24/7</div>

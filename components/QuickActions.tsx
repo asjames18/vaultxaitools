@@ -29,16 +29,16 @@ const PlusIcon = ({ className }: { className?: string }) => (
 
 const quickActions = [
   {
-    title: "Media Consulting",
-    description: "Expert media guidance",
+    title: "AI Consulting",
+    description: "Expert AI & tech guidance",
     icon: RocketIcon,
     href: "/consulting",
-    color: "blue",
-    gradient: "from-blue-500 to-cyan-500"
+    color: "green",
+    gradient: "from-green-500 to-green-400"
   },
   {
     title: "Get Started",
-    description: "New to media? Start here",
+    description: "New to tech? Start here",
     icon: StarIcon,
     href: "/getting-started",
     color: "yellow",
@@ -46,7 +46,7 @@ const quickActions = [
   },
   {
     title: "Popular",
-    description: "Most used media tools",
+    description: "Most used AI tools",
     icon: FireIcon,
     href: "/AITools",
     color: "red",
@@ -54,7 +54,7 @@ const quickActions = [
   },
   {
     title: "Submit Resource",
-    description: "Add a new media resource",
+    description: "Add a new AI resource",
     icon: PlusIcon,
     href: "/submit-tool",
     color: "green",

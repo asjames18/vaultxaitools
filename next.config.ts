@@ -65,11 +65,11 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://static.mailerlite.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: blob: https://www.google-analytics.com https://avatars.githubusercontent.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com",
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://api.mailerlite.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",
@@ -143,6 +143,11 @@ const nextConfig: NextConfig = {
         source: '/api/admin/automation',
         destination: '/api/admin/automation-status',
         permanent: false,
+      },
+      {
+        source: '/docs',
+        destination: '/documentation',
+        permanent: true,
       },
     ];
   },

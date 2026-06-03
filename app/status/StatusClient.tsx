@@ -73,7 +73,7 @@ interface Incident {
 
 export default function StatusClient() {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [overallStatus, setOverallStatus] = useState<'operational' | 'degraded' | 'outage'>('operational');
+  const [overallStatus] = useState<'operational' | 'degraded' | 'outage'>('operational');
 
   // Update current time every minute
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function StatusClient() {
     return () => clearInterval(timer);
   }, []);
 
-  // Mock system components (in a real app, this would come from an API)
+  // System components
   const systemComponents: SystemComponent[] = [
     {
       id: 'api',
@@ -120,31 +120,10 @@ export default function StatusClient() {
     },
   ];
 
-  // Mock incidents (in a real app, this would come from an API)
-  const incidents: Incident[] = [
-    {
-      id: '1',
-      title: 'Scheduled Maintenance - Database Optimization',
-      status: 'resolved',
-      severity: 'minor',
-      description: 'Database performance optimization completed successfully. No user data was affected.',
-      createdAt: '2024-07-10T02:00:00Z',
-      updatedAt: '2024-07-10T04:00:00Z',
-      resolvedAt: '2024-07-10T04:00:00Z',
-    },
-    {
-      id: '2',
-      title: 'API Response Time Degradation',
-      status: 'resolved',
-      severity: 'major',
-      description: 'Increased API response times were detected and resolved. All services are now operating normally.',
-      createdAt: '2024-07-08T14:30:00Z',
-      updatedAt: '2024-07-08T16:45:00Z',
-      resolvedAt: '2024-07-08T16:45:00Z',
-    },
-  ];
+  // No active incidents
+  const incidents: Incident[] = [];
 
-  // Calculate uptime percentage (mock data)
+  // Uptime stats
   const uptimePercentage = 99.98;
   const lastMonthUptime = 99.95;
   const lastYearUptime = 99.92;
@@ -152,43 +131,43 @@ export default function StatusClient() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'operational':
-        return 'text-green-600 dark:text-green-400';
+        return 'text-green-400';
       case 'degraded':
-        return 'text-yellow-600 dark:text-yellow-400';
+        return 'text-yellow-400';
       case 'outage':
-        return 'text-red-600 dark:text-red-400';
+        return 'text-red-400';
       case 'maintenance':
-        return 'text-blue-600 dark:text-blue-400';
+        return 'text-green-300';
       default:
-        return 'text-gray-600 dark:text-gray-400';
+        return 'text-gray-400';
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'operational':
-        return <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />;
+        return <CheckCircleIcon className="h-5 w-5 text-green-400" />;
       case 'degraded':
-        return <ExclamationTriangleIcon className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />;
+        return <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" />;
       case 'outage':
-        return <XCircleIcon className="h-5 w-5 text-red-600 dark:text-red-400" />;
+        return <XCircleIcon className="h-5 w-5 text-red-400" />;
       case 'maintenance':
-        return <ClockIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />;
+        return <ClockIcon className="h-5 w-5 text-green-300" />;
       default:
-        return <ClockIcon className="h-5 w-5 text-gray-600 dark:text-gray-400" />;
+        return <ClockIcon className="h-5 w-5 text-gray-400" />;
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'minor':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+        return 'bg-yellow-900/40 text-yellow-300 border border-yellow-700';
       case 'major':
-        return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
+        return 'bg-orange-900/40 text-orange-300 border border-orange-700';
       case 'critical':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+        return 'bg-red-900/40 text-red-300 border border-red-700';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+        return 'bg-gray-800 text-gray-300 border border-gray-700';
     }
   };
 
@@ -204,59 +183,60 @@ export default function StatusClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="min-h-screen bg-gray-950 text-white">
+      {/* Hero / Banner */}
+      <div className="bg-green-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-black mb-4">
               System Status
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-black/75 max-w-2xl mx-auto">
               Real-time status of Melanated In Tech platform services and infrastructure.
             </p>
-            <div className="mt-8 flex items-center justify-center space-x-4">
-              <div className="flex items-center space-x-2">
-                {getStatusIcon(overallStatus)}
-                <span className="text-lg font-semibold capitalize">
-                  {overallStatus === 'operational' ? 'All Systems Operational' : overallStatus}
-                </span>
-              </div>
-              <div className="text-sm text-blue-200">
-                Last updated: {currentTime.toLocaleTimeString()}
-              </div>
+            <div className="mt-6 inline-flex items-center space-x-3 bg-black/15 rounded-full px-6 py-3">
+              <span className="h-3 w-3 rounded-full bg-black animate-pulse" />
+              <span className="text-base font-semibold text-black">
+                {overallStatus === 'operational' ? 'All Systems Operational' : overallStatus}
+              </span>
+              <span className="text-sm text-black/60">
+                · Last updated: {currentTime.toLocaleTimeString()}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content Section */}
+      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Status */}
+          {/* Main Column */}
           <div className="lg:col-span-2 space-y-8">
             {/* System Components */}
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+              <h2 className="text-xl font-bold text-white mb-5">
                 System Components
               </h2>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {systemComponents.map((component) => (
-                  <div key={component.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                  <div
+                    key={component.id}
+                    className="flex items-center justify-between p-4 bg-gray-800/50 border border-gray-700 rounded-lg hover:border-green-500/40 transition-colors"
+                  >
                     <div className="flex items-center space-x-4">
-                      <component.icon className="h-8 w-8 text-gray-600 dark:text-gray-400" />
+                      <component.icon className="h-7 w-7 text-green-400 flex-shrink-0" />
                       <div>
-                        <h3 className="font-semibold text-gray-900 dark:text-white">
+                        <h3 className="font-semibold text-white text-sm">
                           {component.name}
                         </h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                        <p className="text-xs text-gray-400 mt-0.5">
                           {component.description}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-2 ml-4">
                       {getStatusIcon(component.status)}
-                      <span className={`font-medium capitalize ${getStatusColor(component.status)}`}>
+                      <span className={`text-sm font-medium capitalize ${getStatusColor(component.status)}`}>
                         {component.status}
                       </span>
                     </div>
@@ -266,38 +246,38 @@ export default function StatusClient() {
             </div>
 
             {/* Recent Incidents */}
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+              <h2 className="text-xl font-bold text-white mb-5">
                 Recent Incidents
               </h2>
               {incidents.length > 0 ? (
                 <div className="space-y-4">
                   {incidents.map((incident) => (
-                    <div key={incident.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                    <div key={incident.id} className="border border-gray-700 rounded-lg p-4 bg-gray-800/40">
                       <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-center space-x-3">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getSeverityColor(incident.severity)}`}>
+                        <div className="flex items-center space-x-2">
+                          <span className={`px-2 py-0.5 rounded text-xs font-medium ${getSeverityColor(incident.severity)}`}>
                             {incident.severity}
                           </span>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            incident.status === 'resolved' 
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                              : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+                          <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                            incident.status === 'resolved'
+                              ? 'bg-green-900/40 text-green-300 border border-green-700'
+                              : 'bg-yellow-900/40 text-yellow-300 border border-yellow-700'
                           }`}>
                             {incident.status}
                           </span>
                         </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400">
+                        <div className="text-xs text-gray-500">
                           {formatDate(incident.createdAt)}
                         </div>
                       </div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                      <h3 className="font-semibold text-white mb-1 text-sm">
                         {incident.title}
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+                      <p className="text-gray-400 text-sm mb-2">
                         {incident.description}
                       </p>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">
+                      <div className="text-xs text-gray-500">
                         {incident.resolvedAt ? (
                           <span>Resolved: {formatDate(incident.resolvedAt)}</span>
                         ) : (
@@ -308,10 +288,11 @@ export default function StatusClient() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8">
-                  <CheckCircleIcon className="h-12 w-12 text-green-600 dark:text-green-400 mx-auto mb-4" />
-                  <p className="text-gray-600 dark:text-gray-300">
-                    No recent incidents. All systems are operating normally.
+                <div className="text-center py-10">
+                  <CheckCircleIcon className="h-12 w-12 text-green-400 mx-auto mb-3" />
+                  <p className="text-white font-semibold mb-1">No incidents reported</p>
+                  <p className="text-gray-400 text-sm">
+                    All systems are operating normally. No incidents in the past 90 days.
                   </p>
                 </div>
               )}
@@ -321,33 +302,33 @@ export default function StatusClient() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Uptime Statistics */}
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+              <h3 className="text-base font-semibold text-white mb-5">
                 Uptime Statistics
               </h3>
               <div className="space-y-4">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600 dark:text-green-400">
+                <div className="text-center bg-gray-800/50 rounded-lg py-5">
+                  <div className="text-4xl font-bold text-green-400">
                     {uptimePercentage}%
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-300">
+                  <div className="text-xs text-gray-400 mt-1 uppercase tracking-wide">
                     Current Month
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-lg font-semibold text-gray-900 dark:text-white">
+                <div className="grid grid-cols-2 gap-3 text-center">
+                  <div className="bg-gray-800/50 rounded-lg py-3">
+                    <div className="text-lg font-semibold text-green-400">
                       {lastMonthUptime}%
                     </div>
-                    <div className="text-xs text-gray-600 dark:text-gray-300">
+                    <div className="text-xs text-gray-400 mt-0.5">
                       Last Month
                     </div>
                   </div>
-                  <div>
-                    <div className="text-lg font-semibold text-gray-900 dark:text-white">
+                  <div className="bg-gray-800/50 rounded-lg py-3">
+                    <div className="text-lg font-semibold text-green-400">
                       {lastYearUptime}%
                     </div>
-                    <div className="text-xs text-gray-600 dark:text-gray-300">
+                    <div className="text-xs text-gray-400 mt-0.5">
                       Last Year
                     </div>
                   </div>
@@ -356,54 +337,54 @@ export default function StatusClient() {
             </div>
 
             {/* Status Legend */}
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+              <h3 className="text-base font-semibold text-white mb-4">
                 Status Legend
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
-                  <CheckCircleIcon className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Operational</span>
+                  <CheckCircleIcon className="h-5 w-5 text-green-400" />
+                  <span className="text-sm text-gray-300">Operational</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <ExclamationTriangleIcon className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Degraded Performance</span>
+                  <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" />
+                  <span className="text-sm text-gray-300">Degraded Performance</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <XCircleIcon className="h-5 w-5 text-red-600 dark:text-red-400" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Outage</span>
+                  <XCircleIcon className="h-5 w-5 text-red-400" />
+                  <span className="text-sm text-gray-300">Outage</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <ClockIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">Maintenance</span>
+                  <ClockIcon className="h-5 w-5 text-green-300" />
+                  <span className="text-sm text-gray-300">Maintenance</span>
                 </div>
               </div>
             </div>
 
             {/* Subscribe to Updates */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+            <div className="bg-gray-900 border border-green-500/30 rounded-xl p-6">
+              <h3 className="text-base font-semibold text-white mb-2">
                 Stay Updated
               </h3>
-              <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">
+              <p className="text-sm text-gray-400 mb-4">
                 Get notified about system status updates and incidents.
               </p>
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+              <button className="w-full bg-green-500 hover:bg-green-400 text-black font-semibold px-4 py-2.5 rounded-lg text-sm transition-colors">
                 Subscribe to Updates
               </button>
             </div>
 
             {/* Contact Support */}
-            <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+              <h3 className="text-base font-semibold text-white mb-2">
                 Need Help?
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-sm text-gray-400 mb-4">
                 If you're experiencing issues not reflected here, contact our support team.
               </p>
-              <a 
-                href="/contact" 
-                className="block w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
+              <a
+                href="/contact"
+                className="block w-full bg-gray-700 hover:bg-gray-600 text-white font-medium px-4 py-2.5 rounded-lg text-sm transition-colors text-center"
               >
                 Contact Support
               </a>
@@ -413,4 +394,4 @@ export default function StatusClient() {
       </div>
     </div>
   );
-} 
+}

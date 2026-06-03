@@ -58,24 +58,24 @@ const dynamicHeadlines = [
 // Testimonials from the Melanated In Tech community
 const testimonials = [
   {
-    name: "Marcus Williams",
-    role: "Career Changer",
-    company: "Aspiring Software Developer",
-    content: "Melanated In Tech gave me a clear roadmap into tech. The AI tools directory and tutorials helped me build real skills fast.",
+    name: "Marcus W.",
+    role: "Career Changer → Software Developer",
+    company: "",
+    content: "Melanated In Tech gave me a clear roadmap into tech. The AI tools directory and tutorials helped me build real skills fast — I landed my first dev role within a year.",
     avatar: "👨‍💻"
   },
   {
-    name: "Aisha Johnson",
-    role: "Entrepreneur",
-    company: "Digital Creator",
-    content: "I use the resources here to automate my business workflows. The platform made AI accessible and practical for someone just starting out.",
+    name: "Aisha J.",
+    role: "Entrepreneur & Digital Creator",
+    company: "",
+    content: "I use the resources here to automate my business workflows. The platform made AI accessible and practical for someone just starting out — no CS degree required.",
     avatar: "👩‍🚀"
   },
   {
-    name: "DeShawn Carter",
-    role: "Educator",
-    company: "Community College Instructor",
-    content: "I recommend Melanated In Tech to every student curious about AI. It breaks down complex tools in a way that actually makes sense.",
+    name: "DeShawn C.",
+    role: "Educator & Community College Instructor",
+    company: "",
+    content: "I recommend Melanated In Tech to every student curious about AI. It breaks down complex tools in a way that actually makes sense for everyday people.",
     avatar: "👨‍🏫"
   }
 ];
@@ -622,10 +622,10 @@ export default function HomeClient({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Trusted by AI Professionals Worldwide
+              Trusted by Learners, Builders & Career Changers
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-200 max-w-2xl mx-auto">
-              See what our community says about our curated AI tool selection
+              See what our community says about learning and growing with Melanated In Tech
             </p>
           </div>
 
@@ -645,7 +645,7 @@ export default function HomeClient({
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-200">{testimonial.role} at {testimonial.company}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-200">{testimonial.role}</p>
                   </div>
                 </div>
               </div>

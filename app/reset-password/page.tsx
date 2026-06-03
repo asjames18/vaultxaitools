@@ -16,20 +16,22 @@ function ResetPasswordForm() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Check if we have a valid session for password reset
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
+    // Listen for PASSWORD_RECOVERY event — Supabase processes the hash token async
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
         setIsValidSession(true);
-      } else {
-        setMessage({ 
-          type: 'error', 
-          text: 'Invalid or expired password reset link. Please request a new one.' 
-        });
+      } else if (event === 'SIGNED_IN' && session) {
+        // Token was already exchanged (e.g. page refresh after recovery)
+        setIsValidSession(true);
       }
-    };
+    });
 
-    checkSession();
+    // Fallback: if a session already exists when the page loads
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setIsValidSession(true);
+    });
+
+    return () => subscription.unsubscribe();
   }, [supabase.auth]);
 
   const handleSubmit = async (e: React.FormEvent) => {
