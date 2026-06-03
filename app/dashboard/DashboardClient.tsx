@@ -1,6 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import PointsDisplay from '@/components/PointsDisplay';
+import StreakTracker from '@/components/StreakTracker';
+import AchievementsGrid from '@/components/AchievementsGrid';
+import RecommendedTools from '@/components/RecommendedTools';
 
 type RecentItem = { id: string; type: 'favorite' | 'review'; label: string; tool?: string; when: string };
 
@@ -23,6 +27,16 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
   const [emailMessage, setEmailMessage] = useState<string | null>(null);
   const [clientFavorites, setClientFavorites] = useState<Array<string | { id: string; name: string; logo?: string; description?: string; category?: string }>>(favorites);
   const [favoritesLoading, setFavoritesLoading] = useState(false);
+  const [gamification, setGamification] = useState<{
+    points: number;
+    level: string;
+    rank: number;
+    streakCount: number;
+    lastActiveDate: string | null;
+  } | null>(null);
+  const [achievements, setAchievements] = useState<{ earned: any[]; all: any[] }>({ earned: [], all: [] });
+  const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [gamificationLoading, setGamificationLoading] = useState(true);
 
   // Load client favorites
   const loadClientFavorites = async () => {
@@ -67,6 +81,56 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
   // Remove test favorites functionality - no longer needed
   // const createTestFavorites = async () => { ... } - REMOVED
 
+  const loadGamification = async () => {
+    setGamificationLoading(true);
+    try {
+      const { createClient } = await import('@/lib/supabase');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.access_token) return;
+      const headers = { Authorization: `Bearer ${session.access_token}` };
+
+      // Fire daily streak + points for login
+      await fetch('/api/user/streak', { method: 'POST', headers });
+      await fetch('/api/user/points', {
+        method: 'POST',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'daily_login' })
+      });
+
+      // Parallel fetch gamification data
+      const [pointsRes, streakRes, achievementsRes, recsRes] = await Promise.all([
+        fetch('/api/user/points', { headers }),
+        fetch('/api/user/streak', { headers }),
+        fetch('/api/user/achievements', { headers }),
+        fetch('/api/user/recommendations', { headers }),
+      ]);
+
+      if (pointsRes.ok && streakRes.ok) {
+        const [pointsData, streakData] = await Promise.all([pointsRes.json(), streakRes.json()]);
+        setGamification({
+          points: pointsData.points ?? 0,
+          level: pointsData.level ?? 'Explorer',
+          rank: pointsData.rank ?? 0,
+          streakCount: streakData.streak_count ?? 0,
+          lastActiveDate: streakData.last_active_date ?? null,
+        });
+      }
+      if (achievementsRes.ok) {
+        const data = await achievementsRes.json();
+        setAchievements({ earned: data.earned ?? [], all: data.all ?? [] });
+      }
+      if (recsRes.ok) {
+        const data = await recsRes.json();
+        setRecommendations(data.recommendations ?? []);
+      }
+    } catch (e) {
+      console.error('Gamification load error', e);
+    } finally {
+      setGamificationLoading(false);
+    }
+  };
+
 
 
 
@@ -106,6 +170,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
         
         // Load client favorites
         loadClientFavorites();
+        loadGamification();
         const response = await fetch('/api/user/export', {
           headers: {
             'Authorization': `Bearer ${session.access_token}`,
@@ -249,23 +314,44 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
           <p className="text-gray-600 dark:text-gray-300">Your personal AI tools dashboard</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 border-t-4 border-t-green-500">
             <p className="text-sm text-gray-600 dark:text-gray-400">Tools Explored</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.toolsExplored}</p>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 border-t-4 border-t-green-500">
             <p className="text-sm text-gray-600 dark:text-gray-400">Reviews Written</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.reviewsWritten}</p>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 border-t-4 border-t-green-500">
             <p className="text-sm text-gray-600 dark:text-gray-400">Favorites</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{clientFavorites.length}</p>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 border-t-4 border-t-green-500">
+            <p className="text-sm text-gray-600 dark:text-gray-400">Points</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{gamification?.points ?? '—'}</p>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 border-t-4 border-t-green-500">
+            <p className="text-sm text-gray-600 dark:text-gray-400">Streak</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{gamification ? `${gamification.streakCount}d` : '—'}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-8">
+            {/* Recommended Tools */}
+            {recommendations.length > 0 && (
+              <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-800">
+                  <h2 className="text-lg font-semibold text-white">Recommended For You</h2>
+                  <p className="text-sm text-gray-400 mt-1">Based on your activity and favorites</p>
+                </div>
+                <div className="p-6">
+                  <RecommendedTools tools={recommendations} />
+                </div>
+              </div>
+            )}
+
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Activity</h2>
@@ -395,6 +481,29 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                 )}
             </div>
           </div>
+          </div>
+
+          {/* Sidebar: lg:col-span-1 */}
+          <div className="lg:col-span-1 space-y-6">
+            {/* Points + Streak */}
+            {gamification && !gamificationLoading && (
+              <div className="space-y-4">
+                <PointsDisplay points={gamification.points} level={gamification.level} />
+                <StreakTracker streakCount={gamification.streakCount} lastActiveDate={gamification.lastActiveDate} />
+              </div>
+            )}
+
+            {/* Achievements */}
+            {!gamificationLoading && (
+              <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+                <div className="px-6 py-4 border-b border-gray-800">
+                  <h2 className="text-lg font-semibold text-white">Achievements</h2>
+                </div>
+                <div className="p-6">
+                  <AchievementsGrid earned={achievements.earned} all={achievements.all} />
+                </div>
+              </div>
+            )}
 
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">

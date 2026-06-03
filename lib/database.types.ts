@@ -156,6 +156,13 @@ export interface Database {
           avatar_url: string | null;
           points: number | null;
           level: string | null;
+          skill_level: 'beginner' | 'intermediate' | 'advanced' | 'expert' | null;
+          interests: string[] | null;
+          learning_path: string | null;
+          streak_count: number | null;
+          last_active_date: string | null;
+          total_tools_viewed: number | null;
+          organization: string | null;
           created_at: string | null;
           updated_at: string | null;
         };
@@ -167,6 +174,13 @@ export interface Database {
           avatar_url?: string | null;
           points?: number | null;
           level?: string | null;
+          skill_level?: 'beginner' | 'intermediate' | 'advanced' | 'expert' | null;
+          interests?: string[] | null;
+          learning_path?: string | null;
+          streak_count?: number | null;
+          last_active_date?: string | null;
+          total_tools_viewed?: number | null;
+          organization?: string | null;
           created_at?: string | null;
           updated_at?: string | null;
         };
@@ -224,6 +238,67 @@ export interface Database {
           created_at?: string | null;
         };
         Update: Partial<Database['public']['Tables']['users']['Insert']>;
+      };
+      achievements: {
+        Row: {
+          id: string;
+          slug: string;
+          name: string;
+          description: string;
+          icon: string;
+          category: 'discovery' | 'learning' | 'community' | 'streak' | 'milestone';
+          points_reward: number;
+          requirement_type: string;
+          requirement_value: number;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          name: string;
+          description: string;
+          icon: string;
+          category: 'discovery' | 'learning' | 'community' | 'streak' | 'milestone';
+          points_reward?: number;
+          requirement_type: string;
+          requirement_value?: number;
+          created_at?: string | null;
+        };
+        Update: Partial<Database['public']['Tables']['achievements']['Insert']>;
+      };
+      user_achievements: {
+        Row: {
+          id: string;
+          user_id: string;
+          achievement_id: string;
+          earned_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          achievement_id: string;
+          earned_at?: string | null;
+        };
+        Update: Partial<Database['public']['Tables']['user_achievements']['Insert']>;
+      };
+      user_recommendations: {
+        Row: {
+          id: string;
+          user_id: string;
+          tool_id: string;
+          score: number;
+          reason: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          tool_id: string;
+          score?: number;
+          reason?: string | null;
+          created_at?: string | null;
+        };
+        Update: Partial<Database['public']['Tables']['user_recommendations']['Insert']>;
       };
     };
   };
