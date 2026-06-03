@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import MailerLiteSignup from './MailerLiteSignup';
 
 export default function Footer() {
@@ -10,15 +11,14 @@ export default function Footer() {
 
   const footerLinks = {
     product: [
-              { name: 'Media Tools', href: '/AITools' },
-      { name: 'Submit Resource', href: '/submit-tool' },
-      // { name: 'API', href: '/api' },
+      { name: 'AI Tools', href: '/AITools' },
+      { name: 'Tutorials', href: '/blog' },
+      { name: 'Resources', href: '/AITools' },
+      { name: 'Submit a Tool', href: '/submit-tool' },
     ],
     company: [
       { name: 'About', href: '/about' },
-      { name: 'Consulting', href: '/consulting' },
       { name: 'Blog', href: '/blog' },
-      // { name: 'Careers', href: '/careers' },
       { name: 'Contact', href: '/contact' },
     ],
     support: [
@@ -42,14 +42,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-                V
-              </div>
-              <span className="text-xl font-bold">VaultX Tech</span>
+            <div className="flex items-center space-x-3 mb-4">
+              <Image
+                src="/logo.png"
+                alt="Melanated In Tech"
+                width={56}
+                height={56}
+                className="object-contain"
+              />
+              <span className="text-xl font-bold">Melanated In Tech</span>
             </div>
-            <p className="text-gray-400 mb-6 max-w-md">
-              Church and ministry media consultant providing tools, resources, and guidance for effective media production.
+            <p className="text-gray-400 mb-2 max-w-md">
+              Learn Tech. Build Skills. Create Opportunities.
+            </p>
+            <p className="text-gray-500 mb-6 max-w-md text-sm">
+              A technology education platform helping people learn AI, automation, software development, and emerging tech to build skills and thrive in the digital economy.
             </p>
             {/* <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200">
@@ -145,7 +152,7 @@ export default function Footer() {
             
             <div className="flex items-center space-x-4">
               <p className="text-gray-400 text-sm">
-                © 2024 VaultX Tech. All rights reserved.
+                © 2025 Melanated In Tech. All rights reserved.
               </p>
               <button
                 onClick={scrollToTop}

@@ -45,14 +45,14 @@ const initialReviews: Review[] = [
     id: 4,
     username: "David R.",
     rating: 5,
-    comment: "The community reviews are so helpful. I trust this platform for all my ministry media tool decisions.",
+    comment: "The community reviews are so helpful. I trust this platform for all my AI tool decisions as I level up my tech skills.",
     timeAgo: "1 week ago"
   },
   {
     id: 5,
     username: "Lisa T.",
     rating: 5,
-    comment: "The expert guidance has been invaluable for our church's live streaming setup. Perfect for ministry needs.",
+    comment: "The expert guidance has been invaluable for setting up my automation workflows. Perfect for entrepreneurs and builders.",
     timeAgo: "1 week ago"
   }
 ];

@@ -22,21 +22,21 @@ export default function DocumentationClient() {
       content: (
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Welcome to VaultX Tech</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Welcome to Melanated In Tech</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              VaultX Tech is your comprehensive resource for discovering, reviewing, and sharing the best media production tools and resources for churches and ministries. 
-              Whether you're a media director, pastor, or ministry leader, our platform helps you find the perfect media solutions for your church or ministry.
+              Melanated In Tech is your comprehensive resource for discovering, reviewing, and sharing the best AI tools, automation platforms, and tech education resources.
+              Whether you're a beginner exploring AI, an entrepreneur automating your workflow, or a developer building your next project, our platform helps you find the right tools for your goals.
             </p>
           </div>
 
           <div>
             <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Key Features</h4>
             <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-              <li><strong>Tool Discovery:</strong> Browse hundreds of media production tools across various categories</li>
-              <li><strong>User Reviews:</strong> Read authentic reviews from churches and ministries</li>
-              <li><strong>Trending Tools:</strong> Discover what's popular in the ministry media community</li>
-              <li><strong>Resource Submissions:</strong> Submit your own media tools and resources to the directory</li>
-              <li><strong>Advanced Search:</strong> Find tools based on specific criteria for your ministry needs</li>
+              <li><strong>Tool Discovery:</strong> Browse hundreds of AI and tech tools across categories like AI Agents, Automation, and Development</li>
+              <li><strong>User Reviews:</strong> Read authentic reviews from learners, builders, and entrepreneurs</li>
+              <li><strong>Trending Tools:</strong> Discover what's popular in the AI and tech community right now</li>
+              <li><strong>Resource Submissions:</strong> Submit your own tools and resources to the directory</li>
+              <li><strong>Advanced Search:</strong> Find tools based on specific criteria for your learning and building needs</li>
             </ul>
           </div>
 
@@ -70,7 +70,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How to Find Media Tools</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Discover media production tools that match your church or ministry needs using our powerful search and filtering system.
+              Discover AI and tech tools that match your learning and building goals using our powerful search and filtering system.
             </p>
           </div>
 
@@ -206,7 +206,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">How to Write Helpful Reviews</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Share your experience with media production tools to help other churches and ministries make informed decisions. Your reviews are valuable to our community.
+              Share your experience with AI and tech tools to help other learners and builders make informed decisions. Your reviews are valuable to our community.
             </p>
           </div>
 
@@ -297,7 +297,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Managing Your Account</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Create and manage your VaultX Tech account to unlock additional features and personalize your experience.
+              Create and manage your Melanated In Tech account to unlock additional features and personalize your experience.
             </p>
           </div>
 
@@ -374,7 +374,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Administrator Guide</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Learn about the administrative features available to help manage the VaultX Tech platform.
+              Learn about the administrative features available to help manage the Melanated In Tech platform.
             </p>
           </div>
 
@@ -468,7 +468,7 @@ export default function DocumentationClient() {
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Getting Help and Support</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Need help with VaultX Tech? We're here to assist you with any questions or issues you may have.
+              Need help with Melanated In Tech? We're here to assist you with any questions or issues you may have.
             </p>
           </div>
 
@@ -575,7 +575,7 @@ export default function DocumentationClient() {
               Documentation
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              Learn how to use VaultX Tech platform effectively. From browsing media tools to submitting your own resources, we've got you covered.
+              Learn how to use Melanated In Tech effectively. From browsing AI tools to submitting your own resources and writing reviews, we've got you covered.
             </p>
           </div>
         </div>

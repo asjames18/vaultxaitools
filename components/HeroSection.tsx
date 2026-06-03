@@ -25,7 +25,7 @@ const HeroSection = memo(({ isVisible, currentHeadlineIndex, dynamicHeadlines }:
           {/* Enhanced badge */}
           <div className={`inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-sm border border-blue-200 dark:border-blue-700 rounded-full px-6 py-3 mb-8 shadow-lg transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <SparklesIcon className="w-5 h-5 text-blue-600 animate-pulse" />
-            <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">Ministry Media Consultant</span>
+            <span className="text-sm font-semibold text-green-700 dark:text-green-300">Technology Education &amp; Innovation</span>
           </div>
           
           {/* Dynamic headline */}
@@ -37,8 +37,7 @@ const HeroSection = memo(({ isVisible, currentHeadlineIndex, dynamicHeadlines }:
           
           {/* Subtitle */}
           <p className={`text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            Discover the most effective media production tools and resources for your church or ministry. 
-            Expert guidance and curated resources to help you produce excellent media content.
+            Discover the most effective AI tools, automation resources, and development guides to build real skills and create opportunities in the digital economy.
           </p>
           
           {/* Enhanced CTA with hover effects */}

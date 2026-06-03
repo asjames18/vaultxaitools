@@ -12,12 +12,12 @@ export const revalidate = 300;
 export const tags = ['tools', 'aitools'];
 
 export const metadata: Metadata = {
-  title: 'Media Tools Directory — Discover & Compare Media Production Tools | VaultX Tech',
-  description: 'Explore our curated directory of media production tools for churches and ministries. Discover, compare, and find the perfect media solution for video editing, graphics design, social media, live streaming, and audio production.',
-  keywords: 'media tools directory, church media tools, ministry media resources, video editing tools, graphics design software, social media management, live streaming platforms, audio production tools',
+  title: 'AI Tools Directory — Discover & Compare the Best AI Tools | Melanated In Tech',
+  description: 'Explore our curated directory of AI tools, automation platforms, development tools, and productivity resources. Discover, compare, and find the right technology to learn, build, and grow.',
+  keywords: 'AI tools directory, best AI tools, artificial intelligence tools, automation tools, AI agents, development tools, productivity tools, prompt engineering, no-code tools, tech education',
   openGraph: {
-    title: 'Media Tools Directory — Discover & Compare Media Production Tools | VaultX Tech',
-    description: 'Explore our curated directory of media production tools for churches and ministries. Discover, compare, and find the perfect media solution.',
+    title: 'AI Tools Directory — Discover & Compare the Best AI Tools | Melanated In Tech',
+    description: 'Explore our curated directory of AI tools, automation platforms, and development resources. Find the right technology to learn, build, and grow.',
     type: 'website',
   },
 };
@@ -78,7 +78,7 @@ export default async function AITools() {
         itemListElement: tools.map((t, i) => ({
           '@type': 'ListItem',
           position: i + 1,
-          url: `https://vaultx.ai/tool/${t.id}`,
+          url: `https://vaultxaitools.com/tool/${t.id}`,
           name: t.name
         }))
       }} />

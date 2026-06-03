@@ -135,14 +135,14 @@ export default function PrivacyClient() {
                   </h2>
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      At VaultX Tech, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
+                      At Melanated In Tech, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
                     </p>
                     
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                       Scope
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      This Privacy Policy applies to all users of VaultX Tech, including visitors to our website, registered users, and administrators. By using our services, you agree to the collection and use of information in accordance with this policy.
+                      This Privacy Policy applies to all users of Melanated In Tech, including visitors to our website, registered users, and administrators. By using our services, you agree to the collection and use of information in accordance with this policy.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -256,7 +256,7 @@ export default function PrivacyClient() {
                       We Do Not Sell Your Data
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      VaultX Tech does not sell, rent, or trade your personal information to third parties for their marketing purposes.
+                      Melanated In Tech does not sell, rent, or trade your personal information to third parties for their marketing purposes.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">

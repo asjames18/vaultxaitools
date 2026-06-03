@@ -9,10 +9,10 @@ export default function AboutClient() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            About VaultX Tech
+            About Melanated In Tech
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            We&apos;re on a mission to empower churches and ministries with professional media tools, resources, and expert guidance for effective media production.
+            Our mission is to educate, empower, and inspire people to use technology as a tool for growth, opportunity, creativity, and impact.
           </p>
         </div>
 
@@ -24,10 +24,10 @@ export default function AboutClient() {
                 Our Mission
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                The media production landscape for churches and ministries is constantly evolving, with new tools and techniques emerging regularly. Our mission is to curate, categorize, and showcase quality media production tools and resources, making it easier for churches and ministries to find the right solutions for their specific needs.
+                The technology landscape is constantly evolving, with new AI tools, automation platforms, and development frameworks emerging regularly. Our mission is to curate, categorize, and showcase quality tech resources, making it easier for learners, builders, and entrepreneurs to find the right tools for their specific goals.
               </p>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                We believe that professional-quality media production should be accessible to every church and ministry, regardless of their technical background or budget. That&apos;s why we provide detailed information, comparisons, expert guidance, and consulting services to help you make informed decisions about which media tools and strategies to use.
+                We believe that technology should be accessible to everyone, regardless of technical background or budget. That&apos;s why we provide practical guides, curated tool comparisons, and beginner-friendly resources to help you make informed decisions and start building real skills today.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="text-center">
@@ -192,7 +192,7 @@ export default function AboutClient() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="mailto:contact@vaultxaitools.com"
+              href="mailto:contact@melanatedintech.com"
               className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
             >
               Contact Us

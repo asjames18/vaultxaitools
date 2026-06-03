@@ -16,25 +16,28 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'VaultX Tech - Church & Ministry Media Consultant',
-    template: '%s | VaultX Tech'
+    default: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
+    template: '%s | Melanated In Tech'
   },
-  description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production. Expert advice for video editing, graphics design, social media, live streaming, and audio production.',
+  description: 'Melanated In Tech is a technology education platform helping people learn AI, automation, software development, and emerging tech. Build skills, create opportunities, and thrive in the digital economy.',
   keywords: [
-    'church media consultant',
-    'ministry media tools',
-    'church video production',
-    'ministry graphics design',
-    'church social media',
-    'ministry live streaming',
-    'church audio production',
-    'ministry media resources',
-    'church media guidance',
-    'ministry media consulting'
+    'AI education',
+    'learn artificial intelligence',
+    'AI tools',
+    'AI agents',
+    'prompt engineering',
+    'automation',
+    'software development',
+    'tech education',
+    'digital transformation',
+    'productivity tools',
+    'emerging technology',
+    'entrepreneurship',
+    'melanated in tech'
   ],
-  authors: [{ name: 'VaultX Tech' }],
-  creator: 'VaultX Tech',
-  publisher: 'VaultX Tech',
+  authors: [{ name: 'Melanated In Tech' }],
+  creator: 'Melanated In Tech',
+  publisher: 'Melanated In Tech',
   formatDetection: {
     email: false,
     address: false,
@@ -45,28 +48,28 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'VaultX Tech - Church & Ministry Media Consultant',
-    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
+    title: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
+    description: 'Melanated In Tech helps people learn AI, automation, software development, and emerging technology to build skills, create opportunities, and thrive in the digital economy.',
     url: 'https://vaultxaitools.com',
-    siteName: 'VaultX Tech',
+    siteName: 'Melanated In Tech',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'VaultX Tech - Church & Ministry Media Consultant',
+        alt: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@vaultxaitools',
-    creator: '@vaultxaitools',
-    title: 'VaultX Tech - Church & Ministry Media Consultant',
-    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
-    images: ['/og-image.jpg'],
+    site: '@melanatedintech',
+    creator: '@melanatedintech',
+    title: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
+    description: 'Melanated In Tech helps people learn AI, automation, software development, and emerging technology to build skills and create opportunities.',
+    images: ['/opengraph-image'],
   },
   robots: {
     index: true,
@@ -100,12 +103,13 @@ export default function RootLayout({
         <JsonLd data={{
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: 'VaultX Tech',
+          name: 'Melanated In Tech',
           url: 'https://vaultxaitools.com',
           logo: 'https://vaultxaitools.com/logo.png',
+          image: 'https://vaultxaitools.com/logo.png',
           sameAs: [
-            'https://twitter.com/vaultxaitools',
-            'https://www.linkedin.com/company/vaultxaitools'
+            'https://twitter.com/melanatedintech',
+            'https://www.linkedin.com/company/melanatedintech'
           ]
         }} />
         <a href="#main-content" className="sr-only focus:not-sr-only focus-visible:outline-2 focus-visible:outline-blue-500">

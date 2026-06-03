@@ -32,7 +32,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           } : undefined,
           author: {
             '@type': 'Organization',
-            name: 'VaultX Tech',
+            name: 'Melanated In Tech',
             url: 'https://vaultxaitools.com'
           },
           datePublished: data.created_at,
@@ -44,7 +44,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
           name: `${data.name} Media Tools`,
-          description: `Best ${data.name} media production tools and resources for churches and ministries`,
+          description: `Best ${data.name} AI and tech tools for learners, builders, and entrepreneurs`,
           url: `https://vaultxaitools.com/AITools?category=${data.slug}`,
           numberOfItems: data.toolCount || 0,
           itemListElement: data.tools?.map((tool: Tool, index: number) => ({
@@ -63,8 +63,8 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         return {
           '@context': 'https://schema.org',
           '@type': 'WebSite',
-          name: 'VaultX Tech',
-          description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
+          name: 'Melanated In Tech',
+          description: 'Technology education platform helping people learn AI, automation, software development, and emerging tech to build skills and create opportunities.',
           url: 'https://vaultxaitools.com',
           potentialAction: {
             '@type': 'SearchAction',
@@ -76,7 +76,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           },
           publisher: {
             '@type': 'Organization',
-            name: 'VaultX Tech',
+            name: 'Melanated In Tech',
             url: 'https://vaultxaitools.com'
           }
         };
@@ -85,8 +85,8 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         return {
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: 'VaultX Tech',
-          description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
+          name: 'Melanated In Tech',
+          description: 'Technology education platform helping people learn AI, automation, software development, and emerging tech to build skills and create opportunities.',
           url: 'https://vaultxaitools.com',
           logo: 'https://vaultxaitools.com/logo.png',
           sameAs: [

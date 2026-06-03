@@ -54,7 +54,7 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
             </h2>
             
             <p className="text-xl md:text-2xl text-indigo-100 mb-10 leading-relaxed max-w-3xl">
-              We test hundreds of media production tools so you don't have to. Get weekly recommendations of only the most effective, reliable, and innovative media solutions for your church or ministry.
+              We curate hundreds of AI and tech tools so you don't have to. Get weekly recommendations of the most effective, beginner-friendly resources for learning AI, automation, and software development.
             </p>
 
             {/* Curation Process - Better organized with more spacing */}

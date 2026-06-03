@@ -5,25 +5,28 @@ import type { Tool, Category } from '@/lib/types/tool';
 export const baseMetadata: Metadata = {
   metadataBase: new URL('https://vaultxaitools.com'),
   title: {
-    default: 'VaultX Tech - Church & Ministry Media Consultant',
-    template: '%s | VaultX Tech'
+    default: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
+    template: '%s | Melanated In Tech'
   },
-  description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production. Expert advice for video editing, graphics design, social media, live streaming, and audio production.',
+  description: 'Melanated In Tech is a technology education platform helping people learn AI, automation, software development, and emerging tech. Build skills, create opportunities, and thrive in the digital economy.',
   keywords: [
-    'church media consultant',
-    'ministry media tools',
-    'church video production',
-    'ministry graphics design',
-    'church social media',
-    'ministry live streaming',
-    'church audio production',
-    'ministry media resources',
-    'church media guidance',
-    'ministry media consulting'
+    'AI education',
+    'learn artificial intelligence',
+    'AI tools',
+    'AI agents',
+    'prompt engineering',
+    'automation',
+    'software development',
+    'tech education',
+    'digital transformation',
+    'productivity tools',
+    'emerging technology',
+    'entrepreneurship',
+    'melanated in tech'
   ],
-  authors: [{ name: 'VaultX Tech' }],
-  creator: 'VaultX Tech',
-  publisher: 'VaultX Tech',
+  authors: [{ name: 'Melanated In Tech' }],
+  creator: 'Melanated In Tech',
+  publisher: 'Melanated In Tech',
   formatDetection: {
     email: false,
     address: false,
@@ -52,25 +55,25 @@ export const baseMetadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://vaultxaitools.com',
-    siteName: 'VaultX Tech',
-    title: 'VaultX Tech - Church & Ministry Media Consultant',
-    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
+    siteName: 'Melanated In Tech',
+    title: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
+    description: 'Melanated In Tech helps people learn AI, automation, software development, and emerging technology to build skills and create opportunities.',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'VaultX AI Tools - Discover the Best AI Tools',
+        alt: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@vaultxaitools',
-    creator: '@vaultxaitools',
-    title: 'VaultX Tech - Church & Ministry Media Consultant',
-    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production.',
-    images: ['/og-image.jpg'],
+    site: '@melanatedintech',
+    creator: '@melanatedintech',
+    title: 'Melanated In Tech - Learn Tech. Build Skills. Create Opportunities.',
+    description: 'Melanated In Tech helps people learn AI, automation, software development, and emerging technology to build skills and create opportunities.',
+    images: ['/opengraph-image'],
   },
 };
 
@@ -100,7 +103,7 @@ export function generateToolMetadata(tool: Tool): Metadata {
       url: `https://vaultxaitools.com/tool/${tool.id}`,
       images: [
         {
-          url: tool.logo || '/og-image.jpg',
+          url: tool.logo || '/opengraph-image',
           width: 1200,
           height: 630,
           alt: `${tool.name} - AI Tool`,
@@ -108,7 +111,7 @@ export function generateToolMetadata(tool: Tool): Metadata {
       ],
       publishedTime: tool.createdAt,
       modifiedTime: tool.updatedAt,
-      authors: ['VaultX Tech'],
+      authors: ['Melanated In Tech'],
       section: tool.category,
       tags: tool.tags || [],
     },
@@ -116,7 +119,7 @@ export function generateToolMetadata(tool: Tool): Metadata {
       card: 'summary_large_image',
       title,
       description,
-      images: [tool.logo || '/og-image.jpg'],
+      images: [tool.logo || '/opengraph-image'],
     },
     alternates: {
       canonical: `/tool/${tool.id}`,
@@ -198,13 +201,13 @@ export function generateSearchMetadata(query: string): Metadata {
 
 // Generate metadata for about page
 export function generateAboutMetadata(): Metadata {
-  const title = 'About VaultX Tech - Church & Ministry Media Consultant';
-  const description = 'Learn about VaultX Tech, your trusted church and ministry media consultant providing tools, resources, and guidance for effective media production.';
-  
+  const title = 'About Melanated In Tech - Our Mission & Vision';
+  const description = 'Learn about Melanated In Tech — our mission to educate, empower, and inspire people to use technology as a tool for growth, opportunity, creativity, and impact.';
+
   return {
     title,
     description,
-    keywords: ['about', 'VaultX Tech', 'church media consultant', 'ministry media tools'],
+    keywords: ['about', 'Melanated In Tech', 'tech education', 'AI learning', 'digital skills'],
     openGraph: {
       title,
       description,
@@ -225,26 +228,26 @@ export function generateAboutMetadata(): Metadata {
 // Generate metadata for blog page
 export function generateBlogMetadata(): Metadata {
   return {
-    title: 'Blog - Church & Ministry Media Resources',
-    description: 'Stay updated with the latest church and ministry media tools, tutorials, best practices, and case studies. Learn how to effectively produce media for your ministry.',
+    title: 'Tutorials & Blog - Melanated In Tech',
+    description: 'Learn AI, automation, prompt engineering, software development, and emerging tech through practical tutorials, guides, and resources from Melanated In Tech.',
     keywords: [
-      'church media blog',
-      'ministry media resources',
-      'church video tutorials',
-      'ministry graphics guides',
-      'church social media tips',
-      'ministry live streaming',
-      'church audio production',
-      'ministry media case studies'
+      'AI tutorials',
+      'tech education blog',
+      'prompt engineering guide',
+      'automation tutorials',
+      'software development tips',
+      'AI agents explained',
+      'digital transformation',
+      'tech for beginners'
     ],
     openGraph: {
-      title: 'Blog - Church & Ministry Media Resources',
-      description: 'Stay updated with the latest church and ministry media tools, tutorials, best practices, and case studies.',
+      title: 'Tutorials & Blog - Melanated In Tech',
+      description: 'Practical tutorials and resources to help you learn AI, automation, software development, and emerging technology.',
       type: 'website',
       url: 'https://vaultxaitools.com/blog',
       images: [
         {
-          url: '/og-blog.jpg',
+          url: '/blog/opengraph-image',
           width: 1200,
           height: 630,
           alt: 'AI Tools Blog - Insights & Reviews',
@@ -253,9 +256,9 @@ export function generateBlogMetadata(): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Blog - Church & Ministry Media Resources',
-      description: 'Stay updated with the latest church and ministry media tools, tutorials, best practices, and case studies.',
-      images: ['/og-blog.jpg'],
+      title: 'Tutorials & Blog - Melanated In Tech',
+      description: 'Practical tutorials and resources to help you learn AI, automation, software development, and emerging technology.',
+      images: ['/blog/opengraph-image'],
     },
   };
 }
@@ -285,7 +288,7 @@ export function generateToolStructuredData(tool: Tool) {
     } : undefined,
     author: {
       '@type': 'Organization',
-      name: 'VaultX Tech',
+      name: 'Melanated In Tech',
       url: 'https://vaultxaitools.com'
     },
     datePublished: tool.createdAt,
@@ -311,8 +314,8 @@ export function generateWebsiteStructuredData() {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'VaultX Tech',
-    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
+    name: 'Melanated In Tech',
+    description: 'Technology education platform helping people learn AI, automation, software development, and emerging tech',
     url: 'https://vaultxaitools.com',
     potentialAction: {
       '@type': 'SearchAction',
@@ -324,7 +327,7 @@ export function generateWebsiteStructuredData() {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'VaultX Tech',
+      name: 'Melanated In Tech',
       logo: {
         '@type': 'ImageObject',
         url: 'https://vaultxaitools.com/logo.png',
@@ -356,19 +359,19 @@ export function generateOrganizationStructuredData() {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'VaultX Tech',
+    name: 'Melanated In Tech',
     url: 'https://vaultxaitools.com',
     logo: 'https://vaultxaitools.com/logo.png',
-    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
+    description: 'Technology education platform helping people learn AI, automation, software development, and emerging tech',
     sameAs: [
-      'https://twitter.com/vaultxaitools',
-      'https://linkedin.com/company/vaultxaitools',
+      'https://twitter.com/melanatedintech',
+      'https://linkedin.com/company/melanatedintech',
       'https://github.com/vaultxaitools',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      email: 'contact@vaultxaitools.com',
+      email: 'contact@melanatedintech.com',
     },
   };
 
@@ -379,14 +382,14 @@ export function generateOrganizationStructuredData() {
 export function generateAdminMetadata(pageTitle: string): Metadata {
   return {
     title: `${pageTitle} - Admin Dashboard`,
-    description: 'Admin dashboard for managing VaultX Tech content and settings.',
+    description: 'Admin dashboard for managing Melanated In Tech platform content and settings.',
     robots: {
       index: false,
       follow: false,
     },
     openGraph: {
       title: `${pageTitle} - Admin Dashboard`,
-      description: 'Admin dashboard for managing VaultX Tech content and settings.',
+      description: 'Admin dashboard for managing Melanated In Tech platform content and settings.',
       type: 'website',
     },
   };

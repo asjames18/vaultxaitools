@@ -36,8 +36,8 @@ const HomeHeroSection = memo(function HomeHeroSection({
           {/* Enhanced badge */}
           <div className={`inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-sm border border-blue-200 dark:border-blue-700 rounded-full px-6 py-3 mb-8 shadow-lg transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <SparklesIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <span className="text-sm font-semibold text-blue-800 dark:text-blue-300">
-              Ministry Media Excellence
+            <span className="text-sm font-semibold text-green-800 dark:text-green-300">
+              Technology Education &amp; Innovation
             </span>
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
           </div>
@@ -49,8 +49,7 @@ const HomeHeroSection = memo(function HomeHeroSection({
 
           {/* Enhanced subtitle */}
           <p className={`text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            Access <span className="font-semibold text-blue-600 dark:text-blue-400">{totalTools}+ carefully selected media tools</span> and 
-            expert guidance for your church or ministry. Professional resources for effective media production.
+            Explore <span className="font-semibold text-green-500 dark:text-green-400">{totalTools}+ curated AI tools, resources, and tutorials</span> to help you learn technology, automate your work, and build skills that create real opportunities.
           </p>
 
           {/* Value propositions grid */}
@@ -60,37 +59,37 @@ const HomeHeroSection = memo(function HomeHeroSection({
                 <CheckIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
               </div>
               <div className="text-left">
-                <div className="font-semibold text-gray-900 dark:text-white text-sm">Expert Guidance</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">Ministry-focused advice</div>
+                <div className="font-semibold text-gray-900 dark:text-white text-sm">Learn AI & Automation</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Beginner-friendly resources</div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-4 border border-gray-200 dark:border-gray-700">
-              <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                <ShieldIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <div className="w-10 h-10 bg-green-100 dark:bg-green-900/40 rounded-lg flex items-center justify-center">
+                <ShieldIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
               </div>
               <div className="text-left">
-                <div className="font-semibold text-gray-900 dark:text-white text-sm">Quality Resources</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">Curated media tools</div>
+                <div className="font-semibold text-gray-900 dark:text-white text-sm">Curated Tools</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Vetted AI & tech tools</div>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-4 border border-gray-200 dark:border-gray-700">
-              <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
-                <RocketIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              <div className="w-10 h-10 bg-green-100 dark:bg-green-900/40 rounded-lg flex items-center justify-center">
+                <RocketIcon className="w-5 h-5 text-green-500 dark:text-green-400" />
               </div>
               <div className="text-left">
-                <div className="font-semibold text-gray-900 dark:text-white text-sm">Always Updated</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">Latest media solutions</div>
+                <div className="font-semibold text-gray-900 dark:text-white text-sm">Build Real Skills</div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">Practical, actionable learning</div>
               </div>
             </div>
           </div>
 
           {/* CTA Buttons */}
           <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-green-400 hover:from-green-400 hover:to-green-300 text-black font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               <SearchIcon className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-              Explore Media Tools
+              Explore AI Tools
               <div className="w-2 h-2 bg-white/30 rounded-full group-hover:bg-white/50 transition-colors"></div>
             </button>
             
@@ -105,8 +104,8 @@ const HomeHeroSection = memo(function HomeHeroSection({
           {/* Trust indicators */}
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 text-center transition-all duration-700 delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">{totalTools}+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Curated Tools</div>
+              <div className="text-2xl font-bold text-green-400">{totalTools}+</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
             </div>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
               <div className="text-2xl font-bold text-gray-900 dark:text-white">50K+</div>
@@ -128,10 +127,10 @@ const HomeHeroSection = memo(function HomeHeroSection({
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="text-center mb-12">
           <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            Trusted by professionals worldwide
+            Trusted by learners and builders worldwide
           </h3>
           <p className="text-gray-600 dark:text-gray-300">
-            See what our users say about our curated AI tool selection
+            See what our community says about learning and growing with Melanated In Tech
           </p>
         </div>
         

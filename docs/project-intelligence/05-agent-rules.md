@@ -8,7 +8,7 @@
 ## Before You Code
 
 1. Read `docs/project-intelligence/01-product-vision.md` through `09-technical-debt.md`
-2. Confirm the actual domain — this is a **church/ministry media tools directory**, not gym/athlete software
+2. Confirm the actual domain — this is a **Melanated In Tech AI and tech education platform**, not gym/athlete software
 3. Use terms from `02-domain-language.md` exactly (Tool, Category, Review, Favorite, Admin, etc.)
 4. Do not introduce Express, MongoDB, Clerk, or Stripe — they are not part of this stack
 5. Prefer extending existing patterns over inventing new abstractions

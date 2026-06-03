@@ -67,7 +67,7 @@ export default function GettingStartedClient() {
       title: "Browse Media Tools",
       description: "Explore our curated collection of media production tools",
       icon: SearchIcon,
-      content: "Start by browsing our comprehensive collection of hand-picked media production tools. Each tool has been carefully selected and tested to ensure quality and effectiveness for church and ministry use.",
+      content: "Start by browsing our comprehensive collection of hand-picked AI and tech tools. Each tool has been carefully selected and tested to ensure quality and real-world effectiveness for learners and builders.",
       action: "Browse Tools",
       actionLink: "/AITools"
     },
@@ -94,7 +94,7 @@ export default function GettingStartedClient() {
       title: "Get Started",
       description: "Start using media tools",
       icon: RocketIcon,
-      content: "Visit tool websites, sign up for free trials, and begin integrating media production tools into your church or ministry workflow. Start with free tools to experiment before investing.",
+      content: "Visit tool websites, sign up for free trials, and begin integrating AI and tech tools into your workflow. Start with free tools to experiment and learn before investing.",
       action: "View Featured Tools",
       actionLink: "/"
     }
@@ -109,7 +109,7 @@ export default function GettingStartedClient() {
     {
       icon: UsersIcon,
       title: "Read User Reviews",
-      description: "Check real user experiences and reviews to understand how tools perform in practice for churches and ministries."
+      description: "Check real user experiences and reviews to understand how tools perform in practice for learners, builders, and entrepreneurs."
     },
     {
       icon: BookOpenIcon,
@@ -120,9 +120,9 @@ export default function GettingStartedClient() {
 
   const popularCategories = [
             { name: "Video Editing", description: "Video editing tools for church media", icon: "🎬", link: "/AITools?category=Video Editing" },
-        { name: "Graphics Design", description: "Graphics design tools for ministry materials", icon: "🎨", link: "/AITools?category=Graphics Design" },
-        { name: "Social Media", description: "Social media management for churches", icon: "📱", link: "/AITools?category=Social Media" },
-        { name: "Live Streaming", description: "Live streaming platforms for services", icon: "📺", link: "/AITools?category=Live Streaming" }
+        { name: "AI Tools", description: "Curated AI tools for every use case", icon: "🤖", link: "/AITools?category=AI Tools" },
+        { name: "Automation", description: "Workflow automation and integration tools", icon: "🔄", link: "/AITools?category=Automation" },
+        { name: "Development Tools", description: "Build apps and automate with code", icon: "💻", link: "/AITools?category=Development Tools" }
   ];
 
   return (
@@ -147,7 +147,7 @@ export default function GettingStartedClient() {
                      </h1>
                      
                      <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
-                       New to media production tools? This comprehensive guide will help you find, understand, and use the best media solutions for your church or ministry.
+                       New to AI and tech tools? This comprehensive guide will help you find, understand, and use the best tools to learn, build, and grow.
                      </p>
          
                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
@@ -172,7 +172,7 @@ export default function GettingStartedClient() {
               Your Journey to Media Production Success
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Follow these four simple steps to find and use the perfect media production tools for your church or ministry
+              Follow these four simple steps to find and use the right AI and tech tools for your goals
             </p>
           </div>
 
@@ -293,7 +293,7 @@ export default function GettingStartedClient() {
               Popular Media Tool Categories
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Start exploring these popular categories to find tools that match your church or ministry needs
+              Start exploring these popular categories to find tools that match your learning and building goals
             </p>
           </div>
 
@@ -328,7 +328,7 @@ export default function GettingStartedClient() {
             Ready to Get Started?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join hundreds of churches and ministries who are already using media production tools to create engaging content and reach their communities.
+            Join thousands of learners, builders, and entrepreneurs who are already using AI and tech tools to create opportunities and grow in the digital economy.
           </p>
           
                              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">

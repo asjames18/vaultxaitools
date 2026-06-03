@@ -83,7 +83,7 @@ export default function SubmitToolPage() {
             Submit a Media Resource
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Found an amazing media tool or resource that should be on VaultX Tech? Submit it here and we'll review it for inclusion in our curated collection.
+            Found an amazing AI or tech tool that should be on Melanated In Tech? Submit it here and we'll review it for inclusion in our curated collection.
           </p>
         </div>
 

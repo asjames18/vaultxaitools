@@ -28,7 +28,7 @@ export default async function InvestorPage() {
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Company Overview</h2>
           <p className="text-gray-600 mb-4">
-            VaultX Tech - Ministry Media tech and consulting. A comprehensive platform providing tools, resources, and expert guidance for effective ministry media production.
+            Melanated In Tech — A technology education platform helping people learn AI, automation, software development, and emerging tech to build skills and create opportunities in the digital economy.
           </p>
           
           <h3 className="text-lg font-semibold mb-2">Key Metrics</h3>

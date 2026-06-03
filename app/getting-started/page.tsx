@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Getting Started with Media Tools - VaultX Tech',
-  description: 'New to media production? Start here with our beginner-friendly guide to media tools and resources for churches and ministries',
+  title: 'Getting Started with AI & Tech Tools - Melanated In Tech',
+  description: 'New to AI and technology? Start here with our beginner-friendly guide to discovering, learning, and building with the best AI tools and tech resources.',
 };
 
 export default function GettingStartedPage() {
@@ -14,7 +14,7 @@ export default function GettingStartedPage() {
             Getting Started with Media Tools 🚀
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            New to media production? Start here with our beginner-friendly guide for churches and ministries
+            New to AI and tech tools? Start here with our beginner-friendly guide to learning and building with technology
           </p>
         </div>
 
@@ -27,8 +27,7 @@ export default function GettingStartedPage() {
             <div>
               <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">What is Media Production?</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
-                Media production for churches and ministries involves creating professional-quality video, graphics, audio, and social media content. 
-                This includes everything from editing sermon videos to designing graphics for social media posts.
+                AI and technology education involves discovering tools, learning practical skills, and applying emerging technology to real-world goals. This includes everything from exploring AI tools to building automations and developing software.
               </p>
               <p className="text-gray-600 dark:text-gray-300">
                 Media production tools can help you create engaging content, manage your social media presence, stream services live, and produce professional audio for podcasts and sermons.
@@ -45,7 +44,7 @@ export default function GettingStartedPage() {
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-white">Explore Our Directory</h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Browse our curated collection of media production tools to see what's available for your church or ministry
+                      Browse our curated collection of AI and tech tools to discover what's available for your learning and building goals
                     </p>
                   </div>
                 </div>

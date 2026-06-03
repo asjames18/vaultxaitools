@@ -381,12 +381,12 @@ export default function ConsultingClient({ constants }: Props) {
 
   const openContact = useCallback((context?: string) => {
     if (context) setContactContext(context);
-    window.dispatchEvent(new CustomEvent('vaultx-cta', { detail: 'contact-click' }));
+    window.dispatchEvent(new CustomEvent('mit-cta', { detail: 'contact-click' }));
     setContactOpen(true);
   }, []);
 
   const openStarter = useCallback(() => {
-    window.dispatchEvent(new CustomEvent('vaultx-cta', { detail: 'starter-click' }));
+    window.dispatchEvent(new CustomEvent('mit-cta', { detail: 'starter-click' }));
     setStarterOpen(true);
   }, []);
 
@@ -431,14 +431,14 @@ export default function ConsultingClient({ constants }: Props) {
                 </button>
               </div>
               <p className="mt-6 text-sm text-gray-600 dark:text-gray-400">
-                Higher-Ed Ready · SMB Friendly · Faith & Nonprofit Support
+                Higher-Ed Ready · SMB Friendly · Nonprofit &amp; Community Support
               </p>
             </div>
             <div className="hidden lg:block">
               <div className="rounded-2xl border border-dashed border-gray-300 p-8 text-center dark:border-gray-700">
                 <Image
                   src={constants.OG_IMAGE}
-                  alt="VaultX AI consulting hero"
+                  alt="Melanated In Tech — AI consulting and education services"
                   width={1200}
                   height={675}
                   className="mx-auto rounded-xl h-auto w-full"
@@ -470,8 +470,8 @@ export default function ConsultingClient({ constants }: Props) {
                   desc: 'Workflows, prompts, automations installed',
                 },
                 {
-                  title: 'Kingdom & Culture aligned',
-                  desc: 'Empowerment with integrity',
+                  title: 'Community & Culture aligned',
+                  desc: 'Empowerment with integrity and inclusion',
                 },
               ].map((card, i) => (
                 <div key={i} className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100 dark:bg-gray-800 dark:ring-gray-700">
@@ -672,7 +672,7 @@ export default function ConsultingClient({ constants }: Props) {
               {[
                 'Small Businesses',
                 'Higher Ed',
-                'Nonprofits & Churches',
+                'Nonprofits & Community Orgs',
                 'Real Estate',
                 'Creators/Coaches',
                 'Crypto & DeFi Educators',
@@ -719,7 +719,7 @@ export default function ConsultingClient({ constants }: Props) {
               {[
                 { q: 'Is this hands-on training?', a: 'Yes. We build together so your team can run it Monday.' },
                 { q: 'What tools do you set up?', a: 'ChatGPT, Zapier/Make, Notion AI, and your current stack where possible.' },
-                { q: 'Faith-based?', a: 'Values-driven and faith-rooted. We serve everyone with integrity.' },
+                { q: 'Values-driven?', a: 'Absolutely. We lead with integrity, inclusion, and empowerment in everything we do.' },
                 { q: 'Remote or on-site?', a: 'Both. We coach worldwide and can join on-site where needed.' },
                 { q: 'Data security?', a: 'Privacy-first configs; enterprise options available.' },
                 { q: 'Timeline to value?', a: 'Many see wins in week one with the Quick Launch.' },

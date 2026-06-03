@@ -1,17 +1,17 @@
-# VaultX Tech
+# Melanated In Tech
 
-**Church & Ministry Media Consultant** - A quality-focused platform providing media production tools, resources, and expert guidance for churches and ministries, built with Next.js, Express.js, and Supabase.
+**Learn Tech. Build Skills. Create Opportunities.** — A technology education platform helping people learn AI, automation, software development, and emerging tech, built with Next.js, Express.js, and Supabase.
 
-> **Ministry-Focused Excellence**: We provide curated media production tools and expert guidance so your church or ministry can produce professional-quality media content effectively.
+> **Tech Education for Everyone**: We curate the best AI tools, tutorials, and resources so learners, builders, and entrepreneurs can develop real skills and create opportunities in the digital economy.
 
 ## Features
 
 ### 🎯 **Expert Curation Process**
-- **Rigorous Testing**: Every tool undergoes thorough evaluation by media production specialists
-- **Quality Standards**: Only tools meeting strict criteria for ministry use are added to the directory
-- **Continuous Review**: Regular assessment of existing tools to maintain quality
-- **User Feedback Integration**: Community insights from churches and ministries help refine our selection process
-- **Transparent Process**: Clear explanation of how tools are selected and rated for ministry effectiveness
+- **Rigorous Testing**: Every tool undergoes thorough evaluation by AI and tech specialists
+- **Quality Standards**: Only tools meeting strict criteria for real-world usefulness are added to the directory
+- **Continuous Review**: Regular assessment of existing tools to maintain quality and relevance
+- **User Feedback Integration**: Community insights from learners, builders, and entrepreneurs help refine our selection process
+- **Transparent Process**: Clear explanation of how tools are selected and rated for practical effectiveness
 
 ### 🔥 Dynamic Trending System
 - **Real-time Trending Algorithm**: Sophisticated scoring system based on multiple factors:

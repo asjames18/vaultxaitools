@@ -21,15 +21,15 @@ export default function SEOHead({
   description,
   keywords = [],
   canonical,
-  ogImage = '/og-image.jpg',
+  ogImage = '/opengraph-image',
   ogType = 'website',
   publishedTime,
   modifiedTime,
-  author = 'VaultX Tech',
+  author = 'Melanated In Tech',
   section,
   tags = [],
 }: SEOHeadProps) {
-  const fullTitle = title.includes('VaultX') ? title : `${title} | VaultX Tech`;
+  const fullTitle = title.includes('Melanated In Tech') ? title : `${title} | Melanated In Tech`;
   const fullDescription = description.length > 160 ? description.substring(0, 157) + '...' : description;
   
   return (
@@ -47,7 +47,7 @@ export default function SEOHead({
       <meta property="og:description" content={fullDescription} />
       <meta property="og:type" content={ogType} />
       <meta property="og:url" content={canonical ? `https://vaultxaitools.com${canonical}` : 'https://vaultxaitools.com'} />
-      <meta property="og:site_name" content="VaultX Tech" />
+      <meta property="og:site_name" content="Melanated In Tech" />
       <meta property="og:locale" content="en_US" />
       <meta property="og:image" content={`https://vaultxaitools.com${ogImage}`} />
       <meta property="og:image:width" content="1200" />
@@ -56,8 +56,8 @@ export default function SEOHead({
       
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@vaultxaitools" />
-      <meta name="twitter:creator" content="@vaultxaitools" />
+      <meta name="twitter:site" content="@melanatedintech" />
+      <meta name="twitter:creator" content="@melanatedintech" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={fullDescription} />
       <meta name="twitter:image" content={`https://vaultxaitools.com${ogImage}`} />
@@ -89,12 +89,12 @@ export default function SEOHead({
       <meta name="geo.region" content="US" />
       
       {/* Social media verification */}
-      <meta name="twitter:site" content="@vaultxaitools" />
-      <meta name="twitter:creator" content="@vaultxaitools" />
+      <meta name="twitter:site" content="@melanatedintech" />
+      <meta name="twitter:creator" content="@melanatedintech" />
       
       {/* Structured data hints */}
-      <meta name="application-name" content="VaultX Tech" />
-      <meta name="apple-mobile-web-app-title" content="VaultX Tech" />
+      <meta name="application-name" content="Melanated In Tech" />
+      <meta name="apple-mobile-web-app-title" content="Melanated In Tech" />
     </Head>
   );
 }

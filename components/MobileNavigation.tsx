@@ -126,8 +126,8 @@ export default function MobileNavigation({
                   <span className="text-white font-bold text-lg">V</span>
                 </div>
                 <div>
-                  <h1 className="font-bold text-gray-900 dark:text-white">VaultX Tech</h1>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Media Tools Directory</p>
+                  <h1 className="font-bold text-gray-900 dark:text-white">Melanated In Tech</h1>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">AI &amp; Tech Education</p>
                 </div>
               </div>
             </div>

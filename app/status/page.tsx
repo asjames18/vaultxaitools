@@ -2,12 +2,12 @@ import { Metadata } from 'next';
 import StatusClient from './StatusClient';
 
 export const metadata: Metadata = {
-  title: 'System Status - VaultX Tech',
-  description: 'Check the current status of VaultX Tech platform, uptime, and any ongoing issues.',
-  keywords: 'status, uptime, system health, maintenance, VaultX Tech',
+  title: 'System Status - Melanated In Tech',
+  description: 'Check the current status of Melanated In Tech platform, uptime, and any ongoing issues.',
+  keywords: 'status, uptime, system health, maintenance, Melanated In Tech',
   openGraph: {
-    title: 'System Status - VaultX Tech',
-    description: 'Check the current status of VaultX Tech platform, uptime, and any ongoing issues.',
+    title: 'System Status - Melanated In Tech',
+    description: 'Check the current status of Melanated In Tech platform, uptime, and any ongoing issues.',
     type: 'website',
   },
 };

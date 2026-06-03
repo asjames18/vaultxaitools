@@ -1,4 +1,4 @@
-// Icon components for VaultX Tech
+// Icon components for Melanated In Tech
 export { default as SparklesIcon } from './SparklesIcon';
 export { default as ArrowRightIcon } from './ArrowRightIcon';
 export { default as TrendingUpIcon } from './TrendingUpIcon';

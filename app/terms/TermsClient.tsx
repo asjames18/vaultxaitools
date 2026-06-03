@@ -73,7 +73,7 @@ export default function TermsClient() {
               Terms of Service
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              Terms and conditions for using VaultX Tech platform
+              Terms and conditions for using Melanated In Tech platform
             </p>
             <div className="mt-8 text-sm text-blue-200">
               Last updated: {formatDate('2024-01-15')}
@@ -134,14 +134,14 @@ export default function TermsClient() {
                   </h2>
                   <div className="prose prose-lg dark:prose-invert max-w-none">
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      These Terms of Service ("Terms") govern your use of VaultX Tech ("Service," "we," "us," or "our"), a platform for discovering and reviewing media production tools and resources for churches and ministries. By accessing or using our Service, you agree to be bound by these Terms.
+                      These Terms of Service ("Terms") govern your use of Melanated In Tech ("Service," "we," "us," or "our"), a technology education platform for discovering AI tools, learning resources, and emerging tech. By accessing or using our Service, you agree to be bound by these Terms.
                     </p>
                     
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                       Agreement to Terms
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      By accessing or using VaultX Tech, you agree to be bound by these Terms. If you disagree with any part of these terms, then you may not access the Service.
+                      By accessing or using Melanated In Tech, you agree to be bound by these Terms. If you disagree with any part of these terms, then you may not access the Service.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -207,7 +207,7 @@ export default function TermsClient() {
                       Service Description
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      VaultX Tech provides a platform for discovering, reviewing, and comparing media production tools and resources for churches and ministries. Our services include:
+                      Melanated In Tech provides a technology education platform for discovering, reviewing, and comparing AI tools, automation resources, and emerging tech. Our services include:
                     </p>
                     <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
                       <li>Media tools directory and search functionality</li>
@@ -297,7 +297,7 @@ export default function TermsClient() {
                       Our Intellectual Property
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      The Service and its original content, features, and functionality are and will remain the exclusive property of VaultX Tech and its licensors. The Service is protected by copyright, trademark, and other laws.
+                      The Service and its original content, features, and functionality are and will remain the exclusive property of Melanated In Tech and its licensors. The Service is protected by copyright, trademark, and other laws.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -356,14 +356,14 @@ export default function TermsClient() {
                       Indemnification
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      You agree to defend, indemnify, and hold harmless VaultX Tech from and against any claims, damages, obligations, losses, liabilities, costs, or debt arising from your use of the Service.
+                      You agree to defend, indemnify, and hold harmless Melanated In Tech from and against any claims, damages, obligations, losses, liabilities, costs, or debt arising from your use of the Service.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                       Governing Law
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      These Terms shall be interpreted and governed by the laws of the jurisdiction in which VaultX Tech operates, without regard to its conflict of law provisions.
+                      These Terms shall be interpreted and governed by the laws of the jurisdiction in which Melanated In Tech operates, without regard to its conflict of law provisions.
                     </p>
 
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">

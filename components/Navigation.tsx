@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu } from '@headlessui/react';
@@ -118,59 +119,62 @@ export default function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900 shadow-lg border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
-            V
-          </div>
-          <span className="text-xl font-bold text-gray-900 dark:text-white tracking-wide">VaultX Tech</span>
+          <Image
+            src="/logo.png"
+            alt="Melanated In Tech"
+            width={44}
+            height={44}
+            className="object-contain"
+            priority
+          />
+          <span className="text-lg font-bold text-white tracking-wide hidden sm:inline">Melanated In Tech</span>
         </Link>
         
         {/* Desktop Navigation */}
         <div className="space-x-1 hidden md:flex">
-          <Link 
-            href="/" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+          <Link
+            href="/"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             Home
           </Link>
-          <Link 
-            href="/AITools" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/AITools' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+          <Link
+            href="/AITools"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/AITools' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
-            Media Tools
+            AI Tools
           </Link>
-          <Link 
-            href="/consulting" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/consulting' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+          <Link
+            href="/blog"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/blog' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
-            Consulting
+            Tutorials
           </Link>
-          {/* <a className="px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400" href="/news">News</a> */}
-          <Link 
-            href="/blog" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/blog' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+          <Link
+            href="/AITools"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400`}
           >
-            Blog
+            Resources
           </Link>
-          <Link 
-            href="/about" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/about' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+          <Link
+            href="/about"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/about' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             About
           </Link>
-          <Link 
-            href="/contact" 
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400${pathname === '/contact' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+          <Link
+            href="/contact"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/contact' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             Contact
           </Link>
-          
         </div>
 
         <div className="flex items-center space-x-2">
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors"
             title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
@@ -178,7 +182,7 @@ export default function Navigation() {
           {/* Search functionality integrated into AI Tools page */}
           <Link 
             href="/AITools" 
-            className="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors"
             title="Media Tools Directory"
           >
             <SearchIcon className="w-5 h-5" />
@@ -186,7 +190,7 @@ export default function Navigation() {
           {user ? (
             <Menu as="div" className="relative hidden sm:block">
               <Menu.Button className="flex items-center focus:outline-none">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-400 rounded-full flex items-center justify-center text-white font-bold">
                   {(displayName || user?.email || 'U').charAt(0).toUpperCase()}
                 </div>
               </Menu.Button>
@@ -247,14 +251,14 @@ export default function Navigation() {
           ) : (
             <Link 
               href="/sign-in" 
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors hidden sm:block"
+              className="px-4 py-2 bg-green-500 text-black text-sm font-medium rounded-lg hover:bg-green-400 transition-colors hidden sm:block"
             >
               Sign In
             </Link>
           )}
               <Link 
                 href="/submit-tool" 
-                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-lg hover:from-purple-700 hover:to-blue-700 transition-colors hidden sm:block"
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-400 text-black text-sm font-medium rounded-lg hover:from-green-400 hover:to-green-300 transition-colors hidden sm:block"
               >
                 Submit Resource
               </Link>
@@ -275,45 +279,45 @@ export default function Navigation() {
       {isMenuOpen && (
         <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
           <div className="px-4 py-2 space-y-1">
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-300${pathname === '/' ? ' bg-green-900/30 text-green-300' : ''}`}
             >
               Home
             </Link>
-                <Link 
-                  href="/AITools" 
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/AITools' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
-                >
-                  Media Tools
-                </Link>
-            <Link 
-              href="/consulting" 
+            <Link
+              href="/AITools"
               onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/consulting' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-300${pathname === '/AITools' ? ' bg-green-900/30 text-green-300' : ''}`}
             >
-              Consulting
+              AI Tools
             </Link>
-            <Link 
-              href="/blog" 
+            <Link
+              href="/blog"
               onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/blog' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-300${pathname === '/blog' ? ' bg-green-900/30 text-green-300' : ''}`}
             >
-              Blog
+              Tutorials
             </Link>
-            <Link 
-              href="/about" 
+            <Link
+              href="/AITools"
               onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/about' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+              className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-300"
+            >
+              Resources
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setIsMenuOpen(false)}
+              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-300${pathname === '/about' ? ' bg-green-900/30 text-green-300' : ''}`}
             >
               About
             </Link>
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               onClick={() => setIsMenuOpen(false)}
-              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-300${pathname === '/contact' ? ' bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300' : ''}`}
+              className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-300${pathname === '/contact' ? ' bg-green-900/30 text-green-300' : ''}`}
             >
               Contact
             </Link>
@@ -356,10 +360,10 @@ export default function Navigation() {
                 </>
               )}
               {!user && (
-                <Link 
-                  href="/sign-in" 
+                <Link
+                  href="/sign-in"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg text-center"
+                  className="block px-3 py-2 bg-green-500 text-black text-sm font-medium rounded-lg text-center"
                 >
                   Sign In
                 </Link>

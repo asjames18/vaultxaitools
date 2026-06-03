@@ -3,23 +3,23 @@ import ConsultingClient from './ConsultingClient';
 import JsonLd from '@/components/JsonLd';
 
 // Brand constants
-const SITE_NAME = 'VaultX Tech';
+const SITE_NAME = 'Melanated In Tech';
 const PRIMARY_CTA_TEXT = 'Send Us a Message';
-const CONTACT_EMAIL = 'contact@vaultxiatools.com';
+const CONTACT_EMAIL = 'contact@melanatedintech.com';
 const BUSINESS_CITY = 'Highlands County, FL';
-const TWITTER_HANDLE = '#';
-const LOGO_SRC = '/logo-vaultx.svg';
-const OG_IMAGE = '/og-vaultx-ai.jpg'; // TODO replace
-const BASE_URL = 'https://vaultxaitools.com'; // TODO replace
+const TWITTER_HANDLE = '@melanatedintech';
+const LOGO_SRC = '/logo.png';
+const OG_IMAGE = '/opengraph-image';
+const BASE_URL = 'https://vaultxaitools.com';
 
 export const metadata: Metadata = {
-  title: 'VaultX Tech Consulting — Church & Ministry Media Services',
+  title: 'Services — Melanated In Tech',
   description:
-    'Church and ministry media consulting services. Expert guidance for video production, graphics design, social media, live streaming, and audio production. Faith-rooted, ministry-focused. Send us a message to get started.',
+    'Technology consulting and education services from Melanated In Tech. Expert guidance for AI strategy, automation, software development, digital transformation, and emerging technology adoption.',
   openGraph: {
-    title: 'VaultX Tech Consulting — Church & Ministry Media Services',
+    title: 'Services — Melanated In Tech',
     description:
-      'Church and ministry media consulting services. Expert guidance for video production, graphics design, social media, live streaming, and audio production.',
+      'Technology consulting and education services. Expert guidance for AI strategy, automation, software development, and digital transformation.',
     url: `${BASE_URL}/consulting`,
     siteName: SITE_NAME,
     images: [{ url: OG_IMAGE }],
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VaultX Tech Consulting — Church & Ministry Media Services',
+    title: 'Services — Melanated In Tech',
     description:
-      'Church and ministry media consulting services. Expert guidance for video production, graphics design, social media, live streaming, and audio production.',
+      'Technology consulting and education services. Expert guidance for AI strategy, automation, software development, and digital transformation.',
     images: [OG_IMAGE],
     creator: TWITTER_HANDLE,
   },

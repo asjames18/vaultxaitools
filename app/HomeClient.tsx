@@ -46,37 +46,37 @@ interface HomeClientProps {
   categories: Category[];
 }
 
-// Dynamic headlines that emphasize ministry media focus
+// Dynamic headlines for Melanated In Tech
 const dynamicHeadlines = [
-  "Empowering churches and ministries with professional media tools.",
-  "Expert guidance for your church's media production needs.",
-  "Quality resources and tools for effective ministry communication.",
-  "Your trusted partner for church and ministry media excellence.",
-  "From video editing to live streaming - we've got you covered."
+  "Learn AI, automation, and software development — all in one place.",
+  "Build real tech skills and create opportunities in the digital economy.",
+  "Discover the best AI tools, agents, and automation resources.",
+  "From prompt engineering to app development — we've got you covered.",
+  "Empowering everyday people to understand and use emerging technology."
 ];
 
-// Testimonials emphasizing ministry media quality
+// Testimonials from the Melanated In Tech community
 const testimonials = [
   {
-    name: "Pastor Michael Johnson",
-    role: "Senior Pastor",
-    company: "Grace Community Church",
-    content: "VaultX Tech transformed our church's media production. The tools and guidance have been invaluable for our ministry!",
-    avatar: "👨‍💼"
+    name: "Marcus Williams",
+    role: "Career Changer",
+    company: "Aspiring Software Developer",
+    content: "Melanated In Tech gave me a clear roadmap into tech. The AI tools directory and tutorials helped me build real skills fast.",
+    avatar: "👨‍💻"
   },
   {
-    name: "Sarah Martinez",
-    role: "Media Director",
-    company: "Hope Church",
-    content: "I love the curated media tools and resources. VaultX Tech has saved us so much time finding the right solutions.",
-    avatar: "👩‍💻"
+    name: "Aisha Johnson",
+    role: "Entrepreneur",
+    company: "Digital Creator",
+    content: "I use the resources here to automate my business workflows. The platform made AI accessible and practical for someone just starting out.",
+    avatar: "👩‍🚀"
   },
   {
-    name: "David Thompson",
-    role: "Worship Leader",
-    company: "Faith Fellowship",
-    content: "The quality of resources is outstanding. We trust VaultX Tech to help us produce excellent media for our ministry.",
-    avatar: "👨‍🎤"
+    name: "DeShawn Carter",
+    role: "Educator",
+    company: "Community College Instructor",
+    content: "I recommend Melanated In Tech to every student curious about AI. It breaks down complex tools in a way that actually makes sense.",
+    avatar: "👨‍🏫"
   }
 ];
 
@@ -402,13 +402,13 @@ export default function HomeClient({
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* SEO Structured Data */}
-      <StructuredData 
-        type="website" 
+      <StructuredData
+        type="website"
         data={{
-          name: 'VaultX Tech',
-          description: 'VaultX Tech - Ministry Media tech and consulting. Providing tools, resources, and expert guidance for effective ministry media production.',
+          name: 'Melanated In Tech',
+          description: 'Melanated In Tech — Learn AI, automation, software development, and emerging technology. Build skills, create opportunities, and thrive in the digital economy.',
           url: 'https://vaultxaitools.com'
-        }} 
+        }}
       />
       
       {/* Toast Notifications */}
@@ -525,10 +525,10 @@ export default function HomeClient({
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
               <HeartIcon className="w-16 h-16 text-red-500 mx-auto mb-6" />
               <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                Start Building Your AI Toolkit
+                Start Building Your Tech Toolkit
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-                Sign in to save your favorite AI tools, track what you've explored, and get personalized recommendations.
+                Sign in to save your favorite AI tools, track what you've explored, and get personalized learning recommendations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link

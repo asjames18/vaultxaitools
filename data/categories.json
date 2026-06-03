@@ -1,67 +1,80 @@
 [
   {
-    "name": "Video Editing",
-    "icon": "🎬",
-    "description": "Video editing tools and software for creating professional church and ministry videos",
-    "count": 0,
-    "color": "from-blue-500 to-cyan-500",
-    "popular_tools": [
-      "Adobe Premiere Pro",
-      "Final Cut Pro",
-      "DaVinci Resolve",
-      "Camtasia"
-    ]
-  },
-  {
-    "name": "Graphics Design",
-    "icon": "🎨",
-    "description": "Graphics design tools for creating church graphics, social media posts, and ministry materials",
-    "count": 0,
-    "color": "from-purple-500 to-pink-500",
-    "popular_tools": [
-      "Canva",
-      "Adobe Photoshop",
-      "Adobe Illustrator",
-      "Figma"
-    ]
-  },
-  {
-    "name": "Social Media",
-    "icon": "📱",
-    "description": "Social media management and scheduling tools for church and ministry outreach",
+    "name": "AI Tools",
+    "icon": "🤖",
+    "description": "Artificial intelligence tools for writing, image generation, research, productivity, and creative work",
     "count": 0,
     "color": "from-green-500 to-emerald-500",
     "popular_tools": [
-      "Buffer",
-      "Hootsuite",
-      "Later",
-      "Sprout Social"
+      "ChatGPT",
+      "Claude",
+      "Gemini",
+      "Perplexity AI"
     ]
   },
   {
-    "name": "Live Streaming",
-    "icon": "📺",
-    "description": "Live streaming platforms and tools for church services and ministry events",
+    "name": "AI Agents",
+    "icon": "⚡",
+    "description": "Autonomous AI agent platforms and tools that can plan, reason, and execute multi-step tasks",
+    "count": 0,
+    "color": "from-violet-500 to-purple-500",
+    "popular_tools": [
+      "AutoGPT",
+      "CrewAI",
+      "LangChain",
+      "n8n"
+    ]
+  },
+  {
+    "name": "Automation",
+    "icon": "🔄",
+    "description": "Workflow automation and integration tools to streamline repetitive tasks and connect your apps",
+    "count": 0,
+    "color": "from-blue-500 to-cyan-500",
+    "popular_tools": [
+      "Zapier",
+      "Make",
+      "n8n",
+      "Power Automate"
+    ]
+  },
+  {
+    "name": "Development Tools",
+    "icon": "💻",
+    "description": "Software development tools, code editors, and platforms for building apps and automations",
+    "count": 0,
+    "color": "from-orange-500 to-amber-500",
+    "popular_tools": [
+      "GitHub Copilot",
+      "Cursor",
+      "Replit",
+      "Vercel"
+    ]
+  },
+  {
+    "name": "Productivity",
+    "icon": "🚀",
+    "description": "Productivity and project management tools to help you stay organized, focused, and efficient",
+    "count": 0,
+    "color": "from-pink-500 to-rose-500",
+    "popular_tools": [
+      "Notion",
+      "Obsidian",
+      "Todoist",
+      "ClickUp"
+    ]
+  },
+  {
+    "name": "Content Creation",
+    "icon": "🎨",
+    "description": "Tools for creating videos, graphics, audio, and written content powered by AI",
     "count": 0,
     "color": "from-yellow-500 to-orange-500",
     "popular_tools": [
-      "OBS Studio",
-      "Streamlabs",
-      "Restream",
-      "YouTube Live"
-    ]
-  },
-  {
-    "name": "Audio/Podcasting",
-    "icon": "🎙️",
-    "description": "Audio production and podcasting tools for church sermons, podcasts, and ministry content",
-    "count": 0,
-    "color": "from-red-500 to-rose-500",
-    "popular_tools": [
-      "Audacity",
-      "Adobe Audition",
-      "GarageBand",
-      "Reaper"
+      "Canva",
+      "Runway",
+      "ElevenLabs",
+      "Descript"
     ]
   }
 ]

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import SettingsClient from './SettingsClient';
 
 export const metadata: Metadata = {
-  title: 'Settings - VaultX Tech',
+  title: 'Settings - Melanated In Tech',
   description: 'Manage your account settings and preferences',
 };
 

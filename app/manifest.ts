@@ -2,13 +2,13 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'VaultX Tech',
-    short_name: 'VaultX',
-    description: 'Church and ministry media consultant providing tools, resources, and guidance for effective media production',
+    name: 'Melanated In Tech',
+    short_name: 'MIT',
+    description: 'Technology education platform helping people learn AI, automation, software development, and emerging tech to build skills and create opportunities.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#ffffff',
-    theme_color: '#3b82f6',
+    background_color: '#000000',
+    theme_color: '#4ade80',
     icons: [
       {
         src: '/icon-192.png',
@@ -33,7 +33,7 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: 'maskable',
       },
     ],
-    categories: ['ministry', 'media', 'church', 'productivity', 'utilities'],
+    categories: ['education', 'technology', 'productivity', 'utilities', 'developer tools'],
     lang: 'en',
     dir: 'ltr',
     orientation: 'portrait',

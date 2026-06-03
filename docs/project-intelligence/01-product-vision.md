@@ -1,23 +1,23 @@
 # Product Vision
 
-**Product:** VaultX AI Tools (also branded VaultX Tech)  
-**Last updated:** 2026-05-29  
-**Status:** Active — church/ministry media tools directory and CMS
+**Product:** Melanated In Tech  
+**Last updated:** 2026-06-02  
+**Status:** Active — AI and tech education platform with curated tools directory
 
 ---
 
 ## Mission
 
-Help churches and ministries discover, evaluate, and use professional media production tools through a curated, quality-focused directory with expert guidance.
+Help learners, builders, and entrepreneurs discover, evaluate, and use the best AI tools, automation platforms, and development resources through a curated, quality-focused directory with practical education content.
 
 ## Target Users
 
 | Persona | Need |
 |---------|------|
-| **Church media volunteer** | Find affordable, ministry-appropriate tools quickly |
-| **Ministry communications lead** | Compare tools, read reviews, track favorites |
-| **VaultX admin/curator** | Manage tool catalog, blog, news, sponsored content, workflows |
-| **Consulting prospect** | Learn about VaultX media consulting services |
+| **Beginner / career changer** | Find beginner-friendly AI and tech tools quickly |
+| **Creator / entrepreneur** | Compare tools, read reviews, discover automation resources |
+| **Admin/curator** | Manage tool catalog, blog, news, sponsored content, workflows |
+| **Consulting prospect** | Learn about Melanated In Tech AI education and consulting services |
 
 ## Core Value Propositions
 

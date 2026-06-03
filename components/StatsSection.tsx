@@ -18,8 +18,8 @@ const StatsSection = memo(({ isVisible, safeAllTools, safeCategories }: StatsSec
         <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">
           {safeAllTools.length}
         </div>
-        <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Media Tools</div>
-        <div className="text-xs text-green-600 mt-1">Ministry Focused</div>
+        <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
+        <div className="text-xs text-green-500 mt-1">Curated &amp; Vetted</div>
       </div>
       <div className="text-center group">
         <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2 group-hover:scale-110 transition-transform">

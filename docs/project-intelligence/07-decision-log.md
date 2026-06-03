@@ -25,13 +25,13 @@
 
 ---
 
-## ADR-003: Ministry/ Church Media Positioning
+## ADR-003: Melanated In Tech Rebrand (2026-06-02)
 
-**Date:** (Historical — inferred)  
+**Date:** 2026-06-02  
 **Status:** Accepted  
-**Context:** Product shifted from generic AI tools directory to church/ministry media focus.  
-**Decision:** Categories, copy, and curation target ministry media production (Video Editing, Live Streaming, etc.).  
-**Consequences:** DB seed categories in `schema.sql` still use generic AI names — migration needed. Static categories in `database-client.ts` are the target canonical list.
+**Context:** Product rebranded from VaultX Tech (church/ministry media focus) to Melanated In Tech (AI and tech education platform for learners, builders, and entrepreneurs).  
+**Decision:** All categories, copy, metadata, and curation now target AI tools, automation, software development, and emerging technology.  
+**Consequences:** Categories in `data/categories.json`, `data/tools.ts`, and `lib/database-client.ts` updated to AI/tech focus. Domain vaultxaitools.com retained pending migration to melanatedintech.com.
 
 ---
 

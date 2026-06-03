@@ -448,7 +448,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up">
-              Discover the right media production tools for your church or ministry. Filter by quality, reviews, and tags to find what actually works.
+              Discover the right AI and tech tools for your goals. Filter by quality, reviews, and tags to find what actually works.
             </p>
 
             {/* Search moved below into the main content area */}
@@ -477,7 +477,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
               Media Tool Finder
             </h2>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-xl sm:max-w-2xl mx-auto px-4 sm:px-0">
-              Filter by best use case and quality to find media production tools that work for your church or ministry
+              Filter by best use case and quality to find AI and tech tools that work for your goals
             </p>
           </div>
           <div className="grid grid-cols-1 xl:grid-cols-4 2xl:grid-cols-5 gap-8 sm:gap-10 lg:gap-12">
@@ -636,7 +636,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
         <div className="max-w-2xl sm:max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white text-center">Media Tool Categories: Guide & FAQ</h2>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 text-center px-4 sm:px-0">
-            Not sure where to start? Here's a quick guide to help you find the perfect media production tool category for your church or ministry needs, plus answers to common questions.
+            Not sure where to start? Here's a quick guide to help you find the right AI and tech tool category for your needs, plus answers to common questions.
           </p>
           <div className="mb-8 sm:mb-10">
             <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gray-900 dark:text-white">How to choose the right category?</h3>
@@ -648,7 +648,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             <div>
               <dt className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base">How are categories selected?</dt>
               <dd className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mt-1 sm:mt-2">
-                Categories are curated based on industry trends, user demand, and the unique features of each tool. We regularly review and update categories to reflect the evolving media production landscape for churches and ministries.
+                Categories are curated based on industry trends, user demand, and the unique features of each tool. We regularly review and update categories to reflect the evolving AI and technology landscape.
               </dd>
             </div>
             <div>

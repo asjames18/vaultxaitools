@@ -74,7 +74,7 @@
 
 | Deprecated Term | Use Instead | Reason |
 |-----------------|-------------|--------|
-| "VaultX Tech" alone | **VaultX AI Tools** (product) / VaultX Tech (consulting brand) | Split product vs consulting |
+| "Melanated In Tech" alone | **VaultX AI Tools** (product) / Melanated In Tech (consulting brand) | Split product vs consulting |
 | Generic AI categories ("Video", "Writing") | Ministry categories ("Video Editing", "Live Streaming") | Product repositioning |
 | Express API / JWT auth | Next.js API routes + Supabase Auth | Legacy README references |
 | MongoDB | Supabase PostgreSQL | Legacy env.example |
@@ -107,5 +107,5 @@ Align all sources to these ministry-focused categories:
 |---------|------|
 | npm package | `vaultxaitools` |
 | Public product | VaultX AI Tools |
-| Consulting arm | VaultX Tech |
+| Consulting arm | Melanated In Tech |
 | URL path (tools directory) | `/AITools` (legacy casing — do not rename without redirect plan) |

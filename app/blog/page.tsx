@@ -4,12 +4,12 @@ import JsonLd from '@/components/JsonLd';
 import { getAllBlogPosts, getBlogCategories } from '@/lib/blog-service';
 
 export const metadata: Metadata = {
-  title: 'Blog - VaultX Tech',
-  description: 'Discover the latest insights, tutorials, best practices, and case studies about church and ministry media production. Stay updated with media tools, techniques, and strategies.',
-  keywords: ['church media blog', 'ministry media resources', 'church video tutorials', 'ministry graphics guides', 'church social media tips', 'ministry live streaming', 'church audio production'],
+  title: 'Tutorials & Blog - Melanated In Tech',
+  description: 'Practical tutorials, guides, and insights on AI, automation, prompt engineering, software development, and emerging technology. Learn at your own pace and build real skills.',
+  keywords: ['AI tutorials', 'tech education blog', 'prompt engineering guide', 'automation tutorials', 'software development tips', 'AI agents explained', 'digital transformation', 'tech for beginners'],
   openGraph: {
-    title: 'Blog - VaultX Tech',
-    description: 'Discover the latest insights, tutorials, best practices, and case studies about church and ministry media production.',
+    title: 'Tutorials & Blog - Melanated In Tech',
+    description: 'Practical tutorials and insights on AI, automation, prompt engineering, and software development. Learn and build real skills.',
     type: 'website',
   },
 };
@@ -23,8 +23,8 @@ export default async function BlogPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'VaultX Tech Blog',
-    description: 'Insights, tutorials, best practices, and case studies about church and ministry media production.',
+    name: 'Melanated In Tech — Tutorials & Blog',
+    description: 'Practical tutorials, guides, and insights on AI, automation, software development, and emerging technology.',
     url: 'https://vaultxaitools.com/blog',
     blogPost: blogPosts.slice(0, 10).map((p) => ({
       '@type': 'BlogPosting',
