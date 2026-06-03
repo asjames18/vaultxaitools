@@ -282,4 +282,4 @@ To contribute to the AI data fetching system:
 
 ## License
 
-This AI data fetching system is part of the VaultX AI Tools project and follows the same license terms. 
+This AI data fetching system is part of the Melanated In Tech project and follows the same license terms. 

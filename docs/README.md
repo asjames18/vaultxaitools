@@ -1,11 +1,11 @@
-# VaultX AI Tools Documentation
+# Melanated In Tech Documentation
 
-This directory contains comprehensive documentation for the VaultX AI Tools project.
+This directory contains comprehensive documentation for the Melanated In Tech project.
 
 ## 📚 Documentation Index
 
 ### 🎨 [Responsive Design](./responsive-design.md)
-Comprehensive guide covering responsive design implementation, breakpoints, and mobile-first approach for the VaultX AI Tools platform.
+Comprehensive guide covering responsive design implementation, breakpoints, and mobile-first approach for the Melanated In Tech platform.
 
 ### 📱 [Device Testing](./device-testing.md)
 Complete testing guide for ensuring cross-device compatibility, including testing strategies, tools, and best practices.

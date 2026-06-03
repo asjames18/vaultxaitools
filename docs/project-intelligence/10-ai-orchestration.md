@@ -1,7 +1,7 @@
 # AI Orchestration
 
 **Last updated:** 2026-05-29  
-**Scope:** How AI is used in VaultX AI Tools — offline pipelines, automation, and future agent integration.
+**Scope:** How AI is used in Melanated In Tech — offline pipelines, automation, and future agent integration.
 
 ---
 

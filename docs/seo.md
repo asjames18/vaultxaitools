@@ -1,6 +1,6 @@
 # SEO Implementation Guide
 
-This document outlines the comprehensive SEO implementation for VaultX AI Tools, including dynamic metadata generation, structured data, and best practices.
+This document outlines the comprehensive SEO implementation for Melanated In Tech, including dynamic metadata generation, structured data, and best practices.
 
 ## 🎯 Overview
 

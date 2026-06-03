@@ -21,8 +21,8 @@ Help learners, builders, and entrepreneurs discover, evaluate, and use the best 
 
 ## Core Value Propositions
 
-1. **Expert curation** — Tools vetted for ministry use, not generic AI hype
-2. **Church/media focus** — Categories aligned to video, graphics, streaming, audio, social
+1. **Expert curation** — Tools vetted for practical real-world use, not generic hype
+2. **Tech education focus** — Categories aligned to AI Tools, Automation, Dev Tools, Productivity, Content Creation
 3. **Community trust** — Reviews, ratings, trending signals, transparent affiliate disclosure
 4. **Operational CMS** — Admin panel for tools, blog, contact, automation, analytics
 
@@ -38,7 +38,7 @@ Help learners, builders, and entrepreneurs discover, evaluate, and use the best 
 1. **Single source of truth** — Supabase `tools` table as primary catalog; static `data/` as seed/fallback only
 2. **Vertical slices** — Complete end-to-end flows before expanding dashboards
 3. **Agent-compatible codebase** — Clear domain language, feature folders, documented decisions
-4. **Ministry positioning** — Align categories, copy, and schema with church/media domain
+4. **Tech education positioning** — Align categories, copy, and schema with AI/tech education domain
 
 ## Success Metrics
 

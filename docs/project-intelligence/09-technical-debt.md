@@ -72,9 +72,9 @@
 **Effort:** Medium
 
 ### TD-H07: Category Naming Inconsistency
-**Location:** DB seeds ("Video", "Writing") vs `database-client.ts` ("Video Editing", "Live Streaming")  
+**Location:** DB seeds ("Video", "Writing") vs `database-client.ts` and `data/categories.json` (AI Tools, Automation, Dev Tools)  
 **Impact:** Broken filters, empty category pages, SEO duplicates  
-**Fix:** Migration to canonical ministry categories  
+**Fix:** Migration to canonical tech-education categories (AI Tools, AI Agents, Automation, Development Tools, Productivity, Content Creation)  
 **Effort:** Medium
 
 ### TD-H08: Minimal Test Coverage
@@ -142,10 +142,10 @@
 **Effort:** Medium
 
 ### TD-M10: npm Audit Vulnerabilities
-**Location:** 11 vulnerabilities (1 low, 5 moderate, 5 high) from `npm install`  
-**Impact:** Supply chain risk  
-**Fix:** `npm audit fix`; review breaking updates  
-**Effort:** Small
+**Location:** 2 moderate vulnerabilities remaining (postcss bundled inside Next.js internals)  
+**Impact:** Build-time only, no runtime exposure — unfixable without breaking Next.js  
+**Fix:** Wait for Next.js to ship patched internal postcss; monitor releases  
+**Effort:** None (resolved when Next.js patches it)
 
 ### TD-M11: Missing npm Scripts Referenced in Docs
 **Location:** Docs mention `update:ai-data`, `seed:ai-data` — not in `package.json`  

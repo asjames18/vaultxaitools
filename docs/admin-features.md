@@ -1,7 +1,7 @@
 # Admin Features Documentation
 
 ## Overview
-The VaultX AI Tools admin system is fully functional with comprehensive management capabilities for all aspects of the platform.
+The Melanated In Tech admin system is fully functional with comprehensive management capabilities for all aspects of the platform.
 
 ## 🔐 Authentication & Access Control
 

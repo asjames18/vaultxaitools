@@ -10,8 +10,8 @@
 
 | Term | Definition | DB / Code Location |
 |------|------------|-------------------|
-| **Tool** | A curated media/AI production product listed in the directory | `tools` table, `data/tools.ts`, `/tool/[id]` |
-| **Category** | Grouping for tools (e.g. Video Editing, Live Streaming) | `categories` table, `lib/database-client.ts` static list |
+| **Tool** | A curated AI or tech product listed in the directory | `tools` table, `data/tools.ts`, `/tool/[id]` |
+| **Category** | Grouping for tools (e.g. AI Tools, Automation, Dev Tools) | `categories` table, `lib/database-client.ts` static list |
 | **Review** | User-submitted rating (1–5) and optional text for a Tool | `reviews` table, `/api/reviews` |
 | **Favorite** | User bookmark of a Tool | `favorites` table, `/api/favorites`, `/favorites` |
 | **Blog Post** | CMS article with slug, SEO fields, draft/published status | `blog_posts` table, `/blog/[slug]` |
@@ -74,8 +74,8 @@
 
 | Deprecated Term | Use Instead | Reason |
 |-----------------|-------------|--------|
-| "Melanated In Tech" alone | **VaultX AI Tools** (product) / Melanated In Tech (consulting brand) | Split product vs consulting |
-| Generic AI categories ("Video", "Writing") | Ministry categories ("Video Editing", "Live Streaming") | Product repositioning |
+| VaultX Tech / VaultX AI Tools | **Melanated In Tech** | Full rebrand June 2026 |
+| Church/ministry categories | AI/tech categories (AI Tools, Automation, Dev Tools) | Rebrand repositioning |
 | Express API / JWT auth | Next.js API routes + Supabase Auth | Legacy README references |
 | MongoDB | Supabase PostgreSQL | Legacy env.example |
 | `src/data/` paths | `data/` at repo root | Outdated docs |
@@ -84,20 +84,20 @@
 
 ## Category Canonical List (Target)
 
-Align all sources to these ministry-focused categories:
+Align all sources to these tech-education-focused categories:
 
-1. Video Editing
-2. Graphics Design
-3. Social Media
-4. Live Streaming
-5. Audio/Podcasting
-6. Presentation
-7. Photography
-8. Website/Hosting
-9. Communication
-10. Productivity
+1. AI Tools
+2. AI Agents
+3. Automation
+4. Development Tools
+5. Productivity
+6. Content Creation
+7. Social Media
+8. Email Marketing
+9. Website Building
+10. Communication
 
-**Current drift:** `supabase/schema.sql` seeds generic AI categories; `lib/database-client.ts` has the ministry list above.
+**Current drift:** `supabase/schema.sql` may still seed old categories — migration needed to align with `data/categories.json` and `lib/database-client.ts`.
 
 ---
 
@@ -105,7 +105,8 @@ Align all sources to these ministry-focused categories:
 
 | Context | Name |
 |---------|------|
-| npm package | `vaultxaitools` |
-| Public product | VaultX AI Tools |
-| Consulting arm | Melanated In Tech |
+| npm package | `vaultxaitools` (unchanged pending domain migration) |
+| Public product | Melanated In Tech |
+| Domain (current) | vaultxaitools.com |
+| Domain (target) | melanatedintech.com |
 | URL path (tools directory) | `/AITools` (legacy casing — do not rename without redirect plan) |

@@ -1,10 +1,10 @@
-# Device Testing Guide - VaultX AI Tools
+# Device Testing Guide - Melanated In Tech
 
 ## Overview
-This guide provides comprehensive testing instructions for ensuring VaultX AI Tools displays correctly across all devices and screen sizes.
+This guide provides comprehensive testing instructions for ensuring Melanated In Tech displays correctly across all devices and screen sizes.
 
 ## Responsive Breakpoints
-VaultX AI Tools uses Tailwind CSS with the following responsive breakpoints:
+Melanated In Tech uses Tailwind CSS with the following responsive breakpoints:
 - **Mobile**: `< 768px` (default)
 - **Tablet**: `768px - 1024px` (md:)
 - **Desktop**: `1024px - 1280px` (lg:)

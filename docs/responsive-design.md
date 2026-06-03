@@ -1,7 +1,7 @@
-# Responsive Design Summary - VaultX AI Tools
+# Responsive Design Summary - Melanated In Tech
 
 ## 🎯 Overview
-VaultX AI Tools has been designed with a mobile-first responsive approach using Tailwind CSS, ensuring optimal user experience across all devices and screen sizes.
+Melanated In Tech has been designed with a mobile-first responsive approach using Tailwind CSS, ensuring optimal user experience across all devices and screen sizes.
 
 ## 📱 Responsive Breakpoints
 
