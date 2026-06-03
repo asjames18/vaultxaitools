@@ -39,7 +39,7 @@ export default function SettingsPage() {
                   <h3 className="text-md font-medium text-gray-900 dark:text-white">Manage Profile & Account</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">Update name, profile details, export data, or delete account</p>
                 </div>
-                <Link href="/dashboard" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium">
+                <Link href="/dashboard" className="px-4 py-2 bg-green-500 text-black rounded-lg hover:bg-green-400 transition-colors font-medium">
                   Go to Profile
                 </Link>
               </div>

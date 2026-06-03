@@ -27,13 +27,16 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white">
+      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
+            <div className="inline-block mb-4 px-3 py-1 rounded-full bg-green-400/10 border border-green-400/30">
+              <span className="text-green-400 text-sm font-medium">AI Tools Blog</span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               AI Tools Blog
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
               Stay updated with the latest AI tools, industry insights, and expert reviews
             </p>
             <div className="max-w-md mx-auto">
@@ -43,10 +46,10 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
                   placeholder="Search articles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className="w-full px-4 py-3 pl-12 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400/50"
                 />
                 <svg
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-200"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-green-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -68,7 +71,7 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                 selectedCategory === category
-                  ? 'bg-blue-600 text-white shadow-lg'
+                  ? 'bg-green-500 text-black shadow-lg'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
@@ -91,14 +94,14 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
                   >
                     <div className="p-6">
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full">
+                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-300 text-xs font-medium rounded-full">
                           {post.category}
                         </span>
                         <span className="text-gray-500 dark:text-gray-400 text-sm">
                           {post.readTime}
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 hover:text-green-500 dark:hover:text-green-400 transition-colors">
                         {post.title}
                       </h3>
                       <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
@@ -106,7 +109,7 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
                       </p>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                          <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-green-400 rounded-full flex items-center justify-center text-black text-sm font-medium">
                             {post.author.split(' ').map(n => n[0]).join('')}
                           </div>
                           <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -145,7 +148,7 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
                         {post.readTime}
                       </span>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 hover:text-green-500 dark:hover:text-green-400 transition-colors">
                       {post.title}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
@@ -181,12 +184,12 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
       </div>
 
       {/* Newsletter Signup */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+      <div className="bg-gray-900 text-white py-16 border-t border-gray-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">
             Stay Updated with AI Tools
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-gray-300 mb-8">
             Get the latest AI tool reviews and industry insights delivered to your inbox
           </p>
           <div className="max-w-md mx-auto">
@@ -194,9 +197,9 @@ export default function BlogClient({ initialPosts, initialCategories }: BlogClie
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="flex-1 px-4 py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400/50"
               />
-              <button className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+              <button className="px-6 py-3 bg-green-500 text-black font-semibold rounded-lg hover:bg-green-400 transition-colors">
                 Subscribe
               </button>
             </div>

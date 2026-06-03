@@ -317,16 +317,16 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                           {/* Clickable card area */}
                           <a 
                             href={`/tool/${toolId}`}
-                            className="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 cursor-pointer group-hover:shadow-md"
+                            className="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 hover:border-green-400 dark:hover:border-green-400 transition-all duration-200 cursor-pointer group-hover:shadow-md"
                           >
                             <div className="flex items-center gap-3">
                               <div className="text-2xl">{toolLogo}</div>
                               <div className="flex-1">
-                                <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                <div className="font-medium text-gray-900 dark:text-white group-hover:text-green-500 dark:group-hover:text-green-400 transition-colors">
                                   {toolName}
                                 </div>
                                 {toolCategory && (
-                                  <div className="text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded-full inline-block mt-1">
+                                  <div className="text-xs text-green-400 dark:text-green-400 bg-green-900/30 dark:bg-green-900/30 px-2 py-1 rounded-full inline-block mt-1">
                                     {toolCategory}
                                   </div>
                                 )}
@@ -337,7 +337,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                                 )}
                               </div>
                               {/* Arrow indicator */}
-                              <div className="text-gray-400 group-hover:text-blue-500 transition-colors">
+                              <div className="text-gray-400 group-hover:text-green-400 transition-colors">
                                 →
                               </div>
                             </div>
@@ -423,7 +423,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                       <input 
                         value={profile.display_name} 
                         onChange={(e) => setProfile((p) => ({ ...p, display_name: e.target.value }))} 
-                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
+                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-green-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
                         placeholder="Your display name"
                       />
                     </div>
@@ -432,7 +432,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                       <input 
                         value={profile.organization} 
                         onChange={(e) => setProfile((p) => ({ ...p, organization: e.target.value }))} 
-                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
+                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-green-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
                         placeholder="Your organization (optional)"
                       />
                     </div>
@@ -442,7 +442,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                         value={profile.bio} 
                         onChange={(e) => setProfile((p) => ({ ...p, bio: e.target.value }))} 
                         rows={3} 
-                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
+                        className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-green-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white" 
                         placeholder="Tell us about yourself (optional)"
                       />
                     </div>
@@ -451,7 +451,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                         type="checkbox" 
                         checked={profile.newsletterOptIn} 
                         onChange={(e) => setProfile((p) => ({ ...p, newsletterOptIn: e.target.checked }))} 
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="rounded border-gray-300 text-green-500 focus:ring-green-400"
                       />
                       Receive the monthly AI Starter tips
                     </label>
@@ -463,7 +463,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                     <button
                       disabled={submitting}
                       onClick={handleSaveProfile}
-                      className="mt-2 w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="mt-2 w-full rounded-lg bg-green-500 px-4 py-2 font-semibold text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {submitting ? 'Saving…' : 'Save Profile'}
                     </button>
@@ -484,7 +484,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                     type="email"
                     value={newEmail}
                     onChange={(e) => setNewEmail(e.target.value)}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-green-400 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
                     placeholder="your@email.com"
                   />
                   {emailMessage && (
@@ -536,7 +536,7 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                       alert('Failed to export data. Please try again.');
                     }
                   }}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                  className="w-full rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-black hover:bg-green-400 transition-colors"
                 >
                   Export My Data (JSON)
                 </button>

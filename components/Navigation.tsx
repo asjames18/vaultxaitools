@@ -265,7 +265,7 @@ export default function Navigation() {
           {/* Mobile menu button */}
             <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-white hover:text-blue-400 focus-visible:outline-2 focus-visible:outline-blue-500 rounded"
+              className="md:hidden p-2 text-white hover:text-green-400 focus-visible:outline-2 focus-visible:outline-green-500 rounded"
           >
             {isMenuOpen ? '✕' : '☰'}
           </button>
@@ -371,7 +371,7 @@ export default function Navigation() {
                   <Link 
                     href="/submit-tool" 
                     onClick={() => setIsMenuOpen(false)}
-                    className="block px-3 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-medium rounded-lg text-center"
+                    className="block px-3 py-2 bg-gradient-to-r from-green-500 to-green-400 text-black text-sm font-medium rounded-lg text-center"
                   >
                     Submit Resource
                   </Link>

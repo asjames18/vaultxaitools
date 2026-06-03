@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function AboutClient() {
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -31,11 +31,11 @@ export default function AboutClient() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                  <div className="text-3xl font-bold text-green-500 dark:text-green-400 mb-2">
                     40+
                   </div>
                   <div className="text-gray-600 dark:text-gray-300">
-                    Media Tools & Resources
+                    AI Tools & Resources
                   </div>
                 </div>
                 <div className="text-center">
@@ -47,7 +47,7 @@ export default function AboutClient() {
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                  <div className="text-3xl font-bold text-green-500 dark:text-green-400 mb-2">
                     10+
                   </div>
                   <div className="text-gray-600 dark:text-gray-300">
@@ -56,7 +56,7 @@ export default function AboutClient() {
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg p-8 text-white">
+            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg p-8 text-white">
               <h3 className="text-2xl font-bold mb-4">
                 Why Choose Melanated In Tech?
               </h3>
@@ -93,8 +93,8 @@ export default function AboutClient() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">1</span>
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-600 dark:text-green-400">1</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                 Discover
@@ -117,8 +117,8 @@ export default function AboutClient() {
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">3</span>
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-green-600 dark:text-green-400">3</span>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                 Implement
@@ -140,12 +140,12 @@ export default function AboutClient() {
               Melanated In Tech is a curated platform dedicated to helping users discover and understand AI tools. We focus on providing accurate, up-to-date information about AI applications across various domains including language processing, image generation, development tools, and productivity solutions.
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
-              Our platform is designed to be a reliable resource for developers, designers, marketers, and anyone interested in leveraging AI technology. We continuously update our database with new tools and maintain quality standards to ensure you find the right AI solution for your needs.
+              Our platform is designed to be a reliable resource for students, career changers, creators, and entrepreneurs who want to leverage AI technology. We continuously update our database with new tools and maintain quality standards to ensure you find the right AI solution for your needs.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl text-blue-600 dark:text-blue-400">🎯</span>
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl text-green-600 dark:text-green-400">🎯</span>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                   Curated Quality
@@ -168,8 +168,8 @@ export default function AboutClient() {
               </div>
               
               <div className="text-center">
-                <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl text-purple-600 dark:text-purple-400">📈</span>
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl text-green-600 dark:text-green-400">📈</span>
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                   Always Updated
@@ -193,13 +193,13 @@ export default function AboutClient() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="mailto:contact@melanatedintech.com"
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              className="bg-green-500 text-black px-8 py-3 rounded-lg font-medium hover:bg-green-400 transition-colors"
             >
               Contact Us
             </Link>
             <Link
               href="/"
-              className="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              className="bg-green-500 text-black px-8 py-3 rounded-lg font-medium hover:bg-green-400 transition-colors"
             >
               Explore Tools
             </Link>

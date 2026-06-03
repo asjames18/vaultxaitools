@@ -400,7 +400,7 @@ export default function HomeClient({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-black">
       {/* SEO Structured Data */}
       <StructuredData
         type="website"
@@ -460,7 +460,7 @@ export default function HomeClient({
 
       {/* Automation Update Banner */}
       {showUpdateBanner && (
-        <div className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-4 py-3 text-center relative">
+        <div className="bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-3 text-center relative">
           <div className="flex items-center justify-center gap-2">
             <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -520,7 +520,7 @@ export default function HomeClient({
 
       {/* Sign In Prompt for Unauthenticated Users */}
       {favoriteTools.length === 0 && recentlyViewed.length === 0 && (
-        <section className="py-16 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+        <section className="py-16 bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
               <HeartIcon className="w-16 h-16 text-red-500 mx-auto mb-6" />
@@ -533,7 +533,7 @@ export default function HomeClient({
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/sign-in"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   <HeartIcon className="w-5 h-5" />
                   Sign In to Save Favorites
@@ -553,7 +553,7 @@ export default function HomeClient({
 
 
       {/* Our Curation Process Section - New! */}
-      <section className="py-20 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -566,7 +566,7 @@ export default function HomeClient({
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center group">
-              <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-2xl text-white font-bold">1</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Tool Discovery</h3>
@@ -576,7 +576,7 @@ export default function HomeClient({
             </div>
             
             <div className="text-center group">
-              <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-2xl text-white font-bold">2</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Expert Testing</h3>
@@ -586,7 +586,7 @@ export default function HomeClient({
             </div>
             
             <div className="text-center group">
-              <div className="w-20 h-20 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-2xl text-white font-bold">3</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Quality Assessment</h3>
@@ -607,9 +607,9 @@ export default function HomeClient({
           </div>
           
           <div className="mt-12 text-center">
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-full px-6 py-3">
-              <ShieldIcon className="w-5 h-5 text-indigo-600" />
-              <span className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">
+            <div className="inline-flex items-center gap-3 bg-green-500/10 rounded-full px-6 py-3">
+              <ShieldIcon className="w-5 h-5 text-green-400" />
+              <span className="text-sm font-semibold text-green-400">
                 Quality Guarantee: Every tool is tested and verified by our experts
               </span>
             </div>
@@ -618,7 +618,7 @@ export default function HomeClient({
       </section>
 
       {/* Testimonials Section - New! */}
-      <section className="py-20 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -640,7 +640,7 @@ export default function HomeClient({
                   "{testimonial.content}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-xl">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white text-xl">
                     {testimonial.avatar}
                   </div>
                   <div>
@@ -655,7 +655,7 @@ export default function HomeClient({
       </section>
 
       {/* Enhanced How It Works Section */}
-      <section className="py-20 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
+      <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -668,7 +668,7 @@ export default function HomeClient({
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center group">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <SearchIcon className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Search & Discover</h3>
@@ -678,7 +678,7 @@ export default function HomeClient({
             </div>
             
             <div className="text-center group">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <CompareIcon className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Compare & Evaluate</h3>
@@ -701,7 +701,7 @@ export default function HomeClient({
       </section>
 
       {/* Enhanced Search & Filter Section */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -733,7 +733,7 @@ export default function HomeClient({
       {/* Category Showcase Section removed per request */}
 
       {/* Trust & Evaluation Framework Section */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <TrustBadges />
         </div>

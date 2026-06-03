@@ -101,7 +101,7 @@ export default function SettingsClient() {
           type="button"
           aria-pressed={darkMode}
           onClick={toggleDarkMode}
-          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${darkMode ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'}`}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${darkMode ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`}
         >
           <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'}`}></span>
         </button>
@@ -117,7 +117,7 @@ export default function SettingsClient() {
           aria-pressed={emailNotifications}
           onClick={toggleEmailNotifications}
           disabled={savingEmailPref}
-          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${emailNotifications ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700'} ${savingEmailPref ? 'opacity-70 cursor-not-allowed' : ''}`}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${emailNotifications ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'} ${savingEmailPref ? 'opacity-70 cursor-not-allowed' : ''}`}
         >
           <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${emailNotifications ? 'translate-x-6' : 'translate-x-1'}`}></span>
         </button>

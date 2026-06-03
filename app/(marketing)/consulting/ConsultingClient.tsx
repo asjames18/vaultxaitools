@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
@@ -90,7 +90,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
           <button
             onClick={onClose}
             aria-label="Close contact form"
-            className="rounded-md p-2 text-gray-500 hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="rounded-md p-2 text-gray-500 hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:text-gray-300 dark:hover:bg-gray-700"
           >
             ✕
           </button>
@@ -118,7 +118,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
             </p>
             <button
               onClick={onClose}
-              className="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="rounded-lg bg-green-500 px-5 py-2 font-semibold text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
             >
               Close
             </button>
@@ -168,7 +168,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
                 id="c-name"
                 name="name"
                 required
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
             <div>
@@ -180,7 +180,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
                 name="email"
                 type="email"
                 required
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
             <div>
@@ -190,7 +190,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
               <input
                 id="c-phone"
                 name="phone"
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
             <div>
@@ -200,7 +200,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
               <input
                 id="c-company"
                 name="company"
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
             <div className="sm:col-span-2">
@@ -212,7 +212,7 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
                 name="message"
                 rows={4}
                 required
-                className="w-full resize-y rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full resize-y rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
           </div>
@@ -220,13 +220,13 @@ function ContactModal({ open, onClose, context }: { open: boolean; onClose: () =
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+              className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="rounded-lg bg-green-500 px-5 py-2 font-semibold text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
             >
               Send
             </button>
@@ -265,13 +265,13 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
           <button
             onClick={onClose}
             aria-label="Close starter kit"
-            className="rounded-md p-2 text-gray-500 hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="rounded-md p-2 text-gray-500 hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:text-gray-300 dark:hover:bg-gray-700"
           >
             ✕
           </button>
         </div>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-          Drop your email and we’ll send a link to the Starter Kit (PDF, videos, and templates).
+          Drop your email and we'll send a link to the Starter Kit (PDF, videos, and templates).
         </p>
         <form
           className="mt-6 space-y-4"
@@ -316,7 +316,7 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
                 id="s-name"
                 name="name"
                 required
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
             <div>
@@ -328,7 +328,7 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
                 name="email"
                 type="email"
                 required
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
             <div>
@@ -338,7 +338,7 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
               <input
                 id="s-org"
                 name="org"
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
             <div>
@@ -348,7 +348,7 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
               <input
                 id="s-goal"
                 name="goal"
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               />
             </div>
           </div>
@@ -356,13 +356,13 @@ function StarterKitModal({ open, onClose }: { open: boolean; onClose: () => void
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+              className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="rounded-lg bg-green-500 px-5 py-2 font-semibold text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
             >
               Get Starter Kit
             </button>
@@ -418,14 +418,14 @@ export default function ConsultingClient({ constants }: Props) {
                 <button
                   data-analytics="contact-hero"
                   onClick={() => openContact('Hero CTA')}
-                  className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="rounded-xl bg-green-500 px-6 py-3 font-semibold text-black shadow hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                 >
                   {constants.PRIMARY_CTA_TEXT}
                 </button>
                 <button
                   data-analytics="starter-hero"
                   onClick={openStarter}
-                  className="rounded-xl border border-gray-300 px-6 py-3 font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                  className="rounded-xl border border-gray-300 px-6 py-3 font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
                 >
                   Get the Starter Kit
                 </button>
@@ -458,7 +458,7 @@ export default function ConsultingClient({ constants }: Props) {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {[
                 {
-                  title: 'Strategy that’s real',
+                  title: "Strategy that's real",
                   desc: 'Practical roadmaps with fast wins',
                 },
                 {
@@ -531,7 +531,7 @@ export default function ConsultingClient({ constants }: Props) {
               <button
                 data-analytics="contact-tool-guidance"
                 onClick={() => openContact('Tool selection help')}
-                className="hidden rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 sm:block dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                className="hidden rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 sm:block dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
               >
                 Ask us for your stack
               </button>
@@ -546,7 +546,7 @@ export default function ConsultingClient({ constants }: Props) {
                 { use: 'Image & Creative', rec: 'Midjourney + Canva', why: 'On-brand visuals, quick turnaround' }
               ].map((g, i) => (
                 <div key={i} className="rounded-2xl bg-white p-6 ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700">
-                  <div className="text-sm font-medium text-blue-600 dark:text-blue-400">{g.use}</div>
+                  <div className="text-sm font-medium text-green-400 dark:text-green-400">{g.use}</div>
                   <div className="mt-1 text-lg font-semibold text-gray-900 dark:text-white">{g.rec}</div>
                   <p className="mt-2 text-gray-700 dark:text-gray-300">{g.why}</p>
                   {/* Per-row CTA removed; use section-level ask button to reduce choice overload */}
@@ -557,7 +557,7 @@ export default function ConsultingClient({ constants }: Props) {
               <button
                 data-analytics="contact-tool-guidance-mobile"
                 onClick={() => openContact('Tool selection help')}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
               >
                 Ask us for your stack
               </button>
@@ -632,7 +632,7 @@ export default function ConsultingClient({ constants }: Props) {
                   <button
                     data-analytics="contact-before-after"
                     onClick={() => openContact('Before/After CTA')}
-                    className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="rounded-lg bg-green-500 px-4 py-2 font-semibold text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
                   >
                     {constants.PRIMARY_CTA_TEXT}
                   </button>
@@ -654,7 +654,7 @@ export default function ConsultingClient({ constants }: Props) {
                 { title: 'Train', desc: 'Hands-on workshops so the team actually uses it.' },
               ].map((s, i) => (
                 <li key={i} className="rounded-2xl bg-gray-50 p-6 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-gray-700">
-                  <div className="text-2xl font-extrabold text-blue-600">{String(i + 1).padStart(2, '0')}</div>
+                  <div className="text-2xl font-extrabold text-green-400">{String(i + 1).padStart(2, '0')}</div>
                   <h3 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white">{s.title}</h3>
                   <p className="mt-1 text-gray-700 dark:text-gray-300">{s.desc}</p>
                 </li>
@@ -696,7 +696,7 @@ export default function ConsultingClient({ constants }: Props) {
                 { name: 'S. Lee', role: 'Ops Lead, Nonprofit', quote: 'Finally AI that respects our values and time.' },
               ].map((t, i) => (
                 <figure key={i} className="rounded-2xl bg-gray-50 p-6 ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-gray-700">
-                  <blockquote className="text-gray-800 dark:text-gray-200">“{t.quote}”</blockquote>
+                  <blockquote className="text-gray-800 dark:text-gray-200">"{t.quote}"</blockquote>
                   <figcaption className="mt-3 text-sm text-gray-600 dark:text-gray-400">
                     <span className="font-medium text-gray-800 dark:text-gray-200">{t.name}</span> — {t.role}
                   </figcaption>
@@ -736,14 +736,14 @@ export default function ConsultingClient({ constants }: Props) {
         </section>
 
         {/* CTA Banner */}
-        <section className="relative isolate overflow-hidden bg-blue-600 py-16">
+        <section className="relative isolate overflow-hidden bg-green-500 py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center gap-4 text-center">
-              <h2 className="text-3xl font-bold text-white">Let’s map your next 90 days.</h2>
+              <h2 className="text-3xl font-bold text-black">Let's map your next 90 days.</h2>
               <button
                 data-analytics="contact-cta-banner"
                 onClick={() => openContact('CTA Banner')}
-                className="rounded-xl bg-white px-6 py-3 font-semibold text-blue-700 hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white"
+                className="rounded-xl bg-black px-6 py-3 font-semibold text-white hover:bg-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black"
               >
                 {constants.PRIMARY_CTA_TEXT}
               </button>
@@ -763,11 +763,11 @@ export default function ConsultingClient({ constants }: Props) {
       {showSticky && !contactOpen && !starterOpen && (
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 p-3 shadow-md sm:hidden dark:border-gray-700 dark:bg-gray-900/95 [padding-bottom:env(safe-area-inset-bottom)]">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
-            <span className="text-sm text-gray-800 dark:text-gray-200">Let’s plan your next 90 days.</span>
+            <span className="text-sm text-gray-800 dark:text-gray-200">Let's plan your next 90 days.</span>
             <button
               data-analytics="contact-sticky-mobile"
               onClick={() => openContact('Sticky mobile CTA')}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="rounded-lg bg-green-500 px-4 py-2 text-sm font-semibold text-black hover:bg-green-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
             >
               {constants.PRIMARY_CTA_TEXT}
             </button>
