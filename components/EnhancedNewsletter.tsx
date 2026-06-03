@@ -46,11 +46,11 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
           <div className="text-white xl:col-span-2">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
               <SparklesIcon className="w-5 h-5" />
-              <span className="text-sm font-semibold">Expert-Curated Media Tools</span>
+              <span className="text-sm font-semibold">Expert-Curated AI Tools</span>
             </div>
             
             <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold mb-8 leading-tight">
-              Only the Best Media Tools Make the Cut
+              Only the Best AI Tools Make the Cut
             </h2>
             
             <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed max-w-3xl">
@@ -88,10 +88,10 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
           <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 xl:col-span-1">
             <div className="text-center mb-6">
               <h3 className="text-2xl font-bold text-white mb-2">
-                Join the Curated Media Community
+                Join the Melanated In Tech Community
               </h3>
               <p className="text-gray-300">
-                Get the best media tools and resources delivered to your inbox every week.
+                Get weekly curated AI tool picks, tutorials, and tech learning resources delivered to your inbox.
               </p>
             </div>
 
@@ -108,10 +108,10 @@ export default function EnhancedNewsletter({ toolsCount, categoriesCount, subscr
                   <CheckIcon className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
-                  Welcome to the Curated Community!
+                  Welcome to the Melanated In Tech Community!
                 </h3>
                 <p className="text-gray-300">
-                  Check your email for your first curated media tool recommendation.
+                  Check your email for your first curated AI tool recommendation.
                 </p>
               </div>
             )}

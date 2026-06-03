@@ -24,11 +24,11 @@ const FeaturedToolsSection = memo(function FeaturedToolsSection({
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-            Featured Media Tools
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+            Featured AI Tools
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Discover the most popular and trending media production tools in our collection
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            Discover the most popular and trending AI tools in our collection
           </p>
         </div>
 
@@ -41,13 +41,13 @@ const FeaturedToolsSection = memo(function FeaturedToolsSection({
               <div className="p-4 sm:p-6">
                 <div className="flex items-start justify-between mb-3 sm:mb-4">
                   <div className="flex items-center gap-2 sm:gap-3">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-900 to-gray-800 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                       <span className="text-base sm:text-lg font-semibold text-gray-600 dark:text-gray-300">
                         {tool.logo || tool.name.charAt(0)}
                       </span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-sm sm:text-base">{tool.name}</h3>
+                      <h3 className="font-semibold text-white group-hover:text-green-400 transition-colors text-sm sm:text-base">{tool.name}</h3>
                       <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{tool.category}</p>
                     </div>
                   </div>
@@ -73,7 +73,7 @@ const FeaturedToolsSection = memo(function FeaturedToolsSection({
                   <Link
                     href={`/tool/${tool.id}`}
                     onClick={() => addToRecentlyViewed(tool.id)}
-                    className="text-blue-600 hover:text-blue-700 font-medium text-xs sm:text-sm group-hover:translate-x-1 transition-transform"
+                    className="text-green-400 hover:text-green-300 font-medium text-xs sm:text-sm group-hover:translate-x-1 transition-transform"
                   >
                     Learn More →
                   </Link>
@@ -92,7 +92,7 @@ const FeaturedToolsSection = memo(function FeaturedToolsSection({
         <div className="text-center mt-12">
           <Link
             href="/AITools"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             View All Tools
             <ArrowRightIcon className="w-4 h-4" />

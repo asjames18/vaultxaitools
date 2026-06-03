@@ -522,12 +522,12 @@ export default function HomeClient({
       {favoriteTools.length === 0 && recentlyViewed.length === 0 && (
         <section className="py-16 bg-gray-900">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+            <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8">
               <HeartIcon className="w-16 h-16 text-red-500 mx-auto mb-6" />
-              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+              <h2 className="text-2xl font-bold mb-4 text-white">
                 Start Building Your Tech Toolkit
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-lg text-gray-300 mb-8">
                 Sign in to save your favorite AI tools, track what you've explored, and get personalized learning recommendations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -556,10 +556,10 @@ export default function HomeClient({
       <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
               Our Rigorous Curation Process
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-200 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
               We don't just list tools - we thoroughly test and evaluate each one to ensure only the best make it to our curated directory
             </p>
           </div>
@@ -569,8 +569,8 @@ export default function HomeClient({
               <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-2xl text-white font-bold">1</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Tool Discovery</h3>
-              <p className="text-gray-600 dark:text-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-white">Tool Discovery</h3>
+              <p className="text-gray-300">
                 We monitor the AI landscape to identify promising new tools and updates to existing ones
               </p>
             </div>
@@ -579,8 +579,8 @@ export default function HomeClient({
               <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-2xl text-white font-bold">2</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Expert Testing</h3>
-              <p className="text-gray-600 dark:text-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-white">Expert Testing</h3>
+              <p className="text-gray-300">
                 Our team of AI specialists thoroughly tests each tool for functionality, reliability, and value
               </p>
             </div>
@@ -589,8 +589,8 @@ export default function HomeClient({
               <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-2xl text-white font-bold">3</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Quality Assessment</h3>
-              <p className="text-gray-600 dark:text-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-white">Quality Assessment</h3>
+              <p className="text-gray-300">
                 We evaluate performance, user experience, pricing, and real-world effectiveness
               </p>
             </div>
@@ -599,8 +599,8 @@ export default function HomeClient({
               <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <span className="text-2xl text-white font-bold">4</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Final Selection</h3>
-              <p className="text-gray-600 dark:text-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-white">Final Selection</h3>
+              <p className="text-gray-300">
                 Only tools that meet our strict quality standards are added to the curated directory
               </p>
             </div>
@@ -617,51 +617,14 @@ export default function HomeClient({
         </div>
       </section>
 
-      {/* Testimonials Section - New! */}
-      <section className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-              Trusted by Learners, Builders & Career Changers
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-200 max-w-2xl mx-auto">
-              See what our community says about learning and growing with Melanated In Tech
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-              >
-
-                <p className="text-gray-600 dark:text-gray-200 mb-6 italic">
-                  "{testimonial.content}"
-                </p>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white text-xl">
-                    {testimonial.avatar}
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-200">{testimonial.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Enhanced How It Works Section */}
       <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
               How to Use Our Curated Directory
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-200 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               Access the best AI tools in three simple steps
             </p>
           </div>
@@ -671,8 +634,8 @@ export default function HomeClient({
               <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <SearchIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Search & Discover</h3>
-              <p className="text-gray-600 dark:text-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-white">Search & Discover</h3>
+              <p className="text-gray-300">
                 Browse our curated collection of AI tools or use our powerful search to find exactly what you need.
               </p>
             </div>
@@ -681,8 +644,8 @@ export default function HomeClient({
               <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <CompareIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Compare & Evaluate</h3>
-              <p className="text-gray-600 dark:text-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-white">Compare & Evaluate</h3>
+              <p className="text-gray-300">
                 Read detailed reviews, compare features, and see real user ratings to make informed decisions.
               </p>
             </div>
@@ -691,8 +654,8 @@ export default function HomeClient({
               <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <RocketIcon className="w-10 h-10 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">Start Building</h3>
-              <p className="text-gray-600 dark:text-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-white">Start Building</h3>
+              <p className="text-gray-300">
                 Get started with your chosen AI tool and join thousands of users building the future.
               </p>
             </div>
@@ -704,7 +667,7 @@ export default function HomeClient({
       <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
               Find Your Perfect AI Tool
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">

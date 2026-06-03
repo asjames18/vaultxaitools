@@ -24,7 +24,7 @@ const initialReviews: Review[] = [
     id: 1,
     username: "Sarah M.",
     rating: 5,
-    comment: "Found the perfect video editing tool for our church's media production. Game changer!",
+    comment: "Found the perfect AI tool for my content creation workflow. Game changer!",
     timeAgo: "2 hours ago"
   },
   {
@@ -38,7 +38,7 @@ const initialReviews: Review[] = [
     id: 3,
     username: "Maria L.",
     rating: 5,
-    comment: "Finally, a platform that actually curates quality media tools for ministries instead of just listing everything.",
+    comment: "Finally, a platform that actually curates quality AI tools for builders instead of just listing everything.",
     timeAgo: "3 days ago"
   },
   {
@@ -68,29 +68,29 @@ export default function CommunityHighlights({
 
   // Create dynamic community stats based on props
   const communityStats = [
-    { 
-      label: "Curated Tools", 
-      value: toolsCount > 0 ? toolsCount.toString() : "—", 
-      icon: StarIcon, 
-      color: "yellow" 
+    {
+      label: "Curated Tools",
+      value: toolsCount > 0 ? toolsCount.toString() : "—",
+      icon: StarIcon,
+      color: "green"
     },
-    { 
-      label: "Categories", 
-      value: categoriesCount > 0 ? categoriesCount.toString() : "—", 
-      icon: MessageCircle, 
-      color: "green" 
+    {
+      label: "Categories",
+      value: categoriesCount > 0 ? categoriesCount.toString() : "—",
+      icon: MessageCircle,
+      color: "green"
     },
-    { 
-      label: "Expert Selected", 
-      value: `${expertSelectedPercentage}%`, 
-      icon: UsersIcon, 
-      color: "blue" 
+    {
+      label: "Expert Selected",
+      value: `${expertSelectedPercentage}%`,
+      icon: UsersIcon,
+      color: "green"
     },
-    { 
-      label: "Quality Focused", 
-      value: qualityFocused ? "✓" : "—", 
-      icon: HeartIcon, 
-      color: "red" 
+    {
+      label: "Quality Focused",
+      value: qualityFocused ? "✓" : "—",
+      icon: HeartIcon,
+      color: "green"
     }
   ];
 
@@ -135,21 +135,21 @@ export default function CommunityHighlights({
   };
 
   return (
-    <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+    <section className="py-16 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Platform Highlights
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
             Discover hand-picked AI tools curated for quality and real-world effectiveness
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Community Stats */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-            <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
+          <div className="bg-gray-800 rounded-2xl shadow-lg p-8">
+            <h3 className="text-xl font-semibold mb-6 text-white">
               Platform Overview
             </h3>
             <div className="grid grid-cols-2 gap-6">
@@ -158,7 +158,7 @@ export default function CommunityHighlights({
                   <div className={`w-12 h-12 bg-${stat.color}-100 dark:bg-${stat.color}-900 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
                     <stat.icon className={`w-6 h-6 text-${stat.color}-600 dark:text-${stat.color}-400`} />
                   </div>
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                  <div className="text-2xl font-bold text-white mb-1">
                     {stat.value}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -169,16 +169,16 @@ export default function CommunityHighlights({
             </div>
             
             <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <div className="flex items-center justify-between text-sm text-gray-400 mb-4">
                 <span>Hand-picked quality tools</span>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <span>Curated</span>
                 </div>
               </div>
               <Link
                 href="/AITools"
-                className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center block"
+                className="w-full bg-green-500 hover:bg-green-400 text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center block"
               >
                 Explore AI Tools
               </Link>
@@ -186,19 +186,19 @@ export default function CommunityHighlights({
           </div>
 
           {/* Community Reviews */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-            <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
+          <div className="bg-gray-800 rounded-2xl shadow-lg p-8">
+            <h3 className="text-xl font-semibold mb-6 text-white">
               Community Reviews
             </h3>
             
             {/* Featured Review */}
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-700 dark:to-gray-800 rounded-xl p-6 mb-6">
+            <div className="bg-gray-700 rounded-xl p-6 mb-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-black font-semibold">
                   {reviews[currentReviewIndex].username.charAt(0)}
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900 dark:text-white">
+                  <div className="font-semibold text-white">
                     {reviews[currentReviewIndex].username}
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -219,7 +219,7 @@ export default function CommunityHighlights({
             {/* Review Stats */}
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-2xl font-bold text-green-400">
                   {reviews.length}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Reviews</div>
@@ -231,7 +231,7 @@ export default function CommunityHighlights({
                 <div className="text-sm text-gray-600 dark:text-gray-400">Avg Rating</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                <div className="text-2xl font-bold text-green-400">
                   {reviews.filter(review => review.rating === 5).length}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">5-Star</div>
@@ -244,7 +244,7 @@ export default function CommunityHighlights({
                 // This could open a review form modal
                 // TODO: Implement review form modal
               }}
-              className="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="w-full mt-6 bg-green-500 hover:bg-green-400 text-black font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Share Your Experience
             </button>
@@ -254,37 +254,37 @@ export default function CommunityHighlights({
         {/* Community Features Grid */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
-            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <UsersIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+            <div className="w-16 h-16 bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+              <UsersIcon className="w-8 h-8 text-green-400" />
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+            <h3 className="text-xl font-semibold mb-2 text-white">
               Community Driven
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-400">
               Real user reviews and ratings help you make informed decisions
             </p>
           </div>
 
           <div className="text-center">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <StarIcon className="w-8 h-8 text-green-600 dark:text-green-400" />
+            <div className="w-16 h-16 bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+              <StarIcon className="w-8 h-8 text-green-400" />
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+            <h3 className="text-xl font-semibold mb-2 text-white">
               Quality Curation
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-400">
               Expert-vetted tools that meet our high standards for effectiveness
             </p>
           </div>
 
           <div className="text-center">
-            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageCircle className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+            <div className="w-16 h-16 bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+              <MessageCircle className="w-8 h-8 text-green-400" />
             </div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+            <h3 className="text-xl font-semibold mb-2 text-white">
               Active Discussion
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-400">
               Join conversations about AI tools and share your experiences
             </p>
           </div>

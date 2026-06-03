@@ -43,18 +43,19 @@ export default function DailyTool({ tools }: DailyToolProps) {
 
   if (!dailyTool) {
     return (
-      <section className="py-16 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden">
+          <div className="bg-gray-800 border border-gray-700 rounded-3xl overflow-hidden">
             <div className="relative p-8 md:p-12 text-center">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                Loading Daily Tool...
+              <div className="inline-flex items-center gap-2 bg-green-500/10 rounded-full px-4 py-2 mb-6">
+                <SparklesIcon className="w-4 h-4 text-green-400" />
+                <span className="text-sm font-semibold text-green-400">Today's Featured Tool</span>
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-3">
+                Come back tomorrow for a featured tool
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                Tools available: {tools.length}
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-500">
-                Debug: dailyTool state is null
+              <p className="text-gray-400">
+                We feature a new AI tool every day. Check back soon!
               </p>
             </div>
           </div>
@@ -64,29 +65,29 @@ export default function DailyTool({ tools }: DailyToolProps) {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+    <section className="py-16 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-gray-800 border border-gray-700 rounded-3xl overflow-hidden">
           <div className="relative">
             {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-blue-600/10 to-pink-600/10" />
-            
+            <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-green-400/5 to-transparent" />
+
             <div className="relative p-8 md:p-12">
               <div className="flex flex-col lg:flex-row items-center gap-8">
                 {/* Tool Info */}
                 <div className="flex-1 text-center lg:text-left">
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 rounded-full px-4 py-2 mb-6">
-                    <SparklesIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-                    <span className="text-sm font-semibold text-purple-500 dark:text-purple-200">
+                  <div className="inline-flex items-center gap-2 bg-green-500/10 rounded-full px-4 py-2 mb-6">
+                    <SparklesIcon className="w-4 h-4 text-green-400" />
+                    <span className="text-sm font-semibold text-green-400">
                       Today's Featured Tool
                     </span>
                   </div>
                   
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                     {dailyTool.name}
                   </h2>
                   
-                  <p className="text-lg text-gray-600 dark:text-gray-200 mb-6 max-w-2xl">
+                  <p className="text-lg text-gray-300 mb-6 max-w-2xl">
                     {dailyTool.description}
                   </p>
                   
@@ -95,14 +96,14 @@ export default function DailyTool({ tools }: DailyToolProps) {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                     <Link
                       href={`/tool/${dailyTool.id}`}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
                       Explore {dailyTool.name}
                       <ArrowRightIcon className="w-4 h-4" />
                     </Link>
                     <Link
                       href="/AITools"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-gray-200"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 border border-gray-600"
                     >
                       Browse All Tools
                     </Link>
@@ -111,26 +112,26 @@ export default function DailyTool({ tools }: DailyToolProps) {
                 
                 {/* Tool Visual */}
                 <div className="flex-shrink-0">
-                  <div className="w-48 h-48 bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 dark:from-purple-900 dark:via-blue-900 dark:to-pink-900 rounded-2xl flex items-center justify-center shadow-lg">
+                  <div className="w-48 h-48 bg-gradient-to-br from-green-900 via-gray-800 to-gray-900 rounded-2xl flex items-center justify-center shadow-lg border border-green-500/20">
                     <div className="text-8xl">{dailyTool.logo || dailyTool.name.charAt(0)}</div>
                   </div>
                 </div>
               </div>
               
               {/* Tool details */}
-              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+              <div className="mt-8 pt-8 border-t border-gray-700">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                    <div className="text-2xl font-bold text-green-400 mb-2">
                       {dailyTool.category}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-200">Category</div>
+                    <div className="text-sm text-gray-400">Category</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    <div className="text-2xl font-bold text-green-400 mb-2">
                       {dailyTool.pricing}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-200">Pricing</div>
+                    <div className="text-sm text-gray-400">Pricing</div>
                   </div>
                 </div>
               </div>
