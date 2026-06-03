@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { supabaseAdmin } from '@/lib/supabaseAdminClient';
+import { resend, FROM_EMAIL, TEAM_EMAIL } from '@/lib/resend';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -117,6 +118,37 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    // Notify team of new contact message
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TEAM_EMAIL,
+      subject: `New Contact Message: ${insertData.subject}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${insertData.name}</p>
+        <p><strong>Email:</strong> ${insertData.email}</p>
+        <p><strong>Subject:</strong> ${insertData.subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${insertData.message.replace(/\n/g, '<br>')}</p>
+      `,
+    }).catch((err) => console.error('Resend notification error:', err));
+
+    // Send confirmation to user
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: insertData.email,
+      subject: "We received your message — Melanated In Tech",
+      html: `
+        <h2>Thanks for reaching out, ${insertData.name}!</h2>
+        <p>We received your message and will get back to you shortly.</p>
+        <hr>
+        <p><strong>Your message:</strong></p>
+        <p>${insertData.message.replace(/\n/g, '<br>')}</p>
+        <br>
+        <p>— The Melanated In Tech Team</p>
+      `,
+    }).catch((err) => console.error('Resend confirmation error:', err));
 
     return NextResponse.json({
       success: true,

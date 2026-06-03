@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { createClient } from '@/lib/supabase';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 function ResetPasswordForm() {
   const [password, setPassword] = useState('');
@@ -10,25 +10,27 @@ function ResetPasswordForm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [isValidSession, setIsValidSession] = useState(false);
-  
+  const [checking, setChecking] = useState(true);
+
   const supabase = createClient();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Listen for PASSWORD_RECOVERY event — Supabase processes the hash token async
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY') {
         setIsValidSession(true);
+        setChecking(false);
       } else if (event === 'SIGNED_IN' && session) {
-        // Token was already exchanged (e.g. page refresh after recovery)
         setIsValidSession(true);
+        setChecking(false);
       }
     });
 
-    // Fallback: if a session already exists when the page loads
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setIsValidSession(true);
+      if (session) {
+        setIsValidSession(true);
+      }
+      setChecking(false);
     });
 
     return () => subscription.unsubscribe();
@@ -36,14 +38,14 @@ function ResetPasswordForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       setMessage({ type: 'error', text: 'Passwords do not match' });
       return;
     }
 
     if (password.length < 6) {
-      setMessage({ type: 'error', text: 'Password must be at least 6 characters long' });
+      setMessage({ type: 'error', text: 'Password must be at least 6 characters' });
       return;
     }
 
@@ -51,67 +53,58 @@ function ResetPasswordForm() {
     setMessage(null);
 
     try {
-      const { error } = await supabase.auth.updateUser({
-        password: password
-      });
+      const { error } = await supabase.auth.updateUser({ password });
+      if (error) throw error;
 
-      if (error) {
-        throw error;
-      }
-
-      setMessage({ 
-        type: 'success', 
-        text: 'Password updated successfully! You will be redirected to the login page.' 
-      });
-
-      // Redirect to login page after 3 seconds
-      setTimeout(() => {
-        router.push('/admin/login');
-      }, 3000);
-
+      setMessage({ type: 'success', text: 'Password updated! Redirecting to login...' });
+      setTimeout(() => router.push('/sign-in'), 2500);
     } catch (error: any) {
-      setMessage({ 
-        type: 'error', 
-        text: error.message || 'Failed to update password' 
-      });
+      setMessage({ type: 'error', text: error.message || 'Failed to update password' });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-            </svg>
+    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
+      <div className="w-full max-w-md">
+
+        {/* Logo / Brand */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="w-2.5 h-2.5 bg-[#4ade80] rounded-full" />
+            <span className="text-[#4ade80] font-bold text-sm tracking-widest uppercase">
+              Melanated In Tech
+            </span>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Reset Your Password
-          </h2>
-          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Enter your new password below
-          </p>
+          <h1 className="text-3xl font-bold text-white mb-2">Reset your password</h1>
+          <p className="text-gray-500 text-sm">Enter a new password for your account</p>
         </div>
 
-        {message && (
-          <div className={`p-4 rounded-lg ${
-            message.type === 'success' 
-              ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400' 
-              : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400'
-          }`}>
-            {message.text}
-          </div>
-        )}
+        {/* Card */}
+        <div className="bg-[#111] border border-[#1f1f1f] rounded-xl p-8">
 
-        {isValidSession ? (
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-            <div className="space-y-4">
+          {/* Status messages */}
+          {message && (
+            <div className={`mb-6 px-4 py-3 rounded-lg text-sm font-medium ${
+              message.type === 'success'
+                ? 'bg-[#4ade80]/10 border border-[#4ade80]/20 text-[#4ade80]'
+                : 'bg-red-500/10 border border-red-500/20 text-red-400'
+            }`}>
+              {message.text}
+            </div>
+          )}
+
+          {checking ? (
+            <div className="text-center py-8">
+              <div className="w-8 h-8 border-2 border-[#4ade80]/30 border-t-[#4ade80] rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-gray-500 text-sm">Verifying your link...</p>
+            </div>
+          ) : isValidSession ? (
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  New Password *
+                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+                  New Password
                 </label>
                 <input
                   type="password"
@@ -120,14 +113,14 @@ function ResetPasswordForm() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                   placeholder="Enter new password"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-[#4ade80] focus:ring-1 focus:ring-[#4ade80]/20 transition-all text-sm"
                 />
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Confirm New Password *
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">
+                  Confirm New Password
                 </label>
                 <input
                   type="password"
@@ -135,50 +128,49 @@ function ResetPasswordForm() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                   placeholder="Confirm new password"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-[#4ade80] focus:ring-1 focus:ring-[#4ade80]/20 transition-all text-sm"
                 />
               </div>
+
+              <div className="bg-[#0a0a0a] border border-[#1f1f1f] rounded-lg p-4">
+                <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-2">Requirements</p>
+                <ul className="space-y-1 text-xs text-gray-500">
+                  <li className={`flex items-center gap-2 ${password.length >= 6 ? 'text-[#4ade80]' : ''}`}>
+                    <span>{password.length >= 6 ? '✓' : '·'}</span> At least 6 characters
+                  </li>
+                  <li className={`flex items-center gap-2 ${password === confirmPassword && password.length > 0 ? 'text-[#4ade80]' : ''}`}>
+                    <span>{password === confirmPassword && password.length > 0 ? '✓' : '·'}</span> Passwords match
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 bg-[#4ade80] text-black font-bold rounded-lg hover:bg-[#22c55e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+              >
+                {loading ? 'Updating...' : 'Update Password'}
+              </button>
+            </form>
+          ) : (
+            <div className="text-center py-4">
+              <p className="text-gray-500 text-sm mb-6">
+                This link is invalid or has expired. Request a new password reset.
+              </p>
+              <button
+                onClick={() => router.push('/sign-in')}
+                className="w-full py-3 bg-[#4ade80] text-black font-bold rounded-lg hover:bg-[#22c55e] transition-colors text-sm"
+              >
+                Back to Sign In
+              </button>
             </div>
-
-            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-              <h4 className="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">
-                🔐 Password Requirements:
-              </h4>
-              <ul className="text-sm text-blue-700 dark:text-blue-300 space-y-1">
-                <li>• Minimum 6 characters</li>
-                <li>• Use a strong, unique password</li>
-                <li>• Consider using a password manager</li>
-              </ul>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
-            >
-              {loading ? 'Updating Password...' : 'Update Password'}
-            </button>
-          </form>
-        ) : (
-          <div className="text-center">
-            <button
-              onClick={() => router.push('/admin/login')}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Go to Login
-            </button>
-          </div>
-        )}
-
-        <div className="text-center">
-          <a
-            href="/admin/login"
-            className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
-          >
-            Back to Login
-          </a>
+          )}
         </div>
+
+        <p className="text-center text-gray-600 text-xs mt-6">
+          © 2025 Melanated In Tech
+        </p>
       </div>
     </div>
   );
@@ -186,8 +178,12 @@ function ResetPasswordForm() {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#4ade80]/30 border-t-[#4ade80] rounded-full animate-spin" />
+      </div>
+    }>
       <ResetPasswordForm />
     </Suspense>
   );
-} 
+}
