@@ -52,31 +52,23 @@ export default function TermsClient() {
     { id: 'liability', title: 'Liability & Disclaimers', icon: ExclamationTriangleIcon },
   ];
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gray-900">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white">
+      <div className="bg-gray-900 border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <div className="flex justify-center mb-6">
-              <DocumentTextIcon className="h-16 w-16 text-blue-200" />
+              <DocumentTextIcon className="h-16 w-16 text-green-400" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Terms of Service
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              Terms and conditions for using Melanated In Tech platform
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+              Terms and conditions for using Melanated In Tech — AI tools directory and tech education platform
             </p>
-            <div className="mt-8 text-sm text-blue-200">
-              Last updated: {formatDate('2024-01-15')}
+            <div className="mt-8 text-sm text-green-400">
+              Last updated June 2026
             </div>
           </div>
         </div>
@@ -95,8 +87,8 @@ export default function TermsClient() {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${
                       activeSection === section.id
-                        ? 'bg-blue-600 text-white shadow-lg'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                        ? 'bg-green-500/20 text-green-400 border border-green-500/40 shadow-lg'
+                        : 'text-gray-300 hover:text-green-400 hover:bg-gray-800'
                     }`}
                   >
                     <section.icon className="h-5 w-5" />
@@ -106,16 +98,19 @@ export default function TermsClient() {
               </nav>
 
               {/* Contact Information */}
-              <div className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+              <div className="mt-8 p-6 bg-gray-800 border border-gray-700 rounded-lg">
+                <h3 className="text-lg font-semibold text-white mb-3">
                   Questions?
                 </h3>
-                <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">
-                  If you have any questions about these Terms of Service, please contact us.
+                <p className="text-sm text-gray-300 mb-4">
+                  If you have any questions about these Terms of Service, email us at{' '}
+                  <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                    contact@melanatedintech.com
+                  </a>
                 </p>
-                <a 
-                  href="/contact" 
-                  className="block w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
+                <a
+                  href="/contact"
+                  className="block w-full bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
                 >
                   Contact Us
                 </a>
@@ -125,37 +120,41 @@ export default function TermsClient() {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-8">
               {/* Overview Section */}
               {activeSection === 'overview' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Overview
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      These Terms of Service ("Terms") govern your use of Melanated In Tech ("Service," "we," "us," or "our"), a technology education platform for discovering AI tools, learning resources, and emerging tech. By accessing or using our Service, you agree to be bound by these Terms.
+                  <div className="prose prose-lg max-w-none">
+                    <p className="text-gray-300 mb-6">
+                      These Terms of Service ("Terms") govern your use of Melanated In Tech ("Service," "we," "us," or "our"), an AI tools directory and tech education platform for discovering AI tools, learning resources, and emerging tech. By accessing or using our Service, you agree to be bound by these Terms.
                     </p>
-                    
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Agreement to Terms
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       By accessing or using Melanated In Tech, you agree to be bound by these Terms. If you disagree with any part of these terms, then you may not access the Service.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Changes to Terms
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       We reserve the right to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Contact Information
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      If you have any questions about these Terms, please contact us through our contact form or at the email address provided on our website.
+                    <p className="text-gray-300 mb-6">
+                      If you have any questions about these Terms, please contact us at{' '}
+                      <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                        contact@melanatedintech.com
+                      </a>{' '}
+                      or through our contact form.
                     </p>
                   </div>
                 </div>
@@ -164,21 +163,21 @@ export default function TermsClient() {
               {/* Acceptance Section */}
               {activeSection === 'acceptance' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Acceptance of Terms
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Eligibility
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You must be at least 13 years old to use this Service. If you are under 18, you must have your parent or guardian's permission to use the Service.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Account Registration
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>You may be required to create an account to access certain features</li>
                       <li>You are responsible for maintaining the confidentiality of your account credentials</li>
                       <li>You are responsible for all activities that occur under your account</li>
@@ -186,10 +185,10 @@ export default function TermsClient() {
                       <li>You may not use another person's account without their permission</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Prohibited Uses
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You may not use the Service for any unlawful purpose or to solicit others to perform unlawful acts. You may not violate any applicable local, state, national, or international law or regulation.
                     </p>
                   </div>
@@ -199,42 +198,42 @@ export default function TermsClient() {
               {/* Services Section */}
               {activeSection === 'services' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Description of Services
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Service Description
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Melanated In Tech provides a technology education platform for discovering, reviewing, and comparing AI tools, automation resources, and emerging tech. Our services include:
+                    <p className="text-gray-300 mb-6">
+                      Melanated In Tech is an AI tools directory and tech education platform for discovering, reviewing, and comparing AI tools, automation resources, and emerging tech. Our services include:
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li>Media tools directory and search functionality</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li>AI tools directory and search functionality</li>
                       <li>User reviews and ratings</li>
                       <li>Tool comparisons and recommendations</li>
-                      <li>Blog content and educational resources</li>
+                      <li>Blog content and tech education resources</li>
                       <li>Community features and discussions</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Service Availability
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       We strive to maintain the Service's availability but do not guarantee uninterrupted access. We may temporarily suspend or discontinue the Service for maintenance, updates, or other reasons.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Third-Party Services
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       Our Service may contain links to third-party websites or services. We are not responsible for the content, privacy policies, or practices of any third-party services.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Service Modifications
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       We reserve the right to modify, suspend, or discontinue any part of the Service at any time without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuance of the Service.
                     </p>
                   </div>
@@ -244,17 +243,17 @@ export default function TermsClient() {
               {/* User Conduct Section */}
               {activeSection === 'user-conduct' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     User Conduct and Responsibilities
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Acceptable Use
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You agree to use the Service only for lawful purposes and in accordance with these Terms. You agree not to use the Service:
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>In any way that violates any applicable federal, state, local, or international law or regulation</li>
                       <li>To transmit, or procure the sending of, any advertising or promotional material</li>
                       <li>To impersonate or attempt to impersonate the company, a company employee, another user, or any other person or entity</li>
@@ -262,13 +261,13 @@ export default function TermsClient() {
                       <li>To introduce viruses, trojan horses, worms, logic bombs, or other material that is malicious or technologically harmful</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Content Standards
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       When submitting content (reviews, comments, etc.), you must ensure that your content:
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>Is accurate and truthful</li>
                       <li>Does not violate any applicable laws or regulations</li>
                       <li>Does not infringe on the rights of others</li>
@@ -276,10 +275,10 @@ export default function TermsClient() {
                       <li>Does not contain spam or promotional content</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Account Security
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You are responsible for maintaining the security of your account and password. We cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.
                     </p>
                   </div>
@@ -289,38 +288,42 @@ export default function TermsClient() {
               {/* Intellectual Property Section */}
               {activeSection === 'intellectual-property' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Intellectual Property Rights
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Our Intellectual Property
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       The Service and its original content, features, and functionality are and will remain the exclusive property of Melanated In Tech and its licensors. The Service is protected by copyright, trademark, and other laws.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Your Content
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       By submitting content to our Service, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, adapt, publish, translate, and distribute such content in connection with the Service.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Third-Party Content
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       Our Service may contain content from third parties. We do not claim ownership of such content and respect the intellectual property rights of third parties.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Copyright Infringement
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      If you believe that your copyrighted work has been copied in a way that constitutes copyright infringement, please contact us with the following information:
+                    <p className="text-gray-300 mb-6">
+                      If you believe that your copyrighted work has been copied in a way that constitutes copyright infringement, please contact us at{' '}
+                      <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                        contact@melanatedintech.com
+                      </a>{' '}
+                      with the following information:
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>A description of the copyrighted work that you claim has been infringed</li>
                       <li>A description of where the material is located on our Service</li>
                       <li>Your contact information</li>
@@ -334,55 +337,58 @@ export default function TermsClient() {
               {/* Liability Section */}
               {activeSection === 'liability' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Liability and Disclaimers
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Disclaimer of Warranties
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS. WE MAKE NO WARRANTIES, EXPRESS OR IMPLIED, AND HEREBY DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Limitation of Liability
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      IN NO EVENT SHALL VAULTX TECH BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES.
+                    <p className="text-gray-300 mb-6">
+                      IN NO EVENT SHALL MELANATED IN TECH BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Indemnification
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You agree to defend, indemnify, and hold harmless Melanated In Tech from and against any claims, damages, obligations, losses, liabilities, costs, or debt arising from your use of the Service.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Governing Law
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       These Terms shall be interpreted and governed by the laws of the jurisdiction in which Melanated In Tech operates, without regard to its conflict of law provisions.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Severability
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law.
                     </p>
 
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mt-8">
-                      <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 mt-8">
+                      <h4 className="text-lg font-semibold text-white mb-3">
                         Contact Information
                       </h4>
-                      <p className="text-blue-700 dark:text-blue-300 mb-4">
-                        For questions about these Terms of Service:
+                      <p className="text-gray-300 mb-4">
+                        For questions about these Terms of Service, email us at{' '}
+                        <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                          contact@melanatedintech.com
+                        </a>
                       </p>
-                      <a 
-                        href="/contact" 
-                        className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
+                      <a
+                        href="/contact"
+                        className="inline-block bg-green-500 hover:bg-green-400 text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors"
                       >
                         Contact Us
                       </a>
@@ -396,4 +402,4 @@ export default function TermsClient() {
       </div>
     </div>
   );
-} 
+}

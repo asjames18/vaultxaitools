@@ -151,12 +151,6 @@ export default function Navigation() {
             Tutorials
           </Link>
           <Link
-            href="/AITools"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400`}
-          >
-            Resources
-          </Link>
-          <Link
             href="/about"
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/about' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
@@ -299,13 +293,6 @@ export default function Navigation() {
               className={`block px-3 py-2 rounded-lg text-sm font-medium text-gray-300${pathname === '/blog' ? ' bg-green-900/30 text-green-300' : ''}`}
             >
               Tutorials
-            </Link>
-            <Link
-              href="/AITools"
-              onClick={() => setIsMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-gray-300"
-            >
-              Resources
             </Link>
             <Link
               href="/about"

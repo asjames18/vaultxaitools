@@ -53,31 +53,23 @@ export default function PrivacyClient() {
     { id: 'rights', title: 'Your Rights', icon: DocumentTextIcon },
   ];
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gray-900">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white">
+      <div className="bg-gray-900 border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <div className="flex justify-center mb-6">
-              <ShieldCheckIcon className="h-16 w-16 text-blue-200" />
+              <ShieldCheckIcon className="h-16 w-16 text-green-400" />
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Privacy Policy
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
-              How we collect, use, and protect your personal information
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+              How we collect, use, and protect your personal information on Melanated In Tech
             </p>
-            <div className="mt-8 text-sm text-blue-200">
-              Last updated: {formatDate('2024-01-15')}
+            <div className="mt-8 text-sm text-green-400">
+              Last updated June 2026
             </div>
           </div>
         </div>
@@ -96,8 +88,8 @@ export default function PrivacyClient() {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${
                       activeSection === section.id
-                        ? 'bg-blue-600 text-white shadow-lg'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                        ? 'bg-green-500/20 text-green-400 border border-green-500/40 shadow-lg'
+                        : 'text-gray-300 hover:text-green-400 hover:bg-gray-800'
                     }`}
                   >
                     <section.icon className="h-5 w-5" />
@@ -107,16 +99,19 @@ export default function PrivacyClient() {
               </nav>
 
               {/* Contact Information */}
-              <div className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+              <div className="mt-8 p-6 bg-gray-800 border border-gray-700 rounded-lg">
+                <h3 className="text-lg font-semibold text-white mb-3">
                   Questions?
                 </h3>
-                <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">
-                  If you have any questions about this Privacy Policy, please contact us.
+                <p className="text-sm text-gray-300 mb-4">
+                  If you have any questions about this Privacy Policy, email us at{' '}
+                  <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                    contact@melanatedintech.com
+                  </a>
                 </p>
-                <a 
-                  href="/contact" 
-                  className="block w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
+                <a
+                  href="/contact"
+                  className="block w-full bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
                 >
                   Contact Us
                 </a>
@@ -126,29 +121,29 @@ export default function PrivacyClient() {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-8">
               {/* Overview Section */}
               {activeSection === 'overview' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Overview
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      At Melanated In Tech, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
+                  <div className="prose prose-lg max-w-none">
+                    <p className="text-gray-300 mb-6">
+                      At Melanated In Tech — an AI tools directory and tech education platform — we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
                     </p>
-                    
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Scope
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       This Privacy Policy applies to all users of Melanated In Tech, including visitors to our website, registered users, and administrators. By using our services, you agree to the collection and use of information in accordance with this policy.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Information We Collect
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>Personal information (name, email address)</li>
                       <li>Account credentials and authentication data</li>
                       <li>Usage data and analytics</li>
@@ -156,10 +151,10 @@ export default function PrivacyClient() {
                       <li>Technical information about your device and browser</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       How We Use Your Information
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>Provide and maintain our services</li>
                       <li>Process your requests and transactions</li>
                       <li>Send you important updates and notifications</li>
@@ -173,34 +168,34 @@ export default function PrivacyClient() {
               {/* Data Collection Section */}
               {activeSection === 'collection' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Data Collection
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Information You Provide
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li><strong>Account Information:</strong> When you create an account, we collect your email address and any additional information you choose to provide.</li>
-                      <li><strong>Profile Information:</strong> You may choose to provide additional information such as your name, profile picture, or bio.</li>
-                      <li><strong>Content:</strong> When you submit tools, write reviews, or post comments, we collect and store this content.</li>
-                      <li><strong>Communications:</strong> When you contact us or participate in our support system, we collect your messages and contact information.</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-white">Account Information:</strong> When you create an account, we collect your email address and any additional information you choose to provide.</li>
+                      <li><strong className="text-white">Profile Information:</strong> You may choose to provide additional information such as your name, profile picture, or bio.</li>
+                      <li><strong className="text-white">Content:</strong> When you submit tools, write reviews, or post comments, we collect and store this content.</li>
+                      <li><strong className="text-white">Communications:</strong> When you contact us or participate in our support system, we collect your messages and contact information.</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Automatically Collected Information
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li><strong>Log Data:</strong> We automatically collect information about your use of our services, including IP address, browser type, pages visited, and time spent on pages.</li>
-                      <li><strong>Device Information:</strong> We collect information about your device, including device type, operating system, and browser version.</li>
-                      <li><strong>Cookies and Similar Technologies:</strong> We use cookies and similar technologies to enhance your experience and collect usage data.</li>
-                      <li><strong>Analytics:</strong> We use third-party analytics services to understand how users interact with our website.</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-white">Log Data:</strong> We automatically collect information about your use of our services, including IP address, browser type, pages visited, and time spent on pages.</li>
+                      <li><strong className="text-white">Device Information:</strong> We collect information about your device, including device type, operating system, and browser version.</li>
+                      <li><strong className="text-white">Cookies and Similar Technologies:</strong> We use cookies and similar technologies to enhance your experience and collect usage data.</li>
+                      <li><strong className="text-white">Analytics:</strong> We use third-party analytics services to understand how users interact with our website.</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Third-Party Information
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       We may receive information about you from third-party services, such as authentication providers (Google, GitHub) when you choose to sign in using these services.
                     </p>
                   </div>
@@ -210,35 +205,35 @@ export default function PrivacyClient() {
               {/* Data Usage Section */}
               {activeSection === 'usage' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Data Usage
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Primary Uses
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li><strong>Service Provision:</strong> To provide, maintain, and improve our media production tools and resources platform.</li>
-                      <li><strong>User Experience:</strong> To personalize your experience and provide relevant content and recommendations.</li>
-                      <li><strong>Communication:</strong> To send you important updates, notifications, and respond to your inquiries.</li>
-                      <li><strong>Security:</strong> To protect against fraud, abuse, and security threats.</li>
-                      <li><strong>Analytics:</strong> To understand usage patterns and improve our services.</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-white">Service Provision:</strong> To provide, maintain, and improve our AI tools directory and tech education resources platform.</li>
+                      <li><strong className="text-white">User Experience:</strong> To personalize your experience and provide relevant content and recommendations.</li>
+                      <li><strong className="text-white">Communication:</strong> To send you important updates, notifications, and respond to your inquiries.</li>
+                      <li><strong className="text-white">Security:</strong> To protect against fraud, abuse, and security threats.</li>
+                      <li><strong className="text-white">Analytics:</strong> To understand usage patterns and improve our services.</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Legal Basis for Processing
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li><strong>Consent:</strong> When you explicitly agree to the processing of your data.</li>
-                      <li><strong>Contract:</strong> To fulfill our obligations under our terms of service.</li>
-                      <li><strong>Legitimate Interest:</strong> To improve our services and ensure security.</li>
-                      <li><strong>Legal Obligation:</strong> To comply with applicable laws and regulations.</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-white">Consent:</strong> When you explicitly agree to the processing of your data.</li>
+                      <li><strong className="text-white">Contract:</strong> To fulfill our obligations under our terms of service.</li>
+                      <li><strong className="text-white">Legitimate Interest:</strong> To improve our services and ensure security.</li>
+                      <li><strong className="text-white">Legal Obligation:</strong> To comply with applicable laws and regulations.</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Data Retention
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       We retain your personal information for as long as necessary to provide our services and fulfill the purposes outlined in this Privacy Policy. We may retain certain information for longer periods to comply with legal obligations, resolve disputes, and enforce our agreements.
                     </p>
                   </div>
@@ -248,42 +243,46 @@ export default function PrivacyClient() {
               {/* Data Sharing Section */}
               {activeSection === 'sharing' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Data Sharing
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       We Do Not Sell Your Data
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       Melanated In Tech does not sell, rent, or trade your personal information to third parties for their marketing purposes.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Service Providers
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      We may share your information with trusted third-party service providers who assist us in operating our website, conducting business, or servicing you. These providers are contractually obligated to protect your information and use it only for specified purposes.
+                    <p className="text-gray-300 mb-4">
+                      We share your information with trusted third-party service providers who assist us in operating our platform. These providers are contractually obligated to protect your information and use it only for specified purposes. Our key data processors include:
                     </p>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-white">Supabase</strong> — database &amp; authentication</li>
+                      <li><strong className="text-white">Vercel</strong> — hosting and deployment</li>
+                    </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Legal Requirements
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       We may disclose your information if required by law or in response to valid legal requests, such as subpoenas or court orders.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Business Transfers
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of the transaction. We will notify you of any such change in ownership or control of your personal information.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Public Information
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       Information you choose to make public, such as reviews, comments, or profile information, may be visible to other users and the general public.
                     </p>
                   </div>
@@ -293,31 +292,31 @@ export default function PrivacyClient() {
               {/* Data Security Section */}
               {activeSection === 'security' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Data Security
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Security Measures
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li><strong>Encryption:</strong> We use industry-standard encryption to protect your data in transit and at rest.</li>
-                      <li><strong>Access Controls:</strong> We implement strict access controls to ensure only authorized personnel can access your information.</li>
-                      <li><strong>Regular Security Audits:</strong> We conduct regular security assessments and updates to protect against vulnerabilities.</li>
-                      <li><strong>Secure Infrastructure:</strong> Our services are hosted on secure, reliable cloud infrastructure with multiple layers of protection.</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-white">Encryption:</strong> We use industry-standard encryption to protect your data in transit and at rest.</li>
+                      <li><strong className="text-white">Access Controls:</strong> We implement strict access controls to ensure only authorized personnel can access your information.</li>
+                      <li><strong className="text-white">Regular Security Audits:</strong> We conduct regular security assessments and updates to protect against vulnerabilities.</li>
+                      <li><strong className="text-white">Secure Infrastructure:</strong> Our services are hosted on Vercel with Supabase providing secure, reliable cloud infrastructure with multiple layers of protection.</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Data Breach Response
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       In the unlikely event of a data breach, we will promptly investigate and take appropriate action to mitigate any potential harm. We will notify affected users and relevant authorities as required by law.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Your Role in Security
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>Keep your account credentials secure and confidential</li>
                       <li>Use strong, unique passwords</li>
                       <li>Enable two-factor authentication when available</li>
@@ -331,62 +330,69 @@ export default function PrivacyClient() {
               {/* Your Rights Section */}
               {activeSection === 'rights' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Your Rights
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Access and Portability
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You have the right to access the personal information we hold about you and request a copy of your data in a portable format.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Correction and Updates
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You can update or correct your personal information through your account settings or by contacting us directly.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Deletion
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You may request the deletion of your personal information, subject to certain legal and contractual obligations.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Restriction and Objection
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       You have the right to restrict or object to certain processing of your personal information.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Withdrawal of Consent
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       Where we rely on your consent for processing, you may withdraw that consent at any time.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Exercising Your Rights
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      To exercise any of these rights, please contact us using the information provided below. We will respond to your request within a reasonable timeframe and may ask for additional information to verify your identity.
+                    <p className="text-gray-300 mb-6">
+                      To exercise any of these rights, please contact us at{' '}
+                      <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                        contact@melanatedintech.com
+                      </a>
+                      . We will respond to your request within a reasonable timeframe and may ask for additional information to verify your identity.
                     </p>
 
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mt-8">
-                      <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+                    <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 mt-8">
+                      <h4 className="text-lg font-semibold text-white mb-3">
                         Contact Information
                       </h4>
-                      <p className="text-blue-700 dark:text-blue-300 mb-4">
-                        For privacy-related inquiries or to exercise your rights:
+                      <p className="text-gray-300 mb-4">
+                        For privacy-related inquiries or to exercise your rights, email us at{' '}
+                        <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                          contact@melanatedintech.com
+                        </a>
                       </p>
-                      <a 
-                        href="/contact" 
-                        className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
+                      <a
+                        href="/contact"
+                        className="inline-block bg-green-500 hover:bg-green-400 text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors"
                       >
                         Contact Us
                       </a>
@@ -400,4 +406,4 @@ export default function PrivacyClient() {
       </div>
     </div>
   );
-} 
+}

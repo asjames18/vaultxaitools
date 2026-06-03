@@ -53,31 +53,25 @@ export default function CookiesClient() {
     { id: 'updates', title: 'Policy Updates', icon: CheckCircleIcon },
   ];
 
-  const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gray-900">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white">
+      <div className="bg-gray-900 border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <div className="flex justify-center mb-6">
-              <CookieIcon className="h-16 w-16 text-blue-200" />
+              <div className="p-4 bg-green-500/10 rounded-full border border-green-500/20">
+                <CookieIcon className="h-16 w-16 text-green-400" />
+              </div>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               Cookie Policy
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
               How we use cookies and similar technologies to enhance your experience
             </p>
-            <div className="mt-8 text-sm text-blue-200">
-              Last updated: {formatDate('2024-01-15')}
+            <div className="mt-8 text-sm text-green-400 font-medium">
+              Last updated: June 2026
             </div>
           </div>
         </div>
@@ -96,8 +90,8 @@ export default function CookiesClient() {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${
                       activeSection === section.id
-                        ? 'bg-blue-600 text-white shadow-lg'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                        ? 'bg-green-500 text-white shadow-lg shadow-green-500/20'
+                        : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                     }`}
                   >
                     <section.icon className="h-5 w-5" />
@@ -107,16 +101,21 @@ export default function CookiesClient() {
               </nav>
 
               {/* Contact Information */}
-              <div className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+              <div className="mt-8 p-6 bg-gray-800 border border-green-500/20 rounded-lg">
+                <h3 className="text-lg font-semibold text-white mb-3">
                   Questions?
                 </h3>
-                <p className="text-sm text-blue-700 dark:text-blue-300 mb-4">
+                <p className="text-sm text-gray-300 mb-3">
                   If you have any questions about our Cookie Policy, please contact us.
                 </p>
-                <a 
-                  href="/contact" 
-                  className="block w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors text-center"
+                <p className="text-sm mb-4">
+                  <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline break-all">
+                    contact@melanatedintech.com
+                  </a>
+                </p>
+                <a
+                  href="/contact"
+                  className="block w-full bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-lg text-sm font-semibold transition-colors text-center"
                 >
                   Contact Us
                 </a>
@@ -126,29 +125,29 @@ export default function CookiesClient() {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-8">
               {/* Overview Section */}
               {activeSection === 'overview' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Overview
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                  <div className="prose prose-lg max-w-none">
+                    <p className="text-gray-300 mb-6">
                       This Cookie Policy explains how Melanated In Tech ("we," "us," or "our") uses cookies and similar technologies when you visit our website. This policy should be read alongside our Privacy Policy, which explains how we use your personal information.
                     </p>
-                    
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       What Are Cookies?
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       Cookies are small text files that are stored on your device (computer, tablet, or mobile) when you visit a website. They help websites remember information about your visit, such as your preferred language and other settings, which can make your next visit easier and more useful.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Why We Use Cookies
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>To provide you with a better user experience</li>
                       <li>To remember your preferences and settings</li>
                       <li>To analyze how our website is used</li>
@@ -156,10 +155,10 @@ export default function CookiesClient() {
                       <li>To ensure the security of our website</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Your Consent
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       By using our website, you consent to our use of cookies in accordance with this Cookie Policy. You can manage your cookie preferences at any time through your browser settings or our cookie consent manager.
                     </p>
                   </div>
@@ -169,55 +168,55 @@ export default function CookiesClient() {
               {/* Types of Cookies Section */}
               {activeSection === 'types' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Types of Cookies We Use
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Essential Cookies
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      These cookies are necessary for the website to function properly. They enable basic functions like page navigation, access to secure areas, and form submissions. The website cannot function properly without these cookies.
+                    <p className="text-gray-300 mb-4">
+                      These cookies are necessary for the website to function properly. They cannot be disabled. The website cannot function without them.
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li>Authentication cookies to keep you logged in</li>
-                      <li>Security cookies to protect against fraud</li>
-                      <li>Session cookies to maintain your session</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-green-400">Authentication cookies:</strong> Keep you signed in securely across pages</li>
+                      <li><strong className="text-green-400">Session cookies:</strong> Maintain your session state while browsing</li>
+                      <li><strong className="text-green-400">Security cookies:</strong> Protect against CSRF attacks and other threats</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Functional Cookies
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      These cookies enable enhanced functionality and personalization, such as remembering your preferences and settings.
-                    </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li>Language preference cookies</li>
-                      <li>Theme preference cookies (light/dark mode)</li>
-                      <li>Search history cookies</li>
-                      <li>User interface customization cookies</li>
-                    </ul>
-
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Analytics Cookies
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously.
+                    <p className="text-gray-300 mb-4">
+                      These cookies help us understand how visitors use our platform by collecting anonymized usage data. This helps us improve content and features.
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li>Page view tracking cookies</li>
-                      <li>User behavior analysis cookies</li>
-                      <li>Performance monitoring cookies</li>
-                      <li>Error tracking cookies</li>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-green-400">Page view tracking:</strong> Which pages are visited and how often</li>
+                      <li><strong className="text-green-400">Usage patterns:</strong> How users navigate through the platform</li>
+                      <li><strong className="text-green-400">Performance monitoring:</strong> Page load times and error rates</li>
+                      <li><strong className="text-green-400">Feature usage:</strong> Which tools and features are most used</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Preference Cookies
+                    </h3>
+                    <p className="text-gray-300 mb-4">
+                      These cookies remember your choices and personalize your experience on our platform.
+                    </p>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li><strong className="text-green-400">Theme preference:</strong> Your selected color scheme or display mode</li>
+                      <li><strong className="text-green-400">Language preference:</strong> Your chosen display language</li>
+                      <li><strong className="text-green-400">Filter settings:</strong> Your saved search filters and category preferences</li>
+                      <li><strong className="text-green-400">Notification preferences:</strong> How you prefer to receive alerts</li>
+                    </ul>
+
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Marketing Cookies
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      These cookies are used to track visitors across websites to display relevant and engaging advertisements.
+                    <p className="text-gray-300 mb-6">
+                      These cookies are used to deliver relevant content and may track your activity across websites. They are only set with your explicit consent.
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>Advertising preference cookies</li>
                       <li>Retargeting cookies</li>
                       <li>Social media integration cookies</li>
@@ -229,43 +228,43 @@ export default function CookiesClient() {
               {/* How We Use Cookies Section */}
               {activeSection === 'usage' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     How We Use Cookies
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Website Functionality
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Keeping You Signed In
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      We use essential cookies to ensure our website works properly and securely. These cookies enable core functionality such as user authentication, session management, and security features.
+                    <p className="text-gray-300 mb-6">
+                      We use authentication and session cookies to keep you logged in as you move between pages on Melanated In Tech. Without these, you would be logged out every time you navigate to a new page. These cookies are essential and cannot be disabled.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      User Experience Enhancement
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Remembering Your Preferences
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Functional cookies help us provide a better user experience by remembering your preferences, such as your language choice, theme preference, and other settings.
+                    <p className="text-gray-300 mb-6">
+                      Preference cookies let us remember your choices so you get a consistent experience each time you visit. This includes your display theme, saved filters, notification settings, and language preferences — so you never have to reconfigure them on each visit.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Analytics and Performance
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Understanding Usage
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Analytics cookies help us understand how our website is used, which pages are most popular, and how users navigate through our site. This information helps us improve our website and services.
+                    <p className="text-gray-300 mb-6">
+                      Analytics cookies help us understand how our community uses the platform. We look at which AI tool categories are most popular, how users discover new tools, and where people spend the most time. This data is anonymized and used solely to improve the platform for everyone.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Personalization
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Website Security
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      We use cookies to provide personalized content and recommendations based on your browsing history and preferences.
+                    <p className="text-gray-300 mb-6">
+                      Security cookies protect our platform and users from fraud, abuse, and other threats. They help us detect suspicious activity and ensure that form submissions and account actions come from legitimate users.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Security
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Personalized Content
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Security cookies help protect our website and users from fraud, abuse, and other security threats.
+                    <p className="text-gray-300 mb-6">
+                      We use cookies to provide personalized tool recommendations and content based on your activity on the platform. This helps surface the most relevant AI tools and resources for your specific interests.
                     </p>
                   </div>
                 </div>
@@ -274,41 +273,54 @@ export default function CookiesClient() {
               {/* Third-Party Cookies Section */}
               {activeSection === 'third-party' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Third-Party Cookies
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       What Are Third-Party Cookies?
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Third-party cookies are cookies that are set by a website other than the one you are visiting. These cookies are often used for advertising and analytics purposes.
+                    <p className="text-gray-300 mb-6">
+                      Third-party cookies are set by services other than Melanated In Tech that we use to power parts of our platform. These providers have their own privacy policies governing how they use data.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Third-Party Services We Use
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Services We Use
                     </h3>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li><strong>Google Analytics:</strong> To analyze website traffic and user behavior</li>
-                      <li><strong>Google Ads:</strong> To provide relevant advertising</li>
-                      <li><strong>Social Media Platforms:</strong> To enable social media integration and sharing</li>
-                      <li><strong>Payment Processors:</strong> To process payments securely</li>
-                      <li><strong>Content Delivery Networks:</strong> To improve website performance</li>
-                    </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <div className="space-y-4 mb-6">
+                      <div className="bg-gray-900 border border-gray-700 rounded-lg p-5">
+                        <h4 className="text-lg font-semibold text-green-400 mb-2">Supabase</h4>
+                        <p className="text-gray-300 text-sm">
+                          We use Supabase for authentication and database services. Supabase sets cookies to manage your login session and keep your account secure. These are essential cookies required for the platform to function.
+                        </p>
+                      </div>
+
+                      <div className="bg-gray-900 border border-gray-700 rounded-lg p-5">
+                        <h4 className="text-lg font-semibold text-green-400 mb-2">Vercel</h4>
+                        <p className="text-gray-300 text-sm">
+                          Melanated In Tech is hosted on Vercel. Vercel may set cookies for edge network routing and analytics to ensure fast, reliable page delivery across all regions. Vercel Analytics helps us understand aggregate traffic patterns.
+                        </p>
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Managing Third-Party Cookies
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      You can control third-party cookies through your browser settings. However, disabling these cookies may affect the functionality of our website and the services we provide.
+                    <p className="text-gray-300 mb-6">
+                      You can control third-party cookies through your browser settings. However, disabling essential third-party cookies (such as Supabase authentication) will prevent you from logging in or using account features.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Third-Party Privacy Policies
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Third-party services have their own privacy policies and cookie practices. We encourage you to review their policies to understand how they use your information.
+                    <p className="text-gray-300 mb-6">
+                      We encourage you to review the privacy policies of these services directly to understand how they handle your data:
                     </p>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li>Supabase Privacy Policy: supabase.com/privacy</li>
+                      <li>Vercel Privacy Policy: vercel.com/legal/privacy-policy</li>
+                    </ul>
                   </div>
                 </div>
               )}
@@ -316,50 +328,63 @@ export default function CookiesClient() {
               {/* Cookie Management Section */}
               {activeSection === 'management' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Managing Your Cookie Preferences
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Browser Settings
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Most web browsers allow you to control cookies through their settings. You can:
+                    <p className="text-gray-300 mb-6">
+                      Most web browsers allow you to control cookies through their settings. Here is how to manage cookies in the most common browsers:
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
-                      <li>View and delete existing cookies</li>
-                      <li>Block cookies from being set</li>
-                      <li>Set preferences for different types of cookies</li>
-                      <li>Clear cookies when you close your browser</li>
+
+                    <div className="space-y-4 mb-8">
+                      <div className="bg-gray-900 border border-gray-700 rounded-lg p-5">
+                        <h4 className="text-base font-semibold text-green-400 mb-2">Google Chrome</h4>
+                        <p className="text-gray-300 text-sm">
+                          Go to <strong className="text-white">Settings</strong> &rarr; <strong className="text-white">Privacy and security</strong> &rarr; <strong className="text-white">Cookies and other site data</strong>. Here you can block third-party cookies, clear all cookies, or manage exceptions for specific sites.
+                        </p>
+                      </div>
+
+                      <div className="bg-gray-900 border border-gray-700 rounded-lg p-5">
+                        <h4 className="text-base font-semibold text-green-400 mb-2">Mozilla Firefox</h4>
+                        <p className="text-gray-300 text-sm">
+                          Go to <strong className="text-white">Settings</strong> &rarr; <strong className="text-white">Privacy &amp; Security</strong>. Under "Enhanced Tracking Protection," choose your level of cookie blocking. You can also manage individual site exceptions here.
+                        </p>
+                      </div>
+
+                      <div className="bg-gray-900 border border-gray-700 rounded-lg p-5">
+                        <h4 className="text-base font-semibold text-green-400 mb-2">Safari</h4>
+                        <p className="text-gray-300 text-sm">
+                          Go to <strong className="text-white">Preferences</strong> &rarr; <strong className="text-white">Privacy</strong>. You can block all cookies or prevent cross-site tracking. On iOS, go to <strong className="text-white">Settings</strong> &rarr; <strong className="text-white">Safari</strong> &rarr; <strong className="text-white">Privacy &amp; Security</strong>.
+                        </p>
+                      </div>
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      What You Can Control
+                    </h3>
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
+                      <li>View and delete existing cookies stored by our site</li>
+                      <li>Block non-essential cookies (analytics, marketing)</li>
+                      <li>Set preferences for different cookie categories</li>
+                      <li>Clear all cookies when you close your browser</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Our Cookie Consent Manager
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Opting Out of Analytics
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      We provide a cookie consent manager that allows you to control which types of cookies we can set on your device. You can access this through the cookie banner or settings page.
+                    <p className="text-gray-300 mb-6">
+                      You can opt out of analytics cookies without affecting core platform functionality. Authentication and security cookies are required for the platform to work correctly and cannot be disabled.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Opting Out
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      You can opt out of certain types of cookies, such as analytics and marketing cookies. However, please note that opting out may affect the functionality of our website.
-                    </p>
-
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Mobile Devices
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      If you access our website on a mobile device, you may need to adjust your device settings to manage cookies. The process varies depending on your device and operating system.
-                    </p>
-
-                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 mt-8">
-                      <h4 className="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-3">
+                    <div className="bg-gray-900 border border-yellow-500/30 rounded-lg p-6 mt-8">
+                      <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                         Important Note
                       </h4>
-                      <p className="text-yellow-700 dark:text-yellow-300 mb-4">
-                        Disabling essential cookies may prevent our website from functioning properly. We recommend keeping essential cookies enabled for the best user experience.
+                      <p className="text-gray-300">
+                        Disabling essential cookies (such as authentication cookies) will prevent you from logging into your account or using personalized features. We recommend keeping essential cookies enabled for the full Melanated In Tech experience.
                       </p>
                     </div>
                   </div>
@@ -369,54 +394,60 @@ export default function CookiesClient() {
               {/* Policy Updates Section */}
               {activeSection === 'updates' && (
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                  <h2 className="text-3xl font-bold text-white mb-6">
                     Policy Updates
                   </h2>
-                  <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <div className="prose prose-lg max-w-none">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Changes to This Policy
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-6">
                       We may update this Cookie Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the updated policy on our website.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                      Notification of Changes
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      How We Notify You
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    <p className="text-gray-300 mb-4">
                       When we make significant changes to this policy, we will:
                     </p>
-                    <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 mb-6 space-y-2">
+                    <ul className="list-disc list-inside text-gray-300 mb-6 space-y-2">
                       <li>Update the "Last updated" date at the top of this policy</li>
-                      <li>Post a notice on our website</li>
-                      <li>Send an email notification to registered users (if applicable)</li>
-                      <li>Display a cookie banner to inform users of changes</li>
+                      <li>Post a notice on our website for a reasonable period</li>
+                      <li>Send an email notification to registered users for significant changes</li>
+                      <li>Display a cookie banner to inform returning users of changes</li>
                     </ul>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Your Continued Use
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Your continued use of our website after any changes to this Cookie Policy constitutes acceptance of those changes. If you do not agree to the changes, you should stop using our website and delete any cookies we have set.
+                    <p className="text-gray-300 mb-6">
+                      Your continued use of our website after any changes to this Cookie Policy constitutes acceptance of those changes. If you do not agree to the changes, you should stop using our website and clear any cookies we have set.
                     </p>
 
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Contact Us
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      If you have any questions about this Cookie Policy or our use of cookies, please contact us using the information provided below.
+                    <p className="text-gray-300 mb-6">
+                      If you have any questions about this Cookie Policy or our use of cookies, please reach out to us directly.
                     </p>
 
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mt-8">
-                      <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
+                    <div className="bg-gray-900 border border-green-500/30 rounded-lg p-6 mt-8">
+                      <h4 className="text-lg font-semibold text-green-400 mb-3">
                         Contact Information
                       </h4>
-                      <p className="text-blue-700 dark:text-blue-300 mb-4">
-                        For questions about our Cookie Policy:
+                      <p className="text-gray-300 mb-2">
+                        Melanated In Tech — Cookie Policy inquiries:
                       </p>
-                      <a 
-                        href="/contact" 
-                        className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
+                      <p className="text-gray-300 mb-4">
+                        <span className="text-green-400 font-medium">Email:</span>{' '}
+                        <a href="mailto:contact@melanatedintech.com" className="text-green-400 hover:text-green-300 underline">
+                          contact@melanatedintech.com
+                        </a>
+                      </p>
+                      <a
+                        href="/contact"
+                        className="inline-block bg-green-500 hover:bg-green-400 text-black px-6 py-2 rounded-lg text-sm font-semibold transition-colors"
                       >
                         Contact Us
                       </a>
@@ -430,4 +461,4 @@ export default function CookiesClient() {
       </div>
     </div>
   );
-} 
+}
