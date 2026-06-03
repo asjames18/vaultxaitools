@@ -1,19 +1,13 @@
 import { createBrowserClient } from '@supabase/ssr'
 
+let clientInstance: ReturnType<typeof createBrowserClient> | null = null;
+
 export function createClient() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  
-  if (!supabaseUrl || !supabaseKey) {
-    // Return a mock client that won't crash the app
-    // This allows the app to render even if Supabase isn't configured
-    console.warn('Missing Supabase environment variables. Some features may not work.');
-    // Create a minimal client that will fail gracefully
-    return createBrowserClient(
-      supabaseUrl || 'https://placeholder.supabase.co',
-      supabaseKey || 'placeholder-key'
-    );
-  }
-  
-  return createBrowserClient(supabaseUrl, supabaseKey)
+  if (clientInstance) return clientInstance;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+
+  clientInstance = createBrowserClient(supabaseUrl, supabaseKey);
+  return clientInstance;
 }
