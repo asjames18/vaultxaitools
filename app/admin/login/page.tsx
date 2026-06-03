@@ -18,20 +18,15 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
         setError(error.message);
       } else {
         router.push('/admin');
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred');
     } finally {
       setLoading(false);
@@ -39,91 +34,95 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-6 sm:space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white">
-            Admin Login
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-            Sign in to access the admin dashboard
-          </p>
+    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
+      <div className="w-full max-w-md">
+
+        {/* Brand */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="w-2.5 h-2.5 bg-[#4ade80] rounded-full" />
+            <span className="text-[#4ade80] font-bold text-sm tracking-widest uppercase">
+              Melanated In Tech
+            </span>
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">Admin Portal</h1>
+          <p className="text-gray-500 text-sm">Sign in to access your dashboard</p>
         </div>
-        <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleLogin}>
-          <div className="space-y-4">
+
+        {/* Card */}
+        <div className="bg-[#111] border border-[#1f1f1f] rounded-xl p-8">
+          {error && (
+            <div className="mb-6 px-4 py-3 rounded-lg text-sm font-medium bg-red-500/10 border border-red-500/20 text-red-400">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label htmlFor="email" className="sr-only">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email address
               </label>
               <input
                 id="email"
-                name="email"
                 type="email"
                 autoComplete="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-green-400 focus:border-green-400 focus:z-10 text-sm sm:text-base bg-white dark:bg-gray-800 min-h-[44px]"
-                placeholder="Email address"
+                placeholder="admin@example.com"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-[#4ade80] focus:ring-1 focus:ring-[#4ade80]/20 transition-all text-sm"
               />
             </div>
+
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
               <input
                 id="password"
-                name="password"
                 type="password"
                 autoComplete="current-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 focus:z-10 text-sm sm:text-base bg-white dark:bg-gray-800 min-h-[44px]"
-                placeholder="Password"
+                placeholder="••••••••"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-white placeholder-gray-600 focus:outline-none focus:border-[#4ade80] focus:ring-1 focus:ring-[#4ade80]/20 transition-all text-sm"
               />
             </div>
-          </div>
 
-          {error && (
-            <div className="rounded-md bg-red-50 dark:bg-red-900/20 p-4">
-              <div className="text-sm text-red-700 dark:text-red-400">{error}</div>
-            </div>
-          )}
-
-          <div>
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm sm:text-base font-medium rounded-lg text-black bg-green-500 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+              className="w-full py-3 bg-[#4ade80] text-black font-bold rounded-lg hover:bg-[#22c55e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
-          </div>
+          </form>
 
-          <div className="text-center">
+          <div className="mt-5 text-center">
             <button
               type="button"
               onClick={() => setShowForgotPassword(true)}
-              className="text-sm text-green-400 hover:text-green-300"
+              className="text-sm text-gray-500 hover:text-[#4ade80] transition-colors"
             >
               Forgot your password?
             </button>
           </div>
-        </form>
+        </div>
 
-        {/* Forgot Password Form */}
-        {showForgotPassword && (
-          <PasswordResetForm
-            mode="forgot-password"
-            onClose={() => setShowForgotPassword(false)}
-            onSuccess={() => {
-              setShowForgotPassword(false);
-              setError('');
-            }}
-          />
-        )}
+        <p className="text-center text-gray-600 text-xs mt-6">© 2025 Melanated In Tech</p>
       </div>
+
+      {showForgotPassword && (
+        <PasswordResetForm
+          mode="forgot-password"
+          onClose={() => setShowForgotPassword(false)}
+          onSuccess={() => {
+            setShowForgotPassword(false);
+            setError('');
+          }}
+        />
+      )}
     </div>
   );
-} 
+}
