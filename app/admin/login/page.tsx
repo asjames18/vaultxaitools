@@ -63,7 +63,7 @@ export default function AdminLogin() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-sm sm:text-base bg-white dark:bg-gray-800 min-h-[44px]"
+                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-green-400 focus:border-green-400 focus:z-10 text-sm sm:text-base bg-white dark:bg-gray-800 min-h-[44px]"
                 placeholder="Email address"
               />
             </div>
@@ -79,7 +79,7 @@ export default function AdminLogin() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 text-sm sm:text-base bg-white dark:bg-gray-800 min-h-[44px]"
+                className="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 focus:z-10 text-sm sm:text-base bg-white dark:bg-gray-800 min-h-[44px]"
                 placeholder="Password"
               />
             </div>
@@ -95,7 +95,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm sm:text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm sm:text-base font-medium rounded-lg text-black bg-green-500 hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
@@ -105,7 +105,7 @@ export default function AdminLogin() {
             <button
               type="button"
               onClick={() => setShowForgotPassword(true)}
-              className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300"
+              className="text-sm text-green-400 hover:text-green-300"
             >
               Forgot your password?
             </button>

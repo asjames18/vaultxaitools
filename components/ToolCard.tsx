@@ -95,13 +95,13 @@ export default function ToolCard({ tool }: { tool: Tool }) {
       </p>
       
       <div className="flex items-center justify-between mb-4">
-        <Link href={`/tool/${tool.id}`} className="text-blue-600 hover:underline">
+        <Link href={`/tool/${tool.id}`} className="text-green-400 hover:underline">
           Learn More →
         </Link>
         <div className="flex items-center gap-2">
           <button
             onClick={toggleCompare}
-            className={`text-sm px-2 py-1 border rounded ${compareSet.includes(tool.id) ? 'bg-blue-600 text-white' : ''}`}
+            className={`text-sm px-2 py-1 border rounded ${compareSet.includes(tool.id) ? 'bg-green-500 text-black' : ''}`}
             aria-pressed={compareSet.includes(tool.id)}
             aria-label={compareSet.includes(tool.id) ? 'Remove from compare' : 'Add to compare'}
           >

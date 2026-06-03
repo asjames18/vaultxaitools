@@ -38,7 +38,7 @@ export default function GettingStartedPage() {
               <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">Getting Started Steps</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                     1
                   </div>
                   <div>
@@ -50,7 +50,7 @@ export default function GettingStartedPage() {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                     2
                   </div>
                   <div>
@@ -62,7 +62,7 @@ export default function GettingStartedPage() {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
+                  <div className="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                     3
                   </div>
                   <div>
@@ -109,7 +109,7 @@ export default function GettingStartedPage() {
               <div className="text-center">
                 <a 
                   href="/AITools" 
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center px-6 py-3 bg-green-500 text-black font-medium rounded-lg hover:bg-green-400 transition-colors"
                 >
                   Browse Media Tools
                 </a>

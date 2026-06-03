@@ -126,23 +126,23 @@ export default function GettingStartedClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gray-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-20 pb-16">
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-green-600 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-blob animation-delay-4000"></div>
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-full px-6 py-3 mb-8 shadow-lg">
-              <BookOpenIcon className="w-5 h-5 text-blue-600" />
-              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">Beginner's Guide</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-900/40 to-green-800/40 rounded-full px-6 py-3 mb-8 shadow-lg">
+              <BookOpenIcon className="w-5 h-5 text-green-400" />
+              <span className="text-sm font-semibold text-green-400">Beginner's Guide</span>
             </div>
             
-                                 <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 sm:mb-6">
+                                 <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-green-400 to-green-300 bg-clip-text text-transparent mb-4 sm:mb-6">
                        Getting Started with Media Tools
                      </h1>
                      
@@ -153,7 +153,7 @@ export default function GettingStartedClient() {
                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                        <Link
                          href="/AITools"
-                         className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base"
+                         className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base"
                        >
                          Browse Media Tools
                          <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -185,14 +185,14 @@ export default function GettingStartedClient() {
                            onClick={() => setActiveStep(step.id)}
                            className={`w-full text-left p-4 sm:p-6 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 ${
                              activeStep === step.id
-                               ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg'
+                               ? 'border-green-500 bg-green-900/20 shadow-lg'
                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                            }`}
                          >
                            <div className="flex items-center gap-3 sm:gap-4">
                              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center ${
                                activeStep === step.id
-                                 ? 'bg-blue-500 text-white'
+                                 ? 'bg-green-500 text-white'
                                  : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
                              }`}>
                                <step.icon className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -206,7 +206,7 @@ export default function GettingStartedClient() {
                                </p>
                              </div>
                              {activeStep === step.id && (
-                               <CheckIcon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+                               <CheckIcon className="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />
                              )}
                            </div>
                          </button>
@@ -221,7 +221,7 @@ export default function GettingStartedClient() {
                            className={`${activeStep === step.id ? 'block' : 'hidden'}`}
                          >
                            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-                             <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                             <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-green-400 rounded-xl sm:rounded-2xl flex items-center justify-center">
                                <step.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                              </div>
                              <div>
@@ -240,7 +240,7 @@ export default function GettingStartedClient() {
                            
                            <Link
                              href={step.actionLink}
-                             className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-300 text-sm sm:text-base"
+                             className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-500 hover:bg-green-400 text-black font-semibold rounded-lg transition-all duration-300 text-sm sm:text-base"
                            >
                              {step.action}
                              <ArrowRightIcon className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -253,7 +253,7 @@ export default function GettingStartedClient() {
       </section>
 
       {/* Quick Tips */}
-      <section className="py-16 bg-gradient-to-r from-green-50 to-blue-50 dark:from-gray-800 dark:to-gray-900">
+      <section className="py-16 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -270,7 +270,7 @@ export default function GettingStartedClient() {
                          key={index}
                          className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                        >
-                         <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
+                         <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-green-400 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6">
                            <tip.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                          </div>
                          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4">
@@ -322,26 +322,26 @@ export default function GettingStartedClient() {
       </section> */}
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="py-16 bg-gray-900 border border-green-500">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Join thousands of learners, builders, and entrepreneurs who are already using AI and tech tools to create opportunities and grow in the digital economy.
           </p>
           
                              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                      <Link
                        href="/AITools"
-                       className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-blue-600 hover:bg-gray-50 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base"
+                       className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-green-500 text-black hover:bg-green-400 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-sm sm:text-base"
                      >
                        Browse All Tools
                        <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                      </Link>
                      <Link
                        href="/search"
-                       className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-transparent text-white border-2 border-white hover:bg-white hover:text-blue-600 font-semibold rounded-xl transition-all duration-300 text-sm sm:text-base"
+                       className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-transparent text-white border-2 border-white hover:bg-white hover:text-black font-semibold rounded-xl transition-all duration-300 text-sm sm:text-base"
                      >
                        Search Tools
                        <SearchIcon className="w-4 h-4 sm:w-5 sm:h-5" />

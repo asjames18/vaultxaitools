@@ -108,7 +108,7 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
             </p>
             <a 
               href="/AITools" 
-              className="text-blue-600 hover:text-blue-700 underline"
+              className="text-green-400 hover:text-green-300 underline"
             >
               Browse all tools
             </a>
@@ -214,7 +214,7 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
           </p>
           <a 
             href="/AITools" 
-            className="text-blue-600 hover:text-blue-700 underline"
+            className="text-green-400 hover:text-green-300 underline"
           >
             Browse all tools
           </a>

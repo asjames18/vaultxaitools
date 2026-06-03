@@ -85,7 +85,7 @@ export default function AdvancedSearchDashboardClient() {
   }, [results, totalResults, availableCategories]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-black">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -140,11 +140,11 @@ export default function AdvancedSearchDashboardClient() {
                 {Object.values(filters).some(value => 
                   Array.isArray(value) ? value.length > 0 : value !== 0 && value !== 'all'
                 ) && (
-                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 mb-4">
+                  <div className="bg-green-900/20 border border-green-800 rounded-lg p-3 mb-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-blue-800 dark:text-blue-200">
+                      <span className="text-sm text-green-200">
                         Active filters: {Object.entries(filters)
-                          .filter(([key, value]) => 
+                          .filter(([key, value]) =>
                             Array.isArray(value) ? value.length > 0 : value !== 0 && value !== 'all'
                           )
                           .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
@@ -152,7 +152,7 @@ export default function AdvancedSearchDashboardClient() {
                       </span>
                       <button
                         onClick={clearFilters}
-                        className="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                        className="text-xs text-green-400 hover:underline"
                       >
                         Clear all
                       </button>
@@ -206,7 +206,7 @@ export default function AdvancedSearchDashboardClient() {
                     <button
                       onClick={handleLoadMore}
                       disabled={loading}
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
+                      className="px-6 py-3 bg-green-500 hover:bg-green-400 disabled:bg-gray-400 text-black font-medium rounded-lg transition-colors"
                     >
                       {loading ? 'Loading...' : 'Load More Results'}
                     </button>
@@ -224,7 +224,7 @@ export default function AdvancedSearchDashboardClient() {
                 </p>
                 <button
                   onClick={resetSearch}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                  className="px-4 py-2 bg-green-500 hover:bg-green-400 text-black font-medium rounded-lg transition-colors"
                 >
                   Start New Search
                 </button>

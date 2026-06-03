@@ -278,7 +278,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
   // If category doesn't exist, show error
   if (!category) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
           <div className="text-8xl mb-6">❌</div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
@@ -289,7 +289,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
           </p>
           <Link
             href="/categories"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 bg-green-500 text-black px-8 py-4 rounded-xl font-semibold hover:bg-green-400 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             <ArrowLeftIcon className="w-5 h-5" />
             Back to Categories
@@ -303,7 +303,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
   const SidebarContent = (
     <div className="space-y-8">
       {/* Subscribe for Updates CTA */}
-      <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl shadow-lg border border-blue-100 dark:border-blue-800 p-6">
+      <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl shadow-lg border border-green-900 dark:border-green-800 p-6">
         <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Stay Updated!</h2>
         <p className="text-base text-gray-600 dark:text-gray-300 mb-4">Subscribe to get the latest {category?.name} tools and updates delivered to your inbox.</p>
         <form className="flex flex-col gap-2" onSubmit={e => { e.preventDefault(); }}>
@@ -312,12 +312,12 @@ export default function CategoryPageClient({ category, categoryTools }: Category
             id="sidebar-subscribe-email"
             type="email"
             placeholder="Enter your email"
-            className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all duration-200 w-full"
+            className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-200 w-full"
             required
           />
           <button
             type="submit"
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-base shadow hover:from-blue-700 hover:to-purple-700 transition-colors"
+            className="px-6 py-3 rounded-xl bg-green-500 text-black font-semibold text-base shadow hover:bg-green-400 transition-colors"
           >
             Subscribe
           </button>
@@ -328,10 +328,10 @@ export default function CategoryPageClient({ category, categoryTools }: Category
         <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white">Quick Links</h3>
         <ul className="space-y-2">
           <li>
-            <a href="/contact" className="text-blue-600 hover:underline font-medium">Suggest a Tool</a>
+            <a href="/contact" className="text-green-400 hover:underline font-medium">Suggest a Tool</a>
           </li>
           <li>
-            <a href="/contact" className="text-blue-600 hover:underline font-medium">Contact / Help</a>
+            <a href="/contact" className="text-green-400 hover:underline font-medium">Contact / Help</a>
           </li>
         </ul>
       </div>
@@ -344,11 +344,11 @@ export default function CategoryPageClient({ category, categoryTools }: Category
     .slice(0, 4); // Show 4 related categories
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gray-900">
       {/* Floating Comparison Bar */}
       {selectedForComparison.length > 0 && (
         <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
-          <div className="bg-blue-600 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4">
+          <div className="bg-green-500 text-black px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4">
             <span className="font-semibold">
               {selectedForComparison.length} tool{selectedForComparison.length !== 1 ? 's' : ''} selected
             </span>
@@ -357,7 +357,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                 // In a real app, this would navigate to a comparison page
                 alert(`Comparing ${selectedForComparison.length} tools: ${selectedForComparison.join(', ')}`);
               }}
-              className="bg-white text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-white text-green-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
             >
               Compare Tools
             </button>
@@ -372,12 +372,12 @@ export default function CategoryPageClient({ category, categoryTools }: Category
       )}
       {/* Enhanced Header */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-pink-600/5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-green-400/5 to-green-300/5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <div className="flex items-center gap-4 mb-8">
             <Link
               href="/categories"
-              className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-white/50 dark:hover:bg-gray-800/50"
+              className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-green-400 dark:hover:text-green-400 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-white/50 dark:hover:bg-gray-800/50"
             >
               <ArrowLeftIcon className="w-4 h-4" />
               Back to Categories
@@ -389,7 +389,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
               {category.icon}
             </div>
             
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-6">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-green-100 to-green-300 bg-clip-text text-transparent mb-6">
               {category.name}
             </h1>
             
@@ -399,12 +399,12 @@ export default function CategoryPageClient({ category, categoryTools }: Category
             
             <div className="flex items-center justify-center gap-8 text-lg text-gray-600 dark:text-gray-400 mb-12">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{category.count}</div>
+                <div className="text-2xl font-bold text-green-400">{category.count}</div>
                 <div className="text-sm">Tools</div>
               </div>
               <div className="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
+                <div className="text-2xl font-bold text-green-400">
                   {category.popularTools.slice(0, 3).join(', ')}
                 </div>
                 <div className="text-sm">Popular Tools</div>
@@ -428,13 +428,13 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                   placeholder={`Search ${category?.name} tools...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 bg-white/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-lg"
+                  className="w-full pl-12 pr-4 py-4 bg-white/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-green-400/20 focus:border-green-400 transition-all duration-200 shadow-lg"
                 />
               </div>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-6 py-4 bg-white/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 shadow-lg"
+                className="px-6 py-4 bg-white/80 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 rounded-2xl text-lg focus:outline-none focus:ring-2 focus:ring-green-400/20 focus:border-green-400 transition-all duration-200 shadow-lg"
               >
                 <option value="popular">Most Popular</option>
                 <option value="rating">Highest Rated</option>
@@ -455,7 +455,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                       type="checkbox"
                       checked={selectedPriceTiers.includes(tier)}
                       onChange={() => handlePriceTierChange(tier)}
-                      className="accent-blue-600"
+                      className="accent-green-500"
                     />
                     {tier}
                   </label>
@@ -471,7 +471,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                       type="checkbox"
                       checked={selectedFeatures.includes(feature)}
                       onChange={() => handleFeatureChange(feature)}
-                      className="accent-blue-600"
+                      className="accent-green-500"
                     />
                     {feature}
                   </label>
@@ -487,7 +487,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                       type="checkbox"
                       checked={selectedCompanySize.includes(size)}
                       onChange={() => handleCompanySizeChange(size)}
-                      className="accent-blue-600"
+                      className="accent-green-500"
                     />
                     {size}
                   </label>
@@ -498,9 +498,9 @@ export default function CategoryPageClient({ category, categoryTools }: Category
             {/* Active Filter Chips */}
             <div className="flex flex-wrap gap-2 mb-6">
               {searchQuery && (
-                <span className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">
+                <span className="inline-flex items-center gap-2 bg-green-900/40 dark:bg-green-900 text-green-300 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
                   Search: "{searchQuery}"
-                  <button onClick={() => setSearchQuery('')} className="hover:bg-blue-200 dark:hover:bg-blue-800 rounded-full p-1">×</button>
+                  <button onClick={() => setSearchQuery('')} className="hover:bg-green-800 dark:hover:bg-green-800 rounded-full p-1">×</button>
                 </span>
               )}
               {selectedPriceTiers.filter(tier => tier !== 'Free' && tier !== 'Paid' && tier !== 'Freemium').map(tier => (
@@ -510,15 +510,15 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                 </span>
               ))}
               {selectedFeatures.map(feature => (
-                <span key={feature} className="inline-flex items-center gap-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium">
+                <span key={feature} className="inline-flex items-center gap-2 bg-green-900/40 dark:bg-green-900/40 text-green-300 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium">
                   {feature}
-                  <button onClick={() => removeFilter('feature', feature)} className="hover:bg-purple-200 dark:hover:bg-purple-800 rounded-full p-1">×</button>
+                  <button onClick={() => removeFilter('feature', feature)} className="hover:bg-green-800 dark:hover:bg-green-800 rounded-full p-1">×</button>
                 </span>
               ))}
               {selectedCompanySize.map(size => (
-                <span key={size} className="inline-flex items-center gap-2 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-3 py-1 rounded-full text-sm font-medium">
+                <span key={size} className="inline-flex items-center gap-2 bg-gray-800 dark:bg-gray-800 text-gray-300 dark:text-gray-300 px-3 py-1 rounded-full text-sm font-medium">
                   {size}
-                  <button onClick={() => removeFilter('company', size)} className="hover:bg-orange-200 dark:hover:bg-orange-800 rounded-full p-1">×</button>
+                  <button onClick={() => removeFilter('company', size)} className="hover:bg-gray-700 dark:hover:bg-gray-700 rounded-full p-1">×</button>
                 </span>
               ))}
               {(selectedFeatures.length > 0 || selectedCompanySize.length > 0 || searchQuery) && (
@@ -591,7 +591,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                               checked={isSelectedForComparison}
                               onChange={() => toggleToolComparison(tool.id)}
                               disabled={!isSelectedForComparison && selectedForComparison.length >= 3}
-                              className="w-4 h-4 accent-blue-600 rounded"
+                              className="w-4 h-4 accent-green-500 rounded"
                               title="Select for comparison"
                             />
                             <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">
@@ -613,10 +613,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
 
                         {/* Badge */}
                         {badge && (
-                          <span className={`absolute top-16 left-4 z-10 px-3 py-1 rounded-full text-xs font-semibold ${
-                            badge === 'Recently Viewed' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                            'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                          }`}>
+                          <span className={`absolute top-16 left-4 z-10 px-3 py-1 rounded-full text-xs font-semibold bg-green-900/40 text-green-300`}>
                             {badge}
                           </span>
                         )}
@@ -635,7 +632,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                               </span>
                             </div>
                           </div>
-                          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 transition-colors">
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-green-400 transition-colors">
                             {tool.name}
                           </h3>
                           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3 leading-relaxed">
@@ -647,7 +644,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                             {getUseCaseTags(tool).map((tag, index) => (
                               <span
                                 key={index}
-                                className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border border-blue-200"
+                                className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-green-900/40 text-green-300 border border-green-800"
                               >
                                 {tag}
                               </span>
@@ -662,7 +659,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                                 {tool.growth || 'N/A'}
                               </div>
                             </div>
-                            <div className="flex items-center gap-2 text-blue-600 group-hover:translate-x-1 transition-transform duration-300">
+                            <div className="flex items-center gap-2 text-green-400 group-hover:translate-x-1 transition-transform duration-300">
                               <span className="font-semibold">View Details</span>
                               <ArrowRightIcon className="w-4 h-4" />
                             </div>
@@ -687,17 +684,17 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                         href={`/categories/${relatedCategory.name.toLowerCase().replace(/\s+/g, '-')}`}
                         className="group"
                       >
-                        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group-hover:border-blue-200 dark:group-hover:border-blue-700">
+                        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group-hover:border-green-500 dark:group-hover:border-green-500">
                           <div className={`w-12 h-12 mb-4 rounded-2xl bg-gradient-to-br ${relatedCategory.color} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                             {relatedCategory.icon}
                           </div>
-                          <h4 className="text-lg font-bold mb-2 group-hover:text-blue-600 transition-colors text-gray-900 dark:text-white">
+                          <h4 className="text-lg font-bold mb-2 group-hover:text-green-400 transition-colors text-gray-900 dark:text-white">
                             {relatedCategory.name}
                           </h4>
                           <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 leading-relaxed mb-4">
                             {relatedCategory.description}
                           </p>
-                          <div className="flex items-center gap-2 text-blue-600 group-hover:translate-x-1 transition-transform duration-300">
+                          <div className="flex items-center gap-2 text-green-400 group-hover:translate-x-1 transition-transform duration-300">
                             <span className="font-medium text-sm">Explore</span>
                             <ArrowRightIcon className="w-3 h-3" />
                           </div>
@@ -731,7 +728,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+                    className="inline-flex items-center gap-2 bg-green-500 text-black px-6 py-3 rounded-xl font-semibold hover:bg-green-400 transition-colors"
                   >
                     Clear Search
                   </button>
@@ -749,7 +746,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
       </section>
 
       {/* FAQ/Guide Section at the bottom */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-t border-gray-200 dark:border-gray-700 mt-12">
+      <section className="py-16 bg-gray-900 border-t border-gray-700 mt-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">{category?.name} Tools: Guide & FAQ</h2>
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 text-center">
@@ -771,7 +768,7 @@ export default function CategoryPageClient({ category, categoryTools }: Category
             <div>
               <dt className="font-semibold text-gray-900 dark:text-white">Can I suggest a new tool?</dt>
               <dd className="text-gray-700 dark:text-gray-300">
-                Absolutely! If you know a great {category?.name} tool, <a href="/contact" className="text-blue-600 hover:underline">contact us</a> and let us know.
+                Absolutely! If you know a great {category?.name} tool, <a href="/contact" className="text-green-400 hover:underline">contact us</a> and let us know.
               </dd>
             </div>
             <div>

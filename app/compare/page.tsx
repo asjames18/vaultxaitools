@@ -30,7 +30,7 @@ export default function ComparePage() {
       <div className="p-6">
         <h1 className="text-2xl font-bold mb-2">Compare Tools</h1>
         <p className="text-gray-600 mb-4">No tools selected. Use the Compare button on tool cards to add up to 3 tools.</p>
-        <Link href="/search" className="text-blue-600 underline">Browse tools</Link>
+        <Link href="/search" className="text-green-400 underline">Browse tools</Link>
       </div>
     );
   }
@@ -49,7 +49,7 @@ export default function ComparePage() {
               <th className="border px-3 py-2 text-left">Attribute</th>
               {tools.map((t) => (
                 <th key={t.id} className="border px-3 py-2 text-left">
-                  <Link href={`/tool/${t.id}`} className="text-blue-600 underline">{t.name}</Link>
+                  <Link href={`/tool/${t.id}`} className="text-green-400 underline">{t.name}</Link>
                 </th>
               ))}
             </tr>
@@ -58,7 +58,7 @@ export default function ComparePage() {
             {[
               ['Category', (t:any)=>t.category],
               ['Pricing', (t:any)=>t.pricing],
-              ['Website', (t:any)=> (<a href={t.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Visit</a>)],
+              ['Website', (t:any)=> (<a href={t.website} target="_blank" rel="noopener noreferrer" className="text-green-400 underline">Visit</a>)],
               ['Features', (t:any)=> (t.features?.join(', ') || '—')],
               ['Pros', (t:any)=> (t.pros?.join(', ') || '—')],
               ['Cons', (t:any)=> (t.cons?.join(', ') || '—')],

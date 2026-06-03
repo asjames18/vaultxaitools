@@ -207,7 +207,7 @@ export default function EnhancedSearch({
           onChange={(e) => handleSearchChange(e.target.value)}
           onKeyDown={handleKeyDown}
           onFocus={() => setShowSuggestions(true)}
-          className="w-full pl-12 pr-12 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+          className="w-full pl-12 pr-12 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
         />
         {searchQuery && (
           <button
@@ -234,7 +234,7 @@ export default function EnhancedSearch({
                   onClick={() => handleSuggestionClick(suggestion)}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                     index === selectedSuggestionIndex
-                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                      ? 'bg-green-900/40 dark:bg-green-900/40 text-green-300 dark:text-green-300'
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                   }`}
                 >

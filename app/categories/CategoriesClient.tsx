@@ -301,11 +301,11 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
 
   if (activeTools.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="relative">
-            <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-            <SparklesIcon className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-blue-600 animate-pulse" />
+            <div className="w-16 h-16 border-4 border-green-900 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
+            <SparklesIcon className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-green-500 animate-pulse" />
           </div>
           <p className="text-gray-600 dark:text-gray-400 text-lg">Discovering amazing AI tools...</p>
         </div>
@@ -334,7 +334,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
   const SidebarContent = (
     <div className="space-y-8">
       {/* Subscribe for Updates CTA */}
-      <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl shadow-lg border border-blue-100 dark:border-blue-800 p-6">
+      <div className="bg-white/90 dark:bg-gray-800/90 rounded-2xl shadow-lg border border-green-900 dark:border-green-800 p-6">
         <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Stay Updated!</h2>
         <p className="text-base text-gray-600 dark:text-gray-300 mb-4">Subscribe to get the latest AI tools and category updates delivered to your inbox.</p>
         <form className="flex flex-col gap-2" onSubmit={handleSubscribe}>
@@ -345,12 +345,12 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             value={subscribeEmail}
             onChange={e => { setSubscribeEmail(e.target.value); setSubscribeStatus('idle'); }}
             placeholder="Enter your email"
-            className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all duration-200 w-full"
+            className="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-200 w-full"
             required
           />
           <button
             type="submit"
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-base shadow hover:from-blue-700 hover:to-purple-700 transition-colors"
+            className="px-6 py-3 rounded-xl bg-green-500 text-black font-semibold text-base shadow hover:bg-green-400 transition-colors"
           >
             Subscribe
           </button>
@@ -367,10 +367,10 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
         <h3 className="text-lg font-bold mb-3 text-gray-900 dark:text-white">Quick Links</h3>
         <ul className="space-y-2">
           <li>
-            <a href="/contact" className="text-blue-600 hover:underline font-medium">Suggest a Category</a>
+            <a href="/contact" className="text-green-400 hover:underline font-medium">Suggest a Category</a>
           </li>
           <li>
-            <a href="/contact" className="text-blue-600 hover:underline font-medium">Contact / Help</a>
+            <a href="/contact" className="text-green-400 hover:underline font-medium">Contact / Help</a>
           </li>
         </ul>
       </div>
@@ -378,7 +378,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gray-900">
       {/* Search Suggestions Portal - positioned at page level */}
       {showSearchSuggestions && searchSuggestions.length > 0 && (
         <div 
@@ -391,7 +391,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                 {searchSuggestions.map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer transition-colors group hover:bg-blue-100 shadow-sm"
+                    className="flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer transition-colors group hover:bg-green-900/40 shadow-sm"
                     onClick={() => {
                       if (item.type === 'category') {
                         // It's a category
@@ -404,15 +404,15 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                     }}
                   >
                     <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 flex items-center justify-center rounded-lg border border-gray-200">
-                      <span className="text-lg sm:text-2xl text-blue-700">
+                      <span className="text-lg sm:text-2xl text-green-400">
                         {item.type === 'category' ? '📁' : '🔧'}
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-black text-sm sm:text-base group-hover:text-blue-700 truncate">
+                      <div className="font-bold text-black text-sm sm:text-base group-hover:text-green-400 truncate">
                         {item.name}
                       </div>
-                      <div className="text-xs sm:text-sm text-gray-600 group-hover:text-blue-600 truncate">
+                      <div className="text-xs sm:text-sm text-gray-600 group-hover:text-green-400 truncate">
                         {item.type === 'category' ? 'Category' : item.category}
                       </div>
                     </div>
@@ -428,22 +428,22 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
       <section className="relative overflow-hidden">
         {/* Animated background elements - Same as home page */}
         <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-20 w-72 h-72 bg-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
         </div>
         
         <div className="relative max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center max-w-4xl mx-auto">
             {/* Enhanced badge - Same style as home page */}
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 backdrop-blur-sm border border-blue-200 dark:border-blue-700 rounded-full px-6 py-3 mb-8 shadow-lg animate-fade-in">
-              <SparklesIcon className="w-5 h-5 text-blue-600 animate-pulse" />
-              <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">Find Media Tools</span>
+            <div className="inline-flex items-center gap-2 bg-green-500/10 backdrop-blur-sm border border-green-500/30 rounded-full px-6 py-3 mb-8 shadow-lg animate-fade-in">
+              <SparklesIcon className="w-5 h-5 text-green-400 animate-pulse" />
+              <span className="text-sm font-semibold text-green-400">Find Media Tools</span>
               <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
             </div>
             
             {/* Main headline - Similar to home page */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 animate-slide-up">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-green-100 to-green-300 bg-clip-text text-transparent mb-6 animate-slide-up">
               Media Tools
             </h1>
             
@@ -456,11 +456,11 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             {/* Enhanced stats with animations - Same style as home page */}
             <div className="grid grid-cols-2 md:grid-cols-2 gap-8 max-w-3xl mx-auto animate-fade-in">
               <div className="text-center group">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform">{categories.length}</div>
+                <div className="text-3xl font-bold text-green-400 mb-2 group-hover:scale-110 transition-transform">{categories.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Categories</div>
               </div>
               <div className="text-center group">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2 group-hover:scale-110 transition-transform">{filteredTools.length}</div>
+                <div className="text-3xl font-bold text-green-400 mb-2 group-hover:scale-110 transition-transform">{filteredTools.length}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">Matching Tools</div>
               </div>
               {/* ratings stats removed */}
@@ -498,9 +498,9 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
               {activeFilterChips.length > 0 && (
                 <div className="mb-6 flex flex-wrap gap-2">
                   {activeFilterChips.map((chip, i) => (
-                    <button key={i} onClick={chip.onRemove} className="group inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100 dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
+                    <button key={i} onClick={chip.onRemove} className="group inline-flex items-center gap-1 rounded-full border border-green-900 bg-green-900/40 px-3 py-1 text-xs font-medium text-green-300 hover:bg-green-900/60 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300">
                       <span>{chip.label}</span>
-                      <span aria-hidden className="ml-1 rounded-full bg-blue-200 px-1.5 group-hover:bg-blue-300 dark:bg-blue-800">×</span>
+                      <span aria-hidden className="ml-1 rounded-full bg-green-800 px-1.5 group-hover:bg-green-700 dark:bg-green-800">×</span>
                     </button>
                   ))}
                 </div>
@@ -519,7 +519,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                   }}
                   onFocus={() => setShowSearchSuggestions(searchQuery.length > 0)}
                   onBlur={() => setTimeout(() => setShowSearchSuggestions(false), 200)}
-                  className="w-full pl-12 pr-4 py-3 sm:py-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border border-gray-300 dark:border-gray-600 rounded-xl sm:rounded-2xl text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-lg hover:shadow-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+                  className="w-full pl-12 pr-4 py-3 sm:py-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border border-gray-300 dark:border-gray-600 rounded-xl sm:rounded-2xl text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all duration-200 shadow-lg hover:shadow-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                 />
               </div>
             </div>
@@ -546,13 +546,13 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                 {['Free','Freemium','Paid'].map(p => {
                   const active = selectedPricing.includes(p);
                   return (
-                    <button key={p} aria-pressed={active} onClick={() => setSelectedPricing(prev => active ? prev.filter(x => x!==p) : [...prev, p])} className={`px-3.5 py-2 rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${active ? 'bg-blue-50 border-blue-300 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800' : 'border-gray-300 hover:bg-gray-50 text-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800'}`}>{p}</button>
+                    <button key={p} aria-pressed={active} onClick={() => setSelectedPricing(prev => active ? prev.filter(x => x!==p) : [...prev, p])} className={`px-3.5 py-2 rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400 ${active ? 'bg-green-900/40 border-green-700 text-green-300 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800' : 'border-gray-300 hover:bg-gray-50 text-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800'}`}>{p}</button>
                   );
                 })}
                 {['Open Source','No Login','API','Privacy-first'].map(tag => {
                   const active = selectedTags.includes(tag);
                   return (
-                    <button key={tag} aria-pressed={active} onClick={() => setSelectedTags(prev => active ? prev.filter(x => x!==tag) : [...prev, tag])} className={`px-3.5 py-2 rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${active ? 'bg-blue-50 border-blue-300 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800' : 'border-gray-300 hover:bg-gray-50 text-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800'}`}>{tag}</button>
+                    <button key={tag} aria-pressed={active} onClick={() => setSelectedTags(prev => active ? prev.filter(x => x!==tag) : [...prev, tag])} className={`px-3.5 py-2 rounded-md border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400 ${active ? 'bg-green-900/40 border-green-700 text-green-300 dark:bg-green-900/20 dark:text-green-300 dark:border-green-800' : 'border-gray-300 hover:bg-gray-50 text-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800'}`}>{tag}</button>
                   );
                 })}
                 {sortBy === 'quality' && (
@@ -560,7 +560,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                 )}
               </div>
               {showWhyQuality && (
-                <div role="note" className="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-200">Ranking blends popularity and recent growth with curator picks.
+                <div role="note" className="mb-6 rounded-lg border border-green-800 bg-green-900/20 p-3 text-sm text-green-300 dark:border-green-800 dark:bg-green-900/20 dark:text-green-200">Ranking blends popularity and recent growth with curator picks.
               </div>
               )}
               <div className={viewMode==='grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 [@media(min-width:1600px)]:grid-cols-5 [@media(min-width:1920px)]:grid-cols-6 gap-4 sm:gap-6 lg:gap-8' : 'space-y-4'}>
@@ -587,11 +587,11 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                       <div className="p-6">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div className="w-12 h-12 bg-green-900/40 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                               <span className="text-lg font-semibold text-gray-600 dark:text-gray-300">{tool.logo || tool.name.charAt(0)}</span>
                             </div>
                             <div>
-                              <Link href={`/tool/${tool.id}`} className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{tool.name}</Link>
+                              <Link href={`/tool/${tool.id}`} className="font-semibold text-gray-900 dark:text-white group-hover:text-green-400 dark:group-hover:text-green-400 transition-colors">{tool.name}</Link>
                               <div className="mt-1 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                                 <span>{tool.category}</span>
                                 <span>•</span>
@@ -608,8 +608,8 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
                           ))}
                                   </div>
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:justify-end">
-                          <button onClick={() => addToCompare(tool.id)} className="flex-1 sm:flex-none px-3.5 py-2 rounded-md text-sm border border-gray-300 hover:bg-gray-50 text-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 transition-colors" title="Add to compare">Compare</button>
-                          <Link href={`/tool/${tool.id}`} className="flex-1 sm:flex-none px-3.5 py-2 rounded-md text-sm bg-blue-600 text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 text-center transition-colors">View</Link>
+                          <button onClick={() => addToCompare(tool.id)} className="flex-1 sm:flex-none px-3.5 py-2 rounded-md text-sm border border-gray-300 hover:bg-gray-50 text-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400 transition-colors" title="Add to compare">Compare</button>
+                          <Link href={`/tool/${tool.id}`} className="flex-1 sm:flex-none px-3.5 py-2 rounded-md text-sm bg-green-500 text-black hover:bg-green-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-400 text-center transition-colors">View</Link>
                         </div>
                       </div>
                     </div>
@@ -619,7 +619,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
               {/* Load more */}
               {visibleCount < sortedTools.length && (
                 <div className="mt-8 flex justify-center">
-                  <button onClick={() => setVisibleCount(c => c + 12)} className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700">Load more</button>
+                  <button onClick={() => setVisibleCount(c => c + 12)} className="rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700">Load more</button>
                 </div>
               )}
             </div>
@@ -632,7 +632,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
         </div>
       </section>
       {/* Enhanced FAQ/Guide Section */}
-      <section className="py-12 sm:py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-t border-gray-200 dark:border-gray-700 mt-8 sm:mt-12">
+      <section className="py-12 sm:py-16 bg-gray-900 border-t border-gray-700 mt-8 sm:mt-12">
         <div className="max-w-2xl sm:max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white text-center">Media Tool Categories: Guide & FAQ</h2>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 text-center px-4 sm:px-0">
@@ -654,7 +654,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             <div>
               <dt className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base">Can I suggest a new category?</dt>
               <dd className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mt-1 sm:mt-2">
-                Absolutely! If you have an idea for a new category, <a href="/contact" className="text-blue-600 hover:underline">contact us</a> and let us know. We value community input.
+                Absolutely! If you have an idea for a new category, <a href="/contact" className="text-green-400 hover:underline">contact us</a> and let us know. We value community input.
               </dd>
             </div>
             <div>
