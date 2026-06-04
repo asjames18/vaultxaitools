@@ -386,6 +386,34 @@ export default function ToolDetailsClient({ tool }: ToolDetailsClientProps) {
             )}
           </div>
         </div>
+
+        {/* Build an agent cross-sell */}
+        <div className="mt-12 bg-gray-900 border border-gray-800 rounded-2xl p-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="space-y-1">
+              <p className="text-xs text-green-400 font-semibold uppercase tracking-widest">Agent Marketplace</p>
+              <h2 className="text-xl font-bold text-white">Build an agent using {tool.name}</h2>
+              <p className="text-gray-400 text-sm max-w-lg">
+                Browse production-ready agents, MCP servers, and automation blueprints that integrate with tools like this one.
+              </p>
+            </div>
+            <div className="flex gap-3 flex-shrink-0">
+              <Link
+                href="/agents"
+                className="px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Browse Agents
+              </Link>
+              <Link
+                href="/products"
+                className="px-5 py-2.5 border border-gray-700 hover:border-green-500/50 text-gray-300 hover:text-green-400 font-semibold rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-green-500"
+              >
+                Shop Blueprints
+              </Link>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

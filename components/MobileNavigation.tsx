@@ -73,13 +73,14 @@ export default function MobileNavigation({
 
   const navigationItems = [
     { name: 'Home',        href: '/',            icon: Home },
+    { name: 'Marketplace', href: '/marketplace', icon: Package },
     { name: 'AI Tools',   href: '/AITools',      icon: Grid },
     { name: 'Agents',     href: '/agents',       icon: Zap },
     { name: 'MCP Servers',href: '/mcp-servers',  icon: Server },
-    { name: 'Blueprints', href: '/products',     icon: Package },
-    { name: 'Tutorials',  href: '/blog',         icon: BookOpen },
+    { name: 'Blueprints', href: '/products',     icon: BookOpen },
+    { name: 'Tutorials',  href: '/blog',         icon: Info },
     { name: 'Favorites',  href: '/favorites',    icon: Heart },
-    { name: 'About',      href: '/about',        icon: Info },
+    { name: 'Creators',   href: '/creators',     icon: Grid },
   ];
 
   const adminItems = [

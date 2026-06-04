@@ -23,12 +23,16 @@ function ToolCard({ tool }: { tool: RecommendedTool }) {
     <div className="flex-shrink-0 w-64 bg-gray-900 border border-gray-800 rounded-xl p-4 flex flex-col gap-3 hover:border-green-500/40 transition-all duration-200 hover:shadow-[0_0_12px_2px_rgba(74,222,128,0.08)]">
       {/* Logo + name */}
       <div className="flex items-center gap-3">
-        {tool.logo ? (
+        {tool.logo && /^https?:\/\/|^\//.test(tool.logo) ? (
           <img
             src={tool.logo}
             alt={tool.name}
             className="w-10 h-10 rounded-lg object-cover flex-shrink-0 bg-gray-800"
           />
+        ) : tool.logo ? (
+          <div className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center flex-shrink-0 text-xl">
+            {tool.logo}
+          </div>
         ) : (
           <div className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center flex-shrink-0">
             <Sparkles className="w-5 h-5 text-green-400" />
@@ -60,7 +64,7 @@ function ToolCard({ tool }: { tool: RecommendedTool }) {
 
       {/* CTA */}
       <Link
-        href={`/tools/${tool.id}`}
+        href={`/tool/${tool.id}`}
         className="flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-400 text-black text-xs font-bold py-2 rounded-lg transition-colors duration-200"
       >
         View Tool
