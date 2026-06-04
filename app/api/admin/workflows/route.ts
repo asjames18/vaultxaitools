@@ -4,10 +4,12 @@ import { createClient as createServerSupabase } from '@/lib/supabase-server';
 import { canAccessAdmin } from '@/lib/auth';
 import { adminRateLimiter, sensitiveOperationRateLimiter } from '@/lib/rateLimit';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function createAdminClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 export async function GET(request: NextRequest) {
   // Rate limiting
@@ -20,6 +22,7 @@ export async function GET(request: NextRequest) {
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const supabase = createAdminClient();
   try {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
@@ -96,6 +99,7 @@ export async function POST(request: NextRequest) {
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const supabase = createAdminClient();
   try {
     const body = await request.json();
     const { name, description, type, config, triggers, actions, conditions, schedule } = body;
@@ -157,6 +161,7 @@ export async function PUT(request: NextRequest) {
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const supabase = createAdminClient();
   try {
     const body = await request.json();
     const { id, ...updates } = body;
@@ -209,6 +214,7 @@ export async function DELETE(request: NextRequest) {
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  const supabase = createAdminClient();
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

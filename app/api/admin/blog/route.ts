@@ -5,12 +5,13 @@ import { canAccessAdmin } from '@/lib/auth';
 import { createClient as createServerSupabase } from '@/lib/supabase-server';
 import { adminRateLimiter, sensitiveOperationRateLimiter } from '@/lib/rateLimit';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+function createAdminClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
-
-// Convert frontend format to database format
 function convertToDB(post: Partial<BlogPost>) {
   return {
     title: post.title,
@@ -31,7 +32,6 @@ function convertToDB(post: Partial<BlogPost>) {
   };
 }
 
-// Convert database format to frontend format
 function convertFromDB(dbPost: any): BlogPost {
   return {
     id: dbPost.id,
@@ -58,16 +58,16 @@ function convertFromDB(dbPost: any): BlogPost {
 }
 
 export async function GET(request: NextRequest) {
-  // Rate limiting
   const rateLimitResult = adminRateLimiter(request);
   if (rateLimitResult) return rateLimitResult;
 
-  // Require admin
   const supabaseUserClient = await createServerSupabase();
   const { data: { user } } = await supabaseUserClient.auth.getUser();
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const supabase = createAdminClient();
   try {
     const { data, error } = await supabase
       .from('blog_posts')
@@ -79,8 +79,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to fetch blog posts' }, { status: 500 });
     }
 
-    const posts = data?.map(convertFromDB) || [];
-    return NextResponse.json(posts);
+    return NextResponse.json(data?.map(convertFromDB) || []);
   } catch (error) {
     console.error('Error in GET /api/admin/blog:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -88,21 +87,20 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  // Rate limiting
   const rateLimitResult = sensitiveOperationRateLimiter(request);
   if (rateLimitResult) return rateLimitResult;
 
-  // Require admin
   const supabaseUserClient = await createServerSupabase();
   const { data: { user } } = await supabaseUserClient.auth.getUser();
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const supabase = createAdminClient();
   try {
     const body = await request.json();
     const postData = convertToDB(body);
 
-    // Set published_at if status is published
     if (postData.status === 'published' && !postData.published_at) {
       postData.published_at = new Date().toISOString();
     }
@@ -118,8 +116,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to create blog post' }, { status: 500 });
     }
 
-    const post = convertFromDB(data);
-    return NextResponse.json(post);
+    return NextResponse.json(convertFromDB(data));
   } catch (error) {
     console.error('Error in POST /api/admin/blog:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -127,22 +124,21 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  // Rate limiting
   const rateLimitResult = sensitiveOperationRateLimiter(request);
   if (rateLimitResult) return rateLimitResult;
 
-  // Require admin
   const supabaseUserClient = await createServerSupabase();
   const { data: { user } } = await supabaseUserClient.auth.getUser();
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const supabase = createAdminClient();
   try {
     const body = await request.json();
     const { id, ...postData } = body;
     const updateData = convertToDB(postData);
 
-    // Set published_at if status is being changed to published
     if (updateData.status === 'published' && !updateData.published_at) {
       updateData.published_at = new Date().toISOString();
     }
@@ -159,8 +155,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to update blog post' }, { status: 500 });
     }
 
-    const post = convertFromDB(data);
-    return NextResponse.json(post);
+    return NextResponse.json(convertFromDB(data));
   } catch (error) {
     console.error('Error in PUT /api/admin/blog:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
@@ -168,16 +163,16 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  // Rate limiting
   const rateLimitResult = sensitiveOperationRateLimiter(request);
   if (rateLimitResult) return rateLimitResult;
 
-  // Require admin
   const supabaseUserClient = await createServerSupabase();
   const { data: { user } } = await supabaseUserClient.auth.getUser();
   if (!user || !(await canAccessAdmin(user))) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  const supabase = createAdminClient();
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
@@ -201,4 +196,4 @@ export async function DELETE(request: NextRequest) {
     console.error('Error in DELETE /api/admin/blog:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-} 
+}

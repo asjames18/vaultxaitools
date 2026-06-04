@@ -56,30 +56,21 @@ export async function GET(request: NextRequest) {
     if (growth) {
       const minGrowth = parseInt(growth);
       if (!isNaN(minGrowth)) {
-        // Extract numeric value from growth string (e.g., "15%" -> 15)
-        supabaseQuery = supabaseQuery.or(`growth.ilike.%${minGrowth}%`);
+        supabaseQuery = supabaseQuery.ilike('growth', `%${minGrowth}%`);
       }
     }
 
     if (integration) {
-      // Check if integrations array contains the specified integration
-      // Simplified to avoid complex array operations
-      supabaseQuery = supabaseQuery.or(`integrations::text.ilike.%${integration}%`);
+      supabaseQuery = supabaseQuery.ilike('integrations', `%${integration}%`);
     }
 
     if (language) {
-      // Check if features array contains language-related terms
-      // Simplified to avoid complex array operations
-      supabaseQuery = supabaseQuery.or(`features::text.ilike.%${language}%`);
+      supabaseQuery = supabaseQuery.ilike('features', `%${language}%`);
     }
 
     if (aiModel) {
-      // Check if features or tags contain AI model information
-      // Simplified to avoid complex array operations
-      supabaseQuery = supabaseQuery.or(`
-        features::text.ilike.%${aiModel}%,
-        tags::text.ilike.%${aiModel}%
-      `);
+      supabaseQuery = supabaseQuery.ilike('features', `%${aiModel}%`);
+
     }
 
     // Apply pagination

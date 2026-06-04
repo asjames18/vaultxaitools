@@ -50,8 +50,9 @@ export default function AdminPage() {
               return;
             }
           } catch {
-            // If API check fails, trust middleware — user got here, so they're admin
-            setCanAccess(true);
+            // API check failed — deny access; do not trust client-side fallback
+            router.push('/admin/unauthorized');
+            return;
           }
 
           // Fetch data for the dashboard

@@ -62,7 +62,7 @@ export default function MobileToolCard({
       <div className="relative">
         {/* Tool Image */}
         <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 relative overflow-hidden">
-          {tool.logo ? (
+          {tool.logo && /^https?:\/\/|^\//.test(tool.logo) ? (
             <OptimizedImage
               src={tool.logo}
               alt={`${tool.name} logo`}
@@ -71,9 +71,15 @@ export default function MobileToolCard({
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-2xl font-bold">
-                {tool.name.charAt(0)}
-              </div>
+              {tool.logo ? (
+                <div className="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center text-4xl">
+                  {tool.logo}
+                </div>
+              ) : (
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-2xl font-bold">
+                  {tool.name.charAt(0)}
+                </div>
+              )}
             </div>
           )}
         </div>
