@@ -144,11 +144,62 @@ export default function BlogPostClient({ post, relatedPosts }: BlogPostClientPro
           </div>
         )}
 
+        {/* Deploy with AI — cross-sell */}
+        <div className="mt-12 bg-white/5 border border-white/10 rounded-2xl p-8 text-center space-y-4">
+          <span className="text-xs text-green-400 font-semibold uppercase tracking-wide">Automate This</span>
+          <h2 className="text-2xl font-bold text-white">Ready to build this workflow?</h2>
+          <p className="text-gray-400 text-sm max-w-lg mx-auto">
+            Browse production-ready agents, MCP servers, and automation blueprints to turn what you just read into a running system.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/agents"
+              className="px-6 py-3 bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-white"
+            >
+              Browse Agents
+            </Link>
+            <Link
+              href="/products"
+              className="px-6 py-3 border border-green-500 text-green-400 hover:bg-green-500/10 font-bold rounded-lg transition-colors focus-visible:outline-2 focus-visible:outline-green-500"
+            >
+              Shop Blueprints
+            </Link>
+          </div>
+        </div>
+
+        {/* Email capture */}
+        <div className="mt-8 bg-black border border-white/10 rounded-2xl p-8 text-center space-y-4">
+          <h2 className="text-xl font-bold text-white">Get weekly agent blueprints</h2>
+          <p className="text-gray-400 text-sm">Automation playbooks, new agents, and MCP server drops — straight to your inbox.</p>
+          <form
+            action="/api/subscribe"
+            method="POST"
+            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          >
+            <input type="hidden" name="source" value="blog-post" />
+            <label htmlFor="blog-email-capture" className="sr-only">Email address</label>
+            <input
+              id="blog-email-capture"
+              type="email"
+              name="email"
+              placeholder="Enter your email address"
+              required
+              className="flex-1 px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-500 transition-colors"
+            />
+            <button
+              type="submit"
+              className="px-6 py-3 bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg transition-colors whitespace-nowrap focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Get Blueprints
+            </button>
+          </form>
+        </div>
+
         {/* Back to Blog */}
-        <div className="mt-12 text-center">
+        <div className="mt-8 text-center">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 border border-white/10 text-gray-400 hover:text-white font-semibold rounded-lg hover:border-white/30 transition-colors focus-visible:outline-2 focus-visible:outline-green-500"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
