@@ -22,6 +22,7 @@ import type { Tool, Category } from '@/lib/types/tool';
 import StructuredData from '@/components/StructuredData';
 import HeroSection from '@/components/HeroSection';
 import MITHero from '@/components/MITHero';
+import BuilderSpotlight from '@/components/BuilderSpotlight';
 import NotificationBanners from '@/components/NotificationBanners';
 import ValueProposition from '@/components/ValueProposition';
 import StatsSection from '@/components/StatsSection';
@@ -705,6 +706,9 @@ export default function HomeClient({
           <TrustBadges />
         </div>
       </section>
+
+      {/* What Builders Are Making */}
+      <BuilderSpotlight />
 
       {/* Enhanced Newsletter Section */}
       <EnhancedNewsletter 

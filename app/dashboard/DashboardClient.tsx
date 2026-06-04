@@ -480,6 +480,56 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
                   </div>
                 )}
             </div>
+
+            {/* Purchased Products */}
+            <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-800 flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold text-white">Your Purchases</h2>
+                  <p className="text-sm text-gray-400 mt-0.5">Products and blueprints you&apos;ve bought</p>
+                </div>
+                <a href="/products" className="text-xs text-green-400 hover:text-green-300 transition-colors">Browse more →</a>
+              </div>
+              <div className="p-6 text-center space-y-4">
+                <div className="text-4xl">📦</div>
+                <p className="text-gray-400 text-sm">Your purchased products and order history are available via your confirmation email.</p>
+                <a href="/products"
+                  className="inline-block px-5 py-2.5 bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg text-sm transition-colors">
+                  Shop Products
+                </a>
+              </div>
+            </div>
+
+            {/* Referral card */}
+            <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-800">
+                <h2 className="text-lg font-semibold text-white">Refer a Builder</h2>
+                <p className="text-sm text-gray-400 mt-0.5">Share the MIT marketplace with your network</p>
+              </div>
+              <div className="p-6 space-y-4">
+                <p className="text-gray-400 text-sm">Know someone who should be building with AI agents? Send them your link.</p>
+                <div className="bg-black border border-gray-700 rounded-lg px-3 py-2 text-xs text-gray-400 font-mono break-all select-all">
+                  melanatedintech.com/marketplace
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <a href="https://twitter.com/intent/tweet?text=Check%20out%20the%20MIT%20Marketplace%20for%20AI%20agents%20%26%20automation%20tools%20%E2%80%94%20melanatedintech.com/marketplace"
+                    target="_blank" rel="noopener noreferrer"
+                    className="text-center py-2 border border-gray-700 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-xs font-semibold transition-colors">
+                    Share on X
+                  </a>
+                  <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://melanatedintech.com/marketplace"
+                    target="_blank" rel="noopener noreferrer"
+                    className="text-center py-2 border border-gray-700 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-xs font-semibold transition-colors">
+                    Share on LinkedIn
+                  </a>
+                </div>
+                <a href="/creators"
+                  className="block text-center text-xs text-green-400 hover:text-green-300 transition-colors">
+                  Want to earn? Join the creator program →
+                </a>
+              </div>
+            </div>
+
           </div>
           </div>
 
