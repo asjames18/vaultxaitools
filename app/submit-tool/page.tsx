@@ -16,8 +16,9 @@ export default function SubmitToolPage() {
   const supabase = createClient();
 
   const categories = [
-    'Video Editing', 'Graphics Design', 'Social Media', 
-    'Live Streaming', 'Audio/Podcasting'
+    'Language & Writing', 'Coding & Development', 'Design & Creative',
+    'Automation', 'AI Agents', 'MCP Servers', 'Research & Analytics',
+    'Video & Audio', 'Productivity', 'Other'
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +81,7 @@ export default function SubmitToolPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            Submit a Media Resource
+            Submit an AI Tool
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Found an amazing AI or tech tool that should be on Melanated In Tech? Submit it here and we'll review it for inclusion in our curated collection.
@@ -114,7 +115,7 @@ export default function SubmitToolPage() {
                 onChange={handleInputChange}
                 required
                 className="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-400/20 focus:border-green-400 transition-all"
-                placeholder="e.g., Adobe Premiere Pro, Canva, OBS Studio"
+                placeholder="e.g., Claude, Midjourney, n8n"
               />
             </div>
 

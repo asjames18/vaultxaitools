@@ -4,11 +4,11 @@ import JsonLd from '@/components/JsonLd';
 import { getAllBlogPosts, getBlogCategories } from '@/lib/blog-service';
 
 export const metadata: Metadata = {
-  title: 'Tutorials & Blog - Melanated In Tech',
+  title: 'Tutorials & Blog',
   description: 'Practical tutorials, guides, and insights on AI, automation, prompt engineering, software development, and emerging technology. Learn at your own pace and build real skills.',
   keywords: ['AI tutorials', 'tech education blog', 'prompt engineering guide', 'automation tutorials', 'software development tips', 'AI agents explained', 'digital transformation', 'tech for beginners'],
   openGraph: {
-    title: 'Tutorials & Blog - Melanated In Tech',
+    title: 'Tutorials & Blog',
     description: 'Practical tutorials and insights on AI, automation, prompt engineering, and software development. Learn and build real skills.',
     type: 'website',
   },

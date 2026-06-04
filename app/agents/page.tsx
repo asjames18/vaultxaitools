@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'AI Agent Marketplace — Melanated In Tech',
+  title: 'AI Agent Marketplace',
   description: 'Browse production-ready AI agents built for creators, entrepreneurs, and builders. Deploy in minutes, monetize in hours.',
 };
 

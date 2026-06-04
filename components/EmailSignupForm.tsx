@@ -51,7 +51,7 @@ export default function EmailSignupForm() {
   return (
     <div className="text-center">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-white mb-2">Stay Ahead with Media Tools</h3>
+        <h3 className="text-lg font-semibold text-white mb-2">Stay Ahead with AI Tools</h3>
         <p className="text-white/80 text-sm mb-4">
           Get weekly curated AI tool picks, practical tutorials, and tech learning resources
         </p>

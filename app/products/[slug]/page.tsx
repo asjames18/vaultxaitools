@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return { title: 'Product Not Found' };
 
   return {
-    title: `${product.name} — Melanated In Tech`,
+    title: product.name,
     description: product.description,
   };
 }

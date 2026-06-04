@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Agent Skills Directory — Melanated In Tech',
+  title: 'Agent Skills Directory',
   description: 'Discover plug-and-play agent skills that supercharge your AI workflows. SEO research, brand voice, code review, and more.',
 };
 

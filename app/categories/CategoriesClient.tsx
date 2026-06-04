@@ -438,13 +438,13 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
             {/* Enhanced badge - Same style as home page */}
             <div className="inline-flex items-center gap-2 bg-green-500/10 backdrop-blur-sm border border-green-500/30 rounded-full px-6 py-3 mb-8 shadow-lg animate-fade-in">
               <SparklesIcon className="w-5 h-5 text-green-400 animate-pulse" />
-              <span className="text-sm font-semibold text-green-400">Find Media Tools</span>
+              <span className="text-sm font-semibold text-green-400">Find AI Tools</span>
               <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
             </div>
             
             {/* Main headline - Similar to home page */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-green-100 to-green-300 bg-clip-text text-transparent mb-6 animate-slide-up">
-              Media Tools
+              AI Tools
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed animate-slide-up">
@@ -474,7 +474,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-white">
-              Media Tool Finder
+              AI Tools Directory
             </h2>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-xl sm:max-w-2xl mx-auto px-4 sm:px-0">
               Filter by best use case and quality to find AI and tech tools that work for your goals
@@ -634,7 +634,7 @@ export default function CategoriesClient({ tools }: CategoriesClientProps) {
       {/* Enhanced FAQ/Guide Section */}
       <section className="py-12 sm:py-16 bg-gray-900 border-t border-gray-700 mt-8 sm:mt-12">
         <div className="max-w-2xl sm:max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white text-center">Media Tool Categories: Guide & FAQ</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-white text-center">AI Tool Categories: Guide & FAQ</h2>
           <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 text-center px-4 sm:px-0">
             Not sure where to start? Here's a quick guide to help you find the right AI and tech tool category for your needs, plus answers to common questions.
           </p>

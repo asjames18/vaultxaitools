@@ -171,7 +171,7 @@ self.addEventListener('push', (event) => {
   };
 
   event.waitUntil(
-    self.registration.showNotification('VaultX Tech', options)
+    self.registration.showNotification('Melanated In Tech', options)
   );
 });
 

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Community — Melanated In Tech',
+  title: 'Community',
   description: 'Connect with builders deploying AI agents, automation systems, and MCP servers. Share what you built, get feedback, find collaborators.',
 };
 

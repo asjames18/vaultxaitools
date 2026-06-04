@@ -201,7 +201,7 @@ export function generateSearchMetadata(query: string): Metadata {
 
 // Generate metadata for about page
 export function generateAboutMetadata(): Metadata {
-  const title = 'About Melanated In Tech - Our Mission & Vision';
+  const title = 'About — Our Mission & Vision';
   const description = 'Learn about Melanated In Tech — our mission to educate, empower, and inspire people to use technology as a tool for growth, opportunity, creativity, and impact.';
 
   return {

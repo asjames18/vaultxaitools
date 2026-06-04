@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function AboutClient() {
   return (
-    <main className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -198,7 +198,7 @@ export default function AboutClient() {
               Contact Us
             </Link>
             <Link
-              href="/"
+              href="/AITools"
               className="bg-green-500 text-black px-8 py-3 rounded-lg font-medium hover:bg-green-400 transition-colors"
             >
               Explore Tools
@@ -206,6 +206,6 @@ export default function AboutClient() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
-} 
+}

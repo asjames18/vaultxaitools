@@ -12,11 +12,11 @@ export const revalidate = 300;
 export const tags = ['tools', 'aitools'];
 
 export const metadata: Metadata = {
-  title: 'AI Tools Directory — Discover & Compare the Best AI Tools | Melanated In Tech',
+  title: 'AI Tools Directory — Discover & Compare the Best AI Tools',
   description: 'Explore our curated directory of AI tools, automation platforms, development tools, and productivity resources. Discover, compare, and find the right technology to learn, build, and grow.',
   keywords: 'AI tools directory, best AI tools, artificial intelligence tools, automation tools, AI agents, development tools, productivity tools, prompt engineering, no-code tools, tech education',
   openGraph: {
-    title: 'AI Tools Directory — Discover & Compare the Best AI Tools | Melanated In Tech',
+    title: 'AI Tools Directory — Discover & Compare the Best AI Tools',
     description: 'Explore our curated directory of AI tools, automation platforms, and development resources. Find the right technology to learn, build, and grow.',
     type: 'website',
   },
