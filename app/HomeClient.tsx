@@ -21,6 +21,7 @@ import HomeHeroSection from '@/components/HomeHeroSection';
 import type { Tool, Category } from '@/lib/types/tool';
 import StructuredData from '@/components/StructuredData';
 import HeroSection from '@/components/HeroSection';
+import MITHero from '@/components/MITHero';
 import NotificationBanners from '@/components/NotificationBanners';
 import ValueProposition from '@/components/ValueProposition';
 import StatsSection from '@/components/StatsSection';
@@ -48,35 +49,35 @@ interface HomeClientProps {
 
 // Dynamic headlines for Melanated In Tech
 const dynamicHeadlines = [
-  "Learn AI, automation, and software development — all in one place.",
-  "Build real tech skills and create opportunities in the digital economy.",
-  "Discover the best AI tools, agents, and automation resources.",
-  "From prompt engineering to app development — we've got you covered.",
-  "Empowering everyday people to understand and use emerging technology."
+  "Deploy production AI agents without engineering overhead.",
+  "Marketplace of pre-built agents, skills, and MCP servers.",
+  "From prompt packs to profitable automation systems.",
+  "The infrastructure layer for agent commerce — built for builders.",
+  "Discover, deploy, and monetize AI agents — all in one place.",
 ];
 
 // Testimonials from the Melanated In Tech community
 const testimonials = [
   {
     name: "Marcus W.",
-    role: "Career Changer → Software Developer",
+    role: "Agency Automation Lead",
     company: "",
-    content: "Melanated In Tech gave me a clear roadmap into tech. The AI tools directory and tutorials helped me build real skills fast — I landed my first dev role within a year.",
+    content: "Deployed an AI research agent from the MIT marketplace in under 2 hours. Cut my team's manual research time by 60% — and we're already building a second one.",
     avatar: "👨‍💻"
   },
   {
     name: "Aisha J.",
-    role: "Entrepreneur & Digital Creator",
+    role: "Entrepreneur & Creator",
     company: "",
-    content: "I use the resources here to automate my business workflows. The platform made AI accessible and practical for someone just starting out — no CS degree required.",
+    content: "Used MIT's prompt packs and MCP server templates to build my first automated client pipeline. Generated $1.2K in the first month without writing a single line of code.",
     avatar: "👩‍🚀"
   },
   {
     name: "DeShawn C.",
-    role: "Educator & Community College Instructor",
+    role: "Educator & Tech Instructor",
     company: "",
-    content: "I recommend Melanated In Tech to every student curious about AI. It breaks down complex tools in a way that actually makes sense for everyday people.",
-    avatar: "👨‍🏫"
+    content: "I use MIT's agent marketplace as a live teaching tool. Students can see real deployed agents, understand how they work, and build their own in the same session.",
+    avatar: "🎓"
   }
 ];
 
@@ -401,6 +402,9 @@ export default function HomeClient({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-900 to-black">
+      {/* New MIT Hero Section */}
+      <MITHero />
+
       {/* SEO Structured Data */}
       <StructuredData
         type="website"

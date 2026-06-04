@@ -198,8 +198,10 @@ export default function EnhancedSearch({
     <div className={`relative ${className}`}>
       {/* Search Input */}
       <div className="relative">
+        <label htmlFor="enhanced-search-input" className="sr-only">Search agents and tools</label>
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
         <input
+          id="enhanced-search-input"
           ref={searchInputRef}
           type="text"
           placeholder="Search AI tools by name, description, or category..."

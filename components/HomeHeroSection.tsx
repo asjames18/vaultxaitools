@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import Link from 'next/link';
 import { SparklesIcon, CheckIcon, ShieldIcon, SearchIcon, RocketIcon } from '@/components/icons';
 
 interface HomeHeroSectionProps {
@@ -93,12 +94,12 @@ const HomeHeroSection = memo(function HomeHeroSection({
               <div className="w-2 h-2 bg-white/30 rounded-full group-hover:bg-white/50 transition-colors"></div>
             </button>
             
-            <button className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 font-medium px-6 py-4 border border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-500 rounded-xl transition-all duration-300 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
+            <Link href="/getting-started" className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 font-medium px-6 py-4 border border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-500 rounded-xl transition-all duration-300 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               How it works
-            </button>
+            </Link>
           </div>
 
           {/* Trust indicators */}

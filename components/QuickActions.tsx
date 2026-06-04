@@ -29,36 +29,32 @@ const PlusIcon = ({ className }: { className?: string }) => (
 
 const quickActions = [
   {
-    title: "AI Consulting",
-    description: "Expert AI & tech guidance",
+    title: "Marketplace",
+    description: "Browse ready-to-deploy AI agents",
     icon: RocketIcon,
-    href: "/consulting",
-    color: "green",
+    href: "/agents",
     gradient: "from-green-500 to-green-400"
   },
   {
-    title: "Get Started",
-    description: "New to tech? Start here",
+    title: "Blueprints",
+    description: "Automation systems & prompt packs",
     icon: StarIcon,
-    href: "/getting-started",
-    color: "yellow",
+    href: "/products",
     gradient: "from-yellow-500 to-orange-500"
   },
   {
-    title: "Popular",
-    description: "Most used AI tools",
+    title: "MCP Servers",
+    description: "Connect your agents to real tools",
     icon: FireIcon,
-    href: "/AITools",
-    color: "red",
-    gradient: "from-red-500 to-pink-500"
+    href: "/mcp-servers",
+    gradient: "from-purple-500 to-indigo-500"
   },
   {
-    title: "Submit Resource",
-    description: "Add a new AI resource",
+    title: "Get Started",
+    description: "New to agents? Start here",
     icon: PlusIcon,
-    href: "/submit-tool",
-    color: "green",
-    gradient: "from-green-500 to-emerald-500"
+    href: "/getting-started",
+    gradient: "from-blue-500 to-cyan-500"
   }
 ];
 
@@ -68,10 +64,10 @@ export default function QuickActions() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Quick Actions
+            Jump In
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
-            Get started quickly with these popular options
+            Everything you need to deploy and monetize AI agents.
           </p>
         </div>
 

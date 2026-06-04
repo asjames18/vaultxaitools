@@ -55,7 +55,7 @@ const FeaturedToolsSection = memo(function FeaturedToolsSection({
                     onClick={() => toggleFavorite(tool.id)}
                     disabled={favoriteLoading === tool.id}
                     className={`transition-colors ${favoriteTools.includes(tool.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'} ${favoriteLoading === tool.id ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    title={favoriteTools.includes(tool.id) ? 'Remove from favorites' : 'Add to favorites'}
+                    aria-label={`${favoriteTools.includes(tool.id) ? 'Remove from favorites' : 'Add to favorites'}: ${tool.name}`}
                   >
                     {favoriteLoading === tool.id ? (
                       <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />

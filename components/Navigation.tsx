@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { Menu } from '@headlessui/react';
 import { createClient } from '@/lib/supabase';
 import { User } from '@supabase/auth-js';
-import { User as UserIcon, Settings as SettingsIcon, LogOut as LogOutIcon, Search as SearchIcon, Shield as ShieldIcon, Sun as SunIcon, Moon as MoonIcon } from 'lucide-react';
+import { User as UserIcon, Settings as SettingsIcon, LogOut as LogOutIcon, Search as SearchIcon, Shield as ShieldIcon, Sun as SunIcon, Moon as MoonIcon, Heart as HeartIcon, Scale as ScaleIcon } from 'lucide-react';
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -134,31 +134,43 @@ export default function Navigation() {
         <div className="space-x-1 hidden md:flex">
           <Link
             href="/"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             Home
           </Link>
           <Link
             href="/AITools"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/AITools' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/AITools' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             AI Tools
           </Link>
           <Link
+            href="/agents"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/agents' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+          >
+            Agents
+          </Link>
+          <Link
+            href="/mcp-servers"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/mcp-servers' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+          >
+            MCP Servers
+          </Link>
+          <Link
             href="/blog"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/blog' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/blog' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             Tutorials
           </Link>
           <Link
             href="/about"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/about' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/about' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             About
           </Link>
           <Link
             href="/contact"
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400${pathname === '/contact' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/contact' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
             Contact
           </Link>
@@ -168,16 +180,33 @@ export default function Navigation() {
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors"
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
             title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
           </button>
-          {/* Search functionality integrated into AI Tools page */}
-          <Link 
-            href="/AITools" 
-            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors"
-            title="Media Tools Directory"
+          {/* Favorites */}
+          <Link
+            href="/favorites"
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+            aria-label="Favorites"
+          >
+            <HeartIcon className="w-5 h-5" />
+          </Link>
+          {/* Compare */}
+          <Link
+            href="/compare"
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+            aria-label="Compare tools"
+          >
+            <ScaleIcon className="w-5 h-5" />
+          </Link>
+          {/* Search */}
+          <Link
+            href="/AITools"
+            className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+            aria-label="Search tools"
           >
             <SearchIcon className="w-5 h-5" />
           </Link>

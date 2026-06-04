@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Menu, X, Search, User, Home, Grid, BookOpen, Heart, Settings, LogOut } from 'lucide-react';
+import { Menu, X, Search, User, Home, Grid, BookOpen, Heart, Settings, LogOut, Zap, Server, Package, Info } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 interface MobileNavigationProps {
@@ -72,9 +72,14 @@ export default function MobileNavigation({
   }, [isOpen]);
 
   const navigationItems = [
-          { name: 'Home', href: '/', icon: Home },
-      { name: 'Media Tools', href: '/AITools', icon: Grid },
-      { name: 'Favorites', href: '/favorites', icon: Heart },
+    { name: 'Home',        href: '/',            icon: Home },
+    { name: 'AI Tools',   href: '/AITools',      icon: Grid },
+    { name: 'Agents',     href: '/agents',       icon: Zap },
+    { name: 'MCP Servers',href: '/mcp-servers',  icon: Server },
+    { name: 'Blueprints', href: '/products',     icon: Package },
+    { name: 'Tutorials',  href: '/blog',         icon: BookOpen },
+    { name: 'Favorites',  href: '/favorites',    icon: Heart },
+    { name: 'About',      href: '/about',        icon: Info },
   ];
 
   const adminItems = [
