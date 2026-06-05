@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import MobileBottomNav from '@/components/MobileBottomNav'
 import { Analytics } from '@vercel/analytics/react'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import JsonLd from '@/components/JsonLd'
@@ -97,7 +98,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Remove the problematic script that causes hydration mismatch */}
+        {/* Apply saved theme before first paint to prevent flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){}})();`,
+          }}
+        />
       </head>
       <body className={`${inter.className} pt-14`} suppressHydrationWarning>
         <JsonLd data={{
@@ -112,16 +118,17 @@ export default function RootLayout({
             'https://www.linkedin.com/company/melanatedintech'
           ]
         }} />
-        <a href="#main-content" className="sr-only focus:not-sr-only focus-visible:outline-2 focus-visible:outline-blue-500">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-green-500 focus:text-black focus:rounded-lg focus:font-semibold focus:outline-none">
           Skip to main content
         </a>
         <Navigation />
         <ErrorBoundary>
-          <main id="main-content" role="main">
+          <main id="main-content" role="main" className="pb-16 md:pb-0">
             {children}
           </main>
         </ErrorBoundary>
         <Footer />
+        <MobileBottomNav />
         <Analytics />
         <SEOMonitor />
         <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />

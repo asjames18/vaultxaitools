@@ -10,6 +10,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const router = useRouter();
   const supabase = createClient();
@@ -89,8 +90,8 @@ export default function SignInPage() {
         setError(error.message);
       } else {
         setError('');
-        alert('Password reset email sent! Check your inbox.');
-        setShowForgotPassword(false);
+        setSuccess('Password reset email sent! Check your inbox.');
+        setTimeout(() => setShowForgotPassword(false), 3000);
       }
     } catch (err) {
       setError('An unexpected error occurred');
@@ -132,6 +133,12 @@ export default function SignInPage() {
             {error && (
               <div className="rounded-md bg-red-50 dark:bg-red-900/20 p-4">
                 <div className="text-sm text-red-700 dark:text-red-400">{error}</div>
+              </div>
+            )}
+
+            {success && (
+              <div className="rounded-md bg-green-50 dark:bg-green-900/20 p-4">
+                <div className="text-sm text-green-700 dark:text-green-400">{success}</div>
               </div>
             )}
 

@@ -8,10 +8,24 @@ import { useState, useEffect } from 'react';
 import { TrustBadge } from './TrustBadges';
 // Ratings removed for now
 
+function isNewTool(createdAt: string | undefined): boolean {
+  if (!createdAt) return false;
+  const created = new Date(createdAt);
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  return created >= sevenDaysAgo;
+}
+
+function isTrendingTool(tool: Tool): boolean {
+  return (tool.reviewCount ?? 0) > 50 && (tool.growth ? parseFloat(tool.growth) > 20 : false);
+}
+
 export default function ToolCard({ tool }: { tool: Tool }) {
   const { isFavorite, addFavorite, removeFavorite, loading } = useFavorites();
   const fav = isFavorite(tool.id);
   const [compareSet, setCompareSet] = useState<string[]>([]);
+  const isNew = isNewTool(tool.createdAt);
+  const isTrending = isTrendingTool(tool);
 
   useEffect(() => {
     const raw = localStorage.getItem('compare-tools');
@@ -63,6 +77,21 @@ export default function ToolCard({ tool }: { tool: Tool }) {
 
   return (
     <div className="relative border rounded-lg p-4 shadow hover:shadow-lg transition">
+      {/* New / Trending badges */}
+      {(isNew || isTrending) && (
+        <div className="flex gap-1 mb-2">
+          {isNew && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+              New
+            </span>
+          )}
+          {isTrending && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300">
+              🔥 Trending
+            </span>
+          )}
+        </div>
+      )}
       <button
         onClick={handleClick}
         className="absolute top-2 right-2"

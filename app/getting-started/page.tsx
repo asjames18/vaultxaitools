@@ -11,7 +11,7 @@ export default function GettingStartedPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Getting Started with Media Tools 🚀
+            Getting Started with AI Tools 🚀
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
             New to AI and tech tools? Start here with our beginner-friendly guide to learning and building with technology
@@ -25,12 +25,12 @@ export default function GettingStartedPage() {
           
           <div className="p-6 space-y-6">
             <div>
-              <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">What is Media Production?</h3>
+              <h3 className="text-md font-medium text-gray-900 dark:text-white mb-4">What are AI Tools?</h3>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 AI and technology education involves discovering tools, learning practical skills, and applying emerging technology to real-world goals. This includes everything from exploring AI tools to building automations and developing software.
               </p>
               <p className="text-gray-600 dark:text-gray-300">
-                Media production tools can help you create engaging content, manage your social media presence, stream services live, and produce professional audio for podcasts and sermons.
+                AI tools can help you create engaging content, automate repetitive tasks, accelerate learning, build software, and solve complex problems faster than ever before.
               </p>
             </div>
 
@@ -111,7 +111,7 @@ export default function GettingStartedPage() {
                   href="/AITools" 
                   className="inline-flex items-center px-6 py-3 bg-green-500 text-black font-medium rounded-lg hover:bg-green-400 transition-colors"
                 >
-                  Browse Media Tools
+                  Browse AI Tools
                 </a>
               </div>
             </div>

@@ -86,13 +86,22 @@ const HomeHeroSection = memo(function HomeHeroSection({
             </div>
           </div>
 
+          {/* Hero Search Bar */}
+          <div className={`mb-8 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <Link href="/advanced-search" className="group flex items-center gap-3 max-w-xl mx-auto bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-500 rounded-xl px-5 py-3.5 shadow-md hover:shadow-lg transition-all duration-200 cursor-text">
+              <SearchIcon className="w-5 h-5 text-gray-400 flex-shrink-0" />
+              <span className="text-gray-500 dark:text-gray-400 text-sm flex-1 text-left">Search AI tools... try "video", "writing", "free"</span>
+              <span className="hidden sm:flex items-center gap-1 text-xs text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-md flex-shrink-0">⌘K</span>
+            </Link>
+          </div>
+
           {/* CTA Buttons */}
           <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 transition-all duration-700 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <button className="group inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-green-400 hover:from-green-400 hover:to-green-300 text-black font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <Link href="/AITools" className="group inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-green-400 hover:from-green-400 hover:to-green-300 text-black font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
               <SearchIcon className="w-5 h-5 group-hover:rotate-12 transition-transform" />
               Explore AI Tools
               <div className="w-2 h-2 bg-white/30 rounded-full group-hover:bg-white/50 transition-colors"></div>
-            </button>
+            </Link>
             
             <Link href="/getting-started" className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 font-medium px-6 py-4 border border-gray-300 dark:border-gray-600 hover:border-green-500 dark:hover:border-green-500 rounded-xl transition-all duration-300 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,19 +115,25 @@ const HomeHeroSection = memo(function HomeHeroSection({
           <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 text-center transition-all duration-700 delay-800 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
               <div className="text-2xl font-bold text-green-400">{totalTools}+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Curated AI Tools</div>
             </div>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
               <div className="text-2xl font-bold text-green-400">10K+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Users</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Community Members</div>
             </div>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-              <div className="text-2xl font-bold text-green-400">100%</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Free Tools</div>
+              <div className="flex items-center justify-center gap-1 mb-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <div className="text-2xl font-bold text-green-400">Free</div>
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Always Free Access</div>
             </div>
             <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">24/7</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">Updated</div>
+              <div className="flex items-center justify-center mb-1">
+                <ShieldIcon className="w-5 h-5 text-green-400 mr-1" />
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">✓</div>
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Vetted &amp; Verified</div>
             </div>
           </div>
         </div>

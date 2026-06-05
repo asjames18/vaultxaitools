@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.CheckoutSession;
+    const session = event.data.object as Stripe.Checkout.Session;
     const customerEmail = session.customer_details?.email;
     const productId = session.metadata?.productId;
     const productSlug = session.metadata?.productSlug;

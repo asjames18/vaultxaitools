@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { StarIcon, MessageCircle, UsersIcon, HeartIcon } from 'lucide-react';
+import { createClient } from '@/lib/supabase';
 
 interface CommunityHighlightsProps {
   toolsCount?: number;
@@ -57,6 +58,16 @@ const initialReviews: Review[] = [
   }
 ];
 
+function formatTimeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return days === 1 ? '1 day ago' : `${days} days ago`;
+}
+
 export default function CommunityHighlights({ 
   toolsCount = 0, 
   categoriesCount = 0, 
@@ -65,6 +76,32 @@ export default function CommunityHighlights({
 }: CommunityHighlightsProps) {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [reviews, setReviews] = useState(initialReviews);
+  const supabase = createClient();
+
+  // Fetch real reviews from the database
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('reviews')
+          .select('id, user_name, rating, comment, created_at')
+          .order('created_at', { ascending: false })
+          .limit(6);
+        if (!error && data && data.length > 0) {
+          setReviews(data.map((r: any) => ({
+            id: r.id,
+            username: r.user_name || 'Community Member',
+            rating: r.rating || 5,
+            comment: r.comment || '',
+            timeAgo: formatTimeAgo(r.created_at),
+          })));
+        }
+      } catch {
+        // Fall back to static reviews
+      }
+    };
+    fetchReviews();
+  }, []);
 
   // Create dynamic community stats based on props
   const communityStats = [

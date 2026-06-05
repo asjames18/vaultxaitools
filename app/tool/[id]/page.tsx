@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import ToolDetailsClient from './ToolDetailsClient';
 import { generateToolMetadata, generateToolStructuredData } from '@/lib/seo';
 import type { Tool } from '@/lib/types/tool';
@@ -198,6 +199,26 @@ export default async function ToolDetails({ params }: ToolDetailsProps) {
         {faqStructuredData && (
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }} />
         )}
+        <nav aria-label="Breadcrumb" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+          <ol className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
+            <li>
+              <Link href="/" className="hover:text-green-400 transition-colors">Home</Link>
+            </li>
+            <li aria-hidden="true" className="select-none">›</li>
+            <li>
+              <Link
+                href={`/AITools?category=${encodeURIComponent(mappedTool.category)}`}
+                className="hover:text-green-400 transition-colors"
+              >
+                {mappedTool.category}
+              </Link>
+            </li>
+            <li aria-hidden="true" className="select-none">›</li>
+            <li className="text-gray-900 dark:text-white font-medium truncate max-w-[200px]" aria-current="page">
+              {mappedTool.name}
+            </li>
+          </ol>
+        </nav>
         <ToolDetailsClient tool={mappedTool} />
       </>
     );

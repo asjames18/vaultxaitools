@@ -194,16 +194,24 @@ export default function EnhancedSearch({
     onResultsChange(tools);
   }, [tools, onResultsChange]);
 
+  const searchId = 'enhanced-search-input';
+  const listboxId = 'enhanced-search-listbox';
+
   return (
     <div className={`relative ${className}`}>
       {/* Search Input */}
       <div className="relative">
-        <label htmlFor="enhanced-search-input" className="sr-only">Search agents and tools</label>
-        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <label htmlFor={searchId} className="sr-only">Search AI tools</label>
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
         <input
-          id="enhanced-search-input"
+          id={searchId}
           ref={searchInputRef}
           type="text"
+          role="combobox"
+          aria-expanded={showSuggestions && (searchSuggestions.length > 0 || recentSearches.length > 0 || popularSearches.length > 0)}
+          aria-controls={listboxId}
+          aria-autocomplete="list"
+          aria-activedescendant={selectedSuggestionIndex >= 0 ? `suggestion-${selectedSuggestionIndex}` : undefined}
           placeholder="Search AI tools by name, description, or category..."
           value={searchQuery}
           onChange={(e) => handleSearchChange(e.target.value)}
@@ -223,7 +231,12 @@ export default function EnhancedSearch({
 
       {/* Search Suggestions */}
       {showSuggestions && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-50 max-h-96 overflow-y-auto">
+        <div
+          id={listboxId}
+          role="listbox"
+          aria-label="Search suggestions"
+          className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-50 max-h-96 overflow-y-auto"
+        >
           {/* Search Suggestions */}
           {searchQuery && searchSuggestions.length > 0 && (
             <div className="p-4 border-b border-gray-100 dark:border-gray-700">
@@ -233,6 +246,9 @@ export default function EnhancedSearch({
               {searchSuggestions.map((suggestion, index) => (
                 <button
                   key={`${suggestion.type}-${suggestion.value}`}
+                  id={`suggestion-${index}`}
+                  role="option"
+                  aria-selected={index === selectedSuggestionIndex}
                   onClick={() => handleSuggestionClick(suggestion)}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                     index === selectedSuggestionIndex

@@ -76,6 +76,45 @@ export default function AnalyticsDashboard() {
   const [analyticsData, setAnalyticsData] = useState(mockAnalyticsData);
   const [sampleData] = useState(generateSampleData());
   const [selectedTimeRange, setSelectedTimeRange] = useState('30d');
+  const [realStats, setRealStats] = useState<{ tools: number; users: number; reviews: number; pendingTools: number } | null>(null);
+
+  // Fetch real counts from Supabase on mount
+  useEffect(() => {
+    const fetchRealStats = async () => {
+      try {
+        const { createClient } = await import('@/lib/supabase');
+        const supabase = createClient();
+        const [toolsRes, usersRes, reviewsRes, pendingRes] = await Promise.all([
+          supabase.from('tools').select('id', { count: 'exact', head: true }).eq('status', 'published'),
+          supabase.from('profiles').select('id', { count: 'exact', head: true }),
+          supabase.from('reviews').select('id', { count: 'exact', head: true }),
+          supabase.from('tools').select('id', { count: 'exact', head: true }).eq('status', 'draft'),
+        ]);
+        setRealStats({
+          tools: toolsRes.count ?? mockAnalyticsData.tools.active,
+          users: usersRes.count ?? mockAnalyticsData.users.total,
+          reviews: reviewsRes.count ?? 0,
+          pendingTools: pendingRes.count ?? mockAnalyticsData.tools.pending,
+        });
+        setAnalyticsData(prev => ({
+          ...prev,
+          tools: {
+            ...prev.tools,
+            active: toolsRes.count ?? prev.tools.active,
+            total: toolsRes.count ?? prev.tools.total,
+            pending: pendingRes.count ?? prev.tools.pending,
+          },
+          users: {
+            ...prev.users,
+            total: usersRes.count ?? prev.users.total,
+          },
+        }));
+      } catch {
+        // Keep mock data as fallback
+      }
+    };
+    fetchRealStats();
+  }, []);
   const [exportSchedules, setExportSchedules] = useState<Array<{
     id: string;
     name: string;

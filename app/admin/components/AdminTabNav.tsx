@@ -10,7 +10,7 @@ interface AdminTabNavProps {
   onContentManagement: () => void;
 }
 
-const tabs: { id: AdminTab | 'blog' | 'investor' | 'content'; label: string; href?: string; isLink?: boolean }[] = [
+const tabs: { id: AdminTab | 'blog' | 'investor' | 'content'; label: string; href?: string; isLink?: boolean; external?: boolean }[] = [
   { id: 'tools', label: 'Tools' },
   { id: 'categories', label: 'Categories' },
   { id: 'users', label: 'Users' },
@@ -18,7 +18,7 @@ const tabs: { id: AdminTab | 'blog' | 'investor' | 'content'; label: string; hre
   { id: 'automation', label: 'Automation' },
   { id: 'sponsored', label: 'Sponsored' },
   { id: 'blog', label: 'Blog', href: '/admin/blog', isLink: true },
-  { id: 'investor', label: 'Investor', href: '/investor', isLink: true },
+  { id: 'investor', label: 'Investor', href: '/investor', isLink: true, external: true },
   { id: 'performance', label: 'Performance' },
   { id: 'workflows', label: 'Workflows' },
   { id: 'data', label: 'Data' },
@@ -50,9 +50,11 @@ export default function AdminTabNav({
               <a
                 key={tab.id}
                 href={tab.href}
+                target={tab.external ? '_blank' : undefined}
+                rel={tab.external ? 'noopener noreferrer' : undefined}
                 className="px-4 py-3 text-xs font-medium whitespace-nowrap border-b-2 border-transparent text-gray-500 hover:text-gray-300 transition-colors"
               >
-                {label}
+                {label}{tab.external ? ' ↗' : ''}
               </a>
             );
           }

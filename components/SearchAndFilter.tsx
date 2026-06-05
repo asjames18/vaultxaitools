@@ -156,7 +156,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
             placeholder="Search AI tools by name, description, or category..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+            className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
           />
           {searchQuery && (
             <button
@@ -177,7 +177,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
             <FilterIcon className="w-5 h-5 text-gray-600 dark:text-gray-400" />
             <span className="font-medium text-gray-900 dark:text-white">Advanced Filters</span>
             {activeFiltersCount > 0 && (
-              <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium px-2 py-1 rounded-full">
+              <span className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium px-2 py-1 rounded-full">
                 {activeFiltersCount}
               </span>
             )}
@@ -216,7 +216,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
                     onClick={() => toggleCategory(category.name)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
                       selectedCategories.includes(category.name)
-                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-700'
+                        ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-700'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                     }`}
                   >
@@ -237,7 +237,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
                     onClick={() => togglePricing(pricing)}
                     className={`px-3 py-2 rounded-lg text-sm transition-colors ${
                       selectedPricing.includes(pricing)
-                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-700'
+                        ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-700'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                     }`}
                   >
@@ -275,7 +275,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
               <select
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="any">Any price</option>
                 <option value="free">Free only</option>
@@ -293,7 +293,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
               <select
                 value={userCount}
                 onChange={(e) => setUserCount(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="any">Any size</option>
                 <option value="small">Small (&lt;10K users)</option>
@@ -311,7 +311,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
               <select
                 value={growthRate}
                 onChange={(e) => setGrowthRate(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="any">Any growth</option>
                 <option value="slow">Slow (&lt;20%)</option>
@@ -329,7 +329,7 @@ export default function SearchAndFilter({ tools, categories, onResultsChange, cl
           {selectedCategories.map((category) => (
             <span
               key={category}
-              className="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm"
+              className="inline-flex items-center gap-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm"
             >
               {category}
               <button

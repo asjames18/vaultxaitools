@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import DashboardClient from './DashboardClient';
+import OnboardingFlow from '@/components/OnboardingFlow';
 
 export default function DashboardPage() {
   const [data, setData] = useState<{
@@ -22,6 +23,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const loadDashboardData = async () => {
     try {
@@ -34,6 +36,7 @@ export default function DashboardPage() {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (session?.user) {
+        setUserId(session.user.id);
         // User is authenticated, load their data
         // Always use the new API endpoint that returns tool names
         let favorites = [];
@@ -244,13 +247,16 @@ export default function DashboardPage() {
   }
 
   return (
-    <DashboardClient
-      userName={data.userName}
-      userEmail={data.userEmail}
-      memberSince={data.memberSince}
-      stats={data.stats}
-      recent={data.recent}
-      favorites={data.favorites}
-    />
+    <>
+      {userId && <OnboardingFlow userId={userId} />}
+      <DashboardClient
+        userName={data.userName}
+        userEmail={data.userEmail}
+        memberSince={data.memberSince}
+        stats={data.stats}
+        recent={data.recent}
+        favorites={data.favorites}
+      />
+    </>
   );
 } 

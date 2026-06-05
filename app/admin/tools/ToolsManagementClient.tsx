@@ -37,6 +37,8 @@ function ToolsManagementContent() {
   const [showForm, setShowForm] = useState(false);
   const [enriching, setEnriching] = useState(false);
   const [enrichUrl, setEnrichUrl] = useState('');
+  const [page, setPage] = useState(1);
+  const PAGE_SIZE = 25;
 
   useEffect(() => {
     loadTools();
@@ -67,6 +69,9 @@ function ToolsManagementContent() {
       [t.name, t.website, t.category, t.pricing, t.description, (t.tags || []).join(' ')].join(' ').toLowerCase().includes(q)
     );
   }, [tools, activeTab, query]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const startCreate = () => {
     setEditing({
@@ -177,7 +182,7 @@ function ToolsManagementContent() {
         {(['all','draft','published','archived'] as const).map((tab) => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => { setActiveTab(tab); setPage(1); }}
             aria-pressed={activeTab===tab}
             className={`px-3.5 py-2 rounded-md text-sm font-semibold border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${activeTab===tab
               ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:text-white dark:border-blue-500'
@@ -188,8 +193,15 @@ function ToolsManagementContent() {
         ))}
       </div>
 
+      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+        <span>{filtered.length} tool{filtered.length !== 1 ? 's' : ''}</span>
+        {totalPages > 1 && (
+          <span>Page {page} of {totalPages}</span>
+        )}
+      </div>
+
       <div className="grid md:grid-cols-2 gap-4">
-        {filtered.map((t) => (
+        {paginated.map((t) => (
           <div key={t.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-5 bg-white dark:bg-gray-900 shadow-sm">
             <div className="flex items-start justify-between mb-3">
               <div>
@@ -220,6 +232,28 @@ function ToolsManagementContent() {
           </div>
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 pt-2">
+          <button
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-3 py-2 rounded-md text-sm border border-gray-300 dark:border-gray-700 disabled:opacity-40 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          >
+            ← Prev
+          </button>
+          <span className="text-sm text-gray-600 dark:text-gray-400 px-2">
+            {page} / {totalPages}
+          </span>
+          <button
+            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="px-3 py-2 rounded-md text-sm border border-gray-300 dark:border-gray-700 disabled:opacity-40 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          >
+            Next →
+          </button>
+        </div>
+      )}
 
       {showForm && editing && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4">

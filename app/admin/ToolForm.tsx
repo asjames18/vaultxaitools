@@ -183,14 +183,26 @@ export default function ToolForm({ tool, categories, onClose, onSuccess }: ToolF
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Website *
               </label>
-              <input
-                type="url"
-                required
-                value={formData.website}
-                onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                placeholder="https://example.com"
-              />
+              <div className="flex items-center gap-2">
+                <input
+                  type="url"
+                  required
+                  value={formData.website}
+                  onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
+                  className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  placeholder="https://example.com"
+                />
+                {formData.website && (
+                  <img
+                    src={`https://www.google.com/s2/favicons?sz=32&domain_url=${encodeURIComponent(formData.website)}`}
+                    alt="site favicon"
+                    width={32}
+                    height={32}
+                    className="rounded flex-shrink-0"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
+                )}
+              </div>
             </div>
 
             <div>

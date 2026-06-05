@@ -33,6 +33,10 @@ function ContactManagementContent() {
   const [selectedMessage, setSelectedMessage] = useState<ContactMessage | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showReplyModal, setShowReplyModal] = useState(false);
+  const [replyBody, setReplyBody] = useState('');
+  const [replySending, setReplySending] = useState(false);
+  const [replySuccess, setReplySuccess] = useState('');
 
   useEffect(() => {
     // Load real messages from the database
@@ -50,48 +54,15 @@ function ContactManagementContent() {
       
       if (response.ok) {
         const data = await response.json();
-        console.log('Contact messages data:', data);
         setMessages(data);
       } else {
         const errorText = await response.text();
         console.error('Error loading messages:', response.status, errorText);
-        
-        // Add fallback data for testing
-        if (messages.length === 0) {
-          const fallbackMessages = [
-            {
-              id: 'test-1',
-              name: 'Test User',
-              email: 'test@example.com',
-              subject: 'Test Message',
-              message: 'This is a test message to show the contact management interface.',
-              status: 'unread' as const,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString()
-            }
-          ];
-          setMessages(fallbackMessages);
-        }
+        setMessages([]);
       }
     } catch (error) {
       console.error('Error loading messages:', error);
-      
-      // Add fallback data on error
-      if (messages.length === 0) {
-        const fallbackMessages = [
-          {
-            id: 'test-1',
-            name: 'Test User',
-            email: 'test@example.com',
-            subject: 'Test Message',
-            message: 'This is a test message to show the contact management interface.',
-            status: 'unread' as const,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          }
-        ];
-        setMessages(fallbackMessages);
-      }
+      setMessages([]);
     } finally {
       setLoading(false);
     }
@@ -407,13 +378,13 @@ function ContactManagementContent() {
                 </div>
 
                 <div className="flex flex-wrap gap-4">
-                  <a
-                    href={`mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject}`}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  <button
+                    onClick={() => { setReplyBody(''); setReplySuccess(''); setShowReplyModal(true); }}
+                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
                   >
                     <Reply className="w-4 h-4" />
-                    Reply via Email
-                  </a>
+                    Reply
+                  </button>
                   <button
                     onClick={() => copyToClipboard(selectedMessage.email)}
                     className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
@@ -440,6 +411,79 @@ function ContactManagementContent() {
           </div>
         </div>
       </div>
+
+      {/* In-app reply modal */}
+      {showReplyModal && selectedMessage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-lg w-full">
+            <div className="p-5 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="font-semibold text-gray-900 dark:text-white">Reply to {selectedMessage.name}</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{selectedMessage.email}</p>
+              <p className="text-xs text-gray-400 mt-1">Re: {selectedMessage.subject}</p>
+            </div>
+            <div className="p-5">
+              <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg text-sm text-gray-600 dark:text-gray-400 max-h-24 overflow-y-auto">
+                <span className="font-medium text-gray-500 text-xs block mb-1">Original message:</span>
+                {selectedMessage.message}
+              </div>
+              <textarea
+                value={replyBody}
+                onChange={(e) => setReplyBody(e.target.value)}
+                placeholder="Write your reply..."
+                rows={5}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+              />
+              {replySuccess && (
+                <p className="mt-2 text-sm text-green-600 dark:text-green-400">{replySuccess}</p>
+              )}
+            </div>
+            <div className="p-5 border-t border-gray-200 dark:border-gray-700 flex gap-3 justify-end">
+              <button
+                onClick={() => setShowReplyModal(false)}
+                className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={!replyBody.trim() || replySending}
+                onClick={async () => {
+                  if (!replyBody.trim()) return;
+                  setReplySending(true);
+                  try {
+                    const headers = await getAuthHeaders();
+                    const res = await fetch('/api/contact', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json', ...headers },
+                      body: JSON.stringify({
+                        name: 'Melanated In Tech Team',
+                        email: selectedMessage.email,
+                        subject: `Re: ${selectedMessage.subject}`,
+                        message: replyBody,
+                        isAdminReply: true,
+                        originalMessageId: selectedMessage.id,
+                      }),
+                    });
+                    if (res.ok) {
+                      await updateMessageStatus(selectedMessage.id, 'replied');
+                      setReplySuccess('Reply sent successfully!');
+                      setTimeout(() => setShowReplyModal(false), 1500);
+                    } else {
+                      setReplySuccess('Failed to send reply. Please try again.');
+                    }
+                  } catch {
+                    setReplySuccess('Failed to send reply. Please try again.');
+                  } finally {
+                    setReplySending(false);
+                  }
+                }}
+                className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {replySending ? 'Sending…' : 'Send Reply'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

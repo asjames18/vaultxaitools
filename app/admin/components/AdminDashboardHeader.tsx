@@ -14,10 +14,23 @@ interface AdminDashboardHeaderProps {
 }
 
 export default function AdminDashboardHeader({ user, sessionInfo, onLogout }: AdminDashboardHeaderProps) {
-  const minutesLeft = Math.floor((sessionInfo?.timeRemaining ?? 0) / 60000);
+  const msLeft = sessionInfo?.timeRemaining ?? 0;
+  const minutesLeft = Math.floor(msLeft / 60000);
+  const secondsLeft = Math.floor((msLeft % 60000) / 1000);
+  const isExpiringSoon = !sessionInfo?.isExpired && msLeft > 0 && minutesLeft < 5;
 
   return (
     <div className="bg-[#111] border-b border-[#1f1f1f] sticky top-0 z-40">
+      {isExpiringSoon && (
+        <div className="bg-amber-900/80 border-b border-amber-700 px-4 py-2 text-center">
+          <span className="text-amber-300 text-xs font-medium">
+            ⚠️ Session expires in {minutesLeft}m {secondsLeft}s — save your work or{' '}
+            <button onClick={() => window.location.reload()} className="underline hover:text-amber-200">
+              refresh to extend
+            </button>
+          </span>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-3">

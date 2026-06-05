@@ -309,10 +309,53 @@ export default function DashboardClient({ userName, userEmail, memberSince, stat
 
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome back, {userName}! 👋</h1>
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-1">Welcome back, {userName}! 👋</h1>
           <p className="text-gray-600 dark:text-gray-300">Your personal AI tools dashboard</p>
         </div>
+
+        {/* Gamification Progress Banner */}
+        {gamification && !gamificationLoading && (
+          <div className="mb-8 bg-gradient-to-r from-green-900/40 to-green-800/20 border border-green-700/40 rounded-2xl p-5 flex flex-wrap items-center gap-6">
+            {/* Streak */}
+            <div className="flex items-center gap-3">
+              <span className="text-3xl" aria-hidden>🔥</span>
+              <div>
+                <div className="text-2xl font-bold text-green-400">{gamification.streakCount} day{gamification.streakCount !== 1 ? 's' : ''}</div>
+                <div className="text-xs text-gray-400">Current streak</div>
+              </div>
+            </div>
+            <div className="w-px h-10 bg-green-700/40 hidden sm:block" />
+            {/* Level */}
+            <div className="flex items-center gap-3">
+              <span className="text-3xl" aria-hidden>⭐</span>
+              <div>
+                <div className="text-2xl font-bold text-green-400">{gamification.level}</div>
+                <div className="text-xs text-gray-400">Your level</div>
+              </div>
+            </div>
+            <div className="w-px h-10 bg-green-700/40 hidden sm:block" />
+            {/* Points */}
+            <div className="flex items-center gap-3">
+              <span className="text-3xl" aria-hidden>🏆</span>
+              <div>
+                <div className="text-2xl font-bold text-green-400">{gamification.points.toLocaleString()}</div>
+                <div className="text-xs text-gray-400">Total points</div>
+              </div>
+            </div>
+            {/* Next milestone nudge */}
+            <div className="ml-auto text-right hidden md:block">
+              <div className="text-xs text-gray-400 mb-1">Keep going!</div>
+              <div className="text-sm text-green-400 font-medium">
+                {stats.reviewsWritten === 0
+                  ? 'Write your first review to earn 10 pts →'
+                  : stats.favoritesCount < 5
+                  ? `Save ${5 - stats.favoritesCount} more tools for Curator badge →`
+                  : "You're crushing it! 🎉"}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 border-t-4 border-t-green-500">

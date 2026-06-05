@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { BlogPost } from '@/data/blog';
 import RichTextEditor from '@/components/RichTextEditor';
 import AdminAuthWrapper from '../AdminAuthWrapper';
@@ -10,6 +10,12 @@ function BlogManagementContent() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
+  const [autoSaveStatus, setAutoSaveStatus] = useState<'saved' | 'saving' | 'unsaved' | null>(null);
+  const [showPublishConfirm, setShowPublishConfirm] = useState(false);
+  const [pendingPublish, setPendingPublish] = useState(false);
+  const isDirtyRef = useRef(false);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const DRAFT_KEY = 'blog-editor-draft';
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -48,8 +54,77 @@ function BlogManagementContent() {
     }
   };
 
+  // Auto-save draft to localStorage
+  const scheduleAutoSave = useCallback((data: typeof formData) => {
+    isDirtyRef.current = true;
+    setAutoSaveStatus('unsaved');
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    autoSaveTimerRef.current = setTimeout(() => {
+      setAutoSaveStatus('saving');
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ data, savedAt: Date.now() }));
+        setAutoSaveStatus('saved');
+      } catch {
+        setAutoSaveStatus('unsaved');
+      }
+    }, 3000);
+  }, []);
+
+  // Trigger auto-save whenever form data changes while the form is open
+  useEffect(() => {
+    if (showForm) scheduleAutoSave(formData);
+  }, [formData]); // intentionally not including scheduleAutoSave to avoid extra triggers
+
+  // Warn before unload if dirty
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (isDirtyRef.current) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, []);
+
+  // Restore draft on open
+  useEffect(() => {
+    if (showForm && !editingPost) {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        try {
+          const { data, savedAt } = JSON.parse(raw);
+          const minsAgo = Math.round((Date.now() - savedAt) / 60000);
+          if (data.title && window.confirm(`Restore unsaved draft from ${minsAgo} min ago? (Title: "${data.title}")`)) {
+            setFormData(data);
+          }
+        } catch {}
+      }
+    }
+    if (!showForm) {
+      isDirtyRef.current = false;
+      setAutoSaveStatus(null);
+    }
+  }, [showForm, editingPost]);
+
+  const handlePublishClick = () => {
+    if (formData.status === 'published' || pendingPublish) {
+      setShowPublishConfirm(true);
+    } else {
+      void handleSubmitInner();
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.status === 'published' && !pendingPublish) {
+      setShowPublishConfirm(true);
+      return;
+    }
+    await handleSubmitInner();
+  };
+
+  const handleSubmitInner = async () => {
     
     try {
       if (editingPost) {
@@ -77,6 +152,11 @@ function BlogManagementContent() {
         }
       }
       
+      localStorage.removeItem(DRAFT_KEY);
+      isDirtyRef.current = false;
+      setPendingPublish(false);
+      setShowPublishConfirm(false);
+      setAutoSaveStatus(null);
       resetForm();
       setShowForm(false);
     } catch (error) {
@@ -371,16 +451,17 @@ function BlogManagementContent() {
                 </label>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
                 >
-                  {editingPost ? 'Update Post' : 'Create Post'}
+                  {editingPost ? 'Update Post' : formData.status === 'published' ? 'Publish Post' : 'Save Draft'}
                 </button>
                 <button
                   type="button"
                   onClick={() => {
+                    if (isDirtyRef.current && !window.confirm('You have unsaved changes. Discard them?')) return;
                     setShowForm(false);
                     setEditingPost(null);
                     resetForm();
@@ -389,8 +470,34 @@ function BlogManagementContent() {
                 >
                   Cancel
                 </button>
+                {autoSaveStatus && (
+                  <span className={`text-xs ml-auto ${autoSaveStatus === 'saved' ? 'text-green-500' : autoSaveStatus === 'saving' ? 'text-yellow-500' : 'text-gray-400'}`}>
+                    {autoSaveStatus === 'saved' ? '✓ Draft saved' : autoSaveStatus === 'saving' ? 'Saving…' : '● Unsaved changes'}
+                  </span>
+                )}
               </div>
             </form>
+          </div>
+        )}
+
+        {/* Publish confirmation modal */}
+        {showPublishConfirm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full mx-4 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Publish this post?</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-2 text-sm">
+                <strong>{formData.title || 'Untitled'}</strong> will go live immediately and be visible to all visitors.
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">Slug: /{formData.slug}</p>
+              <div className="flex gap-3 justify-end">
+                <button onClick={() => setShowPublishConfirm(false)} className="px-4 py-2 text-sm rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                  Cancel
+                </button>
+                <button onClick={() => { setPendingPublish(true); void handleSubmitInner(); }} className="px-4 py-2 text-sm rounded-lg bg-green-600 text-white hover:bg-green-700 transition-colors">
+                  Publish
+                </button>
+              </div>
+            </div>
           </div>
         )}
 

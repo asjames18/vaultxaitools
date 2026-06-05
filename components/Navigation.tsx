@@ -145,6 +145,12 @@ export default function Navigation() {
             AI Tools
           </Link>
           <Link
+            href="/categories"
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/categories' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
+          >
+            Categories
+          </Link>
+          <Link
             href="/agents"
             className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-green-400 dark:hover:text-green-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500${pathname === '/agents' ? ' bg-green-900/30 text-green-300 dark:bg-green-900/30 dark:text-green-300' : ''}`}
           >
@@ -210,7 +216,7 @@ export default function Navigation() {
           </Link>
           {/* Search */}
           <Link
-            href="/AITools"
+            href="/advanced-search"
             className="p-2 text-gray-600 dark:text-gray-300 hover:text-green-400 dark:hover:text-green-400 rounded-lg hover:bg-gray-800 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
             aria-label="Search tools"
           >

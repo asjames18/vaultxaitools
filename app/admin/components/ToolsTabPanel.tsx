@@ -1,9 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { ToolsTable } from '@/components/admin/ToolsTable';
 import { triggerGlobalUpdate } from '@/lib/revalidate';
 import type { AdminCategory, AdminMessage, AdminTool } from '../types';
 import CategoriesOverviewTable from './CategoriesOverviewTable';
+
+interface ConfirmModal {
+  title: string;
+  description: string;
+  count: number;
+  onConfirm: () => void;
+}
 
 interface ToolsTabPanelProps {
   tools: AdminTool[];
@@ -34,6 +42,8 @@ export default function ToolsTabPanel({
   onEditCategory,
   onDeleteCategory,
 }: ToolsTabPanelProps) {
+  const [confirmModal, setConfirmModal] = useState<ConfirmModal | null>(null);
+
   const handleManualRefresh = async () => {
     onSetLoading(true);
     try {
@@ -50,9 +60,16 @@ export default function ToolsTabPanel({
   const handlePublishAllDrafts = () => {
     const draftTools = tools.filter((t) => t.status === 'draft');
     if (draftTools.length > 0) {
-      if (confirm(`Publish all ${draftTools.length} draft tools?`)) {
-        draftTools.forEach((tool) => onToggleToolStatus(tool.id, 'published'));
-      }
+      setConfirmModal({
+        title: 'Publish All Drafts',
+        description: `This will make all draft tools publicly visible on the site.`,
+        count: draftTools.length,
+        onConfirm: () => {
+          draftTools.forEach((tool) => onToggleToolStatus(tool.id, 'published'));
+          setConfirmModal(null);
+          onSetMessage({ type: 'success', text: `Published ${draftTools.length} tools` });
+        },
+      });
     } else {
       onSetMessage({ type: 'success', text: 'No draft tools to publish' });
     }
@@ -66,9 +83,16 @@ export default function ToolsTabPanel({
       return daysSinceUpdate > 30;
     });
     if (oldTools.length > 0) {
-      if (confirm(`Archive ${oldTools.length} tools not updated in 30+ days?`)) {
-        oldTools.forEach((tool) => onToggleToolStatus(tool.id, 'archived'));
-      }
+      setConfirmModal({
+        title: 'Archive Old Tools',
+        description: `This will archive tools that haven't been updated in 30+ days. They will no longer appear in listings.`,
+        count: oldTools.length,
+        onConfirm: () => {
+          oldTools.forEach((tool) => onToggleToolStatus(tool.id, 'archived'));
+          setConfirmModal(null);
+          onSetMessage({ type: 'success', text: `Archived ${oldTools.length} tools` });
+        },
+      });
     } else {
       onSetMessage({ type: 'success', text: 'No old tools to archive' });
     }
@@ -198,6 +222,35 @@ export default function ToolsTabPanel({
         onEdit={onEditCategory}
         onDelete={onDeleteCategory}
       />
+
+      {/* Bulk action confirmation modal */}
+      {confirmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{confirmModal.title}</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-3">{confirmModal.description}</p>
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-3 mb-5">
+              <span className="text-amber-800 dark:text-amber-300 font-semibold text-sm">
+                {confirmModal.count} tool{confirmModal.count !== 1 ? 's' : ''} will be affected. This cannot be undone.
+              </span>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setConfirmModal(null)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmModal.onConfirm}
+                className="px-4 py-2 text-sm font-medium text-white bg-amber-600 rounded-lg hover:bg-amber-700 transition-colors"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
