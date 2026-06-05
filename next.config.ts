@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
     optimizeCss: false,
     optimizePackageImports: ['lucide-react', '@supabase/supabase-js'],
   },
+
+  outputFileTracingExcludes: {
+    '*': ['node_modules/**/*'],
+  },
   
   // Core security/perf flags moved from next.config.js
   poweredByHeader: false,
@@ -132,11 +136,6 @@ const nextConfig: NextConfig = {
       {
         source: '/home',
         destination: '/',
-        permanent: true,
-      },
-      {
-        source: '/categories',
-        destination: '/AITools',
         permanent: true,
       },
       {
