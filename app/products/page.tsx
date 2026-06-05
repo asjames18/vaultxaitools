@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase-server';
+import { createClientWithoutCookies } from '@/lib/supabase-server';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
@@ -26,7 +26,7 @@ const categoryColors: Record<string, string> = {
 };
 
 export default async function ProductsPage() {
-  const supabase = await createClient();
+  const supabase = createClientWithoutCookies();
 
   const { data: products } = await supabase
     .from('products')
@@ -47,18 +47,12 @@ export default async function ProductsPage() {
           </span>
           <h1 className="text-5xl font-bold mb-4">Products</h1>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Prompt packs, automation blueprints, templates, and guides — built for AI agent builders. One-time purchase. Instant download.
+            Prompt packs, automation blueprints, templates, and guides &mdash; built for AI agent builders. One-time purchase. Instant download.
           </p>
           <div className="flex flex-wrap justify-center gap-3 mt-6">
-            <Link href="/agents" className="px-4 py-2 border border-white/10 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-green-500">
-              Browse Agents →
-            </Link>
-            <Link href="/mcp-servers" className="px-4 py-2 border border-white/10 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-green-500">
-              MCP Servers →
-            </Link>
-            <Link href="/skills" className="px-4 py-2 border border-white/10 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-green-500">
-              Agent Skills →
-            </Link>
+            <Link href="/agents" className="px-4 py-2 border border-white/10 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-green-500">Browse Agents &rarr;</Link>
+            <Link href="/mcp-servers" className="px-4 py-2 border border-white/10 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-green-500">MCP Servers &rarr;</Link>
+            <Link href="/skills" className="px-4 py-2 border border-white/10 hover:border-green-500/50 text-gray-400 hover:text-green-400 rounded-lg text-sm transition-colors focus-visible:outline-2 focus-visible:outline-green-500">Agent Skills &rarr;</Link>
           </div>
         </div>
 
@@ -66,7 +60,7 @@ export default async function ProductsPage() {
         <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm text-gray-500">
           {['One-time payment', 'Instant download', 'Lifetime access', 'Works with Claude, GPT-4, Gemini', 'Secure via Stripe'].map((item) => (
             <span key={item} className="flex items-center gap-1.5">
-              <span className="text-green-400">✓</span>
+              <span className="text-green-400">&#10003;</span>
               {item}
             </span>
           ))}
@@ -90,34 +84,21 @@ export default async function ProductsPage() {
                   className="group bg-white/5 hover:bg-white/10 border border-white/10 hover:border-green-500/30 rounded-2xl p-6 transition-all duration-200 flex flex-col focus-visible:outline-2 focus-visible:outline-green-500"
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <span className={`px-2.5 py-1 text-xs font-semibold rounded-full border ${colorClass}`}>
-                      {label}
-                    </span>
-                    <span className="text-xl font-bold text-white">
-                      ${(product.price / 100).toFixed(2)}
-                    </span>
+                    <span className={`px-2.5 py-1 text-xs font-semibold rounded-full border ${colorClass}`}>{label}</span>
+                    <span className="text-xl font-bold text-white">${(product.price / 100).toFixed(2)}</span>
                   </div>
-
-                  <h2 className="text-lg font-bold mb-2 group-hover:text-green-400 transition-colors">
-                    {product.name}
-                  </h2>
+                  <h2 className="text-lg font-bold mb-2 group-hover:text-green-400 transition-colors">{product.name}</h2>
                   <p className="text-gray-400 text-sm line-clamp-3 flex-1">{product.description}</p>
-
                   {product.tags?.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 mt-4">
                       {product.tags.slice(0, 3).map((tag: string) => (
-                        <span key={tag} className="text-xs text-gray-600 bg-white/5 border border-white/10 rounded px-2 py-0.5">
-                          {tag}
-                        </span>
+                        <span key={tag} className="text-xs text-gray-600 bg-white/5 border border-white/10 rounded px-2 py-0.5">{tag}</span>
                       ))}
                     </div>
                   )}
-
                   <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-xs text-gray-500">One-time · Instant download</span>
-                    <span className="text-xs text-green-400 group-hover:translate-x-1 transition-transform">
-                      View & Buy →
-                    </span>
+                    <span className="text-xs text-gray-500">One-time &middot; Instant download</span>
+                    <span className="text-xs text-green-400 group-hover:translate-x-1 transition-transform">View &amp; Buy &rarr;</span>
                   </div>
                 </Link>
               );
@@ -128,13 +109,8 @@ export default async function ProductsPage() {
         {/* Bottom CTA */}
         <div className="mt-20 border-t border-white/10 pt-16 text-center space-y-4">
           <h2 className="text-2xl font-bold">Need a custom blueprint?</h2>
-          <p className="text-gray-400 max-w-xl mx-auto">
-            We build bespoke automation systems, prompt packs, and agent architectures for teams and founders.
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block px-8 py-4 bg-green-500 hover:bg-green-400 text-black font-bold rounded-xl transition-colors focus-visible:outline-2 focus-visible:outline-white"
-          >
+          <p className="text-gray-400 max-w-xl mx-auto">We build bespoke automation systems, prompt packs, and agent architectures for teams and founders.</p>
+          <Link href="/contact" className="inline-block px-8 py-4 bg-green-500 hover:bg-green-400 text-black font-bold rounded-xl transition-colors focus-visible:outline-2 focus-visible:outline-white">
             Talk to the Team
           </Link>
         </div>
